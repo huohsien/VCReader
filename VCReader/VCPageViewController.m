@@ -22,8 +22,9 @@
     NSDictionary *_attributionDict;
     NSLayoutManager *_layoutManager;
     NSTextContainer *_textContainer;
-    int pageNumber;
-    CGRect rectOfPage;
+    int _pageNumber;
+    int _numberOfCreatedPaged;
+    CGRect _rectOfPage;
 
 }
 @synthesize backgroundColor = _backgroundColor;
@@ -61,10 +62,11 @@
 
 -(void) setup {
     
-    pageNumber = -1;
+    _pageNumber = -1;
+    _numberOfCreatedPaged = 0;
     
     CGSize sizeOfScreen = [[UIScreen mainScreen] bounds].size;
-    rectOfPage = CGRectMake(_margin, _margin, sizeOfScreen.width - 2 * _margin, sizeOfScreen.height - 2 * _margin);
+    _rectOfPage = CGRectMake(_margin, _margin, sizeOfScreen.width - 2 * _margin, sizeOfScreen.height - 2 * _margin);
     
 
     [self loadContent];
@@ -111,15 +113,22 @@
 
 -(void) createOnePage {
     
-    pageNumber++;
-    _textContainer = [[NSTextContainer alloc] initWithSize:rectOfPage.size];
-    [_layoutManager addTextContainer:_textContainer];
+    _pageNumber++;
+    if (_numberOfCreatedPaged < _pageNumber + 1) {
+        _textContainer = [[NSTextContainer alloc] initWithSize:_rectOfPage.size];
+        [_layoutManager addTextContainer:_textContainer];
+        _numberOfCreatedPaged++;
+    }
     [_currentPageTextView removeFromSuperview];
-    _currentPageTextView = [[UITextView alloc] initWithFrame:rectOfPage textContainer:[_layoutManager.textContainers objectAtIndex:pageNumber]];
+    _currentPageTextView = [[UITextView alloc] initWithFrame:_rectOfPage textContainer:[_layoutManager.textContainers objectAtIndex:_pageNumber]];
     [_currentPageTextView setBackgroundColor:self.backgroundColor];
     [_currentPageTextView setScrollEnabled:NO];
     [self.view addSubview:_currentPageTextView];
-
+    
+    if (_pageNumber == 0)
+        return;
+    
+    NSLog(@"number to loaded page = %d. current page = %d", _numberOfCreatedPaged, _pageNumber);
 }
 
 -(void)swipeUp:(id)sender {
@@ -129,11 +138,11 @@
 
 -(void)swipeDown:(id)sender {
     
-    pageNumber--;
-    if (pageNumber < 0) pageNumber = 0;
+    _pageNumber--;
+    if (_pageNumber < 0) _pageNumber = 0;
     
     [_currentPageTextView removeFromSuperview];
-    _currentPageTextView = [[UITextView alloc] initWithFrame:rectOfPage textContainer:[_layoutManager.textContainers objectAtIndex:pageNumber]];
+    _currentPageTextView = [[UITextView alloc] initWithFrame:_rectOfPage textContainer:[_layoutManager.textContainers objectAtIndex:_pageNumber]];
     [_currentPageTextView setBackgroundColor:self.backgroundColor];
     [_currentPageTextView setScrollEnabled:NO];
     [self.view addSubview:_currentPageTextView];
