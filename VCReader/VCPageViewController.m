@@ -105,7 +105,7 @@
         //    _chapterNumber = 772;
         _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
         _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
-        
+        NSLog(@"chapter:%d page:%d", _chapterNumber, _pageNumber);
         [self loadChapter:_chapterNumber];
         [self updatePage];
         [self.activityIndicator stopAnimating];

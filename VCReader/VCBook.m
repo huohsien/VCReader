@@ -99,6 +99,7 @@
     __block int count = 1;
     __block NSString *previousChapterString = @"";
     __block NSRange previousTitleRange;
+    
     previousTitleRange = NSMakeRange(0, 0);
     
     NSRegularExpression *regex = [NSRegularExpression
@@ -112,6 +113,7 @@
         NSString *title = [_contentString substringWithRange:range];
 
         if ([[self getChapterStringFromString:previousChapterString] isEqualToString:[self getChapterStringFromString:title]]) {
+            previousTitleRange = range;
             return;
 
         }
@@ -127,13 +129,13 @@
         [_chapterTitleStringArray addObject:workingString];
         if (previousTitleRange.length > 0) {
             
-            [_chapterContentRangeStringArray addObject:NSStringFromRange(NSMakeRange(NSMaxRange(previousTitleRange), range.location - previousTitleRange.location - previousTitleRange.length))];
+            [_chapterContentRangeStringArray addObject:NSStringFromRange(NSMakeRange(NSMaxRange(previousTitleRange), range.location - NSMaxRange(previousTitleRange)))];
 
         }
 
         previousChapterString = title;
         previousTitleRange = range;
-//        NSLog(@"title:%@ word count:%lu match number:%d",title, (unsigned long)range.length, count);
+        NSLog(@"title:%@ word count:%lu match number:%d",title, (unsigned long)range.length, count);
         count++;
     }];
     count--;
