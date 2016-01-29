@@ -14,6 +14,8 @@
 		667AACDF1C545D9400CD40E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 667AACDE1C545D9400CD40E1 /* Assets.xcassets */; };
 		667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */; };
 		667AACF01C54797700CD40E1 /* novel.txt in Resources */ = {isa = PBXBuildFile; fileRef = 667AACEF1C54797700CD40E1 /* novel.txt */; };
+		667AACF71C58ACE300CD40E1 /* VCPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACF61C58ACE300CD40E1 /* VCPage.m */; };
+		667AACFA1C58B05C00CD40E1 /* VCBookContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACF91C58B05C00CD40E1 /* VCBookContent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,10 @@
 		667AACE91C545E3E00CD40E1 /* VCPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCPageViewController.h; sourceTree = "<group>"; };
 		667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPageViewController.m; sourceTree = "<group>"; };
 		667AACEF1C54797700CD40E1 /* novel.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = novel.txt; sourceTree = "<group>"; };
+		667AACF51C58ACE300CD40E1 /* VCPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCPage.h; sourceTree = "<group>"; };
+		667AACF61C58ACE300CD40E1 /* VCPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPage.m; sourceTree = "<group>"; };
+		667AACF81C58B05C00CD40E1 /* VCBookContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBookContent.h; sourceTree = "<group>"; };
+		667AACF91C58B05C00CD40E1 /* VCBookContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBookContent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +92,10 @@
 			children = (
 				667AACE91C545E3E00CD40E1 /* VCPageViewController.h */,
 				667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */,
+				667AACF51C58ACE300CD40E1 /* VCPage.h */,
+				667AACF61C58ACE300CD40E1 /* VCPage.m */,
+				667AACF81C58B05C00CD40E1 /* VCBookContent.h */,
+				667AACF91C58B05C00CD40E1 /* VCBookContent.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -170,6 +180,8 @@
 			files = (
 				667AACDD1C545D9400CD40E1 /* VCReader.xcdatamodeld in Sources */,
 				667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */,
+				667AACFA1C58B05C00CD40E1 /* VCBookContent.m in Sources */,
+				667AACF71C58ACE300CD40E1 /* VCPage.m in Sources */,
 				667AACD41C545D9400CD40E1 /* AppDelegate.m in Sources */,
 				667AACD11C545D9400CD40E1 /* main.m in Sources */,
 			);

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "VCBookContent.h"
 @interface VCPageViewController : UIViewController
 
 @property (strong, nonatomic) UIColor *backgroundColor;

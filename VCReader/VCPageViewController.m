@@ -16,14 +16,12 @@
 @implementation VCPageViewController
 {
     NSMutableAttributedString *_contentAttributedTextString;
-    UITextView *_currentPageTextView;
-    UITextView *_previousPageTextView;
-    UITextView *_nextPageTextView;
+    UITextView *_pageTextView;
+
     NSDictionary *_attributionDict;
     NSLayoutManager *_layoutManager;
-    NSTextContainer *_textContainer;
     int _pageNumber;
-    int _numberOfCreatedPaged;
+    int _totalNumberOfPage;
     CGRect _rectOfPage;
 
 }
@@ -35,7 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self baseInit];
     [self setup];
 }
@@ -62,17 +60,13 @@
 
 -(void) setup {
     
-    _pageNumber = -1;
-    _numberOfCreatedPaged = 0;
-    
+    _pageNumber = 0;
+    _totalNumberOfPage = 0;
     CGSize sizeOfScreen = [[UIScreen mainScreen] bounds].size;
     _rectOfPage = CGRectMake(_margin, _margin, sizeOfScreen.width - 2 * _margin, sizeOfScreen.height - 2 * _margin);
     
 
-    [self loadContent];
-    self.textStorage = [[NSTextStorage alloc] initWithAttributedString:_contentAttributedTextString];
-    _layoutManager = [NSLayoutManager new];
-    [self.textStorage addLayoutManager:_layoutManager];
+
 
 
     UISwipeGestureRecognizer *gr = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeUp:)];
@@ -89,7 +83,19 @@
     [self.activityIndicator startAnimating];
     dispatch_queue_t queue = dispatch_get_main_queue();
     dispatch_async(queue, ^{
-        [self createOnePage];
+        
+        [self loadContent];
+        VCBookContent *content = [[VCBookContent alloc] initWithContent:_contentString];
+        NSString *chapterTitleString = [content.chapterTitleStringArray objectAtIndex:0];
+        NSString *chapterContentString = [content getTextStringFromChapter:1];
+        
+        
+        [self setupChapterAttributionFromString:[NSString stringWithFormat:@"%@%@", chapterTitleString, chapterContentString]];
+        self.textStorage = [[NSTextStorage alloc] initWithAttributedString:_contentAttributedTextString];
+        _layoutManager = [NSLayoutManager new];
+        [self.textStorage addLayoutManager:_layoutManager];
+        [self createAllContainers];
+        [self updatePage];
         [self.activityIndicator stopAnimating];
     });
 }
@@ -98,7 +104,10 @@
     NSURL *textURL = [[NSBundle mainBundle] URLForResource:@"novel" withExtension:@"txt"];
     NSError *error = nil;
     self.contentString = [[NSString alloc] initWithContentsOfURL:textURL encoding:NSUTF8StringEncoding error:&error];
-    _contentAttributedTextString = [[NSMutableAttributedString alloc] initWithString:self.contentString];
+}
+
+-(void) setupChapterAttributionFromString:(NSString *)string {
+    _contentAttributedTextString = [[NSMutableAttributedString alloc] initWithString:string];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = 5;
     paragraphStyle.alignment = NSTextAlignmentJustified;
@@ -107,45 +116,50 @@
     UIColor *foregroundColor = _textColor;
     _attributionDict = @{NSParagraphStyleAttributeName : paragraphStyle , NSFontAttributeName : font, NSBackgroundColorAttributeName : backgroundColor, NSForegroundColorAttributeName : foregroundColor};
     
-    [_contentAttributedTextString addAttributes:_attributionDict range:NSMakeRange(0, [self.contentString length])];
+    [_contentAttributedTextString addAttributes:_attributionDict range:NSMakeRange(0, [string length])];
     
 }
 
--(void) createOnePage {
-    
-    _pageNumber++;
-    if (_numberOfCreatedPaged < _pageNumber + 1) {
-        _textContainer = [[NSTextContainer alloc] initWithSize:_rectOfPage.size];
-        [_layoutManager addTextContainer:_textContainer];
-        _numberOfCreatedPaged++;
+- (void)createAllContainers {
+    if (_layoutManager.textContainers.count == 0) {
+        NSRange range = NSMakeRange(0, 0);
+        int numberOfPages = 0;
+        while(NSMaxRange(range) < _layoutManager.numberOfGlyphs) {
+            NSTextContainer *myTextContainer = [[NSTextContainer alloc] initWithSize:_rectOfPage.size];
+            [_layoutManager addTextContainer:myTextContainer];
+            range = [_layoutManager glyphRangeForTextContainer:myTextContainer];
+            numberOfPages++;
+        }
+        NSLog(@"%d container were created", numberOfPages);
+        _totalNumberOfPage = numberOfPages;
     }
-    [_currentPageTextView removeFromSuperview];
-    _currentPageTextView = [[UITextView alloc] initWithFrame:_rectOfPage textContainer:[_layoutManager.textContainers objectAtIndex:_pageNumber]];
-    [_currentPageTextView setBackgroundColor:self.backgroundColor];
-    [_currentPageTextView setScrollEnabled:NO];
-    [self.view addSubview:_currentPageTextView];
+}
+-(void) updatePage {
     
-    if (_pageNumber == 0)
-        return;
-    
-    NSLog(@"number to loaded page = %d. current page = %d", _numberOfCreatedPaged, _pageNumber);
+    NSTextContainer *newContainer = [_layoutManager.textContainers objectAtIndex:_pageNumber];
+    _pageTextView = [[UITextView alloc] initWithFrame:_rectOfPage textContainer:newContainer];
+    [_pageTextView setSelectable:NO];
+    [_pageTextView setScrollEnabled:NO];
+    [_pageTextView setBackgroundColor:self.backgroundColor];
+
+    [self.view addSubview:_pageTextView];
+
 }
 
 -(void)swipeUp:(id)sender {
-    
-    [self createOnePage];
+    if (_pageNumber == _totalNumberOfPage - 1)
+        return;
+    _pageNumber++;
+    [self updatePage];
 }
 
 -(void)swipeDown:(id)sender {
     
-    _pageNumber--;
-    if (_pageNumber < 0) _pageNumber = 0;
+    if (_pageNumber == 0)
+        return;
     
-    [_currentPageTextView removeFromSuperview];
-    _currentPageTextView = [[UITextView alloc] initWithFrame:_rectOfPage textContainer:[_layoutManager.textContainers objectAtIndex:_pageNumber]];
-    [_currentPageTextView setBackgroundColor:self.backgroundColor];
-    [_currentPageTextView setScrollEnabled:NO];
-    [self.view addSubview:_currentPageTextView];
+    _pageNumber--;
+    [self updatePage];
 }
 
 @end
