@@ -8,28 +8,26 @@
 
 #import "VCPageViewController.h"
 
-@interface VCPageViewController ()
-
-@property (strong, nonatomic) NSTextStorage *textStorage;
-@end
-
 @implementation VCPageViewController
 {
     NSMutableAttributedString *_contentAttributedTextString;
     UITextView *_pageTextView;
 
     NSDictionary *_attributionDict;
+    NSTextStorage *_textStorage;
     NSLayoutManager *_layoutManager;
     int _pageNumber;
+    int _chapterNumber;
     int _totalNumberOfPage;
+    int _totalNumberOfChapter;
+    NSArray *_titleOfChaptersArray;
     CGRect _rectOfPage;
 
 }
+@synthesize currentBook = _currentBook;
 @synthesize backgroundColor = _backgroundColor;
 @synthesize textColor = _textColor;
-@synthesize contentString = _contentString;
 @synthesize margin = _margin;
-@synthesize textStorage = _textStorage;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -61,20 +59,20 @@
 -(void) setup {
     
     _pageNumber = 0;
+    _chapterNumber = 0;
     _totalNumberOfPage = 0;
+    _totalNumberOfChapter = 0;
     CGSize sizeOfScreen = [[UIScreen mainScreen] bounds].size;
     _rectOfPage = CGRectMake(_margin, _margin, sizeOfScreen.width - 2 * _margin, sizeOfScreen.height - 2 * _margin);
     
-
-
-
-
     UISwipeGestureRecognizer *gr = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeUp:)];
     gr.direction = UISwipeGestureRecognizerDirectionUp;
     [self.view addGestureRecognizer:gr];
     UISwipeGestureRecognizer *gr1 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeDown:)];
     gr1.direction = UISwipeGestureRecognizerDirectionDown;
     [self.view addGestureRecognizer:gr1];
+    
+
 
 }
 
@@ -84,26 +82,31 @@
     dispatch_queue_t queue = dispatch_get_main_queue();
     dispatch_async(queue, ^{
         
-        [self loadContent];
-        VCBookContent *content = [[VCBookContent alloc] initWithContent:_contentString];
-        NSString *chapterTitleString = [content.chapterTitleStringArray objectAtIndex:0];
-        NSString *chapterContentString = [content getTextStringFromChapter:1];
+        _currentBook = [[VCBook alloc] initWithBookName:@"官神"];
+        NSString *s = [VCHelperClass getDatafromBook:_currentBook.bookName withField:@"numberOfChapters"];
+        _totalNumberOfChapter = [s intValue];
         
-        
-        [self setupChapterAttributionFromString:[NSString stringWithFormat:@"%@%@", chapterTitleString, chapterContentString]];
-        self.textStorage = [[NSTextStorage alloc] initWithAttributedString:_contentAttributedTextString];
-        _layoutManager = [NSLayoutManager new];
-        [self.textStorage addLayoutManager:_layoutManager];
-        [self createAllContainers];
+        [self loadChapter:_chapterNumber];
         [self updatePage];
         [self.activityIndicator stopAnimating];
     });
 }
 
--(void) loadContent {
-    NSURL *textURL = [[NSBundle mainBundle] URLForResource:@"novel" withExtension:@"txt"];
-    NSError *error = nil;
-    self.contentString = [[NSString alloc] initWithContentsOfURL:textURL encoding:NSUTF8StringEncoding error:&error];
+-(BOOL)loadChapter:(int)chapterNumber {
+    
+    if (chapterNumber < 0 || chapterNumber >= _totalNumberOfChapter) {
+        return NO;
+    }
+    NSString *chapterTitleString = [_currentBook getChapterTitleStringFromChapterNumber:chapterNumber];
+    NSString *chapterTextContentString = [_currentBook getTextContentStringFromChapterNumber:chapterNumber];
+    
+    
+    [self setupChapterAttributionFromString:[NSString stringWithFormat:@"%@%@", chapterTitleString, chapterTextContentString]];
+    _textStorage = [[NSTextStorage alloc] initWithAttributedString:_contentAttributedTextString];
+    _layoutManager = [NSLayoutManager new];
+    [_textStorage addLayoutManager:_layoutManager];
+    [self createAllContainers];
+    return YES;
 }
 
 -(void) setupChapterAttributionFromString:(NSString *)string {
@@ -147,19 +150,34 @@
 }
 
 -(void)swipeUp:(id)sender {
-    if (_pageNumber == _totalNumberOfPage - 1)
-        return;
-    _pageNumber++;
+    
+    if (_pageNumber == _totalNumberOfPage - 1) {
+        _chapterNumber++;
+        if([self loadChapter:_chapterNumber] == NO) {
+            _chapterNumber--;
+            return;
+        }
+        _pageNumber = 0;
+    } else {
+        _pageNumber++;
+    }
     [self updatePage];
 }
 
 -(void)swipeDown:(id)sender {
     
-    if (_pageNumber == 0)
-        return;
-    
-    _pageNumber--;
+    if (_pageNumber == 0){
+        _chapterNumber--;
+        if([self loadChapter:_chapterNumber] == NO) {
+            _chapterNumber++;
+            return;
+        }
+        _pageNumber = _totalNumberOfPage - 1;
+    } else {
+        _pageNumber--;
+    }
     [self updatePage];
 }
+
 
 @end

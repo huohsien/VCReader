@@ -1,0 +1,15 @@
+//
+//  PrefixHeader.pch
+//  VCReader
+//
+//  Created by victor on 1/30/16.
+//  Copyright © 2016 VHHC. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import "VCHelperClass.h"
+
+
+#endif /* PrefixHeader_pch */

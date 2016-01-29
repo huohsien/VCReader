@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "VCBookContent.h"
+#import "VCBook.h"
+
 @interface VCPageViewController : UIViewController
 
 @property (strong, nonatomic) UIColor *backgroundColor;
 @property (strong, nonatomic) UIColor *textColor;
-@property (strong, nonatomic) NSString *contentString;
 @property (assign) CGFloat margin;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
+@property (strong, nonatomic) VCBook *currentBook;
 
 @end

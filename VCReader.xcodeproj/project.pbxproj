@@ -13,9 +13,10 @@
 		667AACDD1C545D9400CD40E1 /* VCReader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 667AACDB1C545D9400CD40E1 /* VCReader.xcdatamodeld */; };
 		667AACDF1C545D9400CD40E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 667AACDE1C545D9400CD40E1 /* Assets.xcassets */; };
 		667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */; };
-		667AACF01C54797700CD40E1 /* novel.txt in Resources */ = {isa = PBXBuildFile; fileRef = 667AACEF1C54797700CD40E1 /* novel.txt */; };
+		667AACF01C54797700CD40E1 /* 官神.txt in Resources */ = {isa = PBXBuildFile; fileRef = 667AACEF1C54797700CD40E1 /* 官神.txt */; };
 		667AACF71C58ACE300CD40E1 /* VCPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACF61C58ACE300CD40E1 /* VCPage.m */; };
-		667AACFA1C58B05C00CD40E1 /* VCBookContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACF91C58B05C00CD40E1 /* VCBookContent.m */; };
+		667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACF91C58B05C00CD40E1 /* VCBook.m */; };
+		668AB1BB1C5BDD1C00395099 /* VCHelperClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,11 +30,14 @@
 		667AACE31C545D9400CD40E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		667AACE91C545E3E00CD40E1 /* VCPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCPageViewController.h; sourceTree = "<group>"; };
 		667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPageViewController.m; sourceTree = "<group>"; };
-		667AACEF1C54797700CD40E1 /* novel.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = novel.txt; sourceTree = "<group>"; };
+		667AACEF1C54797700CD40E1 /* 官神.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "官神.txt"; sourceTree = "<group>"; };
 		667AACF51C58ACE300CD40E1 /* VCPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCPage.h; sourceTree = "<group>"; };
 		667AACF61C58ACE300CD40E1 /* VCPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPage.m; sourceTree = "<group>"; };
-		667AACF81C58B05C00CD40E1 /* VCBookContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBookContent.h; sourceTree = "<group>"; };
-		667AACF91C58B05C00CD40E1 /* VCBookContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBookContent.m; sourceTree = "<group>"; };
+		667AACF81C58B05C00CD40E1 /* VCBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBook.h; sourceTree = "<group>"; };
+		667AACF91C58B05C00CD40E1 /* VCBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBook.m; sourceTree = "<group>"; };
+		668AB1B91C5BDD1C00395099 /* VCHelperClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCHelperClass.h; sourceTree = "<group>"; };
+		668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCHelperClass.m; sourceTree = "<group>"; };
+		668AB1BD1C5BDF8900395099 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,7 @@
 		667AACCF1C545D9400CD40E1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				668AB1BD1C5BDF8900395099 /* PrefixHeader.pch */,
 				667AACD21C545D9400CD40E1 /* AppDelegate.h */,
 				667AACD31C545D9400CD40E1 /* AppDelegate.m */,
 				667AACD01C545D9400CD40E1 /* main.m */,
@@ -94,8 +99,10 @@
 				667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */,
 				667AACF51C58ACE300CD40E1 /* VCPage.h */,
 				667AACF61C58ACE300CD40E1 /* VCPage.m */,
-				667AACF81C58B05C00CD40E1 /* VCBookContent.h */,
-				667AACF91C58B05C00CD40E1 /* VCBookContent.m */,
+				667AACF81C58B05C00CD40E1 /* VCBook.h */,
+				667AACF91C58B05C00CD40E1 /* VCBook.m */,
+				668AB1B91C5BDD1C00395099 /* VCHelperClass.h */,
+				668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -103,7 +110,7 @@
 		667AACF41C584F1900CD40E1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				667AACEF1C54797700CD40E1 /* novel.txt */,
+				667AACEF1C54797700CD40E1 /* 官神.txt */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -165,7 +172,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				667AACF01C54797700CD40E1 /* novel.txt in Resources */,
+				667AACF01C54797700CD40E1 /* 官神.txt in Resources */,
 				667AACDF1C545D9400CD40E1 /* Assets.xcassets in Resources */,
 				667AACDA1C545D9400CD40E1 /* Main.storyboard in Resources */,
 			);
@@ -180,7 +187,8 @@
 			files = (
 				667AACDD1C545D9400CD40E1 /* VCReader.xcdatamodeld in Sources */,
 				667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */,
-				667AACFA1C58B05C00CD40E1 /* VCBookContent.m in Sources */,
+				668AB1BB1C5BDD1C00395099 /* VCHelperClass.m in Sources */,
+				667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */,
 				667AACF71C58ACE300CD40E1 /* VCPage.m in Sources */,
 				667AACD41C545D9400CD40E1 /* AppDelegate.m in Sources */,
 				667AACD11C545D9400CD40E1 /* main.m in Sources */,
@@ -285,6 +293,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = VCReader/PrefixHeader.pch;
 				INFOPLIST_FILE = VCReader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.VHHC.VCReader;
@@ -296,6 +306,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = VCReader/PrefixHeader.pch;
 				INFOPLIST_FILE = VCReader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.VHHC.VCReader;
