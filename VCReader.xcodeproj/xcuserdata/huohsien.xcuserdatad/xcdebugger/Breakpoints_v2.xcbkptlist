@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VCReader/VCPageViewController.m"
-            timestampString = "475786381.215896"
+            timestampString = "475789944.047533"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
             landmarkName = "-loadChapter:"
             landmarkType = "5">
          </BreakpointContent>
@@ -52,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VCReader/VCPageViewController.m"
-            timestampString = "475786381.215896"
+            timestampString = "475789944.047533"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
             landmarkName = "-swipeUp:"
             landmarkType = "5">
          </BreakpointContent>
@@ -68,11 +68,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VCReader/VCPageViewController.m"
-            timestampString = "475786381.215896"
+            timestampString = "475789944.047533"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
             landmarkName = "-swipeUp:"
             landmarkType = "5">
          </BreakpointContent>

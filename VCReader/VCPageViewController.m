@@ -49,6 +49,18 @@
     return YES;
 }
 
+-(void) applicationWillEnterForeground:(NSNotification *)notification {
+    
+}
+
+
+-(void) applicationWillResignActive:(NSNotification *)notification {
+    
+    [VCHelperClass storeIntoBook:_currentBook.bookName withField:@"savedPageNumber" andData:@(_pageNumber).stringValue];
+    [VCHelperClass storeIntoBook:_currentBook.bookName withField:@"savedChapterNumber" andData:@(_chapterNumber).stringValue];
+
+}
+
 -(void)baseInit {
     _margin = 10;
     _backgroundColor = [UIColor blackColor];
@@ -58,8 +70,10 @@
 
 -(void) setup {
     
-    _pageNumber = 0;
-    _chapterNumber = 0;
+
+    
+
+
     _totalNumberOfPage = 0;
     _totalNumberOfChapter = 0;
     CGSize sizeOfScreen = [[UIScreen mainScreen] bounds].size;
@@ -72,6 +86,8 @@
     gr1.direction = UISwipeGestureRecognizerDirectionDown;
     [self.view addGestureRecognizer:gr1];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
 
 
 }
@@ -83,8 +99,12 @@
     dispatch_async(queue, ^{
         
         _currentBook = [[VCBook alloc] initWithBookName:@"官神"];
-        NSString *s = [VCHelperClass getDatafromBook:_currentBook.bookName withField:@"numberOfChapters"];
-        _totalNumberOfChapter = [s intValue];
+        _totalNumberOfChapter = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"numberOfChapters"] intValue];
+        
+        //    _pageNumber = 0;
+        //    _chapterNumber = 772;
+        _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
+        _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
         
         [self loadChapter:_chapterNumber];
         [self updatePage];
