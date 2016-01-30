@@ -69,10 +69,6 @@
 }
 
 -(void) setup {
-    
-
-    
-
 
     _totalNumberOfPage = 0;
     _totalNumberOfChapter = 0;
@@ -110,7 +106,31 @@
         [self updatePage];
         [self.activityIndicator stopAnimating];
     });
+
+    //test
+//    [self startTimedTask];
+
+
 }
+
+//- (void)startTimedTask
+//{
+//    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(performBackgroundTask) userInfo:nil repeats:YES];
+//}
+//
+//- (void)performBackgroundTask
+//{
+//    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+//        //Background Thread
+//        dispatch_async(dispatch_get_main_queue(), ^(void){
+//            //Run UI Updates
+//            [self swipeUp:self];
+//            
+//        });
+//    });
+//}
+
+
 
 -(BOOL)loadChapter:(int)chapterNumber {
     
@@ -155,11 +175,16 @@
         }
         NSLog(@"%d container were created", numberOfPages);
         _totalNumberOfPage = numberOfPages;
+        
     }
 }
 -(void) updatePage {
     
     NSTextContainer *newContainer = [_layoutManager.textContainers objectAtIndex:_pageNumber];
+    if (_pageTextView) {
+        [_pageTextView removeFromSuperview];
+        _pageTextView = nil;
+    }
     _pageTextView = [[UITextView alloc] initWithFrame:_rectOfPage textContainer:newContainer];
     [_pageTextView setSelectable:NO];
     [_pageTextView setScrollEnabled:NO];
