@@ -8,13 +8,20 @@
 
 #import <UIKit/UIKit.h>
 #import "VCBook.h"
-
+#import "VCView.h"
 @interface VCPageViewController : UIViewController
 
 @property (strong, nonatomic) UIColor *backgroundColor;
 @property (strong, nonatomic) UIColor *textColor;
-@property (assign) CGFloat margin;
+@property (assign) CGFloat topMargin;
+@property (assign) CGFloat horizontalMargin;
+@property (assign) CGFloat bottomMargin;
+@property (assign) CGFloat textLineSpacing;
+
+
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *batteryLabel;
 
 @property (strong, nonatomic) VCBook *currentBook;
 
