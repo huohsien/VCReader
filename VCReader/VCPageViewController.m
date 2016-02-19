@@ -22,6 +22,8 @@
     NSArray *_titleOfChaptersArray;
     CGRect _rectOfPage;
     
+    NSMutableArray *_viewStacks;
+    
     // touch
     
     CGFloat _lastTouchedPointX;
@@ -38,7 +40,53 @@
 @synthesize horizontalMargin = _horizontalMargin;
 @synthesize textLineSpacing = _textLineSpacing;
 
+-(void) baseInit {
+    _topMargin = 40;
+    _bottomMargin = 20;
+    _horizontalMargin = 10;
+    _textLineSpacing = 15;
+    _backgroundColor = [UIColor blackColor];
+    _textColor = [UIColor colorWithRed: 60.0 / 255.0 green: 1.0 blue: 1.0 / 255.0 alpha: 1.0];
+    
+}
+
+-(void) setup {
+    
+    _totalNumberOfPage = 0;
+    _totalNumberOfChapter = 0;
+    CGSize sizeOfScreen = [[UIScreen mainScreen] bounds].size;
+    _rectOfPage = CGRectMake(_horizontalMargin, _topMargin, sizeOfScreen.width - 2 * _horizontalMargin, sizeOfScreen.height - _topMargin - _bottomMargin);
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    
+    [((VCView *)self.view) setNextResponder:self];
+}
+
+-(void) start {
+    
+    [self.activityIndicator startAnimating];
+    dispatch_queue_t queue = dispatch_get_main_queue();
+    dispatch_async(queue, ^{
+        
+        _currentBook = [[VCBook alloc] initWithBookName:@"超級學神"];
+        _totalNumberOfChapter = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"numberOfChapters"] intValue];
+        
+        _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
+        _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
+        NSLog(@"chapter:%d page:%d", _chapterNumber, _pageNumber);
+        [self loadChapter:_chapterNumber];
+        [self updatePage];
+        [self.activityIndicator stopAnimating];
+    });
+    [self startMonitoringBattery];
+    [self StartTimerForClock];
+    
+    
+}
+
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     [self baseInit];
@@ -46,9 +94,11 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    
     [super viewWillAppear:animated];
     [self start];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -69,85 +119,6 @@
     [VCHelperClass storeIntoBook:_currentBook.bookName withField:@"savedChapterNumber" andData:@(_chapterNumber).stringValue];
 
 }
-
--(void)baseInit {
-    _topMargin = 40;
-    _bottomMargin = 20;
-    _horizontalMargin = 10;
-    _textLineSpacing = 15;
-    _backgroundColor = [UIColor blackColor];
-    _textColor = [UIColor colorWithRed: 60.0 / 255.0 green: 1.0 blue: 1.0 / 255.0 alpha: 1.0];
-
-}
-
--(void) setup {
-
-    _totalNumberOfPage = 0;
-    _totalNumberOfChapter = 0;
-    CGSize sizeOfScreen = [[UIScreen mainScreen] bounds].size;
-    _rectOfPage = CGRectMake(_horizontalMargin, _topMargin, sizeOfScreen.width - 2 * _horizontalMargin, sizeOfScreen.height - _topMargin - _bottomMargin);
-    
-//    UISwipeGestureRecognizer *gr = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeUp:)];
-//    gr.direction = UISwipeGestureRecognizerDirectionUp;
-//    [self.view addGestureRecognizer:gr];
-//    UISwipeGestureRecognizer *gr1 = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeDown:)];
-//    gr1.direction = UISwipeGestureRecognizerDirectionDown;
-//    [self.view addGestureRecognizer:gr1];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
-    
-    [((VCView *)self.view) setNextResponder:self];
-}
-
--(void) start {
-    
-    [self.activityIndicator startAnimating];
-    dispatch_queue_t queue = dispatch_get_main_queue();
-    dispatch_async(queue, ^{
-        
-//        _currentBook = [[VCBook alloc] initWithBookName:@"官神"];
-        _currentBook = [[VCBook alloc] initWithBookName:@"超級學神"];
-        _totalNumberOfChapter = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"numberOfChapters"] intValue];
-        
-//        _pageNumber = 0;
-//        _chapterNumber = 118;
-//        [VCHelperClass storeIntoBook:_currentBook.bookName withField:@"savedChapterNumber" andData:@(_chapterNumber).stringValue];
-//        [VCHelperClass storeIntoBook:_currentBook.bookName withField:@"savedPageNumber" andData:@(_pageNumber).stringValue];
-
-        _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
-        _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
-        NSLog(@"chapter:%d page:%d", _chapterNumber, _pageNumber);
-        [self loadChapter:_chapterNumber];
-        [self updatePage];
-        [self.activityIndicator stopAnimating];
-    });
-    [self startMonitoringBattery];
-    [self StartTimerForClock];
-
-    //test
-//    [self startTimedTask];
-
-
-}
-
-//- (void)startTimedTask
-//{
-//    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(performBackgroundTask) userInfo:nil repeats:YES];
-//}
-//
-//- (void)performBackgroundTask
-//{
-//    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-//        //Background Thread
-//        dispatch_async(dispatch_get_main_queue(), ^(void){
-//            //Run UI Updates
-//            [self swipeUp:self];
-//            
-//        });
-//    });
-//}
-
 
 
 -(BOOL)loadChapter:(int)chapterNumber {
@@ -233,7 +204,6 @@
     [_pageTextView setScrollEnabled:NO];
     [_pageTextView setEditable:NO];
     [_pageTextView setBackgroundColor:self.backgroundColor];
-//    [_pageTextView setBackgroundColor:[UIColor whiteColor]];
 
     [self.view addSubview:_pageTextView];
 
