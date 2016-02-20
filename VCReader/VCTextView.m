@@ -10,10 +10,28 @@
 
 @implementation VCTextView
 
+@synthesize responder = _responder;
+
++(void) removeAllInView:(UIView *)view {
+
+    for (UIView *v in view.subviews) {
+        if ([v isKindOfClass:[VCTextView class]]) {
+            
+//            NSLog(@"%s: found", __PRETTY_FUNCTION__);
+            
+            [v removeFromSuperview];
+            
+        } else {
+//            NSLog(@"%s: not found", __PRETTY_FUNCTION__);
+
+        }
+    }
+}
+
 - (void) touchesBegan: (NSSet *) touches withEvent: (UIEvent *) event {
     // If not dragging, send event to next responder
     if (!self.dragging)
-        [self.nextResponder touchesBegan: touches withEvent:event];
+        [_responder touchesBegan: touches withEvent:event];
     else
         [super touchesBegan: touches withEvent: event];
 }
@@ -21,7 +39,7 @@
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
     // If not dragging, send event to next responder
     if (!self.dragging)
-        [self.nextResponder touchesEnded: touches withEvent:event];
+        [_responder touchesEnded: touches withEvent:event];
     else
         [super touchesEnded: touches withEvent: event];
 }
@@ -29,7 +47,7 @@
 - (void) touchesEnded: (NSSet *) touches withEvent: (UIEvent *) event {
     // If not dragging, send event to next responder
     if (!self.dragging)
-        [self.nextResponder touchesEnded: touches withEvent:event];
+        [_responder touchesEnded: touches withEvent:event];
     else
         [super touchesEnded: touches withEvent: event];
 }

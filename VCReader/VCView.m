@@ -13,6 +13,12 @@
 @synthesize nextResponder = _nextResponder;
 
 
+- (void)setNextResponder:(UIResponder *)nextResponder {
+    
+    _nextResponder = nextResponder;
+    
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -35,11 +41,16 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+    
     [_nextResponder touchesBegan:touches withEvent:event];
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    NSLog(@"%s",__PRETTY_FUNCTION__);
+
     [_nextResponder touchesEnded:touches withEvent:event];
 }
 

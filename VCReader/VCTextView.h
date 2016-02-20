@@ -10,4 +10,8 @@
 
 @interface VCTextView : UITextView
 
+@property (strong, nonatomic) UIResponder *responder;
+
++(void) removeAllInView:(UIView *)view;
+
 @end
