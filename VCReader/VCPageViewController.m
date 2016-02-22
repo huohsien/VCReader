@@ -17,7 +17,7 @@
     int _chapterNumber;
     int _totalNumberOfPage;
     NSArray *_titleOfChaptersArray;
-    CGRect _rectOfPage;
+    CGRect _rectOfTextView;
     CGRect _rectOfScreen;
     CGFloat _currentPageScrollOffset;
     
@@ -43,7 +43,7 @@
 @synthesize charactersSpacing = _charactersSpacing;
 @synthesize chapterTitleFontSize = _chapterTitleFontSize;
 @synthesize chapterContentFontSize = _chapterContentFontSize;
-//@synthesize contentView =_contentView;
+@synthesize contentView =_contentView;
 
 -(void) baseInit {
     
@@ -66,12 +66,14 @@
     
     _rectOfScreen = [[UIScreen mainScreen] bounds];
     CGSize sizeOfScreen = _rectOfScreen.size;
+    NSLog(@"w:%f h:%f", sizeOfScreen.width, sizeOfScreen.height);
+
+    _rectOfTextView = CGRectMake(_horizontalMargin, _topMargin, sizeOfScreen.width - 2 * _horizontalMargin, sizeOfScreen.height - _topMargin - _bottomMargin);
     
-    _rectOfPage = CGRectMake(_horizontalMargin, _topMargin, sizeOfScreen.width - 2 * _horizontalMargin, sizeOfScreen.height - _topMargin - _bottomMargin);
-    
-//    _contentView = [[UIView alloc] initWithFrame:_rectOfPage];
-//    [_contentView setBackgroundColor:_backgroundColor];
-//    [self.view addSubview:_contentView];
+    _contentView = [[UIView alloc] initWithFrame:_rectOfScreen];
+    [self.view setBackgroundColor:_backgroundColor];
+    [_contentView setBackgroundColor:[UIColor clearColor ]];
+    [self.view addSubview:_contentView];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
@@ -82,6 +84,7 @@
 -(void) start {
     
     [self.activityIndicator startAnimating];
+    
     dispatch_queue_t queue = dispatch_get_main_queue();
     dispatch_async(queue, ^{
         
@@ -91,11 +94,12 @@
         _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
         NSLog(@"chapter:%d page:%d", _chapterNumber, _pageNumber);
 
-        _currentVCChapter = [[VCChapter alloc] initForVCBook:_currentBook OfChapterNumber:_chapterNumber inViewController:self isPrefetching:YES];
+        _currentVCChapter = [[VCChapter alloc] initForVCBook:_currentBook OfChapterNumber:_chapterNumber inViewController:self inViewingRect:_rectOfTextView isPrefetching:YES];
         
         [_currentVCChapter makePageVisibleAt:_pageNumber];
         
         [self.activityIndicator stopAnimating];
+        [self.activityIndicator setHidden:YES];
     });
     [self startMonitoringBattery];
     [self StartTimerForClock];
@@ -204,11 +208,10 @@
 
 //-(void) showPageWithScrollOffsetByUserTouch {
 //    
-//    for (int i = 0; i < _viewsStack.count; i++) {
-//        UIView *v = [_viewsStack objectAtIndex:i];
-//        
-//        [v setFrame:CGRectMake(0, (i - _pageNumber) * _rectOfScreen.size.height + _currentPageScrollOffset, _rectOfScreen.size.width, _rectOfScreen.size.height)];
-//        
+//    for (UIView *v in _currentVCChapter.viewsStack) {
+//        CGRect rect = v.frame;
+//        int inViewPageNumber = rect.origin.y / _rectOfScreen.size.height;
+//        [v setFrame:CGRectMake(0, rect.origin.y + _currentPageScrollOffset, _rectOfScreen.size.width, _rectOfScreen.size.height)];
 //    }
 //    
 //}
@@ -296,7 +299,6 @@
     
     _currentPageScrollOffset = 0;
     
-    _lastTouchedPointX = point.x;
     _lastTouchedPointY = point.y;
     
 //    _startTime = CACurrentMediaTime();
@@ -330,11 +332,8 @@
     
 //    NSLog(@"%@", NSStringFromCGPoint(point));
 
-    CGFloat pointX = point.x;
     CGFloat pointY = point.y;
-    CGFloat xDisplacement = (pointX - _lastTouchedPointX);
     CGFloat yDisplacement = (pointY - _lastTouchedPointY);
-    CGFloat distance = sqrt((xDisplacement * xDisplacement) + (yDisplacement * yDisplacement));
     
 //    NSLog(@"moved distance %.0f",distance);
     

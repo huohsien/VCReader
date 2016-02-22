@@ -19,8 +19,6 @@
 		667AACF01C54797700CD40E1 /* 官神.txt in Resources */ = {isa = PBXBuildFile; fileRef = 667AACEF1C54797700CD40E1 /* 官神.txt */; };
 		667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACF91C58B05C00CD40E1 /* VCBook.m */; };
 		668AB1BB1C5BDD1C00395099 /* VCHelperClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */; };
-		66E84A181C609A0E00621742 /* PageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E84A151C609A0E00621742 /* PageCache.m */; };
-		66E84A191C609A0E00621742 /* PageSwitcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 66E84A171C609A0E00621742 /* PageSwitcher.m */; };
 		66F8C3761C5D078100DF7611 /* VCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C3751C5D078100DF7611 /* VCTextView.m */; };
 		66F8C3791C5D0AF300DF7611 /* VCView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C3781C5D0AF300DF7611 /* VCView.m */; };
 /* End PBXBuildFile section */
@@ -46,10 +44,6 @@
 		668AB1B91C5BDD1C00395099 /* VCHelperClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCHelperClass.h; sourceTree = "<group>"; };
 		668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCHelperClass.m; sourceTree = "<group>"; };
 		668AB1BD1C5BDF8900395099 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		66E84A141C609A0E00621742 /* PageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageCache.h; sourceTree = "<group>"; };
-		66E84A151C609A0E00621742 /* PageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageCache.m; sourceTree = "<group>"; };
-		66E84A161C609A0E00621742 /* PageSwitcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageSwitcher.h; sourceTree = "<group>"; };
-		66E84A171C609A0E00621742 /* PageSwitcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageSwitcher.m; sourceTree = "<group>"; };
 		66F8C3741C5D078100DF7611 /* VCTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCTextView.h; sourceTree = "<group>"; };
 		66F8C3751C5D078100DF7611 /* VCTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCTextView.m; sourceTree = "<group>"; };
 		66F8C3771C5D0AF300DF7611 /* VCView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCView.h; sourceTree = "<group>"; };
@@ -86,7 +80,6 @@
 		667AACCE1C545D9400CD40E1 /* VCReader */ = {
 			isa = PBXGroup;
 			children = (
-				66E84A1A1C609A1F00621742 /* components */,
 				667AACF41C584F1900CD40E1 /* Resources */,
 				667AACEC1C545E9400CD40E1 /* ViewControllers */,
 				667AACD81C545D9400CD40E1 /* Main.storyboard */,
@@ -136,17 +129,6 @@
 				667AACEF1C54797700CD40E1 /* 官神.txt */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		66E84A1A1C609A1F00621742 /* components */ = {
-			isa = PBXGroup;
-			children = (
-				66E84A141C609A0E00621742 /* PageCache.h */,
-				66E84A151C609A0E00621742 /* PageCache.m */,
-				66E84A161C609A0E00621742 /* PageSwitcher.h */,
-				66E84A171C609A0E00621742 /* PageSwitcher.m */,
-			);
-			name = components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,7 +205,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6643419D1C7A868A00580AEF /* VCChapter.m in Sources */,
-				66E84A191C609A0E00621742 /* PageSwitcher.m in Sources */,
 				66F8C3761C5D078100DF7611 /* VCTextView.m in Sources */,
 				667AACDD1C545D9400CD40E1 /* VCReader.xcdatamodeld in Sources */,
 				66F8C3791C5D0AF300DF7611 /* VCView.m in Sources */,
@@ -232,7 +213,6 @@
 				667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */,
 				667AACD41C545D9400CD40E1 /* AppDelegate.m in Sources */,
 				667AACD11C545D9400CD40E1 /* main.m in Sources */,
-				66E84A181C609A0E00621742 /* PageCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

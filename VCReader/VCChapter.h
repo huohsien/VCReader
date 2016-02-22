@@ -20,7 +20,7 @@
 @property (assign) int totalNumberOfPages;
 @property (strong, nonatomic) NSMutableArray *viewsStack;
 
--(instancetype) initForVCBook:(VCBook *)book OfChapterNumber:(int)chapterNumber inViewController:(VCPageViewController *)viewController isPrefetching:(BOOL)isPrefetching;
+-(instancetype) initForVCBook:(VCBook *)book OfChapterNumber:(int)chapterNumber inViewController:(VCPageViewController *)viewController inViewingRect:(CGRect)rect isPrefetching:(BOOL)isPrefetching;
 -(void) makePageVisibleAt:(int)pageNumber;
 -(BOOL) goToNextChapter;
 -(BOOL) goToPreviousChapter;

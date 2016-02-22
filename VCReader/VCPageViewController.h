@@ -23,7 +23,7 @@
 @property (assign) CGFloat chapterTitleFontSize;
 @property (assign) CGFloat chapterContentFontSize;
 
-//@property (strong, nonatomic) UIView *contentView;
+@property (strong, nonatomic) UIView *contentView;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;

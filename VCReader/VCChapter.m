@@ -14,7 +14,7 @@
     NSLayoutManager *_layoutManager;
     
     VCBook *_book;
-    CGRect _rectOfPage;
+    CGRect _rectOfTextView;
     
     UIView *_contentView;
     
@@ -42,7 +42,7 @@
 @synthesize totalNumberOfPages = _totalNumberOfPages;
 @synthesize viewsStack = _viewsStack;
 
--(instancetype) initForVCBook:(VCBook *)book OfChapterNumber:(int)chapterNumber inViewController:(VCPageViewController *)viewController isPrefetching:(BOOL)isPrefetching {
+-(instancetype) initForVCBook:(VCBook *)book OfChapterNumber:(int)chapterNumber inViewController:(VCPageViewController *)viewController inViewingRect:(CGRect)rect isPrefetching:(BOOL)isPrefetching {
     
     self = [super init];
     if (self) {
@@ -55,16 +55,15 @@
         _viewController = viewController;
         CGRect rectOfScreen = [[UIScreen mainScreen] bounds];
         _sizeOfScreen = rectOfScreen.size;
-        
+
         _textLineSpacing = 15;
         _charactersSpacing = 2.0;
         _chapterTitleFontSize = 32.0;
         _chapterContentFontSize = 28.0;
         _backgroundColor = [UIColor blackColor];
         _textColor = [UIColor colorWithRed: 60.0 / 255.0 green: 1.0 blue: 1.0 / 255.0 alpha: 1.0];
-        
-        _contentView = _viewController.view;
-        _rectOfPage = _contentView.bounds;
+        _rectOfTextView = rect;
+        _contentView = viewController.contentView;
         [self renderPagesAndStoreInViewsStack];
 
         if (isPrefetching) {
@@ -98,19 +97,20 @@
         
         while(NSMaxRange(range) < _layoutManager.numberOfGlyphs) {
             
-            NSTextContainer *myTextContainer = [[NSTextContainer alloc] initWithSize:_rectOfPage.size];
+            NSTextContainer *myTextContainer = [[NSTextContainer alloc] initWithSize:_rectOfTextView.size];
             [_layoutManager addTextContainer:myTextContainer];
             range = [_layoutManager glyphRangeForTextContainer:myTextContainer];
             
-            UIView *pageView = [[UIView alloc] initWithFrame:_rectOfPage];
-            [pageView setBackgroundColor:_backgroundColor];
-            
-            VCTextView *pageTextView = [[VCTextView alloc] initWithFrame:_rectOfPage textContainer:myTextContainer];
+            VCTextView *pageTextView = [[VCTextView alloc] initWithFrame:_rectOfTextView textContainer:myTextContainer];
+
+            UIView *pageView = [[UIView alloc] initWithFrame:_rectOfTextView];
+            [pageView setBackgroundColor:[UIColor clearColor]];
             [pageTextView setResponder:_viewController];
-            
             [pageTextView setSelectable:NO];
             [pageTextView setScrollEnabled:NO];
             [pageTextView setEditable:NO];
+            [pageTextView setBackgroundColor:[UIColor clearColor]];
+            
             [pageView addSubview:pageTextView];
             [_viewsStack addObject:pageView];
             
@@ -136,7 +136,7 @@
     paragraphStyle.alignment = NSTextAlignmentLeft;
     paragraphStyle.headIndent = 0;
     UIFont *font = [UIFont systemFontOfSize:_chapterTitleFontSize];
-    UIColor *backgroundColor = _backgroundColor;
+    UIColor *backgroundColor = [UIColor clearColor];
     UIColor *foregroundColor = _textColor;
     NSDictionary *attributionDict = @{NSParagraphStyleAttributeName : paragraphStyle , NSFontAttributeName : font, NSBackgroundColorAttributeName : backgroundColor, NSForegroundColorAttributeName : foregroundColor};
     
@@ -154,7 +154,7 @@
     UIFont *font = [UIFont systemFontOfSize:_chapterContentFontSize];
     paragraphStyle.firstLineHeadIndent = _chapterContentFontSize;
     
-    UIColor *backgroundColor = _backgroundColor;
+    UIColor *backgroundColor = [UIColor clearColor];
     UIColor *foregroundColor = _textColor;
     NSDictionary *attributionDict = @{NSParagraphStyleAttributeName : paragraphStyle , NSFontAttributeName : font, NSBackgroundColorAttributeName : backgroundColor, NSForegroundColorAttributeName : foregroundColor};
     
@@ -168,8 +168,8 @@
     
     for (int i = 0; i < _viewsStack.count; i++) {
         UIView *v = [_viewsStack objectAtIndex:i];
-        
-        [v setFrame:CGRectMake(0, (i - pageNumber) * _sizeOfScreen.height, _sizeOfScreen.width, _sizeOfScreen.height)];
+        int currentChapterPageOffsetInViewsStack = (int)_previousVCChapter.viewsStack.count;
+        [v setFrame:CGRectMake(0, (i - pageNumber - currentChapterPageOffsetInViewsStack) * _sizeOfScreen.height, _sizeOfScreen.width, _sizeOfScreen.height)];
         [_contentView addSubview:v];
         
     }
@@ -179,9 +179,9 @@
 -(void) prefetchChapters {
     
     NSLog(@"fetch previous chapter");
-    _previousVCChapter = [[VCChapter alloc] initForVCBook:_book OfChapterNumber:(_chapterNumber - 1) inViewController:_viewController isPrefetching:NO];
+    _previousVCChapter = [[VCChapter alloc] initForVCBook:_book OfChapterNumber:(_chapterNumber - 1) inViewController:_viewController inViewingRect:_rectOfTextView isPrefetching:NO];
     NSLog(@"fetch next chapter");
-    _nextVCChapter = [[VCChapter alloc] initForVCBook:_book OfChapterNumber:(_chapterNumber + 1) inViewController:_viewController isPrefetching:NO];
+    _nextVCChapter = [[VCChapter alloc] initForVCBook:_book OfChapterNumber:(_chapterNumber + 1) inViewController:_viewController inViewingRect:_rectOfTextView isPrefetching:NO];
     
 }
 
@@ -189,34 +189,39 @@
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
     NSMutableArray *stack = [NSMutableArray new];
+    int count = 0;
+
     for (int i = 0; i < _previousVCChapter.viewsStack.count; i++) {
-        [stack addObject:[_previousVCChapter.viewsStack objectAtIndex:i]];
-    }
-    for (int i = 0; i < _viewsStack.count; i++) {
-        [stack addObject:[_viewsStack objectAtIndex:i]];
         
+        UIView *v = [_previousVCChapter.viewsStack objectAtIndex:i];
+        CGRect rect = CGRectMake(0, (count - _previousVCChapter.viewsStack.count) * _sizeOfScreen.height, v.frame.size.width, v.frame.size.height);
+        [v setFrame:rect];
+        [stack addObject:v];
+        [_contentView addSubview:v];
+        count++;
+    }
+    for (int i = 0; i < self.viewsStack.count; i++) {
+
+        UIView *v = [self.viewsStack objectAtIndex:i];
+        CGRect rect = CGRectMake(0, (count - _previousVCChapter.viewsStack.count) * _sizeOfScreen.height, v.frame.size.width, v.frame.size.height);
+        [v setFrame:rect];
+        [stack addObject:v];
+        [_contentView addSubview:v];
+        count++;
     }
     for (int i = 0; i < _nextVCChapter.viewsStack.count; i++) {
-        [stack addObject:[_nextVCChapter.viewsStack objectAtIndex:i]];
+
+        UIView *v = [_nextVCChapter.viewsStack objectAtIndex:i];
+        CGRect rect = CGRectMake(0, (count - _previousVCChapter.viewsStack.count) * _sizeOfScreen.height, v.frame.size.width, v.frame.size.height);
+        [v setFrame:rect];
+        [stack addObject:v];
+        [_contentView addSubview:v];
+        count++;
     }
     _viewsStack = stack;
     
-    [self addViewsFromStack];
 }
 
--(void) addViewsFromStack {
-    
-
-    int count = 0;
-    for (UIView *v in _viewsStack) {
-        
-        CGRect rect = CGRectMake(0, (count - _previousVCChapter.viewsStack.count) * _sizeOfScreen.height, v.frame.size.width, v.frame.size.height);
-        [v setFrame:rect];
-        [_contentView addSubview:v];
-        NSLog(@"%f", v.frame.origin.y);
-        count++;
-    }
-}
 
 -(BOOL) goToNextChapter {
     if (_chapterNumber == _book.totalNumberOfChapters - 1) {
