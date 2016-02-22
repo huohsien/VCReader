@@ -166,13 +166,13 @@
 
 -(void) makePageVisibleAt:(int)pageNumber {
     
-//    for (int i = 0; i < _viewsStack.count; i++) {
-//        UIView *v = [_viewsStack objectAtIndex:i];
-//        
-//        [v setFrame:CGRectMake(0, (i - pageNumber) * _sizeOfScreen.height, _sizeOfScreen.width, _sizeOfScreen.height)];
-//        [_contentView addSubview:v];
-//        
-//    }
+    for (int i = 0; i < _viewsStack.count; i++) {
+        UIView *v = [_viewsStack objectAtIndex:i];
+        
+        [v setFrame:CGRectMake(0, (i - pageNumber) * _sizeOfScreen.height, _sizeOfScreen.width, _sizeOfScreen.height)];
+        [_contentView addSubview:v];
+        
+    }
     
 }
 
