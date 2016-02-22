@@ -10,8 +10,8 @@
 
 @interface VCBook : NSObject
 
-@property (strong, nonatomic) NSString *contentString;
 @property (strong, nonatomic) NSString *bookName;
+@property (assign) int totalNumberOfChapters;
 
 -(instancetype) initWithBookName:(NSString *)bookName;
 -(NSString *)getTextContentStringFromChapterNumber:(NSUInteger)chapterNumber;

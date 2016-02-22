@@ -12,22 +12,17 @@
 
 @implementation VCPageViewController
 {
-    NSMutableAttributedString *_contentAttributedTextString;
 
-    NSTextStorage *_textStorage;
-    NSLayoutManager *_layoutManager;
     int _pageNumber;
     int _chapterNumber;
     int _totalNumberOfPage;
-    int _totalNumberOfChapter;
     NSArray *_titleOfChaptersArray;
     CGRect _rectOfPage;
     CGRect _rectOfScreen;
+    CGFloat _currentPageScrollOffset;
     
-    NSMutableArray *_viewsStack;
-    
-    UIView *_viewOfTheFirstPageInThePreviouslyLoadedChapter;
-    UIView *_viewOfTheLastPageInThePreviouslyLoadedChapter;
+    VCChapter *_currentVCChapter;
+
     
     // touch
     
@@ -45,6 +40,10 @@
 @synthesize bottomMargin = _bottomMargin;
 @synthesize horizontalMargin = _horizontalMargin;
 @synthesize textLineSpacing = _textLineSpacing;
+@synthesize charactersSpacing = _charactersSpacing;
+@synthesize chapterTitleFontSize = _chapterTitleFontSize;
+@synthesize chapterContentFontSize = _chapterContentFontSize;
+//@synthesize contentView =_contentView;
 
 -(void) baseInit {
     
@@ -52,6 +51,10 @@
     _bottomMargin = 20;
     _horizontalMargin = 10;
     _textLineSpacing = 15;
+    _charactersSpacing = 2.0;
+    _chapterTitleFontSize = 32.0;
+    _chapterContentFontSize = 28.0;
+    
     _backgroundColor = [UIColor blackColor];
     _textColor = [UIColor colorWithRed: 60.0 / 255.0 green: 1.0 blue: 1.0 / 255.0 alpha: 1.0];
     
@@ -60,21 +63,21 @@
 -(void) setup {
     
     _totalNumberOfPage = 0;
-    _totalNumberOfChapter = 0;
     
     _rectOfScreen = [[UIScreen mainScreen] bounds];
     CGSize sizeOfScreen = _rectOfScreen.size;
     
     _rectOfPage = CGRectMake(_horizontalMargin, _topMargin, sizeOfScreen.width - 2 * _horizontalMargin, sizeOfScreen.height - _topMargin - _bottomMargin);
     
+//    _contentView = [[UIView alloc] initWithFrame:_rectOfPage];
+//    [_contentView setBackgroundColor:_backgroundColor];
+//    [self.view addSubview:_contentView];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [[appDelegate window] setBackgroundColor:[UIColor blackColor]];
-    self.view.backgroundColor = [UIColor blackColor];
-    
-    //    [((VCView *)self.view) setNextResponder:self];
+
 }
+
 
 -(void) start {
     
@@ -83,14 +86,14 @@
     dispatch_async(queue, ^{
         
         _currentBook = [[VCBook alloc] initWithBookName:@"超級學神"];
-        _totalNumberOfChapter = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"numberOfChapters"] intValue];
         
         _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
         _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
         NSLog(@"chapter:%d page:%d", _chapterNumber, _pageNumber);
-        [self loadChapter];
+
+        _currentVCChapter = [[VCChapter alloc] initForVCBook:_currentBook OfChapterNumber:_chapterNumber inViewController:self isPrefetching:YES];
         
-//        [self addPageTextViewForPageNumber:_pageNumber onView:self.view];
+        [_currentVCChapter makePageVisibleAt:_pageNumber];
         
         [self.activityIndicator stopAnimating];
     });
@@ -137,183 +140,81 @@
 
 }
 
-- (void)createAllContainers {
-    
-    // clear possible views from the previous chapter
-    [self removeAllSubviews];
-    
-    _viewsStack = [NSMutableArray new];
 
-    if (_layoutManager.textContainers.count == 0) {
-        NSRange range = NSMakeRange(0, 0);
-        int numberOfPages = 0;
-        
-        while(NSMaxRange(range) < _layoutManager.numberOfGlyphs) {
-            
-            NSTextContainer *myTextContainer = [[NSTextContainer alloc] initWithSize:_rectOfPage.size];
-            [_layoutManager addTextContainer:myTextContainer];
-            range = [_layoutManager glyphRangeForTextContainer:myTextContainer];
-            
-            
-            
-            UIView *pageView = [[UIView alloc] init];
-            [pageView setFrame:CGRectMake(0, 0 * _rectOfScreen.size.height, _rectOfScreen.size.width, _rectOfScreen.size.height)];
-            [self addPageTextViewForPageNumber:numberOfPages onView:pageView];
-            [self.view addSubview:pageView];
-            [self.view sendSubviewToBack:pageView];
-            [_viewsStack addObject:pageView];
-            
-            
-            
-            numberOfPages++;
-        }
-        
-        NSLog(@"%s:%d container were created", __PRETTY_FUNCTION__, numberOfPages);
-        
-        _totalNumberOfPage = numberOfPages;
-        
-    }
-}
 
--(BOOL)loadChapter {
-    
-    _viewOfTheFirstPageInThePreviouslyLoadedChapter = nil;
-    _viewOfTheLastPageInThePreviouslyLoadedChapter = nil;
-    
-    if (_chapterNumber < 0 || _chapterNumber >= _totalNumberOfChapter) {
-        return NO;
-    }
-    NSString *chapterTitleString = [_currentBook getChapterTitleStringFromChapterNumber:_chapterNumber];
-    NSString *chapterTextContentString = [_currentBook getTextContentStringFromChapterNumber:_chapterNumber];
-    
-    
-    _contentAttributedTextString = [[NSMutableAttributedString alloc] initWithAttributedString:[self createAttributiedChapterTitleStringFromString:[NSString stringWithFormat:@"%@\n",chapterTitleString]]];
-    [_contentAttributedTextString appendAttributedString:[self createAttributiedChapterContentStringFromString:chapterTextContentString]];
-    
-    _textStorage = [[NSTextStorage alloc] initWithAttributedString:_contentAttributedTextString];
-    _layoutManager = [NSLayoutManager new];
-    [_textStorage addLayoutManager:_layoutManager];
-    
-    [self createAllContainers];
-    
-    return YES;
-}
-
--(void)removeAllSubviews {
-    
-    for (UIView *v in self.view.subviews) {
-        [v removeFromSuperview];
-    }
-}
-
--(void) addPageTextViewForPageNumber:(int)pageNumber onView:(UIView *)view {
-    
-    NSTextContainer *newContainer = [_layoutManager.textContainers objectAtIndex:pageNumber];
-    VCTextView *pageTextView;
-
-    [VCTextView removeAllInView:view];
-    
-    if (pageTextView) {
-        [pageTextView removeFromSuperview];
-        pageTextView = nil;
-    }
-    pageTextView = [[VCTextView alloc] initWithFrame:_rectOfPage textContainer:newContainer];
-    [pageTextView setResponder:self];
-    
-    [pageTextView setSelectable:NO];
-    [pageTextView setScrollEnabled:NO];
-    [pageTextView setEditable:NO];
-    [pageTextView setBackgroundColor:self.backgroundColor];
-
-    [view addSubview:pageTextView];
-
-}
-
-#pragma mark attributed string styling
-
--(NSAttributedString *) createAttributiedChapterTitleStringFromString:(NSString *)string {
-    
-    NSMutableAttributedString *workingAttributedString = [[NSMutableAttributedString alloc] initWithString:string];
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineSpacing = _textLineSpacing;
-    paragraphStyle.alignment = NSTextAlignmentLeft;
-    paragraphStyle.headIndent = 0;
-    UIFont *font = [UIFont systemFontOfSize:32.0];
-    UIColor *backgroundColor = _backgroundColor;
-    UIColor *foregroundColor = _textColor;
-    NSDictionary *attributionDict = @{NSParagraphStyleAttributeName : paragraphStyle , NSFontAttributeName : font, NSBackgroundColorAttributeName : backgroundColor, NSForegroundColorAttributeName : foregroundColor};
-    
-    [workingAttributedString addAttributes:attributionDict range:NSMakeRange(0, [string length])];
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithAttributedString:workingAttributedString];
-    return attributedString;
-}
-
--(NSAttributedString *) createAttributiedChapterContentStringFromString:(NSString *)string {
-    
-    NSMutableAttributedString *workingAttributedString = [[NSMutableAttributedString alloc] initWithString:string];
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineSpacing = _textLineSpacing;
-    paragraphStyle.alignment = NSTextAlignmentLeft;
-    UIFont *font = [UIFont systemFontOfSize:26.0];
-    paragraphStyle.firstLineHeadIndent = 26;
-    
-    UIColor *backgroundColor = _backgroundColor;
-    UIColor *foregroundColor = _textColor;
-    NSDictionary *attributionDict = @{NSParagraphStyleAttributeName : paragraphStyle , NSFontAttributeName : font, NSBackgroundColorAttributeName : backgroundColor, NSForegroundColorAttributeName : foregroundColor};
-    
-    [workingAttributedString addAttributes:attributionDict range:NSMakeRange(0, [string length])];
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithAttributedString:workingAttributedString];
-    return attributedString;
-}
 
 #pragma mark gesture callback
+
 -(void)swipeUp:(id)sender {
     
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+//    NSLog(@"%s",__PRETTY_FUNCTION__);
 
     if (_pageNumber == _totalNumberOfPage - 1) {
+
         _chapterNumber++;
-        
-        if([self loadChapter] == NO) {
-            _chapterNumber--;
+
+        if(![_currentVCChapter goToNextChapter])
             return;
-        }
+
         _pageNumber = 0;
+        
+        [_currentVCChapter makePageVisibleAt:_pageNumber];
+        
     } else {
+        
         _pageNumber++;
-        [UIView transitionFromView:[_viewsStack objectAtIndex:(_pageNumber - 1)] toView:[_viewsStack objectAtIndex:_pageNumber]
-                          duration:0.2
-                           options:UIViewAnimationOptionTransitionCurlUp
-                        completion:NULL];
+        
+        [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            
+            [_currentVCChapter makePageVisibleAt:_pageNumber];
+            
+        } completion:nil];
     }
-    
-//    [self addPageTextViewForPageNumber:_pageNumber onView:self.view];
     
 }
 
 -(void)swipeDown:(id)sender {
     
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+//    NSLog(@"%s",__PRETTY_FUNCTION__);
 
     if (_pageNumber == 0){
+        
         _chapterNumber--;
-        if([self loadChapter] == NO) {
-            _chapterNumber++;
-            return;
-        }
-        _pageNumber = _totalNumberOfPage - 1;
-        [self.view bringSubviewToFront:[_viewsStack objectAtIndex:_pageNumber]];
-    } else {
-        _pageNumber--;
-        [UIView transitionFromView:[_viewsStack objectAtIndex:(_pageNumber + 1)] toView:[_viewsStack objectAtIndex:_pageNumber]
-                          duration:0.2
-                           options:UIViewAnimationOptionTransitionCurlDown
-                        completion:NULL];
-    }
-    
-//    [self addPageTextViewForPageNumber:_pageNumber onView:self.view];
 
+        if(![_currentVCChapter goToPreviousChapter])
+            return;
+
+            _pageNumber = _totalNumberOfPage - 1;
+        
+        [_currentVCChapter makePageVisibleAt:_pageNumber];
+
+        
+    } else {
+        
+        _pageNumber--;
+        
+        [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            
+            [_currentVCChapter makePageVisibleAt:_pageNumber];
+            
+        } completion:nil];
+
+    }
 }
+
+//-(void) showPageWithScrollOffsetByUserTouch {
+//    
+//    for (int i = 0; i < _viewsStack.count; i++) {
+//        UIView *v = [_viewsStack objectAtIndex:i];
+//        
+//        [v setFrame:CGRectMake(0, (i - _pageNumber) * _rectOfScreen.size.height + _currentPageScrollOffset, _rectOfScreen.size.width, _rectOfScreen.size.height)];
+//        
+//    }
+//    
+//}
+
+
+
 #pragma mark time functions
 
 -(void)updateTimeOnClock {
@@ -356,7 +257,7 @@
     int seconds = [[self getCurrentTimeSeconds] intValue];
     if (seconds != 0) {
         [self performSelector:@selector(StartTimerForClock) withObject:nil afterDelay:(60 - seconds)];
-        NSLog(@"compensation delay- %d", (60 - seconds));
+//        NSLog(@"compensation delay - %d", (60 - seconds));
         return;
     }
     
@@ -386,56 +287,61 @@
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+//    NSLog(@"%s",__PRETTY_FUNCTION__);
 
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.view];
     
-    NSLog(@"%@", NSStringFromCGPoint(point));
+//    NSLog(@"%@", NSStringFromCGPoint(point));
+    
+    _currentPageScrollOffset = 0;
     
     _lastTouchedPointX = point.x;
     _lastTouchedPointY = point.y;
     
-    _startTime = CACurrentMediaTime();
+//    _startTime = CACurrentMediaTime();
 }
 
 - (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    _elapsedTime = CACurrentMediaTime() - _startTime;
+//    NSLog(@"%s",__PRETTY_FUNCTION__);
     
-    //    NSLog(@"duration of atouch: %f", _elapsedTime);
-    if (_elapsedTime > 1.0 && _startTime != 0) {
+    UITouch *touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self.view];
+    
+//    NSLog(@"%@", NSStringFromCGPoint(point));
+    
+    CGFloat pointY = point.y;
+    CGFloat yDisplacement = (pointY - _lastTouchedPointY);
 
-        _startTime = 0;
-    }
+    _currentPageScrollOffset = yDisplacement;
+    
+//    [self showPageWithScrollOffsetByUserTouch];
+    
     
 }
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+//    NSLog(@"%s",__PRETTY_FUNCTION__);
 
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.view];
     
-    NSLog(@"%@", NSStringFromCGPoint(point));
+//    NSLog(@"%@", NSStringFromCGPoint(point));
 
     CGFloat pointX = point.x;
     CGFloat pointY = point.y;
-    CGFloat xDist = (pointX - _lastTouchedPointX);
-    CGFloat yDist = (pointY - _lastTouchedPointY);
-    CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
+    CGFloat xDisplacement = (pointX - _lastTouchedPointX);
+    CGFloat yDisplacement = (pointY - _lastTouchedPointY);
+    CGFloat distance = sqrt((xDisplacement * xDisplacement) + (yDisplacement * yDisplacement));
     
-    NSLog(@"moved distance %.0f",distance);
+//    NSLog(@"moved distance %.0f",distance);
     
-    if (distance <= 100.0) {
-    } else {
-    }
-    
-    if (yDist < -10) {
+    if (yDisplacement < -40) {
         [self swipeUp:nil];
     }
-    if (yDist > 10) {
+    if (yDisplacement > 40) {
         [self swipeDown:nil];
     }
 }

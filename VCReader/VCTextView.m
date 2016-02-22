@@ -39,9 +39,9 @@
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
     // If not dragging, send event to next responder
     if (!self.dragging)
-        [_responder touchesEnded: touches withEvent:event];
+        [_responder touchesMoved: touches withEvent:event];
     else
-        [super touchesEnded: touches withEvent: event];
+        [super touchesMoved: touches withEvent: event];
 }
 
 - (void) touchesEnded: (NSSet *) touches withEvent: (UIEvent *) event {

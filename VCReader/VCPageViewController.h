@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "VCBook.h"
 #import "VCView.h"
+#import "VCChapter.h"
+
 @interface VCPageViewController : UIViewController
 
 @property (strong, nonatomic) UIColor *backgroundColor;
@@ -17,7 +19,11 @@
 @property (assign) CGFloat horizontalMargin;
 @property (assign) CGFloat bottomMargin;
 @property (assign) CGFloat textLineSpacing;
+@property (assign) CGFloat charactersSpacing;
+@property (assign) CGFloat chapterTitleFontSize;
+@property (assign) CGFloat chapterContentFontSize;
 
+//@property (strong, nonatomic) UIView *contentView;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;

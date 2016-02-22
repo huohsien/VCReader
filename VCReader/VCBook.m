@@ -12,15 +12,15 @@
     NSString *_fullBookDirectoryPath;
     NSMutableArray *_chapterTitleStringArray;
     NSMutableArray *_chapterContentRangeStringArray;
+    NSString *_contentString;
 }
 
-@synthesize contentString = _contentString;
 @synthesize bookName = _bookName;
+@synthesize totalNumberOfChapters = _totalNumberOfChapters;
 
 -(instancetype) initWithBookName:(NSString *)bookName {
     self = [super init];
     if (self) {
-        _contentString = @"";
         _bookName = bookName;
         
         [self setup];
@@ -32,6 +32,8 @@
 -(void) setup {
     _chapterTitleStringArray = [NSMutableArray new];
     _chapterContentRangeStringArray = [NSMutableArray new];
+    _totalNumberOfChapters = 0;
+    
     [self loadContent];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
@@ -53,6 +55,8 @@
             // write title to storage
         }
     }
+    
+    _totalNumberOfChapters = [[VCHelperClass getDatafromBook:_bookName withField:@"numberOfChapters"] intValue];
 
 }
 
@@ -87,7 +91,7 @@
 -(void) loadContent {
     NSURL *textURL = [[NSBundle mainBundle] URLForResource:_bookName withExtension:@"txt"];
     NSError *error = nil;
-    self.contentString = [[NSString alloc] initWithContentsOfURL:textURL encoding:NSUTF8StringEncoding error:&error];
+    _contentString = [[NSString alloc] initWithContentsOfURL:textURL encoding:NSUTF8StringEncoding error:&error];
 }
 
 -(void) loadContentOfChapter:(int)chapterNumer {
@@ -194,7 +198,7 @@
                                                     attributes:nil
                                                          error:&error])
     {
-        NSLog(@"Create directory error: %@", error);
+//        NSLog(@"Create directory error: %@", error);
     }
     return filePathAndDirectory;
 }
