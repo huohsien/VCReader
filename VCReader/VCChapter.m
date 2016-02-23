@@ -58,10 +58,10 @@
         CGRect rectOfScreen = [[UIScreen mainScreen] bounds];
         _sizeOfScreen = rectOfScreen.size;
 
-        _textLineSpacing = 15;
-        _charactersSpacing = 2.0;
-        _chapterTitleFontSize = 32.0;
-        _chapterContentFontSize = 28.0;
+        _textLineSpacing = 4;
+        _charactersSpacing = 1.0;
+        _chapterTitleFontSize = 34.0;
+        _chapterContentFontSize = 30.0;
         _backgroundColor = [UIColor blackColor];
         _textColor = [UIColor colorWithRed: 60.0 / 255.0 green: 1.0 blue: 1.0 / 255.0 alpha: 1.0];
         _rectOfTextView = rect;
@@ -119,7 +119,7 @@
             numberOfPages++;
         }
         
-        NSLog(@"%s:%d page views were created", __PRETTY_FUNCTION__, numberOfPages);
+//        NSLog(@"%s:%d page views were created", __PRETTY_FUNCTION__, numberOfPages);
         
     }
     return YES;
@@ -127,15 +127,14 @@
 
 -(void) prefetchChapters {
     
-    NSLog(@"fetch previous chapter");
     _previousVCChapter = [[VCChapter alloc] initForVCBook:_book OfChapterNumber:(_chapterNumber - 1) inViewController:_viewController inViewingRect:_rectOfTextView isPrefetching:NO];
-    NSLog(@"fetch next chapter");
     _nextVCChapter = [[VCChapter alloc] initForVCBook:_book OfChapterNumber:(_chapterNumber + 1) inViewController:_viewController inViewingRect:_rectOfTextView isPrefetching:NO];
     
 }
 
 -(void) consolidateStacks {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+//    NSLog(@"%s", __PRETTY_FUNCTION__);
     
     NSMutableArray *array = [NSMutableArray new];
     int count = 0;
@@ -358,7 +357,8 @@
     paragraphStyle.lineSpacing = _textLineSpacing;
     paragraphStyle.alignment = NSTextAlignmentLeft;
     paragraphStyle.headIndent = 0;
-    UIFont *font = [UIFont systemFontOfSize:_chapterTitleFontSize];
+//    UIFont *font = [UIFont systemFontOfSize:_chapterTitleFontSize];
+    UIFont *font = [UIFont fontWithName:@"STFangSong" size:_chapterTitleFontSize];
     UIColor *backgroundColor = [UIColor clearColor];
     UIColor *foregroundColor = _textColor;
     NSDictionary *attributionDict = @{NSParagraphStyleAttributeName : paragraphStyle , NSFontAttributeName : font, NSBackgroundColorAttributeName : backgroundColor, NSForegroundColorAttributeName : foregroundColor};
@@ -374,7 +374,8 @@
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = _textLineSpacing;
     paragraphStyle.alignment = NSTextAlignmentJustified;
-    UIFont *font = [UIFont systemFontOfSize:_chapterContentFontSize];
+//    UIFont *font = [UIFont systemFontOfSize:_chapterContentFontSize];
+    UIFont *font = [UIFont fontWithName:@"STFangSong" size:_chapterContentFontSize];
     paragraphStyle.firstLineHeadIndent = _chapterContentFontSize;
     
     UIColor *backgroundColor = [UIColor clearColor];

@@ -67,7 +67,7 @@
     
     _rectOfScreen = [[UIScreen mainScreen] bounds];
     CGSize sizeOfScreen = _rectOfScreen.size;
-    NSLog(@"w:%f h:%f", sizeOfScreen.width, sizeOfScreen.height);
+//    NSLog(@"w:%f h:%f", sizeOfScreen.width, sizeOfScreen.height);
 
     _rectOfTextView = CGRectMake(_horizontalMargin, _topMargin, sizeOfScreen.width - 2 * _horizontalMargin, sizeOfScreen.height - _topMargin - _bottomMargin);
     
@@ -97,7 +97,7 @@
         
         _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
         _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
-        NSLog(@"chapter:%d page:%d", _chapterNumber, _pageNumber);
+//        NSLog(@"chapter:%d page:%d", _chapterNumber, _pageNumber);
 
         _currentVCChapter = [[VCChapter alloc] initForVCBook:_currentBook OfChapterNumber:_chapterNumber inViewController:self inViewingRect:_rectOfTextView isPrefetching:YES];
         _totalNumberOfPage = _currentVCChapter.totalNumberOfPages;
@@ -161,7 +161,8 @@
 
     _pageNumber++;
 
-    [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    
+    [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         
         [_currentVCChapter makePageVisibleAt:_pageNumber];
         
@@ -187,8 +188,8 @@
 //    NSLog(@"%s",__PRETTY_FUNCTION__);
 
     _pageNumber--;
-
-    [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    
+    [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         
         [_currentVCChapter makePageVisibleAt:_pageNumber];
         
@@ -295,7 +296,7 @@
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+//    NSLog(@"%s",__PRETTY_FUNCTION__);
 
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.view];
@@ -310,7 +311,7 @@
 
 - (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+//    NSLog(@"%s",__PRETTY_FUNCTION__);
     
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.view];
@@ -331,7 +332,7 @@
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+//    NSLog(@"%s",__PRETTY_FUNCTION__);
 
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.view];
@@ -343,18 +344,12 @@
     
 //    NSLog(@"moved distance %.0f",distance);
     
-    if (yDisplacement < -10) {
+    if (yDisplacement < 0) {
         [self swipeUp:nil];
     }
-    if (yDisplacement > 10) {
+    if (yDisplacement > 0) {
         [self swipeDown:nil];
     }
-    int count = 0;
-    for (VCPage *v in _currentVCChapter.pageArray) {
-        NSLog(@"%@ c:%d p:%d", NSStringFromCGRect(v.view.frame), v.chapterNumber, v.pageNumber);
-        count++;
-    }
-    NSLog(@"%d", count);
 }
 
 

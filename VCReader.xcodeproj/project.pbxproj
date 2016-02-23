@@ -11,6 +11,8 @@
 		6643419A1C770EFF00580AEF /* 超級學神.txt in Resources */ = {isa = PBXBuildFile; fileRef = 664341991C770EFF00580AEF /* 超級學神.txt */; };
 		6643419D1C7A868A00580AEF /* VCChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419C1C7A868A00580AEF /* VCChapter.m */; };
 		664341A01C7BFA7C00580AEF /* VCPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419F1C7BFA7C00580AEF /* VCPage.m */; };
+		664341A51C7D102600580AEF /* Kaiti.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 664341A41C7D0E9200580AEF /* Kaiti.ttc */; };
+		664341A71C7D11E300580AEF /* STFangSong.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 664341A61C7D11C700580AEF /* STFangSong.ttf */; };
 		667AACD11C545D9400CD40E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACD01C545D9400CD40E1 /* main.m */; };
 		667AACD41C545D9400CD40E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACD31C545D9400CD40E1 /* AppDelegate.m */; };
 		667AACDA1C545D9400CD40E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 667AACD81C545D9400CD40E1 /* Main.storyboard */; };
@@ -31,6 +33,8 @@
 		6643419C1C7A868A00580AEF /* VCChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCChapter.m; sourceTree = "<group>"; };
 		6643419E1C7BFA7C00580AEF /* VCPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCPage.h; sourceTree = "<group>"; };
 		6643419F1C7BFA7C00580AEF /* VCPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPage.m; sourceTree = "<group>"; };
+		664341A41C7D0E9200580AEF /* Kaiti.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kaiti.ttc; sourceTree = "<group>"; };
+		664341A61C7D11C700580AEF /* STFangSong.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = STFangSong.ttf; sourceTree = "<group>"; };
 		667AACCC1C545D9400CD40E1 /* VCReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VCReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		667AACD01C545D9400CD40E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		667AACD21C545D9400CD40E1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -129,6 +133,8 @@
 		667AACF41C584F1900CD40E1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				664341A61C7D11C700580AEF /* STFangSong.ttf */,
+				664341A41C7D0E9200580AEF /* Kaiti.ttc */,
 				664341991C770EFF00580AEF /* 超級學神.txt */,
 				664341971C74654500580AEF /* 命師.txt */,
 				667AACEF1C54797700CD40E1 /* 官神.txt */,
@@ -194,6 +200,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				664341A71C7D11E300580AEF /* STFangSong.ttf in Resources */,
+				664341A51C7D102600580AEF /* Kaiti.ttc in Resources */,
 				664341981C74654500580AEF /* 命師.txt in Resources */,
 				667AACF01C54797700CD40E1 /* 官神.txt in Resources */,
 				667AACDF1C545D9400CD40E1 /* Assets.xcassets in Resources */,

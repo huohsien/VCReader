@@ -6,7 +6,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             scope = "0"
@@ -20,12 +20,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VCReader/VCChapter.m"
-            timestampString = "477910251.05324"
+            timestampString = "477963629.506729"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "-renderPagesAndStoreInto:forChapter:"
+            startingLineNumber = "379"
+            endingLineNumber = "379"
+            landmarkName = "-createAttributiedChapterContentStringFromString:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
