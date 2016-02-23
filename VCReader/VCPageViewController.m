@@ -211,22 +211,31 @@
     [self updateProgessInfo];
 }
 
-//-(void) showPageWithScrollOffsetByUserTouch {
-//    
-//    int offset = [_currentVCChapter getOffset];
-//
-//    for (int i = 0; i < _currentVCChapter.pageArray.count; i++) {
-//        VCPage *page = [_currentVCChapter.pageArray objectAtIndex:i];
-//        [page.view setFrame:CGRectMake(0, (i - offset + _pageNumber) * _rectOfScreen.size.height + _currentPageScrollOffset, _rectOfScreen.size.width, _rectOfScreen.size.height)];
+-(void) showPageWithScrollOffsetByUserTouch {
+    
+    int offset = [_currentVCChapter getOffset];
+    NSLog(@"-------------------------");
+//    int count = 0;
+//    for (UIView *v in _contentView.subviews) {
+//        NSLog(@"%@", v.description);
+//        count++;
 //    }
-//    NSLog(@"*****************************************************");
-//    for (int i = 0; i < _currentVCChapter.pageArray.count; i++) {
-//        VCPage *page = [_currentVCChapter.pageArray objectAtIndex:i];
-//        NSLog(@"%@ c:%d p:%d", NSStringFromCGRect(page.view.frame), page.chapterNumber, page.pageNumber);
+//    NSLog(@"%d", count);
+    
+//    int count = 0;
+//    for (VCPage *v in _currentVCChapter.pageArray) {
+//        NSLog(@"%@ c:%d p:%d", v.description, v.chapterNumber, v.pageNumber);
+//        count++;
 //    }
-//    NSLog(@"*****************************************************");
-//
-//}
+//    NSLog(@"%d", count);
+
+    
+    for (int i = 0; i < _currentVCChapter.pageArray.count; i++) {
+        VCPage *page = [_currentVCChapter.pageArray objectAtIndex:i];
+        [page.view setFrame:CGRectMake(0, (i - offset + _pageNumber) * _rectOfScreen.size.height + _currentPageScrollOffset, _rectOfScreen.size.width, _rectOfScreen.size.height)];
+    }
+
+}
 
 
 
@@ -302,7 +311,7 @@
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
-//    NSLog(@"%s",__PRETTY_FUNCTION__);
+    NSLog(@"%s",__PRETTY_FUNCTION__);
 
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.view];
@@ -312,13 +321,12 @@
     _currentPageScrollOffset = 0;
     
     _lastTouchedPointY = point.y;
-    
-//    _startTime = CACurrentMediaTime();
+
 }
 
 - (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     
-//    NSLog(@"%s",__PRETTY_FUNCTION__);
+    NSLog(@"%s",__PRETTY_FUNCTION__);
     
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.view];
@@ -330,14 +338,20 @@
 
     _currentPageScrollOffset = yDisplacement;
     
-//    [self showPageWithScrollOffsetByUserTouch];
+    [self showPageWithScrollOffsetByUserTouch];
+    int count = 0;
+    for (VCPage *v in _currentVCChapter.pageArray) {
+        NSLog(@"%@ c:%d p:%d", NSStringFromCGRect(v.view.frame), v.chapterNumber, v.pageNumber);
+        count++;
+    }
+    NSLog(@"%d", count);
     
     
 }
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
-//    NSLog(@"%s",__PRETTY_FUNCTION__);
+    NSLog(@"%s",__PRETTY_FUNCTION__);
 
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.view];
