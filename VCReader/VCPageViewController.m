@@ -74,6 +74,7 @@
     [self.view setBackgroundColor:_backgroundColor];
     [_contentView setBackgroundColor:[UIColor clearColor ]];
     [self.view addSubview:_contentView];
+    [self.view sendSubviewToBack:_contentView];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
@@ -90,14 +91,18 @@
         
         _currentBook = [[VCBook alloc] initWithBookName:@"超級學神"];
         
+//        _chapterNumber = 166;
+//        _pageNumber = 0;
+        
         _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
         _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
         NSLog(@"chapter:%d page:%d", _chapterNumber, _pageNumber);
 
         _currentVCChapter = [[VCChapter alloc] initForVCBook:_currentBook OfChapterNumber:_chapterNumber inViewController:self inViewingRect:_rectOfTextView isPrefetching:YES];
-        
+        _totalNumberOfPage = _currentVCChapter.totalNumberOfPages;
         [_currentVCChapter makePageVisibleAt:_pageNumber];
-        
+        [self updateProgessInfo];
+
         [self.activityIndicator stopAnimating];
         [self.activityIndicator setHidden:YES];
     });
@@ -153,7 +158,15 @@
     
 //    NSLog(@"%s",__PRETTY_FUNCTION__);
 
-    if (_pageNumber == _totalNumberOfPage - 1) {
+    _pageNumber++;
+
+    [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        
+        [_currentVCChapter makePageVisibleAt:_pageNumber];
+        
+    } completion:nil];
+    
+    if (_pageNumber > _totalNumberOfPage - 1) {
 
         _chapterNumber++;
 
@@ -161,59 +174,58 @@
             return;
 
         _pageNumber = 0;
+        _totalNumberOfPage = _currentVCChapter.totalNumberOfPages;
         
-        [_currentVCChapter makePageVisibleAt:_pageNumber];
-        
-    } else {
-        
-        _pageNumber++;
-        
-        [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            
-            [_currentVCChapter makePageVisibleAt:_pageNumber];
-            
-        } completion:nil];
     }
     
+    [self updateProgessInfo];
 }
 
 -(void)swipeDown:(id)sender {
     
 //    NSLog(@"%s",__PRETTY_FUNCTION__);
 
-    if (_pageNumber == 0){
+    _pageNumber--;
+
+    [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        
+        [_currentVCChapter makePageVisibleAt:_pageNumber];
+        
+    } completion:nil];
+    
+    if (_pageNumber < 0){
         
         _chapterNumber--;
 
         if(![_currentVCChapter goToPreviousChapter])
             return;
 
-            _pageNumber = _totalNumberOfPage - 1;
+        _totalNumberOfPage = _currentVCChapter.totalNumberOfPages;
+        _pageNumber = _totalNumberOfPage - 1;
         
         [_currentVCChapter makePageVisibleAt:_pageNumber];
 
         
-    } else {
-        
-        _pageNumber--;
-        
-        [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            
-            [_currentVCChapter makePageVisibleAt:_pageNumber];
-            
-        } completion:nil];
-
     }
+    
+    [self updateProgessInfo];
 }
 
 //-(void) showPageWithScrollOffsetByUserTouch {
 //    
-//    for (UIView *v in _currentVCChapter.viewsStack) {
-//        CGRect rect = v.frame;
-//        int inViewPageNumber = rect.origin.y / _rectOfScreen.size.height;
-//        [v setFrame:CGRectMake(0, rect.origin.y + _currentPageScrollOffset, _rectOfScreen.size.width, _rectOfScreen.size.height)];
+//    int offset = [_currentVCChapter getOffset];
+//
+//    for (int i = 0; i < _currentVCChapter.pageArray.count; i++) {
+//        VCPage *page = [_currentVCChapter.pageArray objectAtIndex:i];
+//        [page.view setFrame:CGRectMake(0, (i - offset + _pageNumber) * _rectOfScreen.size.height + _currentPageScrollOffset, _rectOfScreen.size.width, _rectOfScreen.size.height)];
 //    }
-//    
+//    NSLog(@"*****************************************************");
+//    for (int i = 0; i < _currentVCChapter.pageArray.count; i++) {
+//        VCPage *page = [_currentVCChapter.pageArray objectAtIndex:i];
+//        NSLog(@"%@ c:%d p:%d", NSStringFromCGRect(page.view.frame), page.chapterNumber, page.pageNumber);
+//    }
+//    NSLog(@"*****************************************************");
+//
 //}
 
 
@@ -337,12 +349,19 @@
     
 //    NSLog(@"moved distance %.0f",distance);
     
-    if (yDisplacement < -40) {
+    if (yDisplacement < -10) {
         [self swipeUp:nil];
     }
-    if (yDisplacement > 40) {
+    if (yDisplacement > 10) {
         [self swipeDown:nil];
     }
+}
+
+
+-(void) updateProgessInfo {
+
+    self.chapterLabel.text = [NSString stringWithFormat:@"%d章", _chapterNumber + 1];
+    self.pageLabel.text = [NSString stringWithFormat:@"%d頁/%d頁", _pageNumber + 1, _currentVCChapter.totalNumberOfPages];
 }
 
 @end

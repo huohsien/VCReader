@@ -24,10 +24,12 @@
 @property (assign) CGFloat chapterContentFontSize;
 
 @property (strong, nonatomic) UIView *contentView;
+@property (weak, nonatomic) IBOutlet UILabel *pageLabel;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *batteryLabel;
+@property (weak, nonatomic) IBOutlet UILabel *chapterLabel;
 
 @property (strong, nonatomic) VCBook *currentBook;
 

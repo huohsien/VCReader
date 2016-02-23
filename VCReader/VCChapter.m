@@ -40,7 +40,9 @@
 @synthesize book = _book;
 @synthesize chapterNumber = _chapterNumber;
 @synthesize totalNumberOfPages = _totalNumberOfPages;
-@synthesize viewsStack = _viewsStack;
+@synthesize pageArray = _pageArray;
+
+
 
 -(instancetype) initForVCBook:(VCBook *)book OfChapterNumber:(int)chapterNumber inViewController:(VCPageViewController *)viewController inViewingRect:(CGRect)rect isPrefetching:(BOOL)isPrefetching {
     
@@ -64,7 +66,9 @@
         _textColor = [UIColor colorWithRed: 60.0 / 255.0 green: 1.0 blue: 1.0 / 255.0 alpha: 1.0];
         _rectOfTextView = rect;
         _contentView = viewController.contentView;
-        [self renderPagesAndStoreInViewsStack];
+        _pageArray = [NSMutableArray new];
+        
+        [self renderPagesAndStoreInto:_pageArray forChapter:chapterNumber];
 
         if (isPrefetching) {
             [self prefetchChapters];
@@ -74,12 +78,10 @@
     return self;
 }
 
--(BOOL) renderPagesAndStoreInViewsStack {
+-(BOOL) renderPagesAndStoreInto:(NSMutableArray*)pageArray forChapter:(int)chapterNumber {
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-
-    NSString *chapterTitleString = [_book getChapterTitleStringFromChapterNumber:_chapterNumber];
-    NSString *chapterTextContentString = [_book getTextContentStringFromChapterNumber:_chapterNumber];
+    NSString *chapterTitleString = [_book getChapterTitleStringFromChapterNumber:chapterNumber];
+    NSString *chapterTextContentString = [_book getTextContentStringFromChapterNumber:chapterNumber];
     
     
     _contentAttributedTextString = [[NSMutableAttributedString alloc] initWithAttributedString:[self createAttributiedChapterTitleStringFromString:[NSString stringWithFormat:@"%@\n",chapterTitleString]]];
@@ -89,7 +91,6 @@
     _layoutManager = [NSLayoutManager new];
     [_textStorage addLayoutManager:_layoutManager];
     
-    _viewsStack = [NSMutableArray new];
     
     if (_layoutManager.textContainers.count == 0) {
         NSRange range = NSMakeRange(0, 0);
@@ -110,21 +111,243 @@
             [pageTextView setScrollEnabled:NO];
             [pageTextView setEditable:NO];
             [pageTextView setBackgroundColor:[UIColor clearColor]];
-            
             [pageView addSubview:pageTextView];
-            [_viewsStack addObject:pageView];
+            
+            VCPage *page = [[VCPage alloc] initWithView:pageView andChapterNumber:chapterNumber withPageNumber:numberOfPages];
+            [pageArray addObject:page];
             
             numberOfPages++;
         }
         
         NSLog(@"%s:%d page views were created", __PRETTY_FUNCTION__, numberOfPages);
         
-        _totalNumberOfPages = numberOfPages;
-        
     }
     return YES;
 }
 
+-(void) prefetchChapters {
+    
+    NSLog(@"fetch previous chapter");
+    _previousVCChapter = [[VCChapter alloc] initForVCBook:_book OfChapterNumber:(_chapterNumber - 1) inViewController:_viewController inViewingRect:_rectOfTextView isPrefetching:NO];
+    NSLog(@"fetch next chapter");
+    _nextVCChapter = [[VCChapter alloc] initForVCBook:_book OfChapterNumber:(_chapterNumber + 1) inViewController:_viewController inViewingRect:_rectOfTextView isPrefetching:NO];
+    
+}
+
+-(void) consolidateStacks {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    NSMutableArray *array = [NSMutableArray new];
+    int count = 0;
+    
+    for (int i = 0; i < _previousVCChapter.pageArray.count; i++) {
+        
+        VCPage *page = [_previousVCChapter.pageArray objectAtIndex:i];
+        CGRect rect = CGRectMake(0, (count - _previousVCChapter.pageArray.count) * _sizeOfScreen.height, page.width, page.height);
+        [page.view setFrame:rect];
+        [array addObject:page];
+        [_contentView addSubview:page.view];
+        count++;
+    }
+    _previousVCChapter.totalNumberOfPages = (int)_previousVCChapter.pageArray.count;
+    
+    for (int i = 0; i < self.pageArray.count; i++) {
+        
+        VCPage *page = [self.pageArray objectAtIndex:i];
+        CGRect rect = CGRectMake(0, (count - _previousVCChapter.pageArray.count) * _sizeOfScreen.height, page.width, page.height);
+        [page.view setFrame:rect];
+        [array addObject:page];
+        [_contentView addSubview:page.view];
+        count++;
+    }
+    _totalNumberOfPages = (int)self.pageArray.count;
+
+    for (int i = 0; i < _nextVCChapter.pageArray.count; i++) {
+        
+        VCPage *page = [_nextVCChapter.pageArray objectAtIndex:i];
+        CGRect rect = CGRectMake(0, (count - _previousVCChapter.pageArray.count) * _sizeOfScreen.height, page.width, page.height);
+        [page.view setFrame:rect];
+        [array addObject:page];
+        [_contentView addSubview:page.view];
+        count++;
+    }
+    _nextVCChapter.totalNumberOfPages = (int)_nextVCChapter.pageArray.count;
+
+    _pageArray = array;
+    
+}
+
+-(void) makePageVisibleAt:(int)pageNumber {
+    
+    int pageNumberOffset = (int)_previousVCChapter.pageArray.count;
+    
+    [VCHelperClass removeAllSubviewsInView:_contentView];
+    
+    for (int i = 0; i < _pageArray.count; i++) {
+        VCPage *page = [_pageArray objectAtIndex:i];
+        [page.view setFrame:CGRectMake(0, (i - pageNumber - pageNumberOffset) * _sizeOfScreen.height, _sizeOfScreen.width, _sizeOfScreen.height)];
+        [_contentView addSubview:page.view];
+        
+    }
+    
+}
+
+-(BOOL) goToNextChapter {
+    
+    if (_chapterNumber == _book.totalNumberOfChapters - 1) {
+        return NO;
+    }
+    
+    _chapterNumber++;
+
+    // move to the next chapter, which was prefetched before and now it becomes the current chapter and we need to move the next chapter to the current one
+    
+    
+    // clean _previousVCChapter and views of it in contentView
+    
+    if (_previousVCChapter.totalNumberOfPages > 0) {
+        
+        for (int i = 0; i < _previousVCChapter.totalNumberOfPages; i++) {
+            VCPage *page = [_pageArray firstObject];
+            [page.view removeFromSuperview];
+            [_pageArray removeObjectAtIndex:0];
+        }
+    }
+    
+    [_previousVCChapter.pageArray removeAllObjects];
+
+    // move current chapter to _previousVCChapter
+    
+    
+    if (_pageArray) {
+        
+        for (int i = 0; i < _totalNumberOfPages; i++) {
+            VCPage *page = [_pageArray objectAtIndex:i];
+            [_previousVCChapter.pageArray addObject:page];
+            [page.view setFrame:CGRectMake(0, (i - _totalNumberOfPages) * _sizeOfScreen.height, _sizeOfScreen.width, _sizeOfScreen.height)];
+        }
+        _previousVCChapter.totalNumberOfPages = _totalNumberOfPages;
+    }
+    
+
+    // set current chapter from _nextVCChapter and adjust position in content view
+    
+    _totalNumberOfPages = _nextVCChapter.totalNumberOfPages;
+    
+    // set view position
+    
+    for (int i = 0; i < _nextVCChapter.pageArray.count; i++) {
+
+        VCPage *page = [_pageArray objectAtIndex:(i + _previousVCChapter.totalNumberOfPages)];
+
+        [page.view setFrame:CGRectMake(0, i * _sizeOfScreen.height, _rectOfTextView.size.width, _rectOfTextView.size.height)];
+        
+
+    }
+
+    //fetch new next chapter
+    [_nextVCChapter.pageArray removeAllObjects];
+    
+    [self renderPagesAndStoreInto:_nextVCChapter.pageArray forChapter:_chapterNumber + 1];
+    _nextVCChapter.totalNumberOfPages = (int)_nextVCChapter.pageArray.count;
+
+    VCPage *page = [_pageArray lastObject];
+    CGFloat yOffsetOfLastViewsInStack = page.view.frame.origin.y + _sizeOfScreen.height;
+    
+    
+    for (int i = 0; i < _nextVCChapter.pageArray.count; i++) {
+        VCPage *page = [_nextVCChapter.pageArray objectAtIndex:i];
+        [_pageArray addObject:page];
+        [page.view setFrame:CGRectMake(0, yOffsetOfLastViewsInStack + _sizeOfScreen.height * i, _rectOfTextView.size.width, _rectOfTextView.size.height)];
+        [_contentView addSubview:page.view];
+    }
+
+//    for (int i = 0; i < _pageArray.count; i++) {
+//        VCPage *page = [_pageArray objectAtIndex:i];
+//        NSLog(@"%@ c:%d p:%d", NSStringFromCGRect(page.view.frame), page.chapterNumber, page.pageNumber);
+//    }
+
+    return YES;
+}
+
+-(BOOL) goToPreviousChapter {
+    
+    if (_chapterNumber == 0) {
+        return NO;
+    }
+    
+    _chapterNumber--;
+    
+    // move to the previous chapter, which was prefetched before and now it becomes the current chapter and we need to move the previous chapter to the current one
+    
+    
+    
+    // clean _nextVCChapter and views of it in contentView
+    
+    if (_nextVCChapter.totalNumberOfPages > 0) {
+        
+        for (int i = 0; i < _nextVCChapter.totalNumberOfPages; i++) {
+            VCPage *page = [_pageArray lastObject];
+            [page.view removeFromSuperview];
+            [_pageArray removeObject:page];
+        }
+    }
+    
+    [_nextVCChapter.pageArray removeAllObjects];
+    
+    // move current chapter to _nextVCChapter
+    
+    
+    if (_pageArray) {
+        
+        for (int i = 0; i < _totalNumberOfPages; i++) {
+            VCPage *page = [_pageArray objectAtIndex:i + _previousVCChapter.totalNumberOfPages];
+            [_nextVCChapter.pageArray addObject:page];
+            [page.view setFrame:CGRectMake(0, (i + 1) * _sizeOfScreen.height, _sizeOfScreen.width, _sizeOfScreen.height)];
+        }
+        _nextVCChapter.totalNumberOfPages = _totalNumberOfPages;
+    }
+    
+    
+    // set current chapter from _previousVCChapter and adjust position in content view
+    
+    _totalNumberOfPages = _previousVCChapter.totalNumberOfPages;
+    
+    // set view position
+    
+    for (int i = 0; i < _previousVCChapter.pageArray.count; i++) {
+        
+        VCPage *page = [_pageArray objectAtIndex:i];
+        
+        [page.view setFrame:CGRectMake(0, (i - _previousVCChapter.pageArray.count) * _sizeOfScreen.height, _rectOfTextView.size.width, _rectOfTextView.size.height)];
+        
+        
+    }
+    
+    //fetch new previous chapter
+    [_previousVCChapter.pageArray removeAllObjects];
+    
+    [self renderPagesAndStoreInto:_previousVCChapter.pageArray forChapter:_chapterNumber - 1];
+    _previousVCChapter.totalNumberOfPages = (int)_previousVCChapter.pageArray.count;
+
+    VCPage *page = [_pageArray firstObject];
+    CGFloat yOffsetOfLastViewsInStack = page.view.frame.origin.y - _sizeOfScreen.height * _previousVCChapter.pageArray.count;
+    
+    
+    for (int i = (int)_previousVCChapter.pageArray.count - 1; i >= 0; i--) {
+        VCPage *page = [_previousVCChapter.pageArray objectAtIndex:i];
+        [_pageArray insertObject:page atIndex:0];
+        [page.view setFrame:CGRectMake(0, yOffsetOfLastViewsInStack + _sizeOfScreen.height * i, _rectOfTextView.size.width, _rectOfTextView.size.height)];
+        [_contentView addSubview:page.view];
+    }
+    
+//    for (int i = 0; i < _pageArray.count; i++) {
+//        VCPage *page = [_pageArray objectAtIndex:i];
+//        NSLog(@"%@ c:%d p:%d", NSStringFromCGRect(page.view.frame), page.chapterNumber, page.pageNumber);
+//    }
+    
+    return YES;
+}
 
 #pragma mark attributed string styling
 
@@ -164,77 +387,10 @@
     return attributedString;
 }
 
--(void) makePageVisibleAt:(int)pageNumber {
+-(int) getOffset {
     
-    for (int i = 0; i < _viewsStack.count; i++) {
-        UIView *v = [_viewsStack objectAtIndex:i];
-        int currentChapterPageOffsetInViewsStack = (int)_previousVCChapter.viewsStack.count;
-        [v setFrame:CGRectMake(0, (i - pageNumber - currentChapterPageOffsetInViewsStack) * _sizeOfScreen.height, _sizeOfScreen.width, _sizeOfScreen.height)];
-        [_contentView addSubview:v];
-        
-    }
-    
+    return (int)_previousVCChapter.pageArray.count;
 }
 
--(void) prefetchChapters {
-    
-    NSLog(@"fetch previous chapter");
-    _previousVCChapter = [[VCChapter alloc] initForVCBook:_book OfChapterNumber:(_chapterNumber - 1) inViewController:_viewController inViewingRect:_rectOfTextView isPrefetching:NO];
-    NSLog(@"fetch next chapter");
-    _nextVCChapter = [[VCChapter alloc] initForVCBook:_book OfChapterNumber:(_chapterNumber + 1) inViewController:_viewController inViewingRect:_rectOfTextView isPrefetching:NO];
-    
-}
-
--(void) consolidateStacks {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-
-    NSMutableArray *stack = [NSMutableArray new];
-    int count = 0;
-
-    for (int i = 0; i < _previousVCChapter.viewsStack.count; i++) {
-        
-        UIView *v = [_previousVCChapter.viewsStack objectAtIndex:i];
-        CGRect rect = CGRectMake(0, (count - _previousVCChapter.viewsStack.count) * _sizeOfScreen.height, v.frame.size.width, v.frame.size.height);
-        [v setFrame:rect];
-        [stack addObject:v];
-        [_contentView addSubview:v];
-        count++;
-    }
-    for (int i = 0; i < self.viewsStack.count; i++) {
-
-        UIView *v = [self.viewsStack objectAtIndex:i];
-        CGRect rect = CGRectMake(0, (count - _previousVCChapter.viewsStack.count) * _sizeOfScreen.height, v.frame.size.width, v.frame.size.height);
-        [v setFrame:rect];
-        [stack addObject:v];
-        [_contentView addSubview:v];
-        count++;
-    }
-    for (int i = 0; i < _nextVCChapter.viewsStack.count; i++) {
-
-        UIView *v = [_nextVCChapter.viewsStack objectAtIndex:i];
-        CGRect rect = CGRectMake(0, (count - _previousVCChapter.viewsStack.count) * _sizeOfScreen.height, v.frame.size.width, v.frame.size.height);
-        [v setFrame:rect];
-        [stack addObject:v];
-        [_contentView addSubview:v];
-        count++;
-    }
-    _viewsStack = stack;
-    
-}
-
-
--(BOOL) goToNextChapter {
-    if (_chapterNumber == _book.totalNumberOfChapters - 1) {
-        return NO;
-    }
-    return YES;
-}
-
--(BOOL) goToPreviousChapter {
-    if (_chapterNumber == 0) {
-        return NO;
-    }
-    return YES;
-}
 
 @end

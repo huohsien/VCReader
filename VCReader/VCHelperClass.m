@@ -22,4 +22,24 @@
     NSDictionary *dict = [defaults objectForKey:[NSString stringWithFormat:@"%@_%@", bookName, field]];
     return [dict objectForKey:field];
 }
+
++(void) removeAllObjectIn:(NSMutableArray *)array ofClass:(Class)class {
+    
+    for (id obj in array) {
+        if ([obj isKindOfClass:class]) {
+            [array removeObject:obj];
+        }
+    }
+}
+
++(int) removeAllSubviewsInView:(UIView *)view {
+    
+    int count = 0;
+    for (UIView *v in view.subviews) {
+        [v removeFromSuperview];
+        count++;
+    }
+    return count;
+}
+
 @end

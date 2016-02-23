@@ -10,6 +10,7 @@
 		664341981C74654500580AEF /* 命師.txt in Resources */ = {isa = PBXBuildFile; fileRef = 664341971C74654500580AEF /* 命師.txt */; };
 		6643419A1C770EFF00580AEF /* 超級學神.txt in Resources */ = {isa = PBXBuildFile; fileRef = 664341991C770EFF00580AEF /* 超級學神.txt */; };
 		6643419D1C7A868A00580AEF /* VCChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419C1C7A868A00580AEF /* VCChapter.m */; };
+		664341A01C7BFA7C00580AEF /* VCPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419F1C7BFA7C00580AEF /* VCPage.m */; };
 		667AACD11C545D9400CD40E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACD01C545D9400CD40E1 /* main.m */; };
 		667AACD41C545D9400CD40E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACD31C545D9400CD40E1 /* AppDelegate.m */; };
 		667AACDA1C545D9400CD40E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 667AACD81C545D9400CD40E1 /* Main.storyboard */; };
@@ -28,6 +29,8 @@
 		664341991C770EFF00580AEF /* 超級學神.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "超級學神.txt"; sourceTree = "<group>"; };
 		6643419B1C7A868A00580AEF /* VCChapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCChapter.h; sourceTree = "<group>"; };
 		6643419C1C7A868A00580AEF /* VCChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCChapter.m; sourceTree = "<group>"; };
+		6643419E1C7BFA7C00580AEF /* VCPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCPage.h; sourceTree = "<group>"; };
+		6643419F1C7BFA7C00580AEF /* VCPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPage.m; sourceTree = "<group>"; };
 		667AACCC1C545D9400CD40E1 /* VCReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VCReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		667AACD01C545D9400CD40E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		667AACD21C545D9400CD40E1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -117,6 +120,8 @@
 				66F8C3781C5D0AF300DF7611 /* VCView.m */,
 				6643419B1C7A868A00580AEF /* VCChapter.h */,
 				6643419C1C7A868A00580AEF /* VCChapter.m */,
+				6643419E1C7BFA7C00580AEF /* VCPage.h */,
+				6643419F1C7BFA7C00580AEF /* VCPage.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -211,6 +216,7 @@
 				667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */,
 				668AB1BB1C5BDD1C00395099 /* VCHelperClass.m in Sources */,
 				667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */,
+				664341A01C7BFA7C00580AEF /* VCPage.m in Sources */,
 				667AACD41C545D9400CD40E1 /* AppDelegate.m in Sources */,
 				667AACD11C545D9400CD40E1 /* main.m in Sources */,
 			);

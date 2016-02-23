@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@import UIKit;
 @interface VCHelperClass : NSObject
 
 +(void) storeIntoBook:(NSString *)bookName withField:(NSString *)field andData:(id)data;
 +(id) getDatafromBook:(NSString *)bookName withField:(NSString *)field;
++(void) removeAllObjectIn:(NSMutableArray *)array ofClass:(Class)class;
++(int) removeAllSubviewsInView:(UIView *)view;
+
 @end

@@ -10,6 +10,8 @@
 #import "VCBook.h"
 #import "VCTextView.h"
 #import "VCPageViewController.h"
+#import "VCPage.h"
+#import "VCHelperClass.h"
 
 @class VCPageViewController;
 
@@ -18,11 +20,12 @@
 @property (strong, nonatomic) VCBook *book;
 @property (assign) int chapterNumber;
 @property (assign) int totalNumberOfPages;
-@property (strong, nonatomic) NSMutableArray *viewsStack;
+@property (strong, nonatomic) NSMutableArray *pageArray;
 
 -(instancetype) initForVCBook:(VCBook *)book OfChapterNumber:(int)chapterNumber inViewController:(VCPageViewController *)viewController inViewingRect:(CGRect)rect isPrefetching:(BOOL)isPrefetching;
 -(void) makePageVisibleAt:(int)pageNumber;
 -(BOOL) goToNextChapter;
 -(BOOL) goToPreviousChapter;
+-(int) getOffset;
 
 @end
