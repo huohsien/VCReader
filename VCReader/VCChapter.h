@@ -26,6 +26,5 @@
 -(void) makePageVisibleAt:(int)pageNumber;
 -(BOOL) goToNextChapter;
 -(BOOL) goToPreviousChapter;
--(int) getOffset;
 
 @end

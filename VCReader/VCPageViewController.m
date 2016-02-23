@@ -19,7 +19,8 @@
     NSArray *_titleOfChaptersArray;
     CGRect _rectOfTextView;
     CGRect _rectOfScreen;
-    CGFloat _currentPageScrollOffset;
+    CGFloat _previousOffset;
+    CGFloat _deltaOffset;
     
     VCChapter *_currentVCChapter;
 
@@ -213,26 +214,9 @@
 
 -(void) showPageWithScrollOffsetByUserTouch {
     
-    int offset = [_currentVCChapter getOffset];
-    NSLog(@"-------------------------");
-//    int count = 0;
-//    for (UIView *v in _contentView.subviews) {
-//        NSLog(@"%@", v.description);
-//        count++;
-//    }
-//    NSLog(@"%d", count);
-    
-//    int count = 0;
-//    for (VCPage *v in _currentVCChapter.pageArray) {
-//        NSLog(@"%@ c:%d p:%d", v.description, v.chapterNumber, v.pageNumber);
-//        count++;
-//    }
-//    NSLog(@"%d", count);
-
-    
     for (int i = 0; i < _currentVCChapter.pageArray.count; i++) {
         VCPage *page = [_currentVCChapter.pageArray objectAtIndex:i];
-        [page.view setFrame:CGRectMake(0, (i - offset + _pageNumber) * _rectOfScreen.size.height + _currentPageScrollOffset, _rectOfScreen.size.width, _rectOfScreen.size.height)];
+        [page.view setFrame:CGRectMake(0, page.view.frame.origin.y + _deltaOffset, _rectOfScreen.size.width, _rectOfScreen.size.height)];
     }
 
 }
@@ -318,8 +302,8 @@
     
 //    NSLog(@"%@", NSStringFromCGPoint(point));
     
-    _currentPageScrollOffset = 0;
-    
+    _previousOffset = 0;
+    _deltaOffset = 0;
     _lastTouchedPointY = point.y;
 
 }
@@ -336,16 +320,12 @@
     CGFloat pointY = point.y;
     CGFloat yDisplacement = (pointY - _lastTouchedPointY);
 
-    _currentPageScrollOffset = yDisplacement;
+    _deltaOffset = yDisplacement - _previousOffset;
     
     [self showPageWithScrollOffsetByUserTouch];
-    int count = 0;
-    for (VCPage *v in _currentVCChapter.pageArray) {
-        NSLog(@"%@ c:%d p:%d", NSStringFromCGRect(v.view.frame), v.chapterNumber, v.pageNumber);
-        count++;
-    }
-    NSLog(@"%d", count);
-    
+
+    _previousOffset = yDisplacement;
+
     
 }
 
@@ -369,6 +349,12 @@
     if (yDisplacement > 10) {
         [self swipeDown:nil];
     }
+    int count = 0;
+    for (VCPage *v in _currentVCChapter.pageArray) {
+        NSLog(@"%@ c:%d p:%d", NSStringFromCGRect(v.view.frame), v.chapterNumber, v.pageNumber);
+        count++;
+    }
+    NSLog(@"%d", count);
 }
 
 

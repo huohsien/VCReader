@@ -387,10 +387,4 @@
     return attributedString;
 }
 
--(int) getOffset {
-    
-    return (int)_previousVCChapter.pageArray.count;
-}
-
-
 @end
