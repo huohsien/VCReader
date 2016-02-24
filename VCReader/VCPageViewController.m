@@ -92,11 +92,12 @@
         
         _currentBook = [[VCBook alloc] initWithBookName:@"超級學神"];
         
-//        _chapterNumber = 166;
-//        _pageNumber = 0;
+//        _chapterNumber = 187;
+//        _pageNumber = 9;
         
         _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
         _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
+
 //        NSLog(@"chapter:%d page:%d", _chapterNumber, _pageNumber);
 
         _currentVCChapter = [[VCChapter alloc] initForVCBook:_currentBook OfChapterNumber:_chapterNumber inViewController:self inViewingRect:_rectOfTextView isPrefetching:YES];
@@ -281,14 +282,27 @@
 
 #pragma mark battery fuctions
 
+- (void)batteryStatusDidChange:(NSNotification *)notification {
+    
+    NSArray *batteryStatusImages = [NSArray arrayWithObjects:
+                              /*Battery status is unknown*/ [UIImage imageNamed:@"battery_not_charging"],
+                              /*"Battery is in use (discharging)*/ [UIImage imageNamed:@"battery_not_charging"],
+                              /*Battery is charging*/ [UIImage imageNamed:@"battery_charging"],
+                              /*Battery is fully charged*/ [UIImage imageNamed:@"battery_not_charging"], nil];
+    UIColor *batteryIconColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.3];
+
+    [self.batteryImageView setImage:[VCHelperClass maskedImageNamed:[batteryStatusImages objectAtIndex:[[UIDevice currentDevice] batteryState]] color:batteryIconColor]];
+
+}
+
 -(void) startMonitoringBattery {
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryLevelDidChange:) name:UIDeviceBatteryLevelDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryStatusDidChange:) name:UIDeviceBatteryStateDidChangeNotification object:nil];
+
     [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
     self.batteryLabel.text = [NSString stringWithFormat:@"%.0f%%",[[UIDevice currentDevice] batteryLevel] * 100.0f];
 
-    UIColor *batteryIconColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.3];
-    [self.batteryImageView setImage:[VCHelperClass maskedImageNamed:[UIImage imageNamed:@"battery_charging"] color:batteryIconColor]];
 
 }
 -(void) batteryLevelDidChange:(NSNotification *)notification {
