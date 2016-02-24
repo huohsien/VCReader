@@ -355,8 +355,13 @@
 
 -(void) updateProgessInfo {
 
-    self.chapterLabel.text = [NSString stringWithFormat:@"%d章", _chapterNumber + 1];
+    self.chapterNumberLabel.text = [NSString stringWithFormat:@"%d章", _chapterNumber + 1];
     self.pageLabel.text = [NSString stringWithFormat:@"%d頁/%d頁", _pageNumber + 1, _currentVCChapter.totalNumberOfPages];
+    if (_pageNumber != 0) {
+        self.chapterTitleLabel.text = [_currentBook getChapterTitleStringFromChapterNumber:_chapterNumber];
+    } else {
+        self.chapterTitleLabel.text = @"";
+    }
 }
 
 @end

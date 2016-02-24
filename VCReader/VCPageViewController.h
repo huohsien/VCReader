@@ -29,7 +29,8 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *batteryLabel;
-@property (weak, nonatomic) IBOutlet UILabel *chapterLabel;
+@property (weak, nonatomic) IBOutlet UILabel *chapterNumberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *chapterTitleLabel;
 
 @property (strong, nonatomic) VCBook *currentBook;
 
