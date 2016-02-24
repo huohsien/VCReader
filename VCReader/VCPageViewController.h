@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *batteryLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chapterNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chapterTitleLabel;
+@property (weak, nonatomic) IBOutlet UIView *batterView;
 
 @property (strong, nonatomic) VCBook *currentBook;
 

@@ -48,8 +48,8 @@
 
 -(void) baseInit {
     
-    _topMargin = 40;
-    _bottomMargin = 20;
+    _topMargin = 20;
+    _bottomMargin = 10;
     _horizontalMargin = 10;
     _textLineSpacing = 15;
     _charactersSpacing = 2.0;
@@ -286,7 +286,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(batteryLevelDidChange:) name:UIDeviceBatteryLevelDidChangeNotification object:nil];
     [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
     self.batteryLabel.text = [NSString stringWithFormat:@"%.0f%%",[[UIDevice currentDevice] batteryLevel] * 100.0f];
-    
+
+    UIColor *batteryIconColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.3];
+    self.batterView.backgroundColor = [UIColor colorWithPatternImage:[VCHelperClass maskedImageNamed:[UIImage imageNamed:@"battery_charging"] color:batteryIconColor]];
 }
 -(void) batteryLevelDidChange:(NSNotification *)notification {
     self.batteryLabel.text = [NSString stringWithFormat:@"%.0f%%",[[UIDevice currentDevice] batteryLevel] * 100.0f];

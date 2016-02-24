@@ -42,4 +42,35 @@
     return count;
 }
 
++(UIImage *) maskedImageNamed:(UIImage *)image color:(UIColor *)color {
+    CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, image.scale);
+    CGContextRef c = UIGraphicsGetCurrentContext();
+    [image drawInRect:rect];
+    CGContextSetFillColorWithColor(c, [color CGColor]);
+    CGContextSetBlendMode(c, kCGBlendModeSourceAtop);
+    CGContextFillRect(c, rect);
+    UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return result;
+}
+
++(UIColor *) changeUIColor:(UIColor *)uicolor alphaValueTo:(CGFloat)alpha {
+    
+    CGColorRef color = [uicolor CGColor];
+    
+    int numComponents = (int)CGColorGetNumberOfComponents(color);
+    
+    UIColor *newColor;
+    if (numComponents == 4)
+    {
+        const CGFloat *components = CGColorGetComponents(color);
+        CGFloat red = components[0];
+        CGFloat green = components[1];
+        CGFloat blue = components[2];
+        newColor = [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+        return newColor;
+    }
+    return nil;
+}
 @end

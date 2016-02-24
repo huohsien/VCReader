@@ -14,5 +14,7 @@
 +(id) getDatafromBook:(NSString *)bookName withField:(NSString *)field;
 +(void) removeAllObjectIn:(NSMutableArray *)array ofClass:(Class)class;
 +(int) removeAllSubviewsInView:(UIView *)view;
++(UIImage *) maskedImageNamed:(UIImage *)image color:(UIColor *)color;
++(UIColor *) changeUIColor:(UIColor *)uicolor alphaValueTo:(CGFloat)alpha;
 
 @end
