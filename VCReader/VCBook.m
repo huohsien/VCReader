@@ -7,12 +7,12 @@
 //
 
 #import "VCBook.h"
-
 @implementation VCBook {
     NSString *_fullBookDirectoryPath;
     NSMutableArray *_chapterTitleStringArray;
     NSMutableArray *_chapterContentRangeStringArray;
     NSString *_contentString;
+
 }
 
 @synthesize bookName = _bookName;
@@ -30,6 +30,7 @@
 
 
 -(void) setup {
+    
     _chapterTitleStringArray = [NSMutableArray new];
     _chapterContentRangeStringArray = [NSMutableArray new];
     _totalNumberOfChapters = 0;
@@ -92,11 +93,11 @@
     NSURL *textURL = [[NSBundle mainBundle] URLForResource:_bookName withExtension:@"txt"];
     NSError *error = nil;
     _contentString = [[NSString alloc] initWithContentsOfURL:textURL encoding:NSUTF8StringEncoding error:&error];
-}
-
--(void) loadContentOfChapter:(int)chapterNumer {
+    
+    [self removeUnwantedCharacter];
     
 }
+
 -(void) splitChapters {
     
     NSError *error = NULL;
@@ -151,6 +152,27 @@
 
 }
 
+-(void) removeUnwantedCharacter {
+    
+    NSError *error = NULL;
+
+    __block NSMutableString *content = [[NSMutableString alloc] init];
+    NSRegularExpression *regex = [NSRegularExpression
+                                  regularExpressionWithPattern:@"(\\p{script=Han}|[0-9]|,|。|\"|·|？|!|—|\\n|\\r\\s)+"
+                                  options:NSRegularExpressionCaseInsensitive
+                                  error:&error];
+    
+    [regex enumerateMatchesInString:_contentString options:0 range:NSMakeRange(0, [_contentString length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+        
+        NSRange range = [match rangeAtIndex:0];
+        [content appendString:[_contentString substringWithRange:range]];
+        
+
+    }];
+//    NSLog(@"%@", content);
+    _contentString = content;
+    
+}
 -(NSString *)getChapterStringFromString:(NSString *)string {
     
     NSError *error = NULL;

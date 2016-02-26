@@ -12,6 +12,7 @@
 
 +(void) storeIntoBook:(NSString *)bookName withField:(NSString *)field andData:(id)data;
 +(id) getDatafromBook:(NSString *)bookName withField:(NSString *)field;
+
 +(void) removeAllObjectIn:(NSMutableArray *)array ofClass:(Class)class;
 +(int) removeAllSubviewsInView:(UIView *)view;
 +(UIImage *) maskedImageNamed:(UIImage *)image color:(UIColor *)color;

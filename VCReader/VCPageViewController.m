@@ -9,6 +9,8 @@
 #import "VCPageViewController.h"
 #import "VCTextView.h"
 #import "AppDelegate.h"
+@import CloudKit;
+
 
 @implementation VCPageViewController
 {
@@ -24,6 +26,11 @@
     
     VCChapter *_currentVCChapter;
 
+    //iCloud
+    
+    CKContainer *_container;
+    CKDatabase *_publicDB;
+    CKDatabase *_privateDB;
     
     // touch
     
@@ -80,8 +87,25 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
 
+    _container = [CKContainer defaultContainer];
+    _publicDB = _container.publicCloudDatabase;
+    _privateDB = _container.privateCloudDatabase;
 }
 
+-(void)updateReadingProgressFromCloud {
+    
+    CKContainer *defaultContainer = [CKContainer defaultContainer];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
+    CKDatabase *privateDatabase = [defaultContainer privateCloudDatabase];
+    CKQuery *query = [[CKQuery alloc] initWithRecordType:@"Book" predicate:predicate];
+    [privateDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
+        if (!error) {
+            NSLog(@"%@", results);
+        } else {
+            NSLog(@"%@", error);
+        }
+    }];
+}
 
 -(void) start {
     
@@ -92,12 +116,12 @@
         
         _currentBook = [[VCBook alloc] initWithBookName:@"超級學神"];
         
-//        _chapterNumber = 187;
-//        _pageNumber = 9;
-        
+//        _chapterNumber = 257;
+//        _pageNumber = 0;
         _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
         _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
 
+        [self updateReadingProgressFromCloud];
 //        NSLog(@"chapter:%d page:%d", _chapterNumber, _pageNumber);
 
         _currentVCChapter = [[VCChapter alloc] initForVCBook:_currentBook OfChapterNumber:_chapterNumber inViewController:self inViewingRect:_rectOfTextView isPrefetching:YES];
