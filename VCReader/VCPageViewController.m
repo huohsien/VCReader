@@ -23,7 +23,7 @@
     CGRect _rectOfScreen;
     CGFloat _previousOffset;
     CGFloat _deltaOffset;
-    
+    BOOL _statusBarHidden;
     VCChapter *_currentVCChapter;
 
     //iCloud
@@ -90,6 +90,18 @@
     _container = [CKContainer defaultContainer];
     _publicDB = _container.publicCloudDatabase;
     _privateDB = _container.privateCloudDatabase;
+    
+    [self showStatusBar:NO];
+//    [self setNeedsStatusBarAppearanceUpdate];
+    
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+//    self.navigationController.navigationBar.barTintColor = [UIColor grayColor];
+    self.navigationController.navigationBar.hidden = NO;
+    CGRect frame = self.navigationController.navigationBar.frame;
+    [self.navigationController.navigationBar setFrame:CGRectMake(frame.origin.x, frame.origin.y - frame.size.height, frame.size.width, frame.size.height)];
+
+    self.tabBarController.tabBar.hidden = YES;
+
 }
 
 -(void)updateReadingProgressFromCloud {
@@ -158,11 +170,22 @@
     // Dispose of any resources that can be recreated.
 }
 
--(BOOL)prefersStatusBarHidden {
-    
-    return YES;
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
 }
 
+-(BOOL)prefersStatusBarHidden {
+    
+    return _statusBarHidden;
+}
+
+- (void)showStatusBar:(BOOL)show {
+    [UIView animateWithDuration:0.3 animations:^{
+        _statusBarHidden = !show;
+        [self setNeedsStatusBarAppearanceUpdate];
+    }];
+}
 -(void) applicationWillEnterForeground:(NSNotification *)notification {
     
 }
@@ -309,10 +332,10 @@
 - (void)batteryStatusDidChange:(NSNotification *)notification {
     
     NSArray *batteryStatusImages = [NSArray arrayWithObjects:
-                              /*Battery status is unknown*/ [UIImage imageNamed:@"battery_not_charging"],
-                              /*"Battery is in use (discharging)*/ [UIImage imageNamed:@"battery_not_charging"],
-                              /*Battery is charging*/ [UIImage imageNamed:@"battery_charging"],
-                              /*Battery is fully charged*/ [UIImage imageNamed:@"battery_not_charging"], nil];
+                              /*Battery status is unknown*/ [UIImage imageNamed:@"battery_not_charging_icon"],
+                              /*"Battery is in use (discharging)*/ [UIImage imageNamed:@"battery_not_charging_icon"],
+                              /*Battery is charging*/ [UIImage imageNamed:@"battery_charging_icon"],
+                              /*Battery is fully charged*/ [UIImage imageNamed:@"battery_not_charging_icon"], nil];
     UIColor *batteryIconColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.3];
 
     [self.batteryImageView setImage:[VCHelperClass maskedImageNamed:[batteryStatusImages objectAtIndex:[[UIDevice currentDevice] batteryState]] color:batteryIconColor]];
@@ -385,14 +408,40 @@
     
 //    NSLog(@"moved distance %.0f",distance);
     
-    if (yDisplacement < 0) {
+    if (yDisplacement < -10) {
         [self swipeUp:nil];
     }
-    if (yDisplacement > 0) {
+    if (yDisplacement > 10) {
         [self swipeDown:nil];
+    }
+    
+    if (yDisplacement < 10 && yDisplacement > -10) {
+        [self toggleNavigationBar];
     }
 }
 
+-(void) toggleNavigationBar {
+    
+
+     [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+
+         CGRect frame = self.navigationController.navigationBar.frame;
+         
+         if (frame.origin.y < 0) {
+             
+             [self showStatusBar:YES];
+             [self.navigationController.navigationBar setFrame:CGRectMake(frame.origin.x, frame.origin.y + frame.size.height + 20, frame.size.width, frame.size.height)];
+
+         } else {
+             
+             [self showStatusBar:NO];
+             [self.navigationController.navigationBar setFrame:CGRectMake(frame.origin.x, frame.origin.y - frame.size.height - 20, frame.size.width, frame.size.height)];
+             [[UIApplication sharedApplication] setStatusBarHidden:YES];
+
+         }
+         
+     } completion:nil];
+}
 
 -(void) updateProgessInfo {
 

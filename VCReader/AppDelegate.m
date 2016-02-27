@@ -17,6 +17,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+    
     NSFileManager* fileManager = [NSFileManager defaultManager];
     id currentiCloudToken = fileManager.ubiquityIdentityToken;
     
@@ -27,6 +28,23 @@
         [[NSUserDefaults standardUserDefaults] removeObjectForKey: @"com.VHHC.VCReader.UbiquityIdentityToken"];
     }
     
+    NSShadow *shadow = [[NSShadow alloc] init];
+    shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
+    shadow.shadowOffset = CGSizeMake(0, 1);
+    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
+                                                           [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
+                                                           shadow, NSShadowAttributeName,
+                                                           [UIFont fontWithName:@"STFangSong" size:21.0], NSFontAttributeName, nil]];
+    shadow.shadowOffset = CGSizeMake(0.0, 1.0);
+    shadow.shadowColor = [UIColor whiteColor];
+    
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
+     setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
+      shadow, NSShadowAttributeName,
+      [UIFont fontWithName:@"STFangSong" size:21.0], NSFontAttributeName, nil]
+     forState:UIControlStateNormal];
     return YES;
 }
 
