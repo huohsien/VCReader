@@ -158,7 +158,7 @@
 
     __block NSMutableString *content = [[NSMutableString alloc] init];
     NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:@"(\\p{script=Han}|[0-9]|,|。|\"|·|？|!|—|\\n|\\r\\s)+"
+                                  regularExpressionWithPattern:@"(\\p{script=Han}|[a-z]|[A-Z]|[0-9]|,|。|\"|·|？|!|—|\\n|\\r\\s)+"
                                   options:NSRegularExpressionCaseInsensitive
                                   error:&error];
     
