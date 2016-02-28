@@ -94,7 +94,7 @@
     NSError *error = nil;
     _contentString = [[NSString alloc] initWithContentsOfURL:textURL encoding:NSUTF8StringEncoding error:&error];
     
-    [self removeUnwantedCharacter];
+//    [self removeUnwantedCharacter];
     
 }
 

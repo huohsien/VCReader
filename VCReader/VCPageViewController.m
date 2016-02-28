@@ -128,10 +128,10 @@
         
         _currentBook = [[VCBook alloc] initWithBookName:@"超級學神"];
         
-        _chapterNumber = 1;
-        _pageNumber = 0;
-//        _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
-//        _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
+//        _chapterNumber = 282;
+//        _pageNumber = 0;
+        _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
+        _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
 
         [self updateReadingProgressFromCloud];
 //        NSLog(@"chapter:%d page:%d", _chapterNumber, _pageNumber);
