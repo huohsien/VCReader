@@ -80,7 +80,7 @@
     
     _contentView = [[UIView alloc] initWithFrame:_rectOfScreen];
     [self.view setBackgroundColor:_backgroundColor];
-    [_contentView setBackgroundColor:[UIColor clearColor ]];
+    [_contentView setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:_contentView];
     [self.view sendSubviewToBack:_contentView];
 
@@ -128,10 +128,10 @@
         
         _currentBook = [[VCBook alloc] initWithBookName:@"超級學神"];
         
-//        _chapterNumber = 257;
-//        _pageNumber = 0;
-        _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
-        _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
+        _chapterNumber = 1;
+        _pageNumber = 0;
+//        _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
+//        _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
 
         [self updateReadingProgressFromCloud];
 //        NSLog(@"chapter:%d page:%d", _chapterNumber, _pageNumber);
@@ -206,7 +206,15 @@
 -(void)swipeUp:(id)sender {
     
 //    NSLog(@"%s",__PRETTY_FUNCTION__);
-
+    if (_chapterNumber == _currentBook.totalNumberOfChapters - 1 && _pageNumber == _totalNumberOfPage - 1) {
+        
+        [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            
+            [_currentVCChapter makePageVisibleAt:_pageNumber];
+            
+        } completion:nil];
+        return;
+    }
     _pageNumber++;
 
     
@@ -220,8 +228,7 @@
 
         _chapterNumber++;
 
-        if(![_currentVCChapter goToNextChapter])
-            return;
+        [_currentVCChapter goToNextChapter];
 
         _pageNumber = 0;
         _totalNumberOfPage = _currentVCChapter.totalNumberOfPages;
@@ -234,7 +241,15 @@
 -(void)swipeDown:(id)sender {
     
 //    NSLog(@"%s",__PRETTY_FUNCTION__);
-
+    if (_chapterNumber == 0 && _pageNumber == 0) {
+     
+        [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            
+            [_currentVCChapter makePageVisibleAt:_pageNumber];
+            
+        } completion:nil];
+        return;
+    }
     _pageNumber--;
     
     [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
@@ -247,8 +262,7 @@
         
         _chapterNumber--;
 
-        if(![_currentVCChapter goToPreviousChapter])
-            return;
+        [_currentVCChapter goToPreviousChapter];
 
         _totalNumberOfPage = _currentVCChapter.totalNumberOfPages;
         _pageNumber = _totalNumberOfPage - 1;

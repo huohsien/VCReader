@@ -78,8 +78,11 @@
     return self;
 }
 
--(BOOL) renderPagesAndStoreInto:(NSMutableArray*)pageArray forChapter:(int)chapterNumber {
+-(void) renderPagesAndStoreInto:(NSMutableArray*)pageArray forChapter:(int)chapterNumber {
     
+    if (chapterNumber < 0 || chapterNumber > _book.totalNumberOfChapters - 1) {
+        return;
+    }
     NSString *chapterTitleString = [_book getChapterTitleStringFromChapterNumber:chapterNumber];
     NSString *chapterTextContentString = [_book getTextContentStringFromChapterNumber:chapterNumber];
     
@@ -122,7 +125,6 @@
 //        NSLog(@"%s:%d page views were created", __PRETTY_FUNCTION__, numberOfPages);
         
     }
-    return YES;
 }
 
 -(void) prefetchChapters {
@@ -191,11 +193,7 @@
     
 }
 
--(BOOL) goToNextChapter {
-    
-    if (_chapterNumber == _book.totalNumberOfChapters - 1) {
-        return NO;
-    }
+-(void) goToNextChapter {
     
     _chapterNumber++;
 
@@ -266,14 +264,9 @@
 //        NSLog(@"%@ c:%d p:%d", NSStringFromCGRect(page.view.frame), page.chapterNumber, page.pageNumber);
 //    }
 
-    return YES;
 }
 
--(BOOL) goToPreviousChapter {
-    
-    if (_chapterNumber == 0) {
-        return NO;
-    }
+-(void) goToPreviousChapter {
     
     _chapterNumber--;
     
@@ -345,7 +338,6 @@
 //        NSLog(@"%@ c:%d p:%d", NSStringFromCGRect(page.view.frame), page.chapterNumber, page.pageNumber);
 //    }
     
-    return YES;
 }
 
 #pragma mark attributed string styling
