@@ -22,6 +22,8 @@
 @property (assign) CGFloat charactersSpacing;
 @property (assign) CGFloat chapterTitleFontSize;
 @property (assign) CGFloat chapterContentFontSize;
+@property (strong) NSMutableDictionary *textRenderAttributionDict;
+@property (strong, nonatomic) VCBook *currentBook;
 
 @property (strong, nonatomic) UIView *contentView;
 @property (weak, nonatomic) IBOutlet UILabel *pageLabel;
@@ -32,7 +34,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *chapterNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chapterTitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *batteryImageView;
+@property (weak, nonatomic) IBOutlet UIView *topStatusBarView;
 
-@property (strong, nonatomic) VCBook *currentBook;
+@property (weak, nonatomic) IBOutlet UIView *bottomStatusBarView;
 
 @end

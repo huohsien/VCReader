@@ -147,6 +147,8 @@
 		667AACEC1C545E9400CD40E1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				666EECB61C81BEC600DF5621 /* VCLibraryTableViewController.h */,
+				666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */,
 				667AACE91C545E3E00CD40E1 /* VCPageViewController.h */,
 				667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */,
 				667AACF81C58B05C00CD40E1 /* VCBook.h */,
@@ -161,8 +163,6 @@
 				6643419C1C7A868A00580AEF /* VCChapter.m */,
 				6643419E1C7BFA7C00580AEF /* VCPage.h */,
 				6643419F1C7BFA7C00580AEF /* VCPage.m */,
-				666EECB61C81BEC600DF5621 /* VCLibraryTableViewController.h */,
-				666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";

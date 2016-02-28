@@ -52,6 +52,7 @@
 @synthesize chapterTitleFontSize = _chapterTitleFontSize;
 @synthesize chapterContentFontSize = _chapterContentFontSize;
 @synthesize contentView =_contentView;
+@synthesize textRenderAttributionDict = _textRenderAttributionDict;
 
 -(void) baseInit {
     
@@ -63,18 +64,23 @@
     _chapterTitleFontSize = 32.0;
     _chapterContentFontSize = 28.0;
     
-    _backgroundColor = [UIColor blackColor];
-    _textColor = [UIColor colorWithRed: 60.0 / 255.0 green: 1.0 blue: 1.0 / 255.0 alpha: 1.0];
+//    _backgroundColor = [UIColor blackColor];
+//    _textColor = [UIColor colorWithRed: 60.0 / 255.0 green: 1.0 blue: 1.0 / 255.0 alpha: 1.0];
+    _backgroundColor = [UIColor brownColor];
+    _textColor = [UIColor colorWithRed: 10 / 255.0 green: 0 / 255.0 blue: 0 / 255.0 alpha: 1.0];
     
 }
 
 -(void) setup {
     
     _totalNumberOfPage = 0;
+    _textRenderAttributionDict = [NSMutableDictionary new];
+    
+    [_textRenderAttributionDict setObject:_backgroundColor forKey:@"background color"];
+    [_textRenderAttributionDict setObject:_textColor forKey:@"text color"];
     
     _rectOfScreen = [[UIScreen mainScreen] bounds];
     CGSize sizeOfScreen = _rectOfScreen.size;
-//    NSLog(@"w:%f h:%f", sizeOfScreen.width, sizeOfScreen.height);
 
     _rectOfTextView = CGRectMake(_horizontalMargin, _topMargin, sizeOfScreen.width - 2 * _horizontalMargin, sizeOfScreen.height - _topMargin - _bottomMargin);
     
@@ -84,18 +90,21 @@
     [self.view addSubview:_contentView];
     [self.view sendSubviewToBack:_contentView];
 
+    [_topStatusBarView setBackgroundColor:_backgroundColor];
+    [_bottomStatusBarView setBackgroundColor:_backgroundColor];
+    
+    UIColor *statusBarTextColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.5];
+    [self.chapterTitleLabel setTextColor:statusBarTextColor];
+    [self.pageLabel setTextColor:statusBarTextColor];
+    [self.batteryLabel setTextColor:statusBarTextColor];
+    [self.currentTimeLabel setTextColor:statusBarTextColor];
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
-
-    _container = [CKContainer defaultContainer];
-    _publicDB = _container.publicCloudDatabase;
-    _privateDB = _container.privateCloudDatabase;
     
     [self showStatusBar:NO];
-//    [self setNeedsStatusBarAppearanceUpdate];
-    
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-//    self.navigationController.navigationBar.barTintColor = [UIColor grayColor];
     self.navigationController.navigationBar.hidden = NO;
     CGRect frame = self.navigationController.navigationBar.frame;
     [self.navigationController.navigationBar setFrame:CGRectMake(frame.origin.x, frame.origin.y - frame.size.height, frame.size.width, frame.size.height)];
@@ -108,20 +117,6 @@
 
 }
 
--(void)updateReadingProgressFromCloud {
-    
-    CKContainer *defaultContainer = [CKContainer defaultContainer];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"TRUEPREDICATE"];
-    CKDatabase *privateDatabase = [defaultContainer privateCloudDatabase];
-    CKQuery *query = [[CKQuery alloc] initWithRecordType:@"Book" predicate:predicate];
-    [privateDatabase performQuery:query inZoneWithID:nil completionHandler:^(NSArray *results, NSError *error) {
-        if (!error) {
-            NSLog(@"%@", results);
-        } else {
-            NSLog(@"%@", error);
-        }
-    }];
-}
 
 -(void) start {
     
@@ -136,9 +131,6 @@
 //        _pageNumber = 0;
         _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
         _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
-
-        [self updateReadingProgressFromCloud];
-//        NSLog(@"chapter:%d page:%d", _chapterNumber, _pageNumber);
 
         _currentVCChapter = [[VCChapter alloc] initForVCBook:_currentBook OfChapterNumber:_chapterNumber inViewController:self inViewingRect:_rectOfTextView isPrefetching:YES];
         _totalNumberOfPage = _currentVCChapter.totalNumberOfPages;

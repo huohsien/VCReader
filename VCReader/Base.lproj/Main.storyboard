@@ -89,14 +89,16 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="IdK-H5-lw7">
                                 <rect key="frame" x="150" y="274" width="20" height="20"/>
                             </activityIndicatorView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OCp-Gc-nZe">
-                                <rect key="frame" x="-4" y="0.0" width="328" height="25"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OCp-Gc-nZe">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="26"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="ass-0g-S0z"/>
+                                </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPy-Um-ZrB">
                                 <rect key="frame" x="16" y="8" width="160" height="12"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <color key="textColor" red="0.1285481983" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8tC-nm-sWY">
@@ -113,7 +115,6 @@
                                     <constraint firstAttribute="height" constant="8" id="YJN-eb-AZh"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <color key="textColor" red="0.12854819834967712" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZH-hX-9R2">
@@ -123,7 +124,6 @@
                                     <constraint firstAttribute="height" constant="8" id="u8m-0b-afu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <color key="textColor" red="0.1285481983" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OS3-ek-Dod">
@@ -133,7 +133,6 @@
                                     <constraint firstAttribute="width" constant="70" id="N7X-I4-a04"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <color key="textColor" red="0.12854819834967712" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o6f-Rs-PYw">
@@ -146,7 +145,9 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="OCp-Gc-nZe" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="8Ku-I7-y4c"/>
                             <constraint firstAttribute="trailing" secondItem="8tC-nm-sWY" secondAttribute="trailing" id="90s-Fv-a9I"/>
+                            <constraint firstItem="OCp-Gc-nZe" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="AuP-1W-pDW"/>
                             <constraint firstAttribute="trailing" secondItem="EZH-hX-9R2" secondAttribute="trailing" constant="9" id="NVz-Zc-4wn"/>
                             <constraint firstItem="EZH-hX-9R2" firstAttribute="leading" secondItem="o6f-Rs-PYw" secondAttribute="trailing" constant="4" id="TzS-ZW-zXO"/>
                             <constraint firstItem="o6f-Rs-PYw" firstAttribute="leading" secondItem="ajo-Vz-MnV" secondAttribute="trailing" constant="16" id="YS1-l0-1ZF"/>
@@ -159,6 +160,7 @@
                             <constraint firstItem="IdK-H5-lw7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="r2L-v0-GKK"/>
                             <constraint firstItem="Kf6-Fp-fHI" firstAttribute="top" secondItem="o6f-Rs-PYw" secondAttribute="bottom" constant="9" id="svC-FM-fMT"/>
                             <constraint firstItem="Kf6-Fp-fHI" firstAttribute="top" secondItem="EZH-hX-9R2" secondAttribute="bottom" constant="9" id="t6H-6k-Crm"/>
+                            <constraint firstAttribute="trailing" secondItem="OCp-Gc-nZe" secondAttribute="trailing" id="zWw-6R-684"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="e4Y-Ck-VjB"/>
@@ -166,9 +168,11 @@
                         <outlet property="activityIndicator" destination="IdK-H5-lw7" id="ceM-gC-Orq"/>
                         <outlet property="batteryImageView" destination="o6f-Rs-PYw" id="zXc-UX-z8B"/>
                         <outlet property="batteryLabel" destination="EZH-hX-9R2" id="trp-jz-I45"/>
+                        <outlet property="bottomStatusBarView" destination="8tC-nm-sWY" id="jFg-Cj-Huw"/>
                         <outlet property="chapterTitleLabel" destination="IPy-Um-ZrB" id="pIe-hY-3aU"/>
                         <outlet property="currentTimeLabel" destination="ajo-Vz-MnV" id="LNk-Yf-YiZ"/>
                         <outlet property="pageLabel" destination="OS3-ek-Dod" id="X0A-ix-Pz2"/>
+                        <outlet property="topStatusBarView" destination="OCp-Gc-nZe" id="WwL-YQ-XVP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

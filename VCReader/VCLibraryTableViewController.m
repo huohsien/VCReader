@@ -32,6 +32,8 @@
     
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationController.navigationBar.barTintColor = [UIColor redColor];
+    self.tabBarController.tabBar.hidden = NO;
+
 }
 
 - (void)didReceiveMemoryWarning {

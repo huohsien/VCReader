@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VCReader/VCChapter.m"
-            timestampString = "478316516.255159"
+            timestampString = "478344552.340383"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "371"
-            endingLineNumber = "371"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
             landmarkName = "-createAttributiedChapterContentStringFromString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -36,12 +36,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VCReader/VCPageViewController.m"
-            timestampString = "478323369.671462"
+            timestampString = "478345473.049761"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "176"
             endingLineNumber = "176"
-            landmarkName = "-viewWillDisappear:"
+            landmarkName = "-preferredStatusBarStyle"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VCReader/VCPageViewController.m"
+            timestampString = "478345473.049761"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
