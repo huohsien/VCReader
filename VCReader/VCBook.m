@@ -118,13 +118,18 @@
         NSString *title = [_contentString substringWithRange:range];
 
         if ([[self getChapterStringFromString:previousChapterString] isEqualToString:[self getChapterStringFromString:title]]) {
+            
             previousTitleRange = range;
+            
+            NSLog(@"duplicated title:%@", [self getChapterStringFromString:title]);
+            
             return;
 
         }
         
         NSMutableString *workingString = [[NSMutableString alloc] initWithString:title];
 
+        // for arabic number representation of chapter number in title. fix the incorrect chapter number (such duplicated or missed chapter)
         int chapterNumber = [self getChapterNumberFromTitle:title];
         if (chapterNumber > 0) {
             if (chapterNumber != count) {
@@ -132,15 +137,16 @@
             }
         }
         [_chapterTitleStringArray addObject:workingString];
+        
         if (previousTitleRange.length > 0) {
-            
-            [_chapterContentRangeStringArray addObject:NSStringFromRange(NSMakeRange(NSMaxRange(previousTitleRange), range.location - NSMaxRange(previousTitleRange)))];
+            NSString *string = NSStringFromRange(NSMakeRange(NSMaxRange(previousTitleRange), range.location - NSMaxRange(previousTitleRange)));
+            [_chapterContentRangeStringArray addObject:string];
 
         }
 
         previousChapterString = title;
         previousTitleRange = range;
-        NSLog(@"title:%@ word count:%lu match number:%d",title, (unsigned long)range.length, count);
+//        NSLog(@"title:%@ word count:%lu match number:%d",title, (unsigned long)range.length, count);
         count++;
     }];
     count--;
