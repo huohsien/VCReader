@@ -11,6 +11,24 @@
 #import "AppDelegate.h"
 @import CloudKit;
 
+@implementation UIImage (Crop)
+
+- (UIImage *)crop:(CGRect)rect {
+    
+    rect = CGRectMake(rect.origin.x * self.scale,
+                      rect.origin.y * self.scale,
+                      rect.size.width * self.scale,
+                      rect.size.height * self.scale);
+    
+    CGImageRef imageRef = CGImageCreateWithImageInRect([self CGImage], rect);
+    UIImage *result = [UIImage imageWithCGImage:imageRef
+                                          scale:self.scale
+                                    orientation:self.imageOrientation];
+    CGImageRelease(imageRef);
+    return result;
+}
+
+@end
 
 @implementation VCPageViewController
 {
@@ -42,7 +60,6 @@
 }
 
 @synthesize currentBook = _currentBook;
-@synthesize backgroundColor = _backgroundColor;
 @synthesize textColor = _textColor;
 @synthesize topMargin = _topMargin;
 @synthesize bottomMargin = _bottomMargin;
@@ -53,6 +70,7 @@
 @synthesize chapterContentFontSize = _chapterContentFontSize;
 @synthesize contentView =_contentView;
 @synthesize textRenderAttributionDict = _textRenderAttributionDict;
+@synthesize backgroundImage = _backgroundImage;
 
 -(void) baseInit {
     
@@ -66,7 +84,7 @@
     
 //    _backgroundColor = [UIColor blackColor];
 //    _textColor = [UIColor colorWithRed: 60.0 / 255.0 green: 1.0 blue: 1.0 / 255.0 alpha: 1.0];
-    _backgroundColor = [UIColor brownColor];
+    _backgroundImage = [UIImage imageNamed:@"paper"];
     _textColor = [UIColor colorWithRed: 10 / 255.0 green: 0 / 255.0 blue: 0 / 255.0 alpha: 1.0];
     
 }
@@ -75,23 +93,28 @@
     
     _totalNumberOfPage = 0;
     _textRenderAttributionDict = [NSMutableDictionary new];
-    
-    [_textRenderAttributionDict setObject:_backgroundColor forKey:@"background color"];
+    [_textRenderAttributionDict setObject:[UIColor colorWithPatternImage:_backgroundImage] forKey:@"background color"];
     [_textRenderAttributionDict setObject:_textColor forKey:@"text color"];
     
     _rectOfScreen = [[UIScreen mainScreen] bounds];
     CGSize sizeOfScreen = _rectOfScreen.size;
-
+    NSLog(@"screen resolution:%@", NSStringFromCGSize(sizeOfScreen));
     _rectOfTextView = CGRectMake(_horizontalMargin, _topMargin, sizeOfScreen.width - 2 * _horizontalMargin, sizeOfScreen.height - _topMargin - _bottomMargin);
     
     _contentView = [[UIView alloc] initWithFrame:_rectOfScreen];
-    [self.view setBackgroundColor:_backgroundColor];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:self.backgroundImage]];
     [_contentView setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:_contentView];
     [self.view sendSubviewToBack:_contentView];
 
-    [_topStatusBarView setBackgroundColor:_backgroundColor];
-    [_bottomStatusBarView setBackgroundColor:_backgroundColor];
+    [_topStatusBarView setBackgroundColor:[UIColor colorWithPatternImage:_backgroundImage]];
+    
+    // crop background image to match the bottom part
+    
+    CGRect cropRect = CGRectMake(0, sizeOfScreen.height - _bottomStatusBarView.bounds.size.height, _bottomStatusBarView.bounds.size.width, _bottomStatusBarView.bounds.size.height);
+
+    
+    [_bottomStatusBarView setBackgroundColor:[UIColor colorWithPatternImage:[_backgroundImage crop:cropRect]]];
     
     UIColor *statusBarTextColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.5];
     [self.chapterTitleLabel setTextColor:statusBarTextColor];
@@ -107,7 +130,7 @@
     self.navigationController.navigationBar.hidden = NO;
     CGRect frame = self.navigationController.navigationBar.frame;
     [self.navigationController.navigationBar setFrame:CGRectMake(frame.origin.x, frame.origin.y - frame.size.height, frame.size.width, frame.size.height)];
-    self.navigationController.navigationBar.barTintColor = [VCHelperClass changeUIColor:_backgroundColor alphaValueTo:0.5];
+    self.navigationController.navigationBar.barTintColor = [VCHelperClass changeUIColor:[UIColor colorWithPatternImage:_backgroundImage] alphaValueTo:0.5];
     self.navigationController.navigationBar.tintColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.5];
 
 

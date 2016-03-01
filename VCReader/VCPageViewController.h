@@ -13,7 +13,7 @@
 
 @interface VCPageViewController : UIViewController
 
-@property (strong, nonatomic) UIColor *backgroundColor;
+@property (strong, nonatomic) UIImage *backgroundImage;
 @property (strong, nonatomic) UIColor *textColor;
 @property (assign) CGFloat topMargin;
 @property (assign) CGFloat horizontalMargin;
