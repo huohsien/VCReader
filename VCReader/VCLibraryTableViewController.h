@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VCLibraryTableViewCell.h"
+#import "VCPageViewController.h"
+#import "VCBook.h"
 
 @interface VCLibraryTableViewController : UITableViewController
 

@@ -1,21 +1,22 @@
 //
-//  VCLibraryTableViewController.m
+//  VCChapterTableViewController.m
 //  VCReader
 //
-//  Created by victor on 2/27/16.
+//  Created by victor on 2/29/16.
 //  Copyright © 2016 VHHC. All rights reserved.
 //
 
-#import "VCLibraryTableViewController.h"
+#import "VCChapterTableViewController.h"
 
-@interface VCLibraryTableViewController ()
+@interface VCChapterTableViewController ()
 
 @end
 
-@implementation VCLibraryTableViewController {
-    
-    NSArray *_bookInfoArray;
-}
+@implementation VCChapterTableViewController
+
+@synthesize book = _book;
+@synthesize chapterNumber = _chapterNumber;
+@synthesize pageNumber = _pageNumber;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,9 +26,11 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    _bookInfoArray = [NSArray arrayWithObjects:@{@"bookName":@"超級學神",@"coverImageFileName":@"book1_cover"}, nil];
+}
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 -(void) viewDidAppear:(BOOL)animated {
@@ -36,24 +39,9 @@
     
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationController.navigationBar.barTintColor = [UIColor redColor];
-    self.tabBarController.tabBar.hidden = NO;
-
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"showBookContent"])
-    {
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-        VCBook *book = [[VCBook alloc] initWithBookName:[(NSDictionary *)[_bookInfoArray objectAtIndex:indexPath.row] valueForKey:@"bookName"]];
-        VCPageViewController *viewController = segue.destinationViewController;
-        viewController.currentBook = book;
-    }
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.tabBarController.tabBar.hidden = YES;
+    
 }
 #pragma mark - Table view data source
 
@@ -62,24 +50,18 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _bookInfoArray.count;
+    return 0;
 }
 
-
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    VCLibraryTableViewCell *cell = (VCLibraryTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"CellIdentifier" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
     // Configure the cell...
-    [cell.bookNameLabel setText:[(NSDictionary *)[_bookInfoArray objectAtIndex:indexPath.row] valueForKey:@"bookName"]];
-    [cell.bookCoverImage setImage:[UIImage imageNamed:[(NSDictionary *)[_bookInfoArray objectAtIndex:indexPath.row] valueForKey:@"coverImageFileName"]]];
     
     return cell;
 }
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100.0;
-}
-
+*/
 
 /*
 // Override to support conditional editing of the table view.

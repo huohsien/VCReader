@@ -104,10 +104,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     
     [self showStatusBar:NO];
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     self.navigationController.navigationBar.hidden = NO;
     CGRect frame = self.navigationController.navigationBar.frame;
     [self.navigationController.navigationBar setFrame:CGRectMake(frame.origin.x, frame.origin.y - frame.size.height, frame.size.width, frame.size.height)];
+    self.navigationController.navigationBar.barTintColor = [VCHelperClass changeUIColor:_backgroundColor alphaValueTo:0.5];
+    self.navigationController.navigationBar.tintColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.5];
+
 
     self.tabBarController.tabBar.hidden = YES;
     
@@ -125,10 +127,9 @@
     dispatch_queue_t queue = dispatch_get_main_queue();
     dispatch_async(queue, ^{
         
-        _currentBook = [[VCBook alloc] initWithBookName:@"超級學神"];
         
-//        _chapterNumber = 282;
-//        _pageNumber = 0;
+//        _chapterNumber = 300;
+//        _pageNumber = 16;
         _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
         _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
 

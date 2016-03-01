@@ -13,8 +13,9 @@
 		664341A01C7BFA7C00580AEF /* VCPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419F1C7BFA7C00580AEF /* VCPage.m */; };
 		664341A51C7D102600580AEF /* Kaiti.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 664341A41C7D0E9200580AEF /* Kaiti.ttc */; };
 		664341A71C7D11E300580AEF /* STFangSong.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 664341A61C7D11C700580AEF /* STFangSong.ttf */; };
-		664341B11C7E9A3100580AEF /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 664341B01C7E9A3100580AEF /* CloudKit.framework */; };
+		666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */; };
 		666EECB81C81BEC600DF5621 /* VCLibraryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */; };
+		666EECBB1C83C3E700DF5621 /* VCChapterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666EECBA1C83C3E700DF5621 /* VCChapterTableViewController.m */; };
 		667AACD11C545D9400CD40E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACD01C545D9400CD40E1 /* main.m */; };
 		667AACD41C545D9400CD40E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACD31C545D9400CD40E1 /* AppDelegate.m */; };
 		667AACDA1C545D9400CD40E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 667AACD81C545D9400CD40E1 /* Main.storyboard */; };
@@ -37,10 +38,12 @@
 		6643419F1C7BFA7C00580AEF /* VCPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPage.m; sourceTree = "<group>"; };
 		664341A41C7D0E9200580AEF /* Kaiti.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kaiti.ttc; sourceTree = "<group>"; };
 		664341A61C7D11C700580AEF /* STFangSong.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = STFangSong.ttf; sourceTree = "<group>"; };
-		664341AF1C7E99AF00580AEF /* VCReader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = VCReader.entitlements; sourceTree = "<group>"; };
-		664341B01C7E9A3100580AEF /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		666266E21C8596DB004F133F /* VCLibraryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCLibraryTableViewCell.h; sourceTree = "<group>"; };
+		666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCLibraryTableViewCell.m; sourceTree = "<group>"; };
 		666EECB61C81BEC600DF5621 /* VCLibraryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCLibraryTableViewController.h; sourceTree = "<group>"; };
 		666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCLibraryTableViewController.m; sourceTree = "<group>"; };
+		666EECB91C83C3E700DF5621 /* VCChapterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCChapterTableViewController.h; sourceTree = "<group>"; };
+		666EECBA1C83C3E700DF5621 /* VCChapterTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCChapterTableViewController.m; sourceTree = "<group>"; };
 		667AACCC1C545D9400CD40E1 /* VCReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VCReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		667AACD01C545D9400CD40E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		667AACD21C545D9400CD40E1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -68,20 +71,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				664341B11C7E9A3100580AEF /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		664341AC1C7D569900580AEF /* images */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = images;
-			sourceTree = "<group>";
-		};
 		664341AD1C7D56A900580AEF /* text files */ = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +94,15 @@
 				664341A41C7D0E9200580AEF /* Kaiti.ttc */,
 			);
 			name = fonts;
+			sourceTree = "<group>";
+		};
+		666266E11C859503004F133F /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				666266E21C8596DB004F133F /* VCLibraryTableViewCell.h */,
+				666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */,
+			);
+			name = TableViewCells;
 			sourceTree = "<group>";
 		};
 		667AACC31C545D9400CD40E1 = {
@@ -120,8 +124,8 @@
 		667AACCE1C545D9400CD40E1 /* VCReader */ = {
 			isa = PBXGroup;
 			children = (
-				664341AF1C7E99AF00580AEF /* VCReader.entitlements */,
 				667AACF41C584F1900CD40E1 /* Resources */,
+				666266E11C859503004F133F /* TableViewCells */,
 				667AACEC1C545E9400CD40E1 /* ViewControllers */,
 				667AACD81C545D9400CD40E1 /* Main.storyboard */,
 				667AACDE1C545D9400CD40E1 /* Assets.xcassets */,
@@ -135,7 +139,6 @@
 		667AACCF1C545D9400CD40E1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				664341B01C7E9A3100580AEF /* CloudKit.framework */,
 				668AB1BD1C5BDF8900395099 /* PrefixHeader.pch */,
 				667AACD21C545D9400CD40E1 /* AppDelegate.h */,
 				667AACD31C545D9400CD40E1 /* AppDelegate.m */,
@@ -149,6 +152,8 @@
 			children = (
 				666EECB61C81BEC600DF5621 /* VCLibraryTableViewController.h */,
 				666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */,
+				666EECB91C83C3E700DF5621 /* VCChapterTableViewController.h */,
+				666EECBA1C83C3E700DF5621 /* VCChapterTableViewController.m */,
 				667AACE91C545E3E00CD40E1 /* VCPageViewController.h */,
 				667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */,
 				667AACF81C58B05C00CD40E1 /* VCBook.h */,
@@ -170,7 +175,6 @@
 		667AACF41C584F1900CD40E1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				664341AC1C7D569900580AEF /* images */,
 				664341AE1C7D56B800580AEF /* fonts */,
 				664341AD1C7D56A900580AEF /* text files */,
 			);
@@ -211,7 +215,7 @@
 						DevelopmentTeam = ZWQWGRSN4T;
 						SystemCapabilities = {
 							com.apple.iCloud = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -257,11 +261,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				666EECBB1C83C3E700DF5621 /* VCChapterTableViewController.m in Sources */,
 				6643419D1C7A868A00580AEF /* VCChapter.m in Sources */,
 				66F8C3761C5D078100DF7611 /* VCTextView.m in Sources */,
 				667AACDD1C545D9400CD40E1 /* VCReader.xcdatamodeld in Sources */,
 				66F8C3791C5D0AF300DF7611 /* VCView.m in Sources */,
 				667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */,
+				666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */,
 				668AB1BB1C5BDD1C00395099 /* VCHelperClass.m in Sources */,
 				666EECB81C81BEC600DF5621 /* VCLibraryTableViewController.m in Sources */,
 				667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */,
@@ -369,7 +375,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = VCReader/VCReader.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -386,7 +391,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = VCReader/VCReader.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
