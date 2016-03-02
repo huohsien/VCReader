@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		664341981C74654500580AEF /* 命師.txt in Resources */ = {isa = PBXBuildFile; fileRef = 664341971C74654500580AEF /* 命師.txt */; };
-		6643419A1C770EFF00580AEF /* 超級學神.txt in Resources */ = {isa = PBXBuildFile; fileRef = 664341991C770EFF00580AEF /* 超級學神.txt */; };
 		6643419D1C7A868A00580AEF /* VCChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419C1C7A868A00580AEF /* VCChapter.m */; };
 		664341A01C7BFA7C00580AEF /* VCPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419F1C7BFA7C00580AEF /* VCPage.m */; };
 		664341A51C7D102600580AEF /* Kaiti.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 664341A41C7D0E9200580AEF /* Kaiti.ttc */; };
 		664341A71C7D11E300580AEF /* STFangSong.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 664341A61C7D11C700580AEF /* STFangSong.ttf */; };
 		666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */; };
+		666266E81C86A265004F133F /* 超级学神.txt in Resources */ = {isa = PBXBuildFile; fileRef = 666266E71C86A265004F133F /* 超级学神.txt */; };
 		666EECB81C81BEC600DF5621 /* VCLibraryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */; };
 		666EECBB1C83C3E700DF5621 /* VCChapterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666EECBA1C83C3E700DF5621 /* VCChapterTableViewController.m */; };
 		667AACD11C545D9400CD40E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACD01C545D9400CD40E1 /* main.m */; };
@@ -31,7 +31,6 @@
 
 /* Begin PBXFileReference section */
 		664341971C74654500580AEF /* 命師.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "命師.txt"; sourceTree = "<group>"; };
-		664341991C770EFF00580AEF /* 超級學神.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "超級學神.txt"; sourceTree = "<group>"; };
 		6643419B1C7A868A00580AEF /* VCChapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCChapter.h; sourceTree = "<group>"; };
 		6643419C1C7A868A00580AEF /* VCChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCChapter.m; sourceTree = "<group>"; };
 		6643419E1C7BFA7C00580AEF /* VCPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCPage.h; sourceTree = "<group>"; };
@@ -40,6 +39,7 @@
 		664341A61C7D11C700580AEF /* STFangSong.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = STFangSong.ttf; sourceTree = "<group>"; };
 		666266E21C8596DB004F133F /* VCLibraryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCLibraryTableViewCell.h; sourceTree = "<group>"; };
 		666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCLibraryTableViewCell.m; sourceTree = "<group>"; };
+		666266E71C86A265004F133F /* 超级学神.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "超级学神.txt"; sourceTree = "<group>"; };
 		666EECB61C81BEC600DF5621 /* VCLibraryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCLibraryTableViewController.h; sourceTree = "<group>"; };
 		666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCLibraryTableViewController.m; sourceTree = "<group>"; };
 		666EECB91C83C3E700DF5621 /* VCChapterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCChapterTableViewController.h; sourceTree = "<group>"; };
@@ -80,7 +80,7 @@
 		664341AD1C7D56A900580AEF /* text files */ = {
 			isa = PBXGroup;
 			children = (
-				664341991C770EFF00580AEF /* 超級學神.txt */,
+				666266E71C86A265004F133F /* 超级学神.txt */,
 				664341971C74654500580AEF /* 命師.txt */,
 				667AACEF1C54797700CD40E1 /* 官神.txt */,
 			);
@@ -246,10 +246,10 @@
 			files = (
 				664341A71C7D11E300580AEF /* STFangSong.ttf in Resources */,
 				664341A51C7D102600580AEF /* Kaiti.ttc in Resources */,
+				666266E81C86A265004F133F /* 超级学神.txt in Resources */,
 				664341981C74654500580AEF /* 命師.txt in Resources */,
 				667AACF01C54797700CD40E1 /* 官神.txt in Resources */,
 				667AACDF1C545D9400CD40E1 /* Assets.xcassets in Resources */,
-				6643419A1C770EFF00580AEF /* 超級學神.txt in Resources */,
 				667AACDA1C545D9400CD40E1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
