@@ -182,6 +182,8 @@
     [_textRenderAttributionDict setObject:[UIColor colorWithPatternImage:_backgroundImage] forKey:@"background color"];
     [_textRenderAttributionDict setObject:_textColor forKey:@"text color"];
     
+    self.title = _currentBook.bookName;
+    
     _rectOfScreen = [[UIScreen mainScreen] bounds];
     CGSize sizeOfScreen = _rectOfScreen.size;
     NSLog(@"screen resolution:%@", NSStringFromCGSize(sizeOfScreen));
@@ -240,7 +242,7 @@
     [self startMonitoringBattery];
     [self StartTimerForClock];
     
-    // UI settings
+    // custom UI settings for status bar and navigation bar
     
     [self setNeedsStatusBarAppearanceUpdate];
     [self showStatusBar:NO];
@@ -250,6 +252,7 @@
     [self.navigationController.navigationBar setFrame:CGRectMake(frame.origin.x, frame.origin.y - frame.size.height, frame.size.width, frame.size.height)];
     self.navigationController.navigationBar.barTintColor = [_backgroundImage averageColor];
     self.navigationController.navigationBar.tintColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.5];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[VCHelperClass changeUIColor:_textColor alphaValueTo:0.5],NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chapter_list_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showChapters:)];
     
