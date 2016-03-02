@@ -26,7 +26,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self setNeedsStatusBarAppearanceUpdate];
-    _bookInfoArray = [NSArray arrayWithObjects:@{@"bookName":@"超級學神",@"coverImageFileName":@"book1_cover"}, nil];
+    _bookInfoArray = [NSArray arrayWithObjects:@{@"bookName":@"超级学神",@"coverImageFileName":@"book1_cover"}, nil];
 
 }
 

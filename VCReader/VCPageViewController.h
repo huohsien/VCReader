@@ -24,6 +24,8 @@
 @property (assign) CGFloat chapterContentFontSize;
 @property (strong) NSMutableDictionary *textRenderAttributionDict;
 @property (strong, nonatomic) VCBook *currentBook;
+@property (assign) int chapterNumber;
+@property (assign) int pageNumber;
 
 @property (strong, nonatomic) UIView *contentView;
 @property (weak, nonatomic) IBOutlet UILabel *pageLabel;

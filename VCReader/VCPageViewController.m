@@ -64,8 +64,6 @@
 @implementation VCPageViewController
 {
 
-    int _pageNumber;
-    int _chapterNumber;
     int _totalNumberOfPage;
     NSArray *_titleOfChaptersArray;
     CGRect _rectOfTextView;
@@ -102,6 +100,8 @@
 @synthesize contentView =_contentView;
 @synthesize textRenderAttributionDict = _textRenderAttributionDict;
 @synthesize backgroundImage = _backgroundImage;
+@synthesize chapterNumber = _chapterNumber;
+@synthesize pageNumber = _pageNumber;
 
 -(void) baseInit {
     
@@ -178,8 +178,8 @@
     dispatch_async(queue, ^{
         
         
-//        _chapterNumber = 300;
-//        _pageNumber = 16;
+//        _chapterNumber = 422;
+//        _pageNumber = 0;
         _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
         _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
 
