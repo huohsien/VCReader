@@ -44,6 +44,10 @@
     
     [super viewWillAppear:animated];
     
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
+    
+    self.title = @"章節";
+    
     [self performSelector:@selector(scrollToCell) withObject:nil afterDelay:0.1];
 }
 - (void) scrollToCell
