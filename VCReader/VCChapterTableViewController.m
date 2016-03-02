@@ -43,6 +43,20 @@
     self.tabBarController.tabBar.hidden = YES;
     
 }
+
+-(void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    
+    [self performSelector:@selector(scrollToCell) withObject:nil afterDelay:0.1];
+}
+- (void) scrollToCell
+{
+    [self.tableView reloadData];
+    NSIndexPath *scrollToPath = [NSIndexPath indexPathForRow:_chapterNumber inSection:0];
+//    [self.tableView scrollToRowAtIndexPath:scrollToPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+    [self.tableView selectRowAtIndexPath:scrollToPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -50,18 +64,23 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    return _book.totalNumberOfChapters;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+
+    static NSString *simpleTableIdentifier = @"SimpleTableItem";
     
-    // Configure the cell...
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+    }
+    
+    cell.textLabel.text = [_book getChapterTitleStringFromChapterNumber:indexPath.row];
     return cell;
 }
-*/
 
 /*
 // Override to support conditional editing of the table view.

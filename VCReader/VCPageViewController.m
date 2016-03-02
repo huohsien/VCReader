@@ -7,6 +7,7 @@
 //
 
 #import "VCPageViewController.h"
+#import "VCChapterTableViewController.h"
 #import "VCTextView.h"
 #import "AppDelegate.h"
 @import CloudKit;
@@ -26,6 +27,36 @@
                                     orientation:self.imageOrientation];
     CGImageRelease(imageRef);
     return result;
+}
+
+@end
+
+@implementation UIImage (AverageColor)
+
+- (UIColor *)averageColor {
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    unsigned char rgba[4];
+    CGContextRef context = CGBitmapContextCreate(rgba, 1, 1, 8, 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    
+    CGContextDrawImage(context, CGRectMake(0, 0, 1, 1), self.CGImage);
+    CGColorSpaceRelease(colorSpace);
+    CGContextRelease(context);
+    
+    if(rgba[3] > 0) {
+        CGFloat alpha = ((CGFloat)rgba[3])/255.0;
+        CGFloat multiplier = alpha/255.0;
+        return [UIColor colorWithRed:((CGFloat)rgba[0])*multiplier
+                               green:((CGFloat)rgba[1])*multiplier
+                                blue:((CGFloat)rgba[2])*multiplier
+                               alpha:alpha];
+    }
+    else {
+        return [UIColor colorWithRed:((CGFloat)rgba[0])/255.0
+                               green:((CGFloat)rgba[1])/255.0
+                                blue:((CGFloat)rgba[2])/255.0
+                               alpha:((CGFloat)rgba[3])/255.0];
+    }
 }
 
 @end
@@ -126,22 +157,18 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     
-    [self showStatusBar:NO];
-    self.navigationController.navigationBar.hidden = NO;
-    CGRect frame = self.navigationController.navigationBar.frame;
-    [self.navigationController.navigationBar setFrame:CGRectMake(frame.origin.x, frame.origin.y - frame.size.height, frame.size.width, frame.size.height)];
-    self.navigationController.navigationBar.barTintColor = [VCHelperClass changeUIColor:[UIColor colorWithPatternImage:_backgroundImage] alphaValueTo:0.5];
-    self.navigationController.navigationBar.tintColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.5];
 
-
-    self.tabBarController.tabBar.hidden = YES;
-    
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    }
 
 }
 
+-(void)showChapters:(id)sender {
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    VCChapterTableViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"VCChapterTableViewController"];
+    vc.book = _currentBook;
+    vc.chapterNumber = _chapterNumber;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 -(void) start {
     
@@ -167,7 +194,28 @@
     [self startMonitoringBattery];
     [self StartTimerForClock];
     
+    // UI settings
     
+    [self setNeedsStatusBarAppearanceUpdate];
+    [self showStatusBar:NO];
+    
+    self.navigationController.navigationBar.hidden = NO;
+    CGRect frame = self.navigationController.navigationBar.frame;
+    [self.navigationController.navigationBar setFrame:CGRectMake(frame.origin.x, frame.origin.y - frame.size.height, frame.size.width, frame.size.height)];
+    self.navigationController.navigationBar.barTintColor = [_backgroundImage averageColor];
+    self.navigationController.navigationBar.tintColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.5];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chapter_list_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showChapters:)];
+    
+    NSArray *actionButtonItems = @[item];
+    self.navigationItem.rightBarButtonItems = actionButtonItems;
+    
+    self.tabBarController.tabBar.hidden = YES;
+    
+    // turn off gesture for navigation
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
 }
 
 - (void)viewDidLoad {
@@ -200,7 +248,7 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-    return UIStatusBarStyleLightContent;
+    return UIStatusBarStyleDefault;
 }
 
 -(BOOL)prefersStatusBarHidden {
@@ -214,6 +262,7 @@
         [self setNeedsStatusBarAppearanceUpdate];
     }];
 }
+
 -(void) applicationWillEnterForeground:(NSNotification *)notification {
     
 }
@@ -478,7 +527,6 @@
              
              [self showStatusBar:NO];
              [self.navigationController.navigationBar setFrame:CGRectMake(frame.origin.x, frame.origin.y - frame.size.height - 20, frame.size.width, frame.size.height)];
-             [[UIApplication sharedApplication] setStatusBarHidden:YES];
 
          }
          
