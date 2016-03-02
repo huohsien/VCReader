@@ -119,15 +119,18 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     
-    // detect going back in navigation chain
     if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
         
+        // detect going back in navigation chain
         //prepare the to be shown controlller with correct UI style
         
         UIViewController *vc = self.navigationController.topViewController;
         vc.navigationController.navigationBar.barStyle = UIBarStyleBlack;
         vc.navigationController.navigationBar.barTintColor = [UIColor redColor];
         vc.tabBarController.tabBar.hidden = NO;
+        
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"the last read book"];
+
     } else {
         
         self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
@@ -214,7 +217,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     
-
+    [[NSUserDefaults standardUserDefaults] setObject:_currentBook.bookName forKey:@"the last read book"];
 
 }
 
@@ -247,9 +250,7 @@
     [self setNeedsStatusBarAppearanceUpdate];
     [self showStatusBar:NO];
     
-    self.navigationController.navigationBar.hidden = NO;
-    CGRect frame = self.navigationController.navigationBar.frame;
-    [self.navigationController.navigationBar setFrame:CGRectMake(frame.origin.x, frame.origin.y - frame.size.height, frame.size.width, frame.size.height)];
+    self.navigationController.navigationBar.hidden = YES;
     self.navigationController.navigationBar.barTintColor = [_backgroundImage averageColor];
     self.navigationController.navigationBar.tintColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.5];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[VCHelperClass changeUIColor:_textColor alphaValueTo:0.5],NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
@@ -533,24 +534,35 @@
 
 -(void) toggleNavigationBar {
     
+    CGRect frame = self.navigationController.navigationBar.bounds;
+    
+    if (self.navigationController.navigationBar.hidden == YES) {
+        
+        self.navigationController.navigationBar.hidden = NO;
+        
+        [self.navigationController.navigationBar setFrame:CGRectMake(0, -20 - frame.size.height, frame.size.width, frame.size.height)];
+        
+        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            
+            [self showStatusBar:YES];
+            [self.navigationController.navigationBar setFrame:CGRectMake(0, 20, frame.size.width, frame.size.height)];
 
-     [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        } completion:nil];
+        
+    } else {
 
-         CGRect frame = self.navigationController.navigationBar.frame;
-         
-         if (frame.origin.y < 0) {
-             
-             [self showStatusBar:YES];
-             [self.navigationController.navigationBar setFrame:CGRectMake(frame.origin.x, frame.origin.y + frame.size.height + 20, frame.size.width, frame.size.height)];
+        [self.navigationController.navigationBar setFrame:CGRectMake(0, 20, frame.size.width, frame.size.height)];
+        
+        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            [self showStatusBar:NO];
+            [self.navigationController.navigationBar setFrame:CGRectMake(0,  -frame.size.height - 20, frame.size.width, frame.size.height)];
+        } completion:^(BOOL finished) {
+            self.navigationController.navigationBar.hidden = YES;
 
-         } else {
-             
-             [self showStatusBar:NO];
-             [self.navigationController.navigationBar setFrame:CGRectMake(frame.origin.x, frame.origin.y - frame.size.height - 20, frame.size.width, frame.size.height)];
+        }];
+    }
 
-         }
-         
-     } completion:nil];
+    
 }
 
 -(void) updateProgessInfo {

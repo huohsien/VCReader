@@ -152,10 +152,10 @@
 			children = (
 				666EECB61C81BEC600DF5621 /* VCLibraryTableViewController.h */,
 				666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */,
-				666EECB91C83C3E700DF5621 /* VCChapterTableViewController.h */,
-				666EECBA1C83C3E700DF5621 /* VCChapterTableViewController.m */,
 				667AACE91C545E3E00CD40E1 /* VCPageViewController.h */,
 				667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */,
+				666EECB91C83C3E700DF5621 /* VCChapterTableViewController.h */,
+				666EECBA1C83C3E700DF5621 /* VCChapterTableViewController.m */,
 				667AACF81C58B05C00CD40E1 /* VCBook.h */,
 				667AACF91C58B05C00CD40E1 /* VCBook.m */,
 				668AB1B91C5BDD1C00395099 /* VCHelperClass.h */,

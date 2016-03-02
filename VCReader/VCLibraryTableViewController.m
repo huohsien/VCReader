@@ -7,6 +7,7 @@
 //
 
 #import "VCLibraryTableViewController.h"
+#import "VCPageViewController.h"
 
 @interface VCLibraryTableViewController ()
 
@@ -28,6 +29,15 @@
     [self setNeedsStatusBarAppearanceUpdate];
     _bookInfoArray = [NSArray arrayWithObjects:@{@"bookName":@"超级学神",@"coverImageFileName":@"book1_cover"}, nil];
 
+    NSString *nameOfLastReadBook = [[NSUserDefaults standardUserDefaults] objectForKey:@"the last read book"];
+    
+    if (nameOfLastReadBook) {
+        UIStoryboard*  sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        VCPageViewController *vc = [sb instantiateViewControllerWithIdentifier:@"VCPageViewController"];
+        VCBook *book = [[VCBook alloc] initWithBookName:nameOfLastReadBook];
+        vc.currentBook = book;
+        [self.navigationController pushViewController:vc animated:NO];
+    }
 }
 
 -(void) viewDidAppear:(BOOL)animated {
@@ -43,10 +53,7 @@
 
     return UIStatusBarStyleLightContent;
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -58,6 +65,7 @@
         viewController.currentBook = book;
     }
 }
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -82,50 +90,5 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 100.0;
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
