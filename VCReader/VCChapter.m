@@ -66,9 +66,6 @@
         _backgroundColor = (UIColor *)[viewController.textRenderAttributionDict objectForKey:@"background color"];
         _textColor = (UIColor *)[viewController.textRenderAttributionDict objectForKey:@"text color"];
         
-//        _backgroundColor = [UIColor blackColor];
-//        _textColor = [UIColor colorWithRed: 60.0 / 255.0 green: 1.0 blue: 1.0 / 255.0 alpha: 1.0];
-        
         _rectOfTextView = rect;
         _contentView = viewController.contentView;
         _pageArray = [NSMutableArray new];
