@@ -38,11 +38,6 @@
     
     [super viewDidAppear:animated];
     
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    self.tabBarController.tabBar.hidden = YES;
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated {

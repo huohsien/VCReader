@@ -27,9 +27,9 @@
 @property (assign) int chapterNumber;
 @property (assign) int pageNumber;
 
+
 @property (strong, nonatomic) UIView *contentView;
 @property (weak, nonatomic) IBOutlet UILabel *pageLabel;
-
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *batteryLabel;
@@ -37,7 +37,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *chapterTitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *batteryImageView;
 @property (weak, nonatomic) IBOutlet UIView *topStatusBarView;
-
 @property (weak, nonatomic) IBOutlet UIView *bottomStatusBarView;
+
 
 @end

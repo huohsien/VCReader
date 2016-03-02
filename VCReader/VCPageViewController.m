@@ -103,6 +103,61 @@
 @synthesize chapterNumber = _chapterNumber;
 @synthesize pageNumber = _pageNumber;
 
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    
+    [self baseInit];
+    [self setup];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    [self start];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    
+    // detect going back in navigation chain
+    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
+        
+        //prepare the to be shown controlller with correct UI style
+        
+        UIViewController *vc = self.navigationController.topViewController;
+        vc.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+        vc.navigationController.navigationBar.barTintColor = [UIColor redColor];
+        vc.tabBarController.tabBar.hidden = NO;
+    } else {
+        
+        self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+        self.navigationController.navigationBar.barTintColor = [UIColor redColor];
+        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+        self.tabBarController.tabBar.hidden = YES;
+    }
+    
+    [super viewWillDisappear:animated];
+    
+    [VCHelperClass storeIntoBook:_currentBook.bookName withField:@"savedPageNumber" andData:@(_pageNumber).stringValue];
+    [VCHelperClass storeIntoBook:_currentBook.bookName withField:@"savedChapterNumber" andData:@(_chapterNumber).stringValue];
+}
+
+- (void)didReceiveMemoryWarning {
+    
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleDefault;
+}
+
+-(BOOL)prefersStatusBarHidden {
+    
+    return _statusBarHidden;
+}
+
 -(void) baseInit {
     
     _topMargin = 20;
@@ -161,15 +216,6 @@
 
 }
 
--(void)showChapters:(id)sender {
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    VCChapterTableViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"VCChapterTableViewController"];
-    vc.book = _currentBook;
-    vc.chapterNumber = _chapterNumber;
-    [self.navigationController pushViewController:vc animated:YES];
-}
-
 -(void) start {
     
     [self.activityIndicator startAnimating];
@@ -218,42 +264,14 @@
     }
 }
 
-- (void)viewDidLoad {
+-(void)showChapters:(id)sender {
     
-    [super viewDidLoad];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    VCChapterTableViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"VCChapterTableViewController"];
+    vc.book = _currentBook;
+    vc.chapterNumber = _chapterNumber;
     
-    [self baseInit];
-    [self setup];
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    
-    [super viewWillAppear:animated];
-    [self start];
-}
-
--(void)viewWillDisappear:(BOOL)animated {
-    
-    [super viewWillDisappear:animated];
-    
-    [VCHelperClass storeIntoBook:_currentBook.bookName withField:@"savedPageNumber" andData:@(_pageNumber).stringValue];
-    [VCHelperClass storeIntoBook:_currentBook.bookName withField:@"savedChapterNumber" andData:@(_chapterNumber).stringValue];
-}
-
-- (void)didReceiveMemoryWarning {
-    
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleDefault;
-}
-
--(BOOL)prefersStatusBarHidden {
-    
-    return _statusBarHidden;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)showStatusBar:(BOOL)show {
@@ -274,7 +292,6 @@
     [VCHelperClass storeIntoBook:_currentBook.bookName withField:@"savedChapterNumber" andData:@(_chapterNumber).stringValue];
 
 }
-
 
 
 
