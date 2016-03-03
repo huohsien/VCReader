@@ -84,11 +84,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VCReader/VCPageViewController.m"
-            timestampString = "478624753.94877"
+            timestampString = "478653331.234114"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "558"
-            endingLineNumber = "558"
+            startingLineNumber = "556"
+            endingLineNumber = "556"
             landmarkName = "-toggleNavigationBar"
             landmarkType = "5">
          </BreakpointContent>
@@ -100,11 +100,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VCReader/VCPageViewController.m"
-            timestampString = "478624758.763454"
+            timestampString = "478653331.234114"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "548"
-            endingLineNumber = "548"
+            startingLineNumber = "546"
+            endingLineNumber = "546"
             landmarkName = "-toggleNavigationBar"
             landmarkType = "5">
          </BreakpointContent>

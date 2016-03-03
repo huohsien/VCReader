@@ -29,21 +29,19 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="超級學神" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lq8-b8-hPe">
-                                            <rect key="frame" x="122" y="39" width="91" height="20"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="20" id="Sms-jU-hsC"/>
-                                                <constraint firstAttribute="width" constant="91" id="zRh-UJ-2GV"/>
-                                            </constraints>
+                                            <rect key="frame" x="122" y="39" width="157" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="Lq8-b8-hPe" firstAttribute="leading" secondItem="CTT-VY-ZkZ" secondAttribute="trailing" constant="42" id="3Vo-Z7-uwT"/>
+                                        <constraint firstAttribute="bottom" secondItem="Lq8-b8-hPe" secondAttribute="bottom" constant="40" id="NmQ-me-8Mh"/>
                                         <constraint firstItem="CTT-VY-ZkZ" firstAttribute="leading" secondItem="ZjS-Np-q5Z" secondAttribute="leading" constant="20" id="PsV-f7-Hh9"/>
-                                        <constraint firstItem="Lq8-b8-hPe" firstAttribute="leading" secondItem="CTT-VY-ZkZ" secondAttribute="trailing" constant="42" id="Z8G-wE-Uot"/>
+                                        <constraint firstItem="Lq8-b8-hPe" firstAttribute="top" secondItem="ZjS-Np-q5Z" secondAttribute="top" constant="39" id="ZSN-sx-o9m"/>
                                         <constraint firstItem="CTT-VY-ZkZ" firstAttribute="centerY" secondItem="ZjS-Np-q5Z" secondAttribute="centerY" id="c3Z-9n-TK6"/>
-                                        <constraint firstItem="Lq8-b8-hPe" firstAttribute="centerY" secondItem="ZjS-Np-q5Z" secondAttribute="centerY" id="h5L-N7-3Qs"/>
+                                        <constraint firstAttribute="trailing" secondItem="Lq8-b8-hPe" secondAttribute="trailing" constant="8" id="gpd-aL-yLE"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>

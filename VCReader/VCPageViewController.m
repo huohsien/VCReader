@@ -171,8 +171,6 @@
     _chapterTitleFontSize = 32.0;
     _chapterContentFontSize = 28.0;
     
-//    _backgroundColor = [UIColor blackColor];
-//    _textColor = [UIColor colorWithRed: 60.0 / 255.0 green: 1.0 blue: 1.0 / 255.0 alpha: 1.0];
     _backgroundImage = [UIImage imageNamed:@"paper"];
     _textColor = [UIColor colorWithRed: 10 / 255.0 green: 0 / 255.0 blue: 0 / 255.0 alpha: 1.0];
     
@@ -229,7 +227,7 @@
     dispatch_async(queue, ^{
         
         
-//        _chapterNumber = 422;
+//        _chapterNumber = 0;
 //        _pageNumber = 0;
         _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
         _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];
