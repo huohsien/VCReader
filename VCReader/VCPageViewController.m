@@ -61,6 +61,20 @@
 
 @end
 
+@implementation UIImage (Color)
+
++ (UIImage *)imageFromColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0, 0, 1, 1);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+@end
+
 @implementation VCPageViewController
 {
 
@@ -171,8 +185,8 @@
     _chapterTitleFontSize = 32.0;
     _chapterContentFontSize = 28.0;
     
-    _backgroundImage = [UIImage imageNamed:@"paper"];
-    _textColor = [UIColor colorWithRed: 10 / 255.0 green: 0 / 255.0 blue: 0 / 255.0 alpha: 1.0];
+    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:186.0 / 255.0 green:159.0 / 255.0 blue:130.0 / 255.0 alpha:1.0]];
+    _textColor = [UIColor colorWithRed: 56.0 / 255.0 green: 33.0 / 255.0 blue: 20.0 / 255.0 alpha: 1.0];
     
 }
 

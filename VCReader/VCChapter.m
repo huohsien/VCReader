@@ -59,9 +59,9 @@
         _sizeOfScreen = rectOfScreen.size;
 
         _textLineSpacing = 4;
-        _charactersSpacing = 1.0;
-        _chapterTitleFontSize = 34.0;
-        _chapterContentFontSize = 30.0;
+        _charactersSpacing = 4.0;
+        _chapterTitleFontSize = 30.0;
+        _chapterContentFontSize = 28.0;
         
         _backgroundColor = (UIColor *)[viewController.textRenderAttributionDict objectForKey:@"background color"];
         _textColor = (UIColor *)[viewController.textRenderAttributionDict objectForKey:@"text color"];
@@ -351,8 +351,8 @@
     paragraphStyle.lineSpacing = _textLineSpacing;
     paragraphStyle.alignment = NSTextAlignmentLeft;
     paragraphStyle.headIndent = 0;
-//    UIFont *font = [UIFont systemFontOfSize:_chapterTitleFontSize];
-    UIFont *font = [UIFont fontWithName:@"STFangSong" size:_chapterTitleFontSize];
+    UIFont *font = [UIFont systemFontOfSize:_chapterTitleFontSize];
+//    UIFont *font = [UIFont fontWithName:@"STFangSong" size:_chapterTitleFontSize];
     UIColor *backgroundColor = [UIColor clearColor];
     UIColor *foregroundColor = _textColor;
     NSDictionary *attributionDict = @{NSParagraphStyleAttributeName : paragraphStyle , NSFontAttributeName : font, NSBackgroundColorAttributeName : backgroundColor, NSForegroundColorAttributeName : foregroundColor};
@@ -368,8 +368,8 @@
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = _textLineSpacing;
     paragraphStyle.alignment = NSTextAlignmentJustified;
-//    UIFont *font = [UIFont systemFontOfSize:_chapterContentFontSize];
-    UIFont *font = [UIFont fontWithName:@"STFangSong" size:_chapterContentFontSize];
+    UIFont *font = [UIFont systemFontOfSize:_chapterContentFontSize];
+//    UIFont *font = [UIFont fontWithName:@"STFangSong" size:_chapterContentFontSize];
     paragraphStyle.firstLineHeadIndent = _chapterContentFontSize;
     
     UIColor *backgroundColor = [UIColor clearColor];
