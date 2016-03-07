@@ -241,7 +241,7 @@
     dispatch_async(queue, ^{
         
         
-//        _chapterNumber = 0;
+//        _chapterNumber = 443;
 //        _pageNumber = 0;
         _chapterNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedChapterNumber"] intValue];
         _pageNumber = [[VCHelperClass getDatafromBook:_currentBook.bookName withField:@"savedPageNumber"] intValue];

@@ -127,7 +127,7 @@
 
         }
         
-        NSMutableString *workingString = [[NSMutableString alloc] initWithString:title];
+        NSMutableString *workingString = [[NSMutableString alloc] initWithString:[self getChapterTitleFullStringFromString:title]];
 
         // for arabic number representation of chapter number in title. fix the incorrect chapter number (such duplicated or missed chapter)
         int chapterNumber = [self getChapterNumberFromTitle:title];
@@ -189,6 +189,21 @@
                                   error:&error];
     NSRange stringRange = NSMakeRange(0, string.length);
 
+    NSArray *matches = [regex matchesInString:string options:0 range:stringRange];
+    NSString *matchedString = [string substringWithRange:[[matches lastObject] rangeAtIndex:0]];
+    return matchedString;
+}
+
+-(NSString *)getChapterTitleFullStringFromString:(NSString *)string {
+    
+    NSError *error = NULL;
+    
+    NSRegularExpression *regex = [NSRegularExpression
+                                  regularExpressionWithPattern:@"第(一|二|三|四|五|六|七|八|九|十|零|百|[0-9])+章.*$"
+                                  options:NSRegularExpressionCaseInsensitive
+                                  error:&error];
+    NSRange stringRange = NSMakeRange(0, string.length);
+    
     NSArray *matches = [regex matchesInString:string options:0 range:stringRange];
     NSString *matchedString = [string substringWithRange:[[matches lastObject] rangeAtIndex:0]];
     return matchedString;

@@ -58,8 +58,8 @@
         CGRect rectOfScreen = [[UIScreen mainScreen] bounds];
         _sizeOfScreen = rectOfScreen.size;
 
-        _textLineSpacing = 4;
-        _charactersSpacing = 4.0;
+        _textLineSpacing = 6.0;
+        _charactersSpacing = 2.0;
         _chapterTitleFontSize = 30.0;
         _chapterContentFontSize = 28.0;
         
@@ -89,7 +89,7 @@
     NSString *chapterTextContentString = [_book getTextContentStringFromChapterNumber:chapterNumber];
     
     
-    _contentAttributedTextString = [[NSMutableAttributedString alloc] initWithAttributedString:[self createAttributiedChapterTitleStringFromString:[NSString stringWithFormat:@"%@\n",chapterTitleString]]];
+    _contentAttributedTextString = [[NSMutableAttributedString alloc] initWithAttributedString:[self createAttributiedChapterTitleStringFromString:[NSString stringWithFormat:@"\n%@\n\n",chapterTitleString]]];
     [_contentAttributedTextString appendAttributedString:[self createAttributiedChapterContentStringFromString:chapterTextContentString]];
     
     _textStorage = [[NSTextStorage alloc] initWithAttributedString:_contentAttributedTextString];
@@ -350,7 +350,6 @@
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = _textLineSpacing;
     paragraphStyle.alignment = NSTextAlignmentLeft;
-    paragraphStyle.headIndent = 0;
     UIFont *font = [UIFont systemFontOfSize:_chapterTitleFontSize];
 //    UIFont *font = [UIFont fontWithName:@"STFangSong" size:_chapterTitleFontSize];
     UIColor *backgroundColor = [UIColor clearColor];
@@ -358,6 +357,8 @@
     NSDictionary *attributionDict = @{NSParagraphStyleAttributeName : paragraphStyle , NSFontAttributeName : font, NSBackgroundColorAttributeName : backgroundColor, NSForegroundColorAttributeName : foregroundColor};
     
     [workingAttributedString addAttributes:attributionDict range:NSMakeRange(0, [string length])];
+    [workingAttributedString addAttribute:NSKernAttributeName value:@(_charactersSpacing) range:NSMakeRange(0, [string length])];
+
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithAttributedString:workingAttributedString];
     return attributedString;
 }
@@ -367,10 +368,11 @@
     NSMutableAttributedString *workingAttributedString = [[NSMutableAttributedString alloc] initWithString:string];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = _textLineSpacing;
+    paragraphStyle.firstLineHeadIndent = _chapterContentFontSize;
     paragraphStyle.alignment = NSTextAlignmentJustified;
     UIFont *font = [UIFont systemFontOfSize:_chapterContentFontSize];
 //    UIFont *font = [UIFont fontWithName:@"STFangSong" size:_chapterContentFontSize];
-    paragraphStyle.firstLineHeadIndent = _chapterContentFontSize;
+
     
     UIColor *backgroundColor = [UIColor clearColor];
     UIColor *foregroundColor = _textColor;
@@ -378,6 +380,7 @@
     
     [workingAttributedString addAttributes:attributionDict range:NSMakeRange(0, [string length])];
     [workingAttributedString addAttribute:NSKernAttributeName value:@(_charactersSpacing) range:NSMakeRange(0, [string length])];
+    
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithAttributedString:workingAttributedString];
     return attributedString;
 }

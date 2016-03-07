@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VCReader/VCChapter.m"
-            timestampString = "479012218.637473"
+            timestampString = "479041857.799509"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "385"
-            endingLineNumber = "385"
+            startingLineNumber = "388"
+            endingLineNumber = "388"
             landmarkName = "@implementation VCChapter"
             landmarkType = "3">
          </BreakpointContent>
@@ -120,6 +120,22 @@
             startingLineNumber = "113"
             endingLineNumber = "113"
             landmarkName = "-tableView:editActionsForRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VCReader/VCBook.m"
+            timestampString = "479033232.901395"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
+            landmarkName = "-getChapterTitleFullStringFromString:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
