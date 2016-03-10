@@ -368,6 +368,8 @@
     NSMutableAttributedString *workingAttributedString = [[NSMutableAttributedString alloc] initWithString:string];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = _textLineSpacing;
+//    paragraphStyle.headIndent = 10.0;
+//    paragraphStyle.tailIndent = 10.0;
     paragraphStyle.firstLineHeadIndent = _chapterContentFontSize;
     paragraphStyle.alignment = NSTextAlignmentJustified;
     UIFont *font = [UIFont systemFontOfSize:_chapterContentFontSize];
