@@ -132,13 +132,10 @@
 			children = (
 				669CD8D71C913E5500CC99D3 /* VCModels */,
 				669CD8D61C913E1400CC99D3 /* Tools */,
-				667AACF41C584F1900CD40E1 /* Resources */,
 				666266E11C859503004F133F /* TableViewCells */,
 				667AACEC1C545E9400CD40E1 /* ViewControllers */,
 				667AACD81C545D9400CD40E1 /* Main.storyboard */,
-				667AACDE1C545D9400CD40E1 /* Assets.xcassets */,
-				667AACE31C545D9400CD40E1 /* Info.plist */,
-				667AACDB1C545D9400CD40E1 /* VCReader.xcdatamodeld */,
+				667AACF41C584F1900CD40E1 /* Resources */,
 				667AACCF1C545D9400CD40E1 /* Supporting Files */,
 			);
 			path = VCReader;
@@ -147,6 +144,7 @@
 		667AACCF1C545D9400CD40E1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				667AACE31C545D9400CD40E1 /* Info.plist */,
 				668AB1BD1C5BDF8900395099 /* PrefixHeader.pch */,
 				667AACD21C545D9400CD40E1 /* AppDelegate.h */,
 				667AACD31C545D9400CD40E1 /* AppDelegate.m */,
@@ -171,6 +169,8 @@
 		667AACF41C584F1900CD40E1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				667AACDB1C545D9400CD40E1 /* VCReader.xcdatamodeld */,
+				667AACDE1C545D9400CD40E1 /* Assets.xcassets */,
 				664341AE1C7D56B800580AEF /* fonts */,
 				664341AD1C7D56A900580AEF /* text files */,
 			);

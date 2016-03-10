@@ -20,11 +20,10 @@
 @property (strong, nonatomic) VCBook *book;
 @property (assign) int chapterNumber;
 @property (assign) int totalNumberOfPages;
-@property (strong, nonatomic) NSMutableArray *pageArray;
 
--(instancetype) initForVCBook:(VCBook *)book OfChapterNumber:(int)chapterNumber inViewController:(VCPageViewController *)viewController inViewingRect:(CGRect)rect isPrefetching:(BOOL)isPrefetching;
--(void) makePageVisibleAt:(int)pageNumber;
--(void) goToNextChapter;
--(void) goToPreviousChapter;
+-(instancetype) initForVCBook:(VCBook *)book OfChapterNumber:(int)chapterNumber inViewController:(VCPageViewController *)viewController inViewingRect:(CGRect)rect;
+-(NSMutableArray*) renderPages;
+-(NSMutableArray*) renderPagesInThePreviousChapter;
+-(NSMutableArray*) renderPagesInTheNextChapter;
 
 @end

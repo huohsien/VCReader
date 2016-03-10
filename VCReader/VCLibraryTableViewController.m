@@ -35,7 +35,7 @@
         UIStoryboard*  sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         VCPageViewController *vc = [sb instantiateViewControllerWithIdentifier:@"VCPageViewController"];
         VCBook *book = [[VCBook alloc] initWithBookName:nameOfLastReadBook];
-        vc.currentBook = book;
+        vc.book = book;
         [self.navigationController pushViewController:vc animated:NO];
     }
 }
@@ -62,7 +62,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         VCBook *book = [[VCBook alloc] initWithBookName:[(NSDictionary *)[_bookInfoArray objectAtIndex:indexPath.row] valueForKey:@"bookName"]];
         VCPageViewController *viewController = segue.destinationViewController;
-        viewController.currentBook = book;
+        viewController.book = book;
     }
 }
 
