@@ -63,8 +63,7 @@
 
 @implementation UIImage (Color)
 
-+ (UIImage *)imageFromColor:(UIColor *)color {
-    CGRect rect = CGRectMake(0, 0, 1, 1);
++ (UIImage *)imageFromColor:(UIColor *)color withRect:(CGRect)rect {
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(context, [color CGColor]);
@@ -74,6 +73,73 @@
     return image;
 }
 @end
+
+@implementation UIImage (Extras)
+
+- (UIImage *)imageByScalingProportionallyToSize:(CGSize)targetSize {
+    
+    UIImage *sourceImage = self;
+    UIImage *newImage = nil;
+    
+    CGSize imageSize = sourceImage.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    
+    CGFloat targetWidth = targetSize.width;
+    CGFloat targetHeight = targetSize.height;
+    
+    CGFloat scaleFactor = 0.0;
+    CGFloat scaledWidth = targetWidth;
+    CGFloat scaledHeight = targetHeight;
+    
+    CGPoint thumbnailPoint = CGPointMake(0.0,0.0);
+    
+    if (CGSizeEqualToSize(imageSize, targetSize) == NO) {
+        
+        CGFloat widthFactor = targetWidth / width;
+        CGFloat heightFactor = targetHeight / height;
+        
+        if (widthFactor < heightFactor)
+            scaleFactor = widthFactor;
+        else
+            scaleFactor = heightFactor;
+        
+        scaledWidth  = width * scaleFactor;
+        scaledHeight = height * scaleFactor;
+        
+        // center the image
+        
+        //        if (widthFactor < heightFactor) {
+        //          thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5;
+        //        } else if (widthFactor > heightFactor) {
+        //          thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
+        //        }
+        
+        //thumbnailPoint.x
+    }
+    
+    
+    // this is actually the interesting part:
+    
+    UIGraphicsBeginImageContext(targetSize);
+    
+    CGRect thumbnailRect = CGRectZero;
+    thumbnailRect.origin = thumbnailPoint;
+    thumbnailRect.size.width  = scaledWidth;
+    thumbnailRect.size.height = scaledHeight;
+    
+    [sourceImage drawInRect:thumbnailRect];
+    
+    newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    if(newImage == nil) NSLog(@"could not scale image");
+    
+    
+    return newImage ;
+}
+
+@end;
 
 @implementation VCPageViewController
 {
@@ -184,8 +250,9 @@
     _charactersSpacing = 2.0;
     _chapterTitleFontSize = 32.0;
     _chapterContentFontSize = 28.0;
-    
-    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:186.0 / 255.0 green:159.0 / 255.0 blue:130.0 / 255.0 alpha:1.0]];
+    _rectOfScreen = [[UIScreen mainScreen] bounds];
+
+    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:186.0 / 255.0 green:159.0 / 255.0 blue:130.0 / 255.0 alpha:1.0] withRect:_rectOfScreen];
     _textColor = [UIColor colorWithRed: 56.0 / 255.0 green: 33.0 / 255.0 blue: 20.0 / 255.0 alpha: 1.0];
     
 }
@@ -199,9 +266,11 @@
     
     self.title = _book.bookName;
     
-    _rectOfScreen = [[UIScreen mainScreen] bounds];
     CGSize sizeOfScreen = _rectOfScreen.size;
     NSLog(@"screen resolution:%@", NSStringFromCGSize(sizeOfScreen));
+    
+    // resize bg image
+    _backgroundImage = [_backgroundImage imageByScalingProportionallyToSize:sizeOfScreen];
     
     // calculate the region for laying out text
     
@@ -209,22 +278,23 @@
     CGFloat h = sizeOfScreen.height - self.bottomStatusBarView.frame.size.height - self.topStatusBarView.frame.size.height - _topMargin - _bottomMargin;
     _rectOfTextView = CGRectMake(_horizontalMargin, y, sizeOfScreen.width - 2 * _horizontalMargin, h);
     
+    // add content view
     _contentView = [[UIView alloc] initWithFrame:_rectOfScreen];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:self.backgroundImage]];
     [_contentView setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:_contentView];
     [self.view sendSubviewToBack:_contentView];
+    
 
-    [_topStatusBarView setBackgroundColor:[UIColor colorWithPatternImage:_backgroundImage]];
+    // set status bars' color
+    [self.topStatusBarView setBackgroundColor:[UIColor colorWithPatternImage:_backgroundImage]];
     
     // crop background image to match the bottom part
+    CGRect cropRect = CGRectMake(0, _backgroundImage.size.height - _bottomStatusBarView.bounds.size.height, _backgroundImage.size.width, _backgroundImage.size.height);
+    [self.bottomStatusBarView setBackgroundColor:[UIColor colorWithPatternImage:[_backgroundImage crop:cropRect]]];
     
-    CGRect cropRect = CGRectMake(0, sizeOfScreen.height - _bottomStatusBarView.bounds.size.height, _bottomStatusBarView.bounds.size.width, _bottomStatusBarView.bounds.size.height);
-
-    
-    [_bottomStatusBarView setBackgroundColor:[UIColor colorWithPatternImage:[_backgroundImage crop:cropRect]]];
-    
-    UIColor *statusBarTextColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.5];
+    // set color of the text in the status bars
+    UIColor *statusBarTextColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.7];
     [self.chapterTitleLabel setTextColor:statusBarTextColor];
     [self.pageLabel setTextColor:statusBarTextColor];
     [self.batteryLabel setTextColor:statusBarTextColor];

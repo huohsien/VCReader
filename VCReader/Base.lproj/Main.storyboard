@@ -127,11 +127,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Kf6-Fp-fHI"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="VCView">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="IdK-H5-lw7">
-                                <rect key="frame" x="150" y="242" width="20" height="20"/>
+                                <rect key="frame" x="150" y="274" width="20" height="20"/>
                             </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OCp-Gc-nZe">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="26"/>
@@ -150,14 +150,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8tC-nm-sWY">
-                                <rect key="frame" x="0.0" y="429" width="320" height="26"/>
+                                <rect key="frame" x="0.0" y="493" width="320" height="26"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="26" id="dmp-je-YJv"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajo-Vz-MnV">
-                                <rect key="frame" x="216" y="438" width="32" height="8"/>
+                                <rect key="frame" x="216" y="502" width="32" height="8"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="Rw5-IN-8eB"/>
                                     <constraint firstAttribute="height" constant="8" id="YJN-eb-AZh"/>
@@ -166,7 +166,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZH-hX-9R2">
-                                <rect key="frame" x="283" y="438" width="28" height="8"/>
+                                <rect key="frame" x="283" y="502" width="28" height="8"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="28" id="Bu4-5i-Pld"/>
                                     <constraint firstAttribute="height" constant="8" id="u8m-0b-afu"/>
@@ -175,7 +175,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OS3-ek-Dod">
-                                <rect key="frame" x="20" y="438" width="70" height="8"/>
+                                <rect key="frame" x="20" y="502" width="70" height="8"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="8" id="G6A-uz-7z7"/>
                                     <constraint firstAttribute="width" constant="70" id="N7X-I4-a04"/>
@@ -184,7 +184,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o6f-Rs-PYw">
-                                <rect key="frame" x="264" y="438" width="15" height="8"/>
+                                <rect key="frame" x="264" y="502" width="15" height="8"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="8" id="3of-dY-YMN"/>
                                     <constraint firstAttribute="width" constant="15" id="NKv-Y0-5Z9"/>
@@ -214,7 +214,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="e4Y-Ck-VjB"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="activityIndicator" destination="IdK-H5-lw7" id="ceM-gC-Orq"/>
                         <outlet property="batteryImageView" destination="o6f-Rs-PYw" id="zXc-UX-z8B"/>

@@ -28,8 +28,8 @@
 @property (assign) int chapterNumber;
 @property (assign) int pageNumber;
 
-
 @property (strong, nonatomic) UIView *contentView;
+
 @property (weak, nonatomic) IBOutlet UILabel *pageLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;
