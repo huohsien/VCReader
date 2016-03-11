@@ -133,7 +133,8 @@
     newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    if(newImage == nil) NSLog(@"could not scale image");
+    if(newImage == nil)
+        NSLog(@"could not scale image");
     
     
     return newImage ;
@@ -332,7 +333,7 @@
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
     
-//    _chapterNumber = 680;
+//    _chapterNumber = 0;
 //    _pageNumber = 0;
     _chapterNumber = [[VCHelperClass getDatafromBook:_book.bookName withField:@"savedChapterNumber"] intValue];
     _pageNumber = [[VCHelperClass getDatafromBook:_book.bookName withField:@"savedPageNumber"] intValue];
@@ -495,12 +496,10 @@
         }
     }
     
-    for (VCPage *p in _pageArray) {
-        
-        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
-        
-    }
-    
+//    for (VCPage *p in _pageArray) {
+//        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
+//    }
+//    
 
     [VCHelperClass removeAllSubviewsInView:self.contentView];
     
@@ -564,11 +563,11 @@
         }
     }
     
-    for (VCPage *p in _pageArray) {
-        
-        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
-        
-    }
+//    for (VCPage *p in _pageArray) {
+//        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
+//    }
+    
+
     
     // organize new page views in the content view
     
@@ -629,11 +628,11 @@
         }
     }
     
-    for (VCPage *p in _pageArray) {
-        
-        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
-        
-    }
+//    for (VCPage *p in _pageArray) {
+//        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
+//    }
+    
+
     
     // organize new page views in the content view
     
@@ -652,7 +651,7 @@
 
 -(void)showThePageAt:(int)pageNumber {
     
-    NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, _chapterNumber, pageNumber);
+//    NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, _chapterNumber, pageNumber);
     
     for (int i = 0; i < _pageArray.count; i++) {
         

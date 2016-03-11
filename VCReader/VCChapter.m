@@ -89,7 +89,7 @@
     
     NSString *chapterTitleString = [_book getChapterTitleStringFromChapterNumber:chapterNumber];
     NSString *chapterTextContentString = [_book getTextContentStringFromChapterNumber:chapterNumber];
-    
+
     
     _contentAttributedTextString = [[NSMutableAttributedString alloc] initWithAttributedString:[self createAttributiedChapterTitleStringFromString:[NSString stringWithFormat:@"\n%@\n\n",chapterTitleString]]];
     [_contentAttributedTextString appendAttributedString:[self createAttributiedChapterContentStringFromString:chapterTextContentString]];
