@@ -10,6 +10,7 @@
 #import "VCChapterTableViewController.h"
 #import "VCTextView.h"
 #import "AppDelegate.h"
+
 #define NUMBER_OF_PREFETCH_PAGES 1
 
 @implementation UIImage (Crop)
@@ -151,7 +152,7 @@
     CGFloat _previousOffset;
     CGFloat _deltaOffset;
     BOOL _statusBarHidden;
-    
+    BOOL _isEditingTextView;
     NSMutableArray *_pageArray;
     
     NSArray *_pagesInThePreviousChapter;
@@ -310,6 +311,8 @@
 }
 
 -(void) start {
+    
+    _isEditingTextView = NO;
     
     // custom UI settings for status bar and navigation bar
     
@@ -764,6 +767,21 @@
     self.batteryLabel.text = [NSString stringWithFormat:@"%.0f%%",[[UIDevice currentDevice] batteryLevel] * 100.0f];
 }
 
+#pragma mark - edit text
+
+-(void) startEditingInTheTextView {
+    
+    VCPage *page = [_pageArray objectAtIndex:NUMBER_OF_PREFETCH_PAGES + _pageNumber];
+    VCTextView *textView = page.textView;
+    NSLog(@"%s: text = %@", __PRETTY_FUNCTION__, textView.text);
+    [textView setEditable:YES];
+    [textView setSelectable:YES];
+    [textView becomeFirstResponder];
+    
+}
+
+
+
 #pragma mark - touch functions
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -778,6 +796,7 @@
     _previousOffset = 0;
     _deltaOffset = 0;
     _lastTouchedPointY = point.y;
+    _startTime = CACurrentMediaTime();
 
 }
 
@@ -789,6 +808,19 @@
     CGPoint point = [touch locationInView:self.view];
     
 //    NSLog(@"%@", NSStringFromCGPoint(point));
+    
+    _elapsedTime = CACurrentMediaTime() - _startTime;
+    
+    if (_elapsedTime > 1.5 && _isEditingTextView == NO) {
+        
+        _isEditingTextView = YES;
+        
+        if (self.navigationController.navigationBar.hidden == NO) {
+            [self toggleNavigationBar];
+        }
+        
+        [self startEditingInTheTextView];
+    }
     
     CGFloat pointY = point.y;
     CGFloat yDisplacement = (pointY - _lastTouchedPointY);
@@ -823,7 +855,7 @@
         [self swipeDown:nil];
     }
     
-    if (yDisplacement < 10 && yDisplacement > -10) {
+    if (yDisplacement < 10 && yDisplacement > -10 && _elapsedTime < 1.5 && _isEditingTextView == NO) {
         [self toggleNavigationBar];
     }
 }

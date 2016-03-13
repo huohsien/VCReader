@@ -27,7 +27,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self setNeedsStatusBarAppearanceUpdate];
-    _bookInfoArray = [NSArray arrayWithObjects:@{@"bookName":@"超级学神",@"coverImageFileName":@"book1_cover"},@{@"bookName":@"完美世界",@"coverImageFileName":@"book2_cover"},@{@"bookName":@"都市巨灵神",@"coverImageFileName":@"book3_cover"},@{@"bookName":@"斗破苍穹",@"coverImageFileName":@"book4_cover"}, nil];
+    _bookInfoArray = [NSArray arrayWithObjects:@{@"bookName":@"超级学神",@"coverImageFileName":@"book1_cover"},@{@"bookName":@"完美世界",@"coverImageFileName":@"book2_cover"},@{@"bookName":@"都市巨灵神",@"coverImageFileName":@"book3_cover"},@{@"bookName":@"斗破苍穹",@"coverImageFileName":@"book4_cover"},@{@"bookName":@"官神",@"coverImageFileName":@"book5_cover"}, nil];
 
     NSString *nameOfLastReadBook = [[NSUserDefaults standardUserDefaults] objectForKey:@"the last read book"];
     

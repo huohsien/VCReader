@@ -158,9 +158,7 @@
     NSMutableAttributedString *workingAttributedString = [[NSMutableAttributedString alloc] initWithString:string];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = _textLineSpacing;
-//    paragraphStyle.headIndent = 10.0;
-//    paragraphStyle.tailIndent = 10.0;
-    paragraphStyle.firstLineHeadIndent = _chapterContentFontSize;
+    paragraphStyle.firstLineHeadIndent = _chapterContentFontSize * 2.0 + _charactersSpacing * 4.0;
     paragraphStyle.alignment = NSTextAlignmentJustified;
     UIFont *font = [UIFont systemFontOfSize:_chapterContentFontSize];
 //    UIFont *font = [UIFont fontWithName:@"STFangSong" size:_chapterContentFontSize];

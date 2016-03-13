@@ -15,6 +15,7 @@
 @synthesize pageNumber = _pageNumber;
 @synthesize width = _width;
 @synthesize height = _height;
+@synthesize textView = _textView;
 
 -(instancetype) initWithView:(UIView *)view andChapterNumber:(int)chapterNumber withPageNumber:(int)pageNumber {
     
@@ -25,6 +26,10 @@
         _view = view;
         _chapterNumber = chapterNumber;
         _pageNumber = pageNumber;
+        UIView *v = [view.subviews lastObject];
+        if ([v isKindOfClass:[VCTextView class]]) {
+            _textView = (VCTextView *)v;
+        }
         
         [self setup];
     }

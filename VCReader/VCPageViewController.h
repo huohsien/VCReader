@@ -10,6 +10,7 @@
 #import "VCBook.h"
 #import "VCView.h"
 #import "VCChapter.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface VCPageViewController : UIViewController
 
