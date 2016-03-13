@@ -53,10 +53,10 @@
         CGRect rectOfScreen = [[UIScreen mainScreen] bounds];
         _sizeOfScreen = rectOfScreen.size;
 
-        _textLineSpacing = 6.0;
-        _charactersSpacing = 2.0;
-        _chapterTitleFontSize = 30.0;
-        _chapterContentFontSize = 28.0;
+        _textLineSpacing = 14.0;
+        _charactersSpacing = 2.5;
+        _chapterTitleFontSize = 36.0;
+        _chapterContentFontSize = 26.0;
         
         _backgroundColor = (UIColor *)[viewController.textRenderAttributionDict objectForKey:@"background color"];
         _textColor = (UIColor *)[viewController.textRenderAttributionDict objectForKey:@"text color"];
@@ -158,7 +158,7 @@
     NSMutableAttributedString *workingAttributedString = [[NSMutableAttributedString alloc] initWithString:string];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = _textLineSpacing;
-    paragraphStyle.firstLineHeadIndent = _chapterContentFontSize * 2.0 + _charactersSpacing * 4.0;
+    paragraphStyle.firstLineHeadIndent = _chapterContentFontSize * 2.0 + _charactersSpacing * 3.0;
     paragraphStyle.alignment = NSTextAlignmentJustified;
     UIFont *font = [UIFont systemFontOfSize:_chapterContentFontSize];
 //    UIFont *font = [UIFont fontWithName:@"STFangSong" size:_chapterContentFontSize];

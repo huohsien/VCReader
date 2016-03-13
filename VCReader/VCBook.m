@@ -136,6 +136,9 @@
         
         if (contentRange.length < 100) {
             
+            previousChapterString = title;
+            previousTitleRange = range;
+            
             NSLog(@"%s: might have a problem splitting cuz the length of the chapter is less than 100. Chapter =%@", __PRETTY_FUNCTION__, title);
 
             return;

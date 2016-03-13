@@ -773,7 +773,7 @@
     
     VCPage *page = [_pageArray objectAtIndex:NUMBER_OF_PREFETCH_PAGES + _pageNumber];
     VCTextView *textView = page.textView;
-    NSLog(@"%s: text = %@", __PRETTY_FUNCTION__, textView.text);
+//    NSLog(@"%s: text = %@", __PRETTY_FUNCTION__, textView.text);
     [textView setEditable:YES];
     [textView setSelectable:YES];
     [textView becomeFirstResponder];
