@@ -250,8 +250,6 @@
     _horizontalMargin = 10;
     _textLineSpacing = 15;
     _charactersSpacing = 2.0;
-    _chapterTitleFontSize = 32.0;
-    _chapterContentFontSize = 28.0;
     _rectOfScreen = [[UIScreen mainScreen] bounds];
 
     _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:186.0 / 255.0 green:159.0 / 255.0 blue:130.0 / 255.0 alpha:1.0] withRect:_rectOfScreen];
@@ -811,16 +809,16 @@
     
     _elapsedTime = CACurrentMediaTime() - _startTime;
     
-    if (_elapsedTime > 1.5 && _isEditingTextView == NO) {
-        
-        _isEditingTextView = YES;
-        
-        if (self.navigationController.navigationBar.hidden == NO) {
-            [self toggleNavigationBar];
-        }
-        
-        [self startEditingInTheTextView];
-    }
+//    if (_elapsedTime > 1.5 && _isEditingTextView == NO) {
+//        
+//        _isEditingTextView = YES;
+//        
+//        if (self.navigationController.navigationBar.hidden == NO) {
+//            [self toggleNavigationBar];
+//        }
+//        
+//        [self startEditingInTheTextView];
+//    }
     
     CGFloat pointY = point.y;
     CGFloat yDisplacement = (pointY - _lastTouchedPointY);

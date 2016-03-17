@@ -46,10 +46,11 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
     
-    self.title = @"章節";
+    self.title = NSLocalizedString(@"chapters", nil);
     
     [self performSelector:@selector(scrollToCell) withObject:nil afterDelay:0.1];
 }
+
 - (void) scrollToCell
 {
     [self.tableView reloadData];

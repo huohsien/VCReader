@@ -72,8 +72,7 @@
     
     NSString *path = [_fullBookDirectoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%lu.txt", (unsigned long)chapterNumber]];
     NSString *string = [_contentString substringWithRange:NSRangeFromString([_chapterContentRangeStringArray objectAtIndex: chapterNumber])];
-    NSString *processedString = [self removeExtraLinesInString:string];
-    [processedString writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    [string writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
 -(NSString *)getChapterTitleStringFromChapterNumber:(NSUInteger)chapterNumber {
@@ -89,19 +88,6 @@
     return [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
 }
 
--(NSString *) removeExtraLinesInString:(NSString *)contentString {
-    
-    NSMutableString *str = [[NSMutableString alloc] initWithString:contentString];
-    
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:
-                                  @"(\\r|\\n)+" options:0 error:nil];
-    [regex replaceMatchesInString:str options:0 range:NSMakeRange(0, [str length]) withTemplate:@"\n"];
-    
-    [str replaceOccurrencesOfString:@"\r\n" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, 10)];
-    [str replaceOccurrencesOfString:@"\n" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, 10)];
-    return str;
-}
-
 -(void) splitChapters {
     
     NSError *error = NULL;
@@ -112,7 +98,7 @@
     previousTitleRange = NSMakeRange(0, 0);
     
     NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:@"第*(一|二|三|四|五|六|七|八|九|十|零|百|[0-9])*卷*.*第(一|二|三|四|五|六|七|八|九|十|零|百|[0-9])+章.*[\\n\\r\\s]*"
+                                  regularExpressionWithPattern:@"(第(一|二|三|四|五|六|七|八|九|十|零|百|千|[0-9])+章|序章|楔子|后记).*[\\n\\r\\s]*"
                                   options:NSRegularExpressionCaseInsensitive
                                   error:&error];
     
@@ -126,32 +112,43 @@
         if (range.location != 0) {
             
             charaterBeforeTitle = [_contentString characterAtIndex:(range.location - 1)];
-            if (charaterBeforeTitle != '\r' && charaterBeforeTitle != '\n') {
-                NSLog(@"%s: might have a problem splitting chapters. problematic chapter title = %@ previous title = %@", __PRETTY_FUNCTION__, title, [_chapterTitleStringArray objectAtIndex:count-1]);
+            if (charaterBeforeTitle != '\r' && charaterBeforeTitle != '\n' && charaterBeforeTitle != ' ') {
+                NSLog(@"%s: might have a problem splitting chapters.\n problematic chapter title = %@ previous title = %@", __PRETTY_FUNCTION__, title, [_chapterTitleStringArray objectAtIndex:count-1]);
                 return ;
             }
         }
 
         NSRange contentRange = NSMakeRange(NSMaxRange(previousTitleRange), range.location - NSMaxRange(previousTitleRange));
         
-        if (contentRange.length < 100) {
+
+        if (previousTitleRange.length == 0) {
             
             previousChapterString = title;
             previousTitleRange = range;
+            return;
             
-            NSLog(@"%s: might have a problem splitting cuz the length of the chapter is less than 100. Chapter =%@", __PRETTY_FUNCTION__, title);
+        } else if (contentRange.length < 100) {
+            
+            if ([[title substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"第"]) {
+                
+                previousChapterString = title;
+                previousTitleRange = range;
+
+                NSLog(@"%s: might have a problem splitting cuz the length of the chapter is less than 100.\n Chapter =%@, count = %d", __PRETTY_FUNCTION__, title, count);
+
+            }
 
             return;
         }
         
         [_chapterTitleStringArray addObject:[self trimTitle:previousChapterString]];
         
-        NSString *string = NSStringFromRange(contentRange);
-        [_chapterContentRangeStringArray addObject:string];
-        
-//        NSLog(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count]).length), count);
-
+        NSString *str = NSStringFromRange(contentRange);
+        [_chapterContentRangeStringArray addObject:str];
         count++;
+
+        NSLog(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
+
         previousChapterString = title;
         previousTitleRange = range;
     }];
@@ -163,10 +160,10 @@
     NSRange contentRange = NSMakeRange(NSMaxRange(previousTitleRange), [_contentString length] - NSMaxRange(previousTitleRange));
     NSString *string = NSStringFromRange(contentRange);
     [_chapterContentRangeStringArray addObject:string];
-    
-//    NSLog(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count]).length), count);
-    
     count++;
+
+    NSLog(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
+    
     
     [_chapterContentRangeStringArray addObject:NSStringFromRange(NSMakeRange(NSMaxRange(previousTitleRange) , _contentString.length - NSMaxRange(previousTitleRange)))];
     [VCHelperClass storeIntoBook:_bookName withField:@"numberOfChapters" andData:@(count).stringValue];

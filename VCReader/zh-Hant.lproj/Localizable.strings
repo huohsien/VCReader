@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  VCReader
+
+  Created by victor on 3/14/16.
+  Copyright © 2016 VHHC. All rights reserved.
+*/
+"my book shelf" = "書架";
+"library" = "書庫";
+"chapters" = "章節";

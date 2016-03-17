@@ -8,6 +8,7 @@
 
 #import "VCLibraryTableViewController.h"
 #import "VCPageViewController.h"
+#import "AppDelegate.h"
 
 @interface VCLibraryTableViewController ()
 
@@ -16,6 +17,7 @@
 @implementation VCLibraryTableViewController {
     
     NSArray *_bookInfoArray;
+    UIView *_activityView;
 }
 
 - (void)viewDidLoad {
@@ -27,22 +29,22 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self setNeedsStatusBarAppearanceUpdate];
-    _bookInfoArray = [NSArray arrayWithObjects:@{@"bookName":@"超级学神",@"coverImageFileName":@"book1_cover"},@{@"bookName":@"完美世界",@"coverImageFileName":@"book2_cover"},@{@"bookName":@"都市巨灵神",@"coverImageFileName":@"book3_cover"},@{@"bookName":@"斗破苍穹",@"coverImageFileName":@"book4_cover"},@{@"bookName":@"官神",@"coverImageFileName":@"book5_cover"},@{@"bookName":@"寻宝美利坚",@"coverImageFileName":@"book6_cover"}, nil];
+    _bookInfoArray = [NSArray arrayWithObjects:@{@"bookName":@"都市巨灵神",@"coverImageFileName":@"book3_cover"},@{@"bookName":@"斗破苍穹",@"coverImageFileName":@"book4_cover"},@{@"bookName":@"官神",@"coverImageFileName":@"book5_cover"},@{@"bookName":@"寻宝美利坚",@"coverImageFileName":@"book6_cover"},@{@"bookName":@"乐尊",@"coverImageFileName":@"book7_cover"}, nil];
 
     NSString *nameOfLastReadBook = [[NSUserDefaults standardUserDefaults] objectForKey:@"the last read book"];
     
     if (nameOfLastReadBook) {
-        UIStoryboard*  sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        VCPageViewController *vc = [sb instantiateViewControllerWithIdentifier:@"VCPageViewController"];
-        VCBook *book = [[VCBook alloc] initWithBookName:nameOfLastReadBook];
-        vc.book = book;
-        [self.navigationController pushViewController:vc animated:NO];
+//        UIStoryboard*  sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        VCPageViewController *vc = [sb instantiateViewControllerWithIdentifier:@"VCPageViewController"];
+//        VCBook *book = [[VCBook alloc] initWithBookName:nameOfLastReadBook];
+//        vc.book = book;
+//        [self.navigationController pushViewController:vc animated:NO];
     }
 }
 
--(void) viewDidAppear:(BOOL)animated {
+-(void) viewWillAppear:(BOOL)animated {
     
-    [super viewDidAppear:animated];
+    [super viewWillAppear:animated];
     
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationController.navigationBar.barTintColor = [UIColor redColor];
@@ -59,11 +61,46 @@
 {
     if ([segue.identifier isEqualToString:@"showBookContent"])
     {
+
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+        
+        
+        [NSThread detachNewThreadSelector:@selector(showActivityView) toTarget:self withObject:nil];
         VCBook *book = [[VCBook alloc] initWithBookName:[(NSDictionary *)[_bookInfoArray objectAtIndex:indexPath.row] valueForKey:@"bookName"]];
+        [self hideActivityView];
+
         VCPageViewController *viewController = segue.destinationViewController;
         viewController.book = book;
     }
+}
+
+#pragma mark - activity indicator view
+
+-(void)showActivityView
+{
+    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    UIWindow *window = delegate.window;
+    _activityView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, window.bounds.size.width, window.bounds.size.height)];
+    _activityView.backgroundColor = [UIColor blackColor];
+    _activityView.alpha = 0.5;
+    
+    UIActivityIndicatorView *activityWheel = [[UIActivityIndicatorView alloc] initWithFrame: CGRectMake(window.bounds.size.width / 2 - 12, window.bounds.size.height / 2 - 12, 24, 24)];
+    activityWheel.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+    activityWheel.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+                                      UIViewAutoresizingFlexibleRightMargin |
+                                      UIViewAutoresizingFlexibleTopMargin |
+                                      UIViewAutoresizingFlexibleBottomMargin);
+    [_activityView addSubview:activityWheel];
+    [window addSubview: _activityView];
+    
+    [[[_activityView subviews] objectAtIndex:0] startAnimating];
+}
+
+-(void)hideActivityView
+{
+    [[[_activityView subviews] objectAtIndex:0] stopAnimating];
+    [_activityView removeFromSuperview];
+    _activityView = nil;
 }
 
 #pragma mark - Table view data source
@@ -82,7 +119,7 @@
     
     // Configure the cell...
     NSString *bookNameString = [(NSDictionary *)[_bookInfoArray objectAtIndex:indexPath.row] valueForKey:@"bookName"];
-    NSLog(@"row:%ld name:%@", (long)indexPath.row, bookNameString);
+//    NSLog(@"row:%ld name:%@", (long)indexPath.row, bookNameString);
     [cell.bookNameLabel setText:bookNameString];
     [cell.bookCoverImage setImage:[UIImage imageNamed:[(NSDictionary *)[_bookInfoArray objectAtIndex:indexPath.row] valueForKey:@"coverImageFileName"]]];
     
@@ -128,6 +165,13 @@
     return @[reload];
 }
 
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+}
+
+#pragma mark - file manager
 -(NSString *)createDirectory:(NSString *)directoryName atFilePath:(NSString *)filePath
 {
     NSString *filePathAndDirectory = [filePath stringByAppendingPathComponent:directoryName];

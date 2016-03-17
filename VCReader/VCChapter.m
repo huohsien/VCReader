@@ -55,7 +55,7 @@
 
         _textLineSpacing = 14.0;
         _charactersSpacing = 2.5;
-        _chapterTitleFontSize = 36.0;
+        _chapterTitleFontSize = 34.0;
         _chapterContentFontSize = 26.0;
         
         _backgroundColor = (UIColor *)[viewController.textRenderAttributionDict objectForKey:@"background color"];
