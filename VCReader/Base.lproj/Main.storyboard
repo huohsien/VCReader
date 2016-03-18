@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
-        <!--Library Table View Controller-->
+        <!--书架-->
         <scene sceneID="vZC-Qb-9pT">
             <objects>
                 <tableViewController id="gy7-W4-JTC" customClass="VCLibraryTableViewController" sceneMemberID="viewController">
@@ -57,7 +57,7 @@
                             <outlet property="delegate" destination="gy7-W4-JTC" id="71h-QC-cvC"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="GxD-j7-QYk"/>
+                    <navigationItem key="navigationItem" title="书架" id="GxD-j7-QYk"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AOo-RN-rMZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

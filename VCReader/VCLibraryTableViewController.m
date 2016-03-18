@@ -34,11 +34,11 @@
     NSString *nameOfLastReadBook = [[NSUserDefaults standardUserDefaults] objectForKey:@"the last read book"];
     
     if (nameOfLastReadBook) {
-//        UIStoryboard*  sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//        VCPageViewController *vc = [sb instantiateViewControllerWithIdentifier:@"VCPageViewController"];
-//        VCBook *book = [[VCBook alloc] initWithBookName:nameOfLastReadBook];
-//        vc.book = book;
-//        [self.navigationController pushViewController:vc animated:NO];
+        UIStoryboard*  sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        VCPageViewController *vc = [sb instantiateViewControllerWithIdentifier:@"VCPageViewController"];
+        VCBook *book = [[VCBook alloc] initWithBookName:nameOfLastReadBook];
+        vc.book = book;
+        [self.navigationController pushViewController:vc animated:NO];
     }
 }
 
