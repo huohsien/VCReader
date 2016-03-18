@@ -38,6 +38,7 @@
 		661DD5B51C90350D00C25E43 /* 都市巨灵神.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "都市巨灵神.txt"; sourceTree = "<group>"; };
 		6620688D1C9ACF6400D00FEB /* 乐尊.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "乐尊.txt"; sourceTree = "<group>"; };
 		6620688F1C9ADBC200D00FEB /* 官神.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "官神.txt"; sourceTree = "<group>"; };
+		662068921C9C7B5000D00FEB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		664341971C74654500580AEF /* 命師.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "命師.txt"; sourceTree = "<group>"; };
 		6643419B1C7A868A00580AEF /* VCChapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCChapter.h; sourceTree = "<group>"; };
 		6643419C1C7A868A00580AEF /* VCChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCChapter.m; sourceTree = "<group>"; };
@@ -259,8 +260,6 @@
 			knownRegions = (
 				en,
 				Base,
-				"zh-Hans",
-				"zh-Hant",
 			);
 			mainGroup = 667AACC31C545D9400CD40E1;
 			productRefGroup = 667AACCD1C545D9400CD40E1 /* Products */;
@@ -330,6 +329,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				667AACD91C545D9400CD40E1 /* Base */,
+				662068921C9C7B5000D00FEB /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
