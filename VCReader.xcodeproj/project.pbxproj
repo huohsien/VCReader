@@ -48,12 +48,7 @@
 		666266E21C8596DB004F133F /* VCLibraryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCLibraryTableViewCell.h; sourceTree = "<group>"; };
 		666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCLibraryTableViewCell.m; sourceTree = "<group>"; };
 		666266E71C86A265004F133F /* 超级学神.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "超级学神.txt"; sourceTree = "<group>"; };
-		6668596A1C9682F30046C8E8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
-		6668596B1C9682FB0046C8E8 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		6668596D1C9683110046C8E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6668596F1C9683250046C8E8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		666859701C96832F0046C8E8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		666859711C9683320046C8E8 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		666EECB61C81BEC600DF5621 /* VCLibraryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCLibraryTableViewController.h; sourceTree = "<group>"; };
 		666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCLibraryTableViewController.m; sourceTree = "<group>"; };
 		666EECB91C83C3E700DF5621 /* VCChapterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCChapterTableViewController.h; sourceTree = "<group>"; };
@@ -74,7 +69,6 @@
 		668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCHelperClass.m; sourceTree = "<group>"; };
 		668AB1BD1C5BDF8900395099 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		669CD8DB1C95C0DB00CC99D3 /* 寻宝美利坚.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "寻宝美利坚.txt"; sourceTree = "<group>"; };
-		66D125BE1C96925C000DD709 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		66D125C11C99D266000DD709 /* 斗破苍穹.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "斗破苍穹.txt"; sourceTree = "<group>"; };
 		66F8C3741C5D078100DF7611 /* VCTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCTextView.h; sourceTree = "<group>"; };
 		66F8C3751C5D078100DF7611 /* VCTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCTextView.m; sourceTree = "<group>"; };
@@ -328,9 +322,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				6668596D1C9683110046C8E8 /* Base */,
-				6668596F1C9683250046C8E8 /* en */,
-				666859701C96832F0046C8E8 /* zh-Hans */,
-				666859711C9683320046C8E8 /* zh-Hant */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -339,9 +330,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				667AACD91C545D9400CD40E1 /* Base */,
-				6668596A1C9682F30046C8E8 /* zh-Hans */,
-				6668596B1C9682FB0046C8E8 /* zh-Hant */,
-				66D125BE1C96925C000DD709 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

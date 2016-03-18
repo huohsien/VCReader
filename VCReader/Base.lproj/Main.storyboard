@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="L0t-ab-HQv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="L0t-ab-HQv">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -197,11 +197,11 @@
             </objects>
             <point key="canvasLocation" x="-832" y="-1781"/>
         </scene>
-        <!--Item-->
+        <!--书架-->
         <scene sceneID="WMx-zY-6Y3">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1pW-PC-mJ8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="vlJ-ZJ-jK7"/>
+                    <tabBarItem key="tabBarItem" title="书架" image="book_shelf" id="vlJ-ZJ-jK7"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="szN-Ar-bog">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -301,11 +301,11 @@
             </objects>
             <point key="canvasLocation" x="607" y="-1044"/>
         </scene>
-        <!--Item-->
+        <!--书库-->
         <scene sceneID="P1a-D9-SrO">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="i4W-mI-2kD" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="6Zd-ec-tZH"/>
+                    <tabBarItem key="tabBarItem" title="书库" image="library" id="6Zd-ec-tZH"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="BBA-wA-duv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -323,5 +323,7 @@
     </scenes>
     <resources>
         <image name="book1_cover" width="60" height="80"/>
+        <image name="book_shelf" width="30" height="30"/>
+        <image name="library" width="30" height="30"/>
     </resources>
 </document>
