@@ -252,8 +252,10 @@
     _charactersSpacing = 2.0;
     _rectOfScreen = [[UIScreen mainScreen] bounds];
 
-    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:186.0 / 255.0 green:159.0 / 255.0 blue:130.0 / 255.0 alpha:1.0] withRect:_rectOfScreen];
-    _textColor = [UIColor colorWithRed: 56.0 / 255.0 green: 33.0 / 255.0 blue: 20.0 / 255.0 alpha: 1.0];
+//    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:186.0 / 255.0 green:159.0 / 255.0 blue:130.0 / 255.0 alpha:1.0] withRect:_rectOfScreen];
+//    _textColor = [UIColor colorWithRed: 56.0 / 255.0 green: 33.0 / 255.0 blue: 20.0 / 255.0 alpha: 1.0];
+    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed: 40.0 / 255.0 green: 40.0 / 255.0 blue: 40.0 / 255.0 alpha: 1.0] withRect:_rectOfScreen];
+    _textColor = [UIColor colorWithRed: 150.0 / 255.0 green: 150.0 / 255.0 blue: 150.0 / 255.0 alpha: 1.0];
     
 }
 
@@ -334,7 +336,7 @@
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
     
-//    _chapterNumber = 0;
+//    _chapterNumber = 195;
 //    _pageNumber = 0;
     _chapterNumber = [[VCHelperClass getDatafromBook:_book.bookName withField:@"savedChapterNumber"] intValue];
     _pageNumber = [[VCHelperClass getDatafromBook:_book.bookName withField:@"savedPageNumber"] intValue];
@@ -497,10 +499,10 @@
         }
     }
     
-//    for (VCPage *p in _pageArray) {
-//        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
-//    }
-//    
+    for (VCPage *p in _pageArray) {
+        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
+    }
+    
 
     [VCHelperClass removeAllSubviewsInView:self.contentView];
     

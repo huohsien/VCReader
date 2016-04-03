@@ -98,7 +98,7 @@
     previousTitleRange = NSMakeRange(0, 0);
     
     NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:@"(第(一|二|三|四|五|六|七|八|九|十|零|百|千|[0-9])+章|序章|楔子|后记).*[\\n\\r\\s]*"
+                                  regularExpressionWithPattern:@"(第(一|两|二|三|四|五|六|七|八|九|十|零|百|千|[0-9])+章|序章|楔子|后记).*[\\n\\r\\s]*"
                                   options:NSRegularExpressionCaseInsensitive
                                   error:&error];
     
@@ -207,7 +207,7 @@
     NSError *error = NULL;
 
     NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:@"第(一|二|三|四|五|六|七|八|九|十|零|百|[0-9])+章"
+                                  regularExpressionWithPattern:@"第(一|两|二|三|四|五|六|七|八|九|十|零|百|[0-9])+章"
                                   options:NSRegularExpressionCaseInsensitive
                                   error:&error];
     NSRange stringRange = NSMakeRange(0, string.length);
@@ -222,7 +222,7 @@
     NSError *error = NULL;
     
     NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:@"第(一|二|三|四|五|六|七|八|九|十|零|百|[0-9])+章.*$"
+                                  regularExpressionWithPattern:@"第(一|两|二|三|四|五|六|七|八|九|十|零|百|[0-9])+章.*$"
                                   options:NSRegularExpressionCaseInsensitive
                                   error:&error];
     NSRange stringRange = NSMakeRange(0, string.length);
