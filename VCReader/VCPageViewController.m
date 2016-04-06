@@ -201,7 +201,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     
-    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
+    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
         
         // detect going back in navigation chain
         //prepare the to be shown controlller with correct UI style
@@ -209,6 +209,8 @@
         UIViewController *vc = self.navigationController.topViewController;
         vc.navigationController.navigationBar.barStyle = UIBarStyleBlack;
         vc.navigationController.navigationBar.barTintColor = [UIColor redColor];
+        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
         vc.tabBarController.tabBar.hidden = NO;
         
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"the last read book"];
@@ -252,11 +254,13 @@
     _charactersSpacing = 2.0;
     _rectOfScreen = [[UIScreen mainScreen] bounds];
 
-//    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:186.0 / 255.0 green:159.0 / 255.0 blue:130.0 / 255.0 alpha:1.0] withRect:_rectOfScreen];
-//    _textColor = [UIColor colorWithRed: 56.0 / 255.0 green: 33.0 / 255.0 blue: 20.0 / 255.0 alpha: 1.0];
-    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed: 40.0 / 255.0 green: 40.0 / 255.0 blue: 40.0 / 255.0 alpha: 1.0] withRect:_rectOfScreen];
-    _textColor = [UIColor colorWithRed: 150.0 / 255.0 green: 150.0 / 255.0 blue: 150.0 / 255.0 alpha: 1.0];
-    
+    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:186.0 / 255.0 green:159.0 / 255.0 blue:130.0 / 255.0 alpha:1.0] withRect:_rectOfScreen];
+//    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed: 40.0 / 255.0 green: 40.0 / 255.0 blue: 40.0 / 255.0 alpha: 1.0] withRect:_rectOfScreen];
+//    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed: 0.0 / 255.0 green: 0.0 / 255.0 blue: 0.0 / 255.0 alpha: 1.0] withRect:_rectOfScreen];
+    _textColor = [UIColor colorWithRed: 56.0 / 255.0 green: 33.0 / 255.0 blue: 20.0 / 255.0 alpha: 1.0];
+//    _textColor = [UIColor colorWithRed: 150.0 / 255.0 green: 150.0 / 255.0 blue: 150.0 / 255.0 alpha: 1.0];
+//    _textColor = [UIColor colorWithRed: 0.0 / 255.0 green: 255.0 / 255.0 blue: 0.0 / 255.0 alpha: 1.0];
+
 }
 
 -(void) setup {
@@ -499,9 +503,9 @@
         }
     }
     
-    for (VCPage *p in _pageArray) {
-        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
-    }
+//    for (VCPage *p in _pageArray) {
+//        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
+//    }
     
 
     [VCHelperClass removeAllSubviewsInView:self.contentView];
@@ -740,17 +744,25 @@
 
 #pragma mark battery fuctions
 
-- (void)batteryStatusDidChange:(NSNotification *)notification {
+-(void) updateBatteryIcon {
     
     NSArray *batteryStatusImages = [NSArray arrayWithObjects:
-                              /*Battery status is unknown*/ [UIImage imageNamed:@"battery_not_charging_icon"],
-                              /*"Battery is in use (discharging)*/ [UIImage imageNamed:@"battery_not_charging_icon"],
-                              /*Battery is charging*/ [UIImage imageNamed:@"battery_charging_icon"],
-                              /*Battery is fully charged*/ [UIImage imageNamed:@"battery_not_charging_icon"], nil];
-    UIColor *batteryIconColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.3];
+                                    /*Battery status is unknown*/ [UIImage imageNamed:@"battery_not_charging_icon"],
+                                    /*"Battery is in use (discharging)*/ [UIImage imageNamed:@"battery_not_charging_icon"],
+                                    /*Battery is charging*/ [UIImage imageNamed:@"battery_charging_icon"],
+                                    /*Battery is fully charged*/ [UIImage imageNamed:@"battery_not_charging_icon"], nil];
+    UIColor *batteryIconColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:1.0];
+    
+    UIImage *maskImage = [batteryStatusImages objectAtIndex:[[UIDevice currentDevice] batteryState]];
+    UIImage *image = [VCHelperClass maskedImage:maskImage color:batteryIconColor];
+    UIImage *batteryLevelIcon = [[UIDevice currentDevice] batteryState] != UIDeviceBatteryStateCharging ? [self adjustBatteryImage:image accordingToLevel:[[UIDevice currentDevice] batteryLevel]] : image;
+    [self.batteryImageView setImage:batteryLevelIcon];
+    
+}
 
-    [self.batteryImageView setImage:[VCHelperClass maskedImageNamed:[batteryStatusImages objectAtIndex:[[UIDevice currentDevice] batteryState]] color:batteryIconColor]];
-
+-(void) batteryStatusDidChange:(NSNotification *)notification {
+    
+    [self updateBatteryIcon];
 }
 
 -(void) startMonitoringBattery {
@@ -760,11 +772,34 @@
 
     [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
     self.batteryLabel.text = [NSString stringWithFormat:@"%.0f%%",[[UIDevice currentDevice] batteryLevel] * 100.0f];
-
+    [self updateBatteryIcon];
 
 }
 -(void) batteryLevelDidChange:(NSNotification *)notification {
     self.batteryLabel.text = [NSString stringWithFormat:@"%.0f%%",[[UIDevice currentDevice] batteryLevel] * 100.0f];
+    [self updateBatteryIcon];
+
+}
+
+-(UIImage *) adjustBatteryImage:(UIImage *)image accordingToLevel:(CGFloat)level {
+
+    if (level < 0 || level >= 1.0) {
+        return image;
+    }
+    
+    CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
+    
+    CGRect toBeErasedRect = CGRectMake((3.0 + 20.0 * level) / 2.0, 3.0 / 2.0, 20.0 * (1 - level) / 2.0, 8.0 / 2.0);
+    
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, image.scale);
+    CGContextRef c = UIGraphicsGetCurrentContext();
+    [image drawInRect:rect];
+    CGContextSetRGBFillColor(c, 1.0, 1.0, 1.0, 1.0);
+    CGContextSetBlendMode(c, kCGBlendModeDestinationOut);
+    CGContextFillRect(c, toBeErasedRect);
+    UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return result;
 }
 
 #pragma mark - edit text

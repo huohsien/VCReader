@@ -42,7 +42,8 @@
     return count;
 }
 
-+(UIImage *) maskedImageNamed:(UIImage *)image color:(UIColor *)color {
++(UIImage *) maskedImage:(UIImage *)image color:(UIColor *)color {
+    
     CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, image.scale);
     CGContextRef c = UIGraphicsGetCurrentContext();
@@ -54,6 +55,8 @@
     UIGraphicsEndImageContext();
     return result;
 }
+
+
 
 +(UIColor *) changeUIColor:(UIColor *)uicolor alphaValueTo:(CGFloat)alpha {
     

@@ -28,8 +28,20 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    //set status bar styke
     [self setNeedsStatusBarAppearanceUpdate];
-    _bookInfoArray = [NSArray arrayWithObjects:@{@"bookName":@"都市巨灵神",@"coverImageFileName":@"book3_cover"},@{@"bookName":@"斗破苍穹",@"coverImageFileName":@"book4_cover"},@{@"bookName":@"官神",@"coverImageFileName":@"book5_cover"},@{@"bookName":@"寻宝美利坚",@"coverImageFileName":@"book6_cover"},@{@"bookName":@"乐尊",@"coverImageFileName":@"book7_cover"}, nil];
+    
+    //set navigation bar style
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+    //hide tab bar
+    self.tabBarController.tabBar.hidden = NO;
+    
+    _bookInfoArray = [NSArray arrayWithObjects:/*@{@"bookName":@"都市巨灵神",@"coverImageFileName":@"book3_cover"},*/@{@"bookName":@"斗破苍穹",@"coverImageFileName":@"book4_cover"},/*@{@"bookName":@"官神",@"coverImageFileName":@"book5_cover"},@{@"bookName":@"寻宝美利坚",@"coverImageFileName":@"book6_cover"},@{@"bookName":@"乐尊",@"coverImageFileName":@"book7_cover"},*/ nil];
 
     NSString *nameOfLastReadBook = [[NSUserDefaults standardUserDefaults] objectForKey:@"the last read book"];
     
@@ -46,9 +58,6 @@
     
     [super viewWillAppear:animated];
     
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
-    self.tabBarController.tabBar.hidden = NO;
 
 }
 -(UIStatusBarStyle)preferredStatusBarStyle {
