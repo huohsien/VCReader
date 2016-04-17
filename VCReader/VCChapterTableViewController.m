@@ -84,9 +84,6 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    [VCHelperClass storeIntoBook:_book.bookName withField:@"savedPageNumber" andData:@"0"];
-    [VCHelperClass storeIntoBook:_book.bookName withField:@"savedChapterNumber" andData:@(indexPath.row).stringValue];
 
     [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:(int)indexPath.row pageNumber:0];
 

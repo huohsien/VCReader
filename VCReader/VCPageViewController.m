@@ -225,9 +225,6 @@
     
     [super viewWillDisappear:animated];
     
-    [VCHelperClass storeIntoBook:_book.bookName withField:@"savedPageNumber" andData:@(_pageNumber).stringValue];
-    [VCHelperClass storeIntoBook:_book.bookName withField:@"savedChapterNumber" andData:@(_chapterNumber).stringValue];
-    
     [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:_chapterNumber pageNumber:_pageNumber];
 }
 
@@ -344,8 +341,7 @@
     
 //    _chapterNumber = 195;
 //    _pageNumber = 0;
-    _chapterNumber = [[VCHelperClass getDatafromBook:_book.bookName withField:@"savedChapterNumber"] intValue];
-    _pageNumber = [[VCHelperClass getDatafromBook:_book.bookName withField:@"savedPageNumber"] intValue];
+
     
     VCReadingStatusMO *readingStatus = [VCHelperClass getReadingStatusForBook:_book.bookName andUserID:@"tester"];
     _chapterNumber = readingStatus.chapterNumber;
@@ -384,9 +380,6 @@
 
 
 -(void) applicationWillResignActive:(NSNotification *)notification {
-    
-    [VCHelperClass storeIntoBook:_book.bookName withField:@"savedPageNumber" andData:@(_pageNumber).stringValue];
-    [VCHelperClass storeIntoBook:_book.bookName withField:@"savedChapterNumber" andData:@(_chapterNumber).stringValue];
     
     [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:_chapterNumber pageNumber:_pageNumber];
 
