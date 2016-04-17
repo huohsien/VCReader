@@ -11,6 +11,7 @@
 #import "VCView.h"
 #import "VCChapter.h"
 #import <QuartzCore/QuartzCore.h>
+#import "VCReadingStatusMO+CoreDataProperties.h"
 
 @interface VCPageViewController : UIViewController
 

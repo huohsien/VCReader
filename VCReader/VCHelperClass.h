@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AppDelegate.h"
+#import "VCReadingStatusMO+CoreDataProperties.h"
+
 @import UIKit;
 @interface VCHelperClass : NSObject
 
@@ -17,5 +20,8 @@
 +(int) removeAllSubviewsInView:(UIView *)view;
 +(UIImage *) maskedImage:(UIImage *)image color:(UIColor *)color;
 +(UIColor *) changeUIColor:(UIColor *)uicolor alphaValueTo:(CGFloat)alpha;
+
++(void)saveReadingStatusForBook:(NSString *)bookName andUserID:(NSString *)userID chapterNumber:(int)chapterNumber pageNumber:(int)pageNumber;
++(VCReadingStatusMO *) getReadingStatusForBook:(NSString *)bookName andUserID:(NSString *)userID;
 
 @end

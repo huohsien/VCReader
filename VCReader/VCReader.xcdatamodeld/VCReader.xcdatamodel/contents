@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
+    <entity name="Book" representedClassName="VCBookMO" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="numberOfChapters" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="chapters" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Chapter" inverseName="book" inverseEntity="Chapter" syncable="YES"/>
+    </entity>
+    <entity name="Chapter" representedClassName="VCChapterMO" syncable="YES">
+        <attribute name="localFileName" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="book" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="chapters" inverseEntity="Book" syncable="YES"/>
+    </entity>
+    <entity name="ReadingStatus" representedClassName="VCReadingStatusMO" syncable="YES">
+        <attribute name="bookName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="chapterNumber" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="pageNumber" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="updateTime" attributeType="Date" syncable="YES"/>
+        <attribute name="userID" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Book" positionX="-2295" positionY="-2347" width="126" height="88"/>
+        <element name="Chapter" positionX="-1998" positionY="-2302" width="128" height="88"/>
+        <element name="ReadingStatus" positionX="-2628" positionY="-2448" width="128" height="118"/>
+    </elements>
 </model>

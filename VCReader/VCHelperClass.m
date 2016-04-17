@@ -7,6 +7,7 @@
 //
 
 #import "VCHelperClass.h"
+#import "VCReadingStatusMO+CoreDataProperties.h"
 
 @implementation VCHelperClass
 
@@ -75,6 +76,68 @@
         return newColor;
     }
     return nil;
+}
+
++(NSManagedObjectContext *) getContext {
+    
+    return ((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext;
+}
+
++(void)saveReadingStatusForBook:(NSString *)bookName andUserID:(NSString *)userID chapterNumber:(int)chapterNumber pageNumber:(int)pageNumber {
+    
+    NSManagedObjectContext *context = [self getContext];
+    
+    VCReadingStatusMO *readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:context];
+    readingStatus.bookName = bookName;
+    readingStatus.chapterNumber = chapterNumber;
+    readingStatus.pageNumber = pageNumber;
+    readingStatus.updateTime = [[NSDate new] timeIntervalSince1970];
+    readingStatus.userID = userID;
+    
+    // Save the context
+    NSError *error = nil;
+    if (![context save:&error]) {
+        NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
+        abort();
+    }
+}
+
++(VCReadingStatusMO *) getReadingStatusForBook:(NSString *)bookName andUserID:(NSString *)userID {
+    
+    NSManagedObjectContext *context = [self getContext];
+
+    // Retrieve all the shapes
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"ReadingStatus"];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bookName == %@", bookName];
+    [fetchRequest setPredicate:predicate];
+    NSError *error = nil;
+    NSArray *statusArray = [context executeFetchRequest:fetchRequest error:&error];
+    if (error) {
+        NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
+        abort();
+    }
+    VCReadingStatusMO *readingStatus = [statusArray lastObject];
+    if (readingStatus == nil) {
+        
+        VCReadingStatusMO *readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:context];
+        readingStatus.bookName = bookName;
+        readingStatus.userID = userID;
+        readingStatus.chapterNumber = 0;
+        readingStatus.pageNumber = 0;
+        readingStatus.updateTime = [[NSDate new] timeIntervalSince1970];
+        // Save the context
+        NSError *error = nil;
+        if (![context save:&error]) {
+            NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
+            abort();
+        }
+        
+    } else if (readingStatus.updateTime > [[NSDate new] timeIntervalSince1970]) {
+        NSLog(@"%s: timeStamp error", __PRETTY_FUNCTION__);
+        abort();
+    }
+    return readingStatus;
 }
 
 @end

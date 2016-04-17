@@ -7,14 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		41A2B5B578457A4DCECFA95E /* libPods-VCReader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B45A4D17CD603364319333 /* libPods-VCReader.a */; };
 		661DD5B61C90350D00C25E43 /* 都市巨灵神.txt in Resources */ = {isa = PBXBuildFile; fileRef = 661DD5B51C90350D00C25E43 /* 都市巨灵神.txt */; };
 		6620688E1C9ACF6400D00FEB /* 乐尊.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6620688D1C9ACF6400D00FEB /* 乐尊.txt */; };
 		662068901C9ADBC200D00FEB /* 官神.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6620688F1C9ADBC200D00FEB /* 官神.txt */; };
+		6622254C1CBD39DA001BE988 /* VCReaderAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622254B1CBD39DA001BE988 /* VCReaderAPIClient.m */; };
+		6622254E1CBE89E1001BE988 /* 大主宰.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6622254D1CBE89E1001BE988 /* 大主宰.txt */; };
+		662225751CBFC8F0001BE988 /* 修真归来在都市.txt in Resources */ = {isa = PBXBuildFile; fileRef = 662225741CBFC8F0001BE988 /* 修真归来在都市.txt */; };
+		662225A81CC3989E001BE988 /* VCBookMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622259D1CC3989E001BE988 /* VCBookMO+CoreDataProperties.m */; };
+		662225A91CC3989E001BE988 /* VCBookMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622259F1CC3989E001BE988 /* VCBookMO.m */; };
+		662225AA1CC3989E001BE988 /* VCChapterMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 662225A11CC3989E001BE988 /* VCChapterMO+CoreDataProperties.m */; };
+		662225AB1CC3989E001BE988 /* VCChapterMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 662225A31CC3989E001BE988 /* VCChapterMO.m */; };
+		662225AC1CC3989E001BE988 /* VCReadingStatusMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 662225A51CC3989E001BE988 /* VCReadingStatusMO+CoreDataProperties.m */; };
+		662225AD1CC3989E001BE988 /* VCReadingStatusMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 662225A71CC3989E001BE988 /* VCReadingStatusMO.m */; };
 		664341981C74654500580AEF /* 命師.txt in Resources */ = {isa = PBXBuildFile; fileRef = 664341971C74654500580AEF /* 命師.txt */; };
 		6643419D1C7A868A00580AEF /* VCChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419C1C7A868A00580AEF /* VCChapter.m */; };
 		664341A01C7BFA7C00580AEF /* VCPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419F1C7BFA7C00580AEF /* VCPage.m */; };
 		664341A51C7D102600580AEF /* Kaiti.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 664341A41C7D0E9200580AEF /* Kaiti.ttc */; };
-		664341A71C7D11E300580AEF /* STFangSong.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 664341A61C7D11C700580AEF /* STFangSong.ttf */; };
 		666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */; };
 		666266E81C86A265004F133F /* 超级学神.txt in Resources */ = {isa = PBXBuildFile; fileRef = 666266E71C86A265004F133F /* 超级学神.txt */; };
 		6668596C1C9683110046C8E8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6668596E1C9683110046C8E8 /* Localizable.strings */; };
@@ -29,16 +38,37 @@
 		667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACF91C58B05C00CD40E1 /* VCBook.m */; };
 		668AB1BB1C5BDD1C00395099 /* VCHelperClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */; };
 		669CD8DC1C95C0DB00CC99D3 /* 寻宝美利坚.txt in Resources */ = {isa = PBXBuildFile; fileRef = 669CD8DB1C95C0DB00CC99D3 /* 寻宝美利坚.txt */; };
+		66A313B71CB6D7CD00A43B7A /* 斗罗大陆.txt in Resources */ = {isa = PBXBuildFile; fileRef = 66A313B61CB6D7CD00A43B7A /* 斗罗大陆.txt */; };
+		66A313B91CB78FBC00A43B7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A313B81CB78FBC00A43B7A /* LaunchScreen.storyboard */; };
+		66A313DD1CB796B400A43B7A /* STFangSong.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 664341A61C7D11C700580AEF /* STFangSong.ttf */; };
+		66CA98001CB62E5400B52B5E /* VCSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66CA97FF1CB62E5400B52B5E /* VCSettingsTableViewController.m */; };
 		66D125C21C99D266000DD709 /* 斗破苍穹.txt in Resources */ = {isa = PBXBuildFile; fileRef = 66D125C11C99D266000DD709 /* 斗破苍穹.txt */; };
 		66F8C3761C5D078100DF7611 /* VCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C3751C5D078100DF7611 /* VCTextView.m */; };
 		66F8C3791C5D0AF300DF7611 /* VCView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C3781C5D0AF300DF7611 /* VCView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B4A3336345389BA90085697 /* Pods-VCReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VCReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VCReader/Pods-VCReader.debug.xcconfig"; sourceTree = "<group>"; };
 		661DD5B51C90350D00C25E43 /* 都市巨灵神.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "都市巨灵神.txt"; sourceTree = "<group>"; };
 		6620688D1C9ACF6400D00FEB /* 乐尊.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "乐尊.txt"; sourceTree = "<group>"; };
 		6620688F1C9ADBC200D00FEB /* 官神.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "官神.txt"; sourceTree = "<group>"; };
 		662068921C9C7B5000D00FEB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		6622254A1CBD39DA001BE988 /* VCReaderAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCReaderAPIClient.h; sourceTree = "<group>"; };
+		6622254B1CBD39DA001BE988 /* VCReaderAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCReaderAPIClient.m; sourceTree = "<group>"; };
+		6622254D1CBE89E1001BE988 /* 大主宰.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "大主宰.txt"; sourceTree = "<group>"; };
+		662225741CBFC8F0001BE988 /* 修真归来在都市.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "修真归来在都市.txt"; sourceTree = "<group>"; };
+		6622259C1CC3989E001BE988 /* VCBookMO+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VCBookMO+CoreDataProperties.h"; path = "VCReader/VCBookMO+CoreDataProperties.h"; sourceTree = "<group>"; };
+		6622259D1CC3989E001BE988 /* VCBookMO+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "VCBookMO+CoreDataProperties.m"; path = "VCReader/VCBookMO+CoreDataProperties.m"; sourceTree = "<group>"; };
+		6622259E1CC3989E001BE988 /* VCBookMO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCBookMO.h; path = VCReader/VCBookMO.h; sourceTree = "<group>"; };
+		6622259F1CC3989E001BE988 /* VCBookMO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCBookMO.m; path = VCReader/VCBookMO.m; sourceTree = "<group>"; };
+		662225A01CC3989E001BE988 /* VCChapterMO+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VCChapterMO+CoreDataProperties.h"; path = "VCReader/VCChapterMO+CoreDataProperties.h"; sourceTree = "<group>"; };
+		662225A11CC3989E001BE988 /* VCChapterMO+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "VCChapterMO+CoreDataProperties.m"; path = "VCReader/VCChapterMO+CoreDataProperties.m"; sourceTree = "<group>"; };
+		662225A21CC3989E001BE988 /* VCChapterMO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCChapterMO.h; path = VCReader/VCChapterMO.h; sourceTree = "<group>"; };
+		662225A31CC3989E001BE988 /* VCChapterMO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCChapterMO.m; path = VCReader/VCChapterMO.m; sourceTree = "<group>"; };
+		662225A41CC3989E001BE988 /* VCReadingStatusMO+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VCReadingStatusMO+CoreDataProperties.h"; path = "VCReader/VCReadingStatusMO+CoreDataProperties.h"; sourceTree = "<group>"; };
+		662225A51CC3989E001BE988 /* VCReadingStatusMO+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "VCReadingStatusMO+CoreDataProperties.m"; path = "VCReader/VCReadingStatusMO+CoreDataProperties.m"; sourceTree = "<group>"; };
+		662225A61CC3989E001BE988 /* VCReadingStatusMO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCReadingStatusMO.h; path = VCReader/VCReadingStatusMO.h; sourceTree = "<group>"; };
+		662225A71CC3989E001BE988 /* VCReadingStatusMO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCReadingStatusMO.m; path = VCReader/VCReadingStatusMO.m; sourceTree = "<group>"; };
 		664341971C74654500580AEF /* 命師.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "命師.txt"; sourceTree = "<group>"; };
 		6643419B1C7A868A00580AEF /* VCChapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCChapter.h; sourceTree = "<group>"; };
 		6643419C1C7A868A00580AEF /* VCChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCChapter.m; sourceTree = "<group>"; };
@@ -70,11 +100,17 @@
 		668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCHelperClass.m; sourceTree = "<group>"; };
 		668AB1BD1C5BDF8900395099 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		669CD8DB1C95C0DB00CC99D3 /* 寻宝美利坚.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "寻宝美利坚.txt"; sourceTree = "<group>"; };
+		66A313B61CB6D7CD00A43B7A /* 斗罗大陆.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "斗罗大陆.txt"; sourceTree = "<group>"; };
+		66A313B81CB78FBC00A43B7A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		66CA97FE1CB62E5400B52B5E /* VCSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCSettingsTableViewController.h; sourceTree = "<group>"; };
+		66CA97FF1CB62E5400B52B5E /* VCSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCSettingsTableViewController.m; sourceTree = "<group>"; };
 		66D125C11C99D266000DD709 /* 斗破苍穹.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "斗破苍穹.txt"; sourceTree = "<group>"; };
 		66F8C3741C5D078100DF7611 /* VCTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCTextView.h; sourceTree = "<group>"; };
 		66F8C3751C5D078100DF7611 /* VCTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCTextView.m; sourceTree = "<group>"; };
 		66F8C3771C5D0AF300DF7611 /* VCView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCView.h; sourceTree = "<group>"; };
 		66F8C3781C5D0AF300DF7611 /* VCView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCView.m; sourceTree = "<group>"; };
+		7448617C5C4D6839113C0905 /* Pods-VCReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VCReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-VCReader/Pods-VCReader.release.xcconfig"; sourceTree = "<group>"; };
+		F4B45A4D17CD603364319333 /* libPods-VCReader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VCReader.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,15 +118,48 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41A2B5B578457A4DCECFA95E /* libPods-VCReader.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		664341AD1C7D56A900580AEF /* text files */ = {
+		662225491CBD395E001BE988 /* APIClients */ = {
 			isa = PBXGroup;
 			children = (
+				6622254A1CBD39DA001BE988 /* VCReaderAPIClient.h */,
+				6622254B1CBD39DA001BE988 /* VCReaderAPIClient.m */,
+			);
+			name = APIClients;
+			sourceTree = "<group>";
+		};
+		6622255B1CBF968C001BE988 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				6622259C1CC3989E001BE988 /* VCBookMO+CoreDataProperties.h */,
+				6622259D1CC3989E001BE988 /* VCBookMO+CoreDataProperties.m */,
+				6622259E1CC3989E001BE988 /* VCBookMO.h */,
+				6622259F1CC3989E001BE988 /* VCBookMO.m */,
+				662225A01CC3989E001BE988 /* VCChapterMO+CoreDataProperties.h */,
+				662225A11CC3989E001BE988 /* VCChapterMO+CoreDataProperties.m */,
+				662225A21CC3989E001BE988 /* VCChapterMO.h */,
+				662225A31CC3989E001BE988 /* VCChapterMO.m */,
+				662225A41CC3989E001BE988 /* VCReadingStatusMO+CoreDataProperties.h */,
+				662225A51CC3989E001BE988 /* VCReadingStatusMO+CoreDataProperties.m */,
+				662225A61CC3989E001BE988 /* VCReadingStatusMO.h */,
+				662225A71CC3989E001BE988 /* VCReadingStatusMO.m */,
+			);
+			name = "Core Data";
+			path = ..;
+			sourceTree = "<group>";
+		};
+		664341AD1C7D56A900580AEF /* book files */ = {
+			isa = PBXGroup;
+			children = (
+				662225741CBFC8F0001BE988 /* 修真归来在都市.txt */,
+				6622254D1CBE89E1001BE988 /* 大主宰.txt */,
+				66A313B61CB6D7CD00A43B7A /* 斗罗大陆.txt */,
 				6620688D1C9ACF6400D00FEB /* 乐尊.txt */,
 				66D125C11C99D266000DD709 /* 斗破苍穹.txt */,
 				669CD8DB1C95C0DB00CC99D3 /* 寻宝美利坚.txt */,
@@ -99,7 +168,7 @@
 				666266E71C86A265004F133F /* 超级学神.txt */,
 				664341971C74654500580AEF /* 命師.txt */,
 			);
-			name = "text files";
+			name = "book files";
 			sourceTree = "<group>";
 		};
 		664341AE1C7D56B800580AEF /* fonts */ = {
@@ -124,7 +193,9 @@
 			isa = PBXGroup;
 			children = (
 				667AACCE1C545D9400CD40E1 /* VCReader */,
+				66A313E31CB7C5CE00A43B7A /* Frameworks */,
 				667AACCD1C545D9400CD40E1 /* Products */,
+				C7054E4DDEEF3B154287D12B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,6 +210,8 @@
 		667AACCE1C545D9400CD40E1 /* VCReader */ = {
 			isa = PBXGroup;
 			children = (
+				6622255B1CBF968C001BE988 /* Core Data */,
+				662225491CBD395E001BE988 /* APIClients */,
 				669CD8D71C913E5500CC99D3 /* VCModels */,
 				669CD8D61C913E1400CC99D3 /* Tools */,
 				666266E11C859503004F133F /* TableViewCells */,
@@ -170,6 +243,8 @@
 				667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */,
 				666EECB91C83C3E700DF5621 /* VCChapterTableViewController.h */,
 				666EECBA1C83C3E700DF5621 /* VCChapterTableViewController.m */,
+				66CA97FE1CB62E5400B52B5E /* VCSettingsTableViewController.h */,
+				66CA97FF1CB62E5400B52B5E /* VCSettingsTableViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -178,10 +253,11 @@
 			isa = PBXGroup;
 			children = (
 				667AACD81C545D9400CD40E1 /* Main.storyboard */,
+				66A313B81CB78FBC00A43B7A /* LaunchScreen.storyboard */,
 				667AACDB1C545D9400CD40E1 /* VCReader.xcdatamodeld */,
 				667AACDE1C545D9400CD40E1 /* Assets.xcassets */,
 				664341AE1C7D56B800580AEF /* fonts */,
-				664341AD1C7D56A900580AEF /* text files */,
+				664341AD1C7D56A900580AEF /* book files */,
 				6668596E1C9683110046C8E8 /* Localizable.strings */,
 			);
 			name = Resources;
@@ -213,6 +289,24 @@
 			name = VCModels;
 			sourceTree = "<group>";
 		};
+		66A313E31CB7C5CE00A43B7A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F4B45A4D17CD603364319333 /* libPods-VCReader.a */,
+			);
+			name = Frameworks;
+			path = VCReader;
+			sourceTree = "<group>";
+		};
+		C7054E4DDEEF3B154287D12B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0B4A3336345389BA90085697 /* Pods-VCReader.debug.xcconfig */,
+				7448617C5C4D6839113C0905 /* Pods-VCReader.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -220,9 +314,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 667AACE61C545D9400CD40E1 /* Build configuration list for PBXNativeTarget "VCReader" */;
 			buildPhases = (
+				12C31A7C016F210BA3584008 /* Check Pods Manifest.lock */,
 				667AACC81C545D9400CD40E1 /* Sources */,
 				667AACC91C545D9400CD40E1 /* Frameworks */,
 				667AACCA1C545D9400CD40E1 /* Resources */,
+				44F762215D8B6FE26AF1C33C /* Embed Pods Frameworks */,
+				AD1C2B06419F9DAF0916C951 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -277,21 +374,73 @@
 			buildActionMask = 2147483647;
 			files = (
 				6620688E1C9ACF6400D00FEB /* 乐尊.txt in Resources */,
-				664341A71C7D11E300580AEF /* STFangSong.ttf in Resources */,
 				6668596C1C9683110046C8E8 /* Localizable.strings in Resources */,
+				66A313DD1CB796B400A43B7A /* STFangSong.ttf in Resources */,
+				66A313B71CB6D7CD00A43B7A /* 斗罗大陆.txt in Resources */,
+				662225751CBFC8F0001BE988 /* 修真归来在都市.txt in Resources */,
 				664341A51C7D102600580AEF /* Kaiti.ttc in Resources */,
 				669CD8DC1C95C0DB00CC99D3 /* 寻宝美利坚.txt in Resources */,
 				666266E81C86A265004F133F /* 超级学神.txt in Resources */,
 				662068901C9ADBC200D00FEB /* 官神.txt in Resources */,
 				664341981C74654500580AEF /* 命師.txt in Resources */,
+				6622254E1CBE89E1001BE988 /* 大主宰.txt in Resources */,
 				66D125C21C99D266000DD709 /* 斗破苍穹.txt in Resources */,
 				667AACDF1C545D9400CD40E1 /* Assets.xcassets in Resources */,
+				66A313B91CB78FBC00A43B7A /* LaunchScreen.storyboard in Resources */,
 				661DD5B61C90350D00C25E43 /* 都市巨灵神.txt in Resources */,
 				667AACDA1C545D9400CD40E1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		12C31A7C016F210BA3584008 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		44F762215D8B6FE26AF1C33C /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VCReader/Pods-VCReader-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AD1C2B06419F9DAF0916C951 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VCReader/Pods-VCReader-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		667AACC81C545D9400CD40E1 /* Sources */ = {
@@ -301,16 +450,24 @@
 				666EECBB1C83C3E700DF5621 /* VCChapterTableViewController.m in Sources */,
 				6643419D1C7A868A00580AEF /* VCChapter.m in Sources */,
 				66F8C3761C5D078100DF7611 /* VCTextView.m in Sources */,
+				662225A81CC3989E001BE988 /* VCBookMO+CoreDataProperties.m in Sources */,
 				667AACDD1C545D9400CD40E1 /* VCReader.xcdatamodeld in Sources */,
 				66F8C3791C5D0AF300DF7611 /* VCView.m in Sources */,
+				6622254C1CBD39DA001BE988 /* VCReaderAPIClient.m in Sources */,
+				662225AC1CC3989E001BE988 /* VCReadingStatusMO+CoreDataProperties.m in Sources */,
+				66CA98001CB62E5400B52B5E /* VCSettingsTableViewController.m in Sources */,
 				667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */,
 				666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */,
 				668AB1BB1C5BDD1C00395099 /* VCHelperClass.m in Sources */,
 				666EECB81C81BEC600DF5621 /* VCLibraryTableViewController.m in Sources */,
 				667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */,
+				662225AD1CC3989E001BE988 /* VCReadingStatusMO.m in Sources */,
 				664341A01C7BFA7C00580AEF /* VCPage.m in Sources */,
+				662225AA1CC3989E001BE988 /* VCChapterMO+CoreDataProperties.m in Sources */,
+				662225A91CC3989E001BE988 /* VCBookMO.m in Sources */,
 				667AACD41C545D9400CD40E1 /* AppDelegate.m in Sources */,
 				667AACD11C545D9400CD40E1 /* main.m in Sources */,
+				662225AB1CC3989E001BE988 /* VCChapterMO.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,13 +576,19 @@
 		};
 		667AACE71C545D9400CD40E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0B4A3336345389BA90085697 /* Pods-VCReader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/VCReader",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = VCReader/PrefixHeader.pch;
 				INFOPLIST_FILE = VCReader/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.VHHC.VCReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -435,13 +598,19 @@
 		};
 		667AACE81C545D9400CD40E1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7448617C5C4D6839113C0905 /* Pods-VCReader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/VCReader",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = VCReader/PrefixHeader.pch;
 				INFOPLIST_FILE = VCReader/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.VHHC.VCReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";

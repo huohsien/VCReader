@@ -98,7 +98,7 @@
     previousTitleRange = NSMakeRange(0, 0);
     
     NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:@"(第(一|两|二|三|四|五|六|七|八|九|十|零|百|千|[0-9])+章|序章|楔子|后记).*[\\n\\r\\s]*"
+                                  regularExpressionWithPattern:@"(第(一|两|二|三|四|五|六|七|八|九|十|零|百|千|[0-9])+章|序章|楔子|引子|后记).*[\\n\\r\\s]*"
                                   options:NSRegularExpressionCaseInsensitive
                                   error:&error];
     
@@ -164,6 +164,7 @@
 
     NSLog(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
     
+    _totalNumberOfChapters = count;
     
     [_chapterContentRangeStringArray addObject:NSStringFromRange(NSMakeRange(NSMaxRange(previousTitleRange) , _contentString.length - NSMaxRange(previousTitleRange)))];
     [VCHelperClass storeIntoBook:_bookName withField:@"numberOfChapters" andData:@(count).stringValue];
@@ -202,6 +203,7 @@
     _contentString = content;
     
 }
+
 -(NSString *)getChapterStringFromString:(NSString *)string {
     
     NSError *error = NULL;

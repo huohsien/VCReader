@@ -37,12 +37,25 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>
-	<key>UIFileSharingEnabled</key>
-	<true/>
 	<key>UIApplicationExitsOnSuspend</key>
 	<true/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>vcreader</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.VHHC.VCReader</string>
+		</dict>
+	</array>
+	<key>CFBundleDisplayName</key>
+	<string>小说神器</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
