@@ -15,4 +15,7 @@ extern NSString * const kVCReaderBaseURLString;
 
 + (VCReaderAPIClient *) sharedClient;
 
+- (void)getReadingStatusForBookNamed:(NSString *)bookName success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
+
+- (void)saveReadingStatusForBookNamed:(NSString *)bookName chapterNumber:(int)chapterNumber pageNumber:(int)pageNumber success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
 @end

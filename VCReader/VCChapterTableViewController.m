@@ -8,6 +8,7 @@
 
 #import "VCChapterTableViewController.h"
 #import "VCHelperClass.h"
+#import "VCReaderAPIClient.h"
 
 @interface VCChapterTableViewController ()
 
@@ -85,8 +86,13 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:(int)indexPath.row pageNumber:0];
-
+    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:_book.bookName chapterNumber:(int)indexPath.row pageNumber:0 success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:(int)indexPath.row pageNumber:0];
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"Failure -- %@", error);
+    }];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

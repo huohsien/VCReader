@@ -12,6 +12,7 @@
 #import "VCChapter.h"
 #import <QuartzCore/QuartzCore.h>
 #import "VCReadingStatusMO+CoreDataProperties.h"
+#import "VCReaderAPIClient.h"
 
 @interface VCPageViewController : UIViewController
 
@@ -41,6 +42,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *batteryImageView;
 @property (weak, nonatomic) IBOutlet UIView *topStatusBarView;
 @property (weak, nonatomic) IBOutlet UIView *bottomStatusBarView;
+
+@property (nonatomic, strong) NSDictionary *jsonResponse;
 
 
 @end

@@ -185,10 +185,11 @@
 @synthesize chapterNumber = _chapterNumber;
 @synthesize pageNumber = _pageNumber;
 
+@synthesize jsonResponse = _jsonResponse;
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
     [self baseInit];
     [self setup];
 }
@@ -225,7 +226,18 @@
     
     [super viewWillDisappear:animated];
     
-    [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:_chapterNumber pageNumber:_pageNumber];
+    
+    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:_book.bookName chapterNumber:_chapterNumber pageNumber:_pageNumber success:^(NSURLSessionDataTask *task, id responseObject) {
+
+        [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:_chapterNumber pageNumber:_pageNumber];
+
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"Failure -- %@", error);
+    }];
+
+
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -338,21 +350,40 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
-    
-//    _chapterNumber = 195;
-//    _pageNumber = 0;
-
-    
-    VCReadingStatusMO *readingStatus = [VCHelperClass getReadingStatusForBook:_book.bookName andUserID:@"tester"];
-    _chapterNumber = readingStatus.chapterNumber;
-    _pageNumber = readingStatus.pageNumber;
-
-    
     [self.activityIndicator startAnimating];
+
+    [self startMonitoringBattery];
+    [self StartTimerForClock];
     
-    dispatch_queue_t queue = dispatch_get_main_queue();
-    dispatch_async(queue, ^{
+    [[VCReaderAPIClient sharedClient] getReadingStatusForBookNamed:_book.bookName success:^(NSURLSessionDataTask *task, id responseObject) {
         
+        self.jsonResponse = responseObject;
+        
+        NSDictionary *dict = self.jsonResponse;
+        int chapterNumber = [dict[@"chapter"] intValue];
+        int pageNumber = [dict[@"page"] intValue];
+        
+        [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:chapterNumber pageNumber:pageNumber];
+        [self loadContent];
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"Failure -- %@", error);
+    }];
+
+}
+
+- (void)loadContent {
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+        //    _chapterNumber = 195;
+        //    _pageNumber = 0;
+        
+        
+        VCReadingStatusMO *readingStatus = [VCHelperClass getReadingStatusForBook:_book.bookName andUserID:@"tester"];
+        _chapterNumber = readingStatus.chapterNumber;
+        _pageNumber = readingStatus.pageNumber;
+    
         [self initPages]; // execute only once
         
         [self updateProgessInfo];
@@ -360,10 +391,6 @@
         [self.activityIndicator setHidden:YES];
     });
     
-    [self startMonitoringBattery];
-    [self StartTimerForClock];
-    
-
 }
 
 - (void)showStatusBar:(BOOL)show {
@@ -381,8 +408,14 @@
 
 -(void) applicationWillResignActive:(NSNotification *)notification {
     
-    [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:_chapterNumber pageNumber:_pageNumber];
+    
+    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:_book.bookName chapterNumber:_chapterNumber pageNumber:_pageNumber success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:_chapterNumber pageNumber:_pageNumber];
 
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"Failure -- %@", error);
+    }];
 }
 
 #pragma mark - uicontrol callbacks
