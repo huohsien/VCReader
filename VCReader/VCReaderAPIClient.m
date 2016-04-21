@@ -39,7 +39,8 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     
     NSString* path = [NSString stringWithFormat:@"user_status_get.php?book_name=%@", bookName];
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"path = %@\n encoded path = %@", path, encodedPath);
+    
+    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
     
     [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         if (success) {
@@ -53,13 +54,14 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     
 }
 
-- (void)saveReadingStatusForBookNamed:(NSString *)bookName chapterNumber:(int)chapterNumber pageNumber:(int)pageNumber success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
+- (void)saveReadingStatusForBookNamed:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
     
     
-    NSString* path = [NSString stringWithFormat:@"user_status_update.php?book_name=%@&current_reading_chapter=%d&current_reading_page=%d", bookName, chapterNumber, pageNumber];
+    NSString* path = [NSString stringWithFormat:@"user_status_update.php?book_name=%@&current_reading_chapter=%d&current_reading_word=%d", bookName, chapterNumber, wordNumber];
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"path = %@\n encoded path = %@", path, encodedPath);
     
+    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
+
     [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         if (success) {
             success(task, responseObject);

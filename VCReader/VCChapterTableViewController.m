@@ -86,14 +86,19 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:_book.bookName chapterNumber:(int)indexPath.row pageNumber:0 success:^(NSURLSessionDataTask *task, id responseObject) {
+    [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:(int)indexPath.row wordNumber:0 inViewController:self];
+
+    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:_book.bookName chapterNumber:(int)indexPath.row wordNumber:0 success:^(NSURLSessionDataTask *task, id responseObject) {
         
-        [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:(int)indexPath.row pageNumber:0];
+        [self.navigationController popViewControllerAnimated:YES];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"Failure -- %@", error);
+        
+        [VCHelperClass showErrorAlertViewWithTitle:@"Web Error" andMessage:error.debugDescription inViewController:self];
+
+        NSLog(@"%s: Failure -- %@",__PRETTY_FUNCTION__, error);
+
     }];
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

@@ -30,13 +30,14 @@
     CGFloat _chapterContentFontSize;
     UIColor *_backgroundColor;
     UIColor *_textColor;
+    
 
 }
 
 @synthesize book = _book;
 @synthesize chapterNumber = _chapterNumber;
-@synthesize totalNumberOfPages = _totalNumberOfPages;
-
+@synthesize pageArray = _pageArray;
+@synthesize firstWordCountOfEachPage = _firstWordCountOfEachPage;
 
 -(instancetype) initForVCBook:(VCBook *)book OfChapterNumber:(int)chapterNumber inViewController:(VCPageViewController *)viewController inViewingRect:(CGRect)rect{
     
@@ -63,32 +64,24 @@
         
         _rectOfTextView = rect;
         _contentView = viewController.contentView;
+        
+        _firstWordCountOfEachPage = [NSMutableArray new];
+        
+        _pageArray = [self renderPages];
 
     }
     return self;
 }
 
--(NSMutableArray *) renderPages {
-    return [self renderPagesForChapter:_chapterNumber];
-}
-
--(NSMutableArray *) renderPagesInThePreviousChapter {
-    return [self renderPagesForChapter:_chapterNumber - 1];
-}
--(NSMutableArray *) renderPagesInTheNextChapter {
+-(NSArray *) renderPages {
     
-    return [self renderPagesForChapter:_chapterNumber + 1];
-}
-
--(NSMutableArray*) renderPagesForChapter:(int)chapterNumber {
-    
-    if (chapterNumber < 0 || chapterNumber > _book.totalNumberOfChapters - 1) {
+    if (_chapterNumber < 0 || _chapterNumber > _book.totalNumberOfChapters - 1) {
         
         return nil;
     }
     
-    NSString *chapterTitleString = [_book getChapterTitleStringFromChapterNumber:chapterNumber];
-    NSString *chapterTextContentString = [_book getTextContentStringFromChapterNumber:chapterNumber];
+    NSString *chapterTitleString = [_book getChapterTitleStringFromChapterNumber:_chapterNumber];
+    NSString *chapterTextContentString = [_book getTextContentStringFromChapterNumber:_chapterNumber];
 
     
     _contentAttributedTextString = [[NSMutableAttributedString alloc] initWithAttributedString:[self createAttributiedChapterTitleStringFromString:[NSString stringWithFormat:@"\n%@\n\n",chapterTitleString]]];
@@ -99,7 +92,6 @@
     [_textStorage addLayoutManager:_layoutManager];
     
     
-//    if (_layoutManager.textContainers.count == 0) {
     
     NSMutableArray *pageArray = [NSMutableArray new];
     NSRange range = NSMakeRange(0, 0);
@@ -110,6 +102,8 @@
         NSTextContainer *myTextContainer = [[NSTextContainer alloc] initWithSize:_rectOfTextView.size];
         [_layoutManager addTextContainer:myTextContainer];
         range = [_layoutManager glyphRangeForTextContainer:myTextContainer];
+        
+        [_firstWordCountOfEachPage addObject:[NSNumber numberWithUnsignedInteger:range.location]];
         
         VCTextView *pageTextView = [[VCTextView alloc] initWithFrame:_rectOfTextView textContainer:myTextContainer];
         
@@ -122,12 +116,11 @@
         [pageTextView setBackgroundColor:[UIColor clearColor]];
         [pageView addSubview:pageTextView];
         
-        VCPage *page = [[VCPage alloc] initWithView:pageView andChapterNumber:chapterNumber withPageNumber:numberOfPages];
+        VCPage *page = [[VCPage alloc] initWithView:pageView andChapterNumber:_chapterNumber withPageNumber:numberOfPages];
         [pageArray addObject:page];
         
         numberOfPages++;
     }
-//    }
     return pageArray;
 }
 

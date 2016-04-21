@@ -83,14 +83,14 @@
     return ((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext;
 }
 
-+(void)saveReadingStatusForBook:(NSString *)bookName andUserID:(NSString *)userID chapterNumber:(int)chapterNumber pageNumber:(int)pageNumber {
++(void)saveReadingStatusForBook:(NSString *)bookName andUserID:(NSString *)userID chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber inViewController:(UIViewController *)vc {
     
     NSManagedObjectContext *context = [self getContext];
     
     VCReadingStatusMO *readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:context];
     readingStatus.bookName = bookName;
     readingStatus.chapterNumber = chapterNumber;
-    readingStatus.pageNumber = pageNumber;
+    readingStatus.wordNumber = wordNumber;
     readingStatus.updateTime = [[NSDate new] timeIntervalSince1970];
     readingStatus.userID = userID;
     
@@ -98,11 +98,12 @@
     NSError *error = nil;
     if (![context save:&error]) {
         NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
+        [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data" inViewController:vc];
         abort();
     }
 }
 
-+(VCReadingStatusMO *) getReadingStatusForBook:(NSString *)bookName andUserID:(NSString *)userID {
++(VCReadingStatusMO *) getReadingStatusForBook:(NSString *)bookName andUserID:(NSString *)userID inViewController:(UIViewController *)vc {
     
     NSManagedObjectContext *context = [self getContext];
 
@@ -120,18 +121,20 @@
     VCReadingStatusMO *readingStatus = [statusArray lastObject];
     if (readingStatus == nil) {
         
-        VCReadingStatusMO *readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:context];
-        readingStatus.bookName = bookName;
-        readingStatus.userID = userID;
-        readingStatus.chapterNumber = 0;
-        readingStatus.pageNumber = 0;
-        readingStatus.updateTime = [[NSDate new] timeIntervalSince1970];
-        // Save the context
-        NSError *error = nil;
-        if (![context save:&error]) {
-            NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
-            abort();
-        }
+//        VCReadingStatusMO *readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:context];
+//        readingStatus.bookName = bookName;
+//        readingStatus.userID = userID;
+//        readingStatus.chapterNumber = 0;
+//        readingStatus.pageNumber = 0;
+//        readingStatus.updateTime = [[NSDate new] timeIntervalSince1970];
+//        // Save the context
+//        NSError *error = nil;
+//        if (![context save:&error]) {
+//            NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
+//            abort();
+//        }
+
+        [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not find user's reading status" inViewController:vc];
         
     } else if (readingStatus.updateTime > [[NSDate new] timeIntervalSince1970]) {
         NSLog(@"%s: timeStamp error", __PRETTY_FUNCTION__);
@@ -140,5 +143,16 @@
     return readingStatus;
 }
 
++(void) showErrorAlertViewWithTitle:(NSString *)title andMessage:(NSString *)message inViewController:(UIViewController *)vc {
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+    [alertController addAction:okAction];
+    
+    [vc presentViewController:alertController animated:YES completion:nil];
+}
 
 @end

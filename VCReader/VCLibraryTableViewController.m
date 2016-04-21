@@ -41,9 +41,9 @@
     //hide tab bar
     self.tabBarController.tabBar.hidden = NO;
     
-    _bookInfoArray = [NSArray arrayWithObjects:/*@{@"bookName":@"都市巨灵神",@"coverImageFileName":@"book3_cover"},*/@{@"bookName":@"斗破苍穹",@"coverImageFileName":@"book4_cover"},/*@{@"bookName":@"官神",@"coverImageFileName":@"book5_cover"},@{@"bookName":@"寻宝美利坚",@"coverImageFileName":@"book6_cover"},@{@"bookName":@"乐尊",@"coverImageFileName":@"book7_cover"},*/@{@"bookName":@"斗罗大陆",@"coverImageFileName":@"book8_cover"}, @{@"bookName":@"大主宰",@"coverImageFileName":@"book9_cover"},@{@"bookName":@"修真归来在都市",@"coverImageFileName":@"book10_cover"}, nil];
+    _bookInfoArray = [NSArray arrayWithObjects:/*@{@"bookName":@"都市巨灵神",@"coverImageFileName":@"book3_cover"},*/@{@"bookName":@"斗破苍穹",@"coverImageFileName":@"book4_cover"},/*@{@"bookName":@"官神",@"coverImageFileName":@"book5_cover"},@{@"bookName":@"寻宝美利坚",@"coverImageFileName":@"book6_cover"},@{@"bookName":@"乐尊",@"coverImageFileName":@"book7_cover"},*/@{@"bookName":@"斗罗大陆",@"coverImageFileName":@"book8_cover"}, @{@"bookName":@"大主宰",@"coverImageFileName":@"book9_cover"},@{@"bookName":@"修真归来在都市",@"coverImageFileName":@"book10_cover"},@{@"bookName":@"重生完美时代",@"coverImageFileName":@"book11_cover"}, nil];
 
-    NSString *nameOfLastReadBook = [[NSUserDefaults standardUserDefaults] objectForKey:@"the last read book"];
+    NSString *nameOfLastReadBook = [[NSUserDefaults standardUserDefaults] objectForKey:@"name of the last read book"];
     
     if (nameOfLastReadBook) {
         UIStoryboard*  sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

@@ -19,11 +19,9 @@
 
 @property (strong, nonatomic) VCBook *book;
 @property (assign) int chapterNumber;
-@property (assign) int totalNumberOfPages;
+@property (strong, nonatomic) NSArray *pageArray;
+@property (strong, nonatomic) NSMutableArray *firstWordCountOfEachPage;
 
 -(instancetype) initForVCBook:(VCBook *)book OfChapterNumber:(int)chapterNumber inViewController:(VCPageViewController *)viewController inViewingRect:(CGRect)rect;
--(NSMutableArray*) renderPages;
--(NSMutableArray*) renderPagesInThePreviousChapter;
--(NSMutableArray*) renderPagesInTheNextChapter;
 
 @end

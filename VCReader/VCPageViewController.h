@@ -28,8 +28,8 @@
 @property (strong) NSMutableDictionary *textRenderAttributionDict;
 
 @property (strong, nonatomic) VCBook *book;
-@property (assign) int chapterNumber;
-@property (assign) int pageNumber;
+//@property (assign) int chapterNumber;
+//@property (assign) int pageNumber;
 
 @property (strong, nonatomic) UIView *contentView;
 
