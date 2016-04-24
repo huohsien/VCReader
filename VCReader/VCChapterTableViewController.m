@@ -94,7 +94,7 @@
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-        [VCHelperClass showErrorAlertViewWithTitle:@"Web Error" andMessage:error.debugDescription inViewController:self];
+        [VCHelperClass showErrorAlertViewWithTitle:@"Web Error" andMessage:error.debugDescription];
 
         NSLog(@"%s: Failure -- %@",__PRETTY_FUNCTION__, error);
 

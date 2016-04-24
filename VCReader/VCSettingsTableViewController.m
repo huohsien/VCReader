@@ -28,6 +28,8 @@
     self.navigationController.navigationBar.barTintColor = [UIColor redColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+    [self.nickNameLabel setText:[[NSUserDefaults standardUserDefaults] objectForKey:@"nickname"]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -119,6 +121,11 @@
     [self.searchTextField resignFirstResponder];
 }
 
+- (IBAction)logoutButtonPressed:(id)sender {
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"token"];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"nickname"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 
 @end

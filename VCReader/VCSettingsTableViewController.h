@@ -11,5 +11,6 @@
 @interface VCSettingsTableViewController : UITableViewController
 
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
+@property (weak, nonatomic) IBOutlet UILabel *nickNameLabel;
 
 @end

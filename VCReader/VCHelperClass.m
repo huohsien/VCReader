@@ -8,6 +8,7 @@
 
 #import "VCHelperClass.h"
 #import "VCReadingStatusMO+CoreDataProperties.h"
+#import "UIAlertController+Window.h"
 
 @implementation VCHelperClass
 
@@ -98,7 +99,7 @@
     NSError *error = nil;
     if (![context save:&error]) {
         NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
-        [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data" inViewController:vc];
+        [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
         abort();
     }
 }
@@ -134,7 +135,7 @@
 //            abort();
 //        }
 
-        [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not find user's reading status" inViewController:vc];
+        [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not find user's reading status"];
         
     } else if (readingStatus.updateTime > [[NSDate new] timeIntervalSince1970]) {
         NSLog(@"%s: timeStamp error", __PRETTY_FUNCTION__);
@@ -143,7 +144,7 @@
     return readingStatus;
 }
 
-+(void) showErrorAlertViewWithTitle:(NSString *)title andMessage:(NSString *)message inViewController:(UIViewController *)vc {
++(void) showErrorAlertViewWithTitle:(NSString *)title andMessage:(NSString *)message {
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
                                                                              message:message
@@ -152,7 +153,7 @@
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
     [alertController addAction:okAction];
     
-    [vc presentViewController:alertController animated:YES completion:nil];
+    [alertController show];
 }
 
 @end

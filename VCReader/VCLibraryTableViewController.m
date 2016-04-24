@@ -23,24 +23,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    //set status bar styke
+    //set status bar style
     [self setNeedsStatusBarAppearanceUpdate];
     
     //set navigation bar style
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationController.navigationBar.barTintColor = [UIColor redColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
     
     //hide tab bar
     self.tabBarController.tabBar.hidden = NO;
-    
+    self.title = @"书架";
+    self.navigationController.title = @"书架";
+
     _bookInfoArray = [NSArray arrayWithObjects:/*@{@"bookName":@"都市巨灵神",@"coverImageFileName":@"book3_cover"},*/@{@"bookName":@"斗破苍穹",@"coverImageFileName":@"book4_cover"},/*@{@"bookName":@"官神",@"coverImageFileName":@"book5_cover"},@{@"bookName":@"寻宝美利坚",@"coverImageFileName":@"book6_cover"},@{@"bookName":@"乐尊",@"coverImageFileName":@"book7_cover"},*/@{@"bookName":@"斗罗大陆",@"coverImageFileName":@"book8_cover"}, @{@"bookName":@"大主宰",@"coverImageFileName":@"book9_cover"},@{@"bookName":@"修真归来在都市",@"coverImageFileName":@"book10_cover"},@{@"bookName":@"重生完美时代",@"coverImageFileName":@"book11_cover"}, nil];
 
     NSString *nameOfLastReadBook = [[NSUserDefaults standardUserDefaults] objectForKey:@"name of the last read book"];

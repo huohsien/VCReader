@@ -22,6 +22,17 @@
 		662225AD1CC3989E001BE988 /* VCReadingStatusMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 662225A71CC3989E001BE988 /* VCReadingStatusMO.m */; };
 		662225B01CC616DB001BE988 /* VCSyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 662225AF1CC616DB001BE988 /* VCSyncEngine.m */; };
 		662225B81CC77D55001BE988 /* 重生完美时代.txt in Resources */ = {isa = PBXBuildFile; fileRef = 662225B71CC77D55001BE988 /* 重生完美时代.txt */; };
+		662225BB1CC9F973001BE988 /* VCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 662225BA1CC9F973001BE988 /* VCLoginViewController.m */; };
+		662225C41CCB7B17001BE988 /* UIAlertController+window.m in Sources */ = {isa = PBXBuildFile; fileRef = 662225C31CCB7B17001BE988 /* UIAlertController+window.m */; };
+		662225CC1CCCA781001BE988 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225CB1CCCA781001BE988 /* TencentOpenAPI.framework */; };
+		662225CE1CCCA7AC001BE988 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225CD1CCCA7AC001BE988 /* Security.framework */; };
+		662225D01CCCA8EE001BE988 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225CF1CCCA8EE001BE988 /* SystemConfiguration.framework */; };
+		662225D21CCCA91B001BE988 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225D11CCCA91B001BE988 /* CoreGraphics.framework */; };
+		662225D41CCCAED1001BE988 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225D31CCCAED1001BE988 /* libsqlite3.dylib */; };
+		662225D61CCCAF39001BE988 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225D51CCCAF39001BE988 /* libz.1.dylib */; };
+		662225D81CCCAF6A001BE988 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225D71CCCAF6A001BE988 /* libstdc++.6.0.9.dylib */; };
+		662225DA1CCCAF7C001BE988 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225D91CCCAF7C001BE988 /* CoreTelephony.framework */; };
+		662225E01CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 662225DF1CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		664341981C74654500580AEF /* 命師.txt in Resources */ = {isa = PBXBuildFile; fileRef = 664341971C74654500580AEF /* 命師.txt */; };
 		6643419D1C7A868A00580AEF /* VCChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419C1C7A868A00580AEF /* VCChapter.m */; };
 		664341A01C7BFA7C00580AEF /* VCPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419F1C7BFA7C00580AEF /* VCPage.m */; };
@@ -74,6 +85,19 @@
 		662225AE1CC616DB001BE988 /* VCSyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCSyncEngine.h; sourceTree = "<group>"; };
 		662225AF1CC616DB001BE988 /* VCSyncEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCSyncEngine.m; sourceTree = "<group>"; };
 		662225B71CC77D55001BE988 /* 重生完美时代.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "重生完美时代.txt"; sourceTree = "<group>"; };
+		662225B91CC9F973001BE988 /* VCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCLoginViewController.h; sourceTree = "<group>"; };
+		662225BA1CC9F973001BE988 /* VCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCLoginViewController.m; sourceTree = "<group>"; };
+		662225C31CCB7B17001BE988 /* UIAlertController+window.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+window.m"; sourceTree = "<group>"; };
+		662225C51CCB7B7F001BE988 /* UIAlertController+Window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Window.h"; sourceTree = "<group>"; };
+		662225CB1CCCA781001BE988 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		662225CD1CCCA7AC001BE988 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		662225CF1CCCA8EE001BE988 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		662225D11CCCA91B001BE988 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		662225D31CCCAED1001BE988 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
+		662225D51CCCAF39001BE988 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		662225D71CCCAF6A001BE988 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "../../../../../usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<group>"; };
+		662225D91CCCAF7C001BE988 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		662225DF1CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
 		664341971C74654500580AEF /* 命師.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "命師.txt"; sourceTree = "<group>"; };
 		6643419B1C7A868A00580AEF /* VCChapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCChapter.h; sourceTree = "<group>"; };
 		6643419C1C7A868A00580AEF /* VCChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCChapter.m; sourceTree = "<group>"; };
@@ -123,7 +147,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				662225DA1CCCAF7C001BE988 /* CoreTelephony.framework in Frameworks */,
+				662225D81CCCAF6A001BE988 /* libstdc++.6.0.9.dylib in Frameworks */,
+				662225D61CCCAF39001BE988 /* libz.1.dylib in Frameworks */,
+				662225D41CCCAED1001BE988 /* libsqlite3.dylib in Frameworks */,
+				662225D21CCCA91B001BE988 /* CoreGraphics.framework in Frameworks */,
+				662225D01CCCA8EE001BE988 /* SystemConfiguration.framework in Frameworks */,
+				662225CE1CCCA7AC001BE988 /* Security.framework in Frameworks */,
 				41A2B5B578457A4DCECFA95E /* libPods-VCReader.a in Frameworks */,
+				662225CC1CCCA781001BE988 /* TencentOpenAPI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +275,8 @@
 		667AACEC1C545E9400CD40E1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				662225B91CC9F973001BE988 /* VCLoginViewController.h */,
+				662225BA1CC9F973001BE988 /* VCLoginViewController.m */,
 				666EECB61C81BEC600DF5621 /* VCLibraryTableViewController.h */,
 				666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */,
 				667AACE91C545E3E00CD40E1 /* VCPageViewController.h */,
@@ -258,6 +292,7 @@
 		667AACF41C584F1900CD40E1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				662225DF1CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle */,
 				667AACD81C545D9400CD40E1 /* Main.storyboard */,
 				66A313B81CB78FBC00A43B7A /* LaunchScreen.storyboard */,
 				667AACDB1C545D9400CD40E1 /* VCReader.xcdatamodeld */,
@@ -276,6 +311,8 @@
 				668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */,
 				662225AE1CC616DB001BE988 /* VCSyncEngine.h */,
 				662225AF1CC616DB001BE988 /* VCSyncEngine.m */,
+				662225C51CCB7B7F001BE988 /* UIAlertController+Window.h */,
+				662225C31CCB7B17001BE988 /* UIAlertController+window.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -300,6 +337,14 @@
 		66A313E31CB7C5CE00A43B7A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				662225D91CCCAF7C001BE988 /* CoreTelephony.framework */,
+				662225D71CCCAF6A001BE988 /* libstdc++.6.0.9.dylib */,
+				662225D51CCCAF39001BE988 /* libz.1.dylib */,
+				662225D31CCCAED1001BE988 /* libsqlite3.dylib */,
+				662225D11CCCA91B001BE988 /* CoreGraphics.framework */,
+				662225CF1CCCA8EE001BE988 /* SystemConfiguration.framework */,
+				662225CD1CCCA7AC001BE988 /* Security.framework */,
+				662225CB1CCCA781001BE988 /* TencentOpenAPI.framework */,
 				F4B45A4D17CD603364319333 /* libPods-VCReader.a */,
 			);
 			name = Frameworks;
@@ -381,6 +426,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				662225E01CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				6620688E1C9ACF6400D00FEB /* 乐尊.txt in Resources */,
 				6668596C1C9683110046C8E8 /* Localizable.strings in Resources */,
 				66A313DD1CB796B400A43B7A /* STFangSong.ttf in Resources */,
@@ -466,6 +512,7 @@
 				6622254C1CBD39DA001BE988 /* VCReaderAPIClient.m in Sources */,
 				662225AC1CC3989E001BE988 /* VCReadingStatusMO+CoreDataProperties.m in Sources */,
 				66CA98001CB62E5400B52B5E /* VCSettingsTableViewController.m in Sources */,
+				662225C41CCB7B17001BE988 /* UIAlertController+window.m in Sources */,
 				667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */,
 				666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */,
 				668AB1BB1C5BDD1C00395099 /* VCHelperClass.m in Sources */,
@@ -476,6 +523,7 @@
 				662225AA1CC3989E001BE988 /* VCChapterMO+CoreDataProperties.m in Sources */,
 				662225A91CC3989E001BE988 /* VCBookMO.m in Sources */,
 				667AACD41C545D9400CD40E1 /* AppDelegate.m in Sources */,
+				662225BB1CC9F973001BE988 /* VCLoginViewController.m in Sources */,
 				667AACD11C545D9400CD40E1 /* main.m in Sources */,
 				662225AB1CC3989E001BE988 /* VCChapterMO.m in Sources */,
 			);
@@ -600,6 +648,21 @@
 				INFOPLIST_FILE = VCReader/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"AFNetworking\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-liconv",
+					"-fobjc-arc",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.VHHC.VCReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -622,6 +685,21 @@
 				INFOPLIST_FILE = VCReader/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"AFNetworking\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-liconv",
+					"-fobjc-arc",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.VHHC.VCReader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

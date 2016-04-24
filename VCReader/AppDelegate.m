@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import <AFNetworking/AFNetworking.h>
+#import "AFNetworkActivityIndicatorManager.h"
+#import <TencentOpenAPI/TencentOAuth.h>
+
 
 @interface AppDelegate ()
 
@@ -22,6 +26,9 @@
     
 //    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"STFangSong" size:21.0], NSFontAttributeName, nil] forState:UIControlStateNormal];
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:21.0], NSFontAttributeName, nil] forState:UIControlStateNormal];
+    
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     return YES;
 }
 
@@ -47,6 +54,14 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    return [TencentOAuth HandleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+    return [TencentOAuth HandleOpenURL:url];
 }
 
 #pragma mark - Core Data stack

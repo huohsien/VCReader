@@ -341,7 +341,8 @@
         
         NSDictionary *dict = self.jsonResponse;
         if (dict[@"error"]) {
-            [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"] inViewController:self];
+            [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+            return;
         }
         int chapterNumber = [dict[@"chapter"] intValue];
         int wordNumber = [dict[@"word"] intValue];
@@ -352,7 +353,7 @@
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-        [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription inViewController:self];
+        [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
         
     }];
 
@@ -530,7 +531,7 @@
         if (wordNumber < [[_currentChapter.firstWordCountOfEachPage objectAtIndex:i] intValue]) {
             return  i - 1;
         }
-        NSLog(@"word number = %d", [[_currentChapter.firstWordCountOfEachPage objectAtIndex:i] intValue]);
+//        NSLog(@"word number = %d", [[_currentChapter.firstWordCountOfEachPage objectAtIndex:i] intValue]);
     }
     
     return (int)_currentChapter.firstWordCountOfEachPage.count - 1;
