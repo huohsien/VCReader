@@ -99,7 +99,12 @@ NSString * const kTencentOAuthAppID = @"1105244329";
     if (_tencentOAuth.accessToken && 0 != [_tencentOAuth.accessToken length])
     {
         //  记录登录用户的OpenID、Token以及过期时间
-        NSLog(@"token = %@", _tencentOAuth.accessToken);
+//        NSLog(@"token = %@", _tencentOAuth.openId);
+        
+        [_tencentOAuth getUserInfo];
+        [[NSUserDefaults standardUserDefaults] setObject:_tencentOAuth.openId forKey:@"token"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+
     }
     else
     {
@@ -126,6 +131,24 @@ NSString * const kTencentOAuthAppID = @"1105244329";
 
 - (void)responseDidReceived:(APIResponse*)response forMessage:(NSString *)message
 {
+
+}
+
+- (void)getUserInfoResponse:(APIResponse*) response {
+    
+    if (URLREQUEST_SUCCEED == response.retCode && kOpenSDKErrorSuccess == response.detailRetCode) {
+       
+        [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"nickname"] forKey:@"nickname"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self performSegueWithIdentifier:@"toHomeViewController" sender:self];
+    
+    } else {
+        
+        NSString *errMsg = [NSString stringWithFormat:@"errorMsg:%@\n%@", response.errorMsg, [response.jsonResponse objectForKey:@"msg"]];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"操作失败" message:errMsg delegate:self cancelButtonTitle:@"我知道啦" otherButtonTitles: nil];
+        [alert show];
+    }
 
 }
 
