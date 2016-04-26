@@ -2,7 +2,7 @@
 //  VCReadingStatusMO+CoreDataProperties.m
 //  VCReader
 //
-//  Created by victor on 4/21/16.
+//  Created by victor on 4/26/16.
 //  Copyright © 2016 VHHC. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,8 +15,8 @@
 
 @dynamic bookName;
 @dynamic chapterNumber;
-@dynamic wordNumber;
-@dynamic updateTime;
+@dynamic timestamp;
 @dynamic userID;
+@dynamic wordNumber;
 
 @end

@@ -1,22 +1,18 @@
 //
-//  VCSettingsTableViewController.m
+//  VCBookStoreTableViewController.m
 //  VCReader
 //
-//  Created by victor on 4/7/16.
+//  Created by victor on 4/26/16.
 //  Copyright © 2016 VHHC. All rights reserved.
 //
 
-#import "VCSettingsTableViewController.h"
-#import "VCLoginViewController.h"
+#import "VCBookStoreTableViewController.h"
 
-@interface VCSettingsTableViewController ()
+@interface VCBookStoreTableViewController ()
 
 @end
 
-@implementation VCSettingsTableViewController {
-    
-    UIImage *_headshot;
-}
+@implementation VCBookStoreTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,34 +28,26 @@
     self.navigationController.navigationBar.barTintColor = [UIColor redColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-
     
-    [self.nickNameLabel setText:[[NSUserDefaults standardUserDefaults] objectForKey:@"nickname"]];
-    
-    _headshot = [UIImage imageWithContentsOfFile:[[NSUserDefaults standardUserDefaults] objectForKey:@"headshot path"]];
-    [self.headshotImageView setImage:_headshot];
-
 }
 
 -(void) viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.topItem.title = @"设置";
+    self.navigationController.navigationBar.topItem.title = @"书库";
     
 }
-
-
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 1;
 }
 
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//#warning Incomplete implementation, return the number of rows
-//    return 0;
-//}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+#warning Incomplete implementation, return the number of rows
+    return 0;
+}
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -114,36 +102,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-//-(BOOL)prefersStatusBarHidden {
-//    return YES;
-//}
-
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    
-//    header.textLabel.textColor = [UIColor redColor];
-    header.textLabel.font = [UIFont boldSystemFontOfSize:21];
-    CGRect headerFrame = header.frame;
-    header.textLabel.frame = headerFrame;
-    header.textLabel.textAlignment = NSTextAlignmentLeft;
-}
-
-- (IBAction)touched:(id)sender {
-    
-    [self.searchTextField resignFirstResponder];
-}
-
-- (IBAction)logoutButtonPressed:(id)sender {
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"token"];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"nickname"];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"login status"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"LoginNavigationController"];
-    [VCHelperClass appDelegate].window.rootViewController = nc;
-}
-
 
 @end

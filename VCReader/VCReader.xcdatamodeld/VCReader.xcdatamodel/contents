@@ -13,7 +13,7 @@
     <entity name="ReadingStatus" representedClassName="VCReadingStatusMO" syncable="YES">
         <attribute name="bookName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="chapterNumber" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="updateTime" attributeType="Date" syncable="YES"/>
+        <attribute name="timestamp" attributeType="Date" syncable="YES"/>
         <attribute name="userID" attributeType="String" syncable="YES"/>
         <attribute name="wordNumber" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>

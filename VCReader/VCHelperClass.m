@@ -92,9 +92,9 @@
     readingStatus.bookName = bookName;
     readingStatus.chapterNumber = chapterNumber;
     readingStatus.wordNumber = wordNumber;
-    readingStatus.updateTime = [[NSDate new] timeIntervalSince1970];
+    NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970];
+    readingStatus.timestamp = timestamp;
     readingStatus.userID = userID;
-    
     // Save the context
     NSError *error = nil;
     if (![context save:&error]) {
@@ -121,23 +121,10 @@
     }
     VCReadingStatusMO *readingStatus = [statusArray lastObject];
     if (readingStatus == nil) {
-        
-//        VCReadingStatusMO *readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:context];
-//        readingStatus.bookName = bookName;
-//        readingStatus.userID = userID;
-//        readingStatus.chapterNumber = 0;
-//        readingStatus.pageNumber = 0;
-//        readingStatus.updateTime = [[NSDate new] timeIntervalSince1970];
-//        // Save the context
-//        NSError *error = nil;
-//        if (![context save:&error]) {
-//            NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
-//            abort();
-//        }
 
         [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not find user's reading status"];
         
-    } else if (readingStatus.updateTime > [[NSDate new] timeIntervalSince1970]) {
+    } else if (readingStatus.timestamp > [[NSDate new] timeIntervalSince1970]) {
         NSLog(@"%s: timeStamp error", __PRETTY_FUNCTION__);
         abort();
     }
@@ -154,6 +141,20 @@
     [alertController addAction:okAction];
     
     [alertController show];
+}
+
++(NSString *)getCurrentEpochTimeInMilliSeconds {
+
+    NSDate *date = [NSDate new];
+    NSTimeInterval time = [date timeIntervalSince1970];
+    NSString *timestampString = [NSString stringWithFormat:@"%ld", (long)(time * 1000.0)];
+    return timestampString;
+}
+
++(AppDelegate *) appDelegate {
+
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+
 }
 
 @end

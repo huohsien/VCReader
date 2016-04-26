@@ -30,15 +30,6 @@ NSString * const kTencentOAuthAppID = @"1105244329";
     self.navigationController.navigationBar.barTintColor = [UIColor redColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
-
-    NSString *tokenString = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
-    
-    if (tokenString) {
-        
-        [self performSegueWithIdentifier:@"toHomeViewController" sender:self];
-    } 
-
 }
 
 
@@ -63,7 +54,10 @@ NSString * const kTencentOAuthAppID = @"1105244329";
             [[NSUserDefaults standardUserDefaults] setObject:self.accountNameTextView.text forKey:@"token"];
             [[NSUserDefaults standardUserDefaults] setObject:self.accountNameTextView.text forKey:@"nickname"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            [self performSegueWithIdentifier:@"toHomeViewController" sender:self];
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
+            [VCHelperClass appDelegate].window.rootViewController = nc;
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
        
@@ -74,13 +68,15 @@ NSString * const kTencentOAuthAppID = @"1105244329";
 
 }
 
-- (IBAction)dismissKeyboard:(id)sender {
+- (IBAction)viewTapped:(id)sender {
     
+    // dismiss keyboard
+
     [self.view endEditing:YES];
 }
 
--(IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
-}
+//-(IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
+//}
 
 - (IBAction)qqButtonPressed:(id)sender {
     
@@ -138,9 +134,12 @@ NSString * const kTencentOAuthAppID = @"1105244329";
     
     if (URLREQUEST_SUCCEED == response.retCode && kOpenSDKErrorSuccess == response.detailRetCode) {
        
+        NSLog(@"qq login response = %@", response.jsonResponse);
+        
+        [self saveImage:[self getImageFromURL:response.jsonResponse[@"figureurl_qq_2"]] withFileName:@"headshot_100" inDirectory:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
+        
         [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"nickname"] forKey:@"nickname"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self performSegueWithIdentifier:@"toHomeViewController" sender:self];
     
     } else {
         
@@ -150,6 +149,27 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         [alert show];
     }
 
+}
+
+-(UIImage *) getImageFromURL:(NSString *)fileURL {
+    UIImage * result;
+    
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
+    result = [UIImage imageWithData:data];
+    
+    return result;
+}
+
+-(void) saveImage:(UIImage *)image withFileName:(NSString *)imageName inDirectory:(NSString *)directoryPath {
+    
+    if (image) {
+        
+        NSString *path = [directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"png"]];
+        [[NSUserDefaults standardUserDefaults] setObject:path forKey:@"headshot path"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [UIImagePNGRepresentation(image) writeToFile:path options:NSAtomicWrite error:nil];
+    }
 }
 
 @end

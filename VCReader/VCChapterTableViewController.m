@@ -87,8 +87,10 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:(int)indexPath.row wordNumber:0 inViewController:self];
-
-    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:_book.bookName chapterNumber:(int)indexPath.row wordNumber:0 success:^(NSURLSessionDataTask *task, id responseObject) {
+    
+    VCReadingStatusMO *readingStatus = [VCHelperClass getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
+    
+    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [self.navigationController popViewControllerAnimated:YES];
         

@@ -290,7 +290,7 @@
 
     //
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     
     [[NSUserDefaults standardUserDefaults] setObject:_book.bookName forKey:@"name of the last read book"];
@@ -330,11 +330,6 @@
     
     //
     
-    [self.activityIndicator startAnimating];
-
-    [self startMonitoringBattery];
-    [self StartTimerForClock];
-    
     [[VCReaderAPIClient sharedClient] getReadingStatusForBookNamed:_book.bookName success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.jsonResponse = responseObject;
@@ -352,11 +347,16 @@
         [self loadContent];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+        NSString* errorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+        NSLog(@"errorResponse = %@", errorResponse);
         [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
         
     }];
 
+    [self.activityIndicator startAnimating];
+
+    [self startMonitoringBattery];
+    [self StartTimerForClock];
 }
 
 -(void) end {
@@ -385,7 +385,9 @@
     
     [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber] inViewController:self];
     
-    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber] success:^(NSURLSessionDataTask *task, id responseObject) {
+    VCReadingStatusMO *readingStatus = [VCHelperClass getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
+    
+    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
         
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -422,16 +424,41 @@
     }];
 }
 
--(void) applicationWillEnterForeground:(NSNotification *)notification {
+-(void) applicationDidBecomeActive:(NSNotification *)notification {
     
+    [[VCReaderAPIClient sharedClient] getReadingStatusForBookNamed:_book.bookName success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        self.jsonResponse = responseObject;
+        
+        NSDictionary *dict = self.jsonResponse;
+        if (dict[@"error"]) {
+            [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+            return;
+        }
+        int chapterNumber = [dict[@"chapter"] intValue];
+        int wordNumber = [dict[@"word"] intValue];
+        
+        [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:chapterNumber wordNumber:wordNumber inViewController:self];
+        
+        [self loadContent];
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSString* errorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+        NSLog(@"errorResponse = %@", errorResponse);
+        [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+        
+    }];
+
 }
 
 
 -(void) applicationWillResignActive:(NSNotification *)notification {
     
     [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber] inViewController:self];
+    
+    VCReadingStatusMO *readingStatus = [VCHelperClass getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
 
-    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber] success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
         
 
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -440,6 +467,7 @@
     
     }];
 }
+
 
 #pragma mark - uicontrol callbacks
 

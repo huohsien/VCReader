@@ -50,6 +50,8 @@
 		667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */; };
 		667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACF91C58B05C00CD40E1 /* VCBook.m */; };
 		668AB1BB1C5BDD1C00395099 /* VCHelperClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */; };
+		669227C61CCDE6730045291E /* VCSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227C51CCDE6730045291E /* VCSignUpViewController.m */; };
+		669227C91CCF59D20045291E /* VCBookStoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227C81CCF59D20045291E /* VCBookStoreTableViewController.m */; };
 		669CD8DC1C95C0DB00CC99D3 /* 寻宝美利坚.txt in Resources */ = {isa = PBXBuildFile; fileRef = 669CD8DB1C95C0DB00CC99D3 /* 寻宝美利坚.txt */; };
 		66A313B71CB6D7CD00A43B7A /* 斗罗大陆.txt in Resources */ = {isa = PBXBuildFile; fileRef = 66A313B61CB6D7CD00A43B7A /* 斗罗大陆.txt */; };
 		66A313B91CB78FBC00A43B7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A313B81CB78FBC00A43B7A /* LaunchScreen.storyboard */; };
@@ -128,6 +130,10 @@
 		668AB1B91C5BDD1C00395099 /* VCHelperClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCHelperClass.h; sourceTree = "<group>"; };
 		668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCHelperClass.m; sourceTree = "<group>"; };
 		668AB1BD1C5BDF8900395099 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		669227C41CCDE6730045291E /* VCSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCSignUpViewController.h; sourceTree = "<group>"; };
+		669227C51CCDE6730045291E /* VCSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCSignUpViewController.m; sourceTree = "<group>"; };
+		669227C71CCF59D10045291E /* VCBookStoreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBookStoreTableViewController.h; sourceTree = "<group>"; };
+		669227C81CCF59D20045291E /* VCBookStoreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBookStoreTableViewController.m; sourceTree = "<group>"; };
 		669CD8DB1C95C0DB00CC99D3 /* 寻宝美利坚.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "寻宝美利坚.txt"; sourceTree = "<group>"; };
 		66A313B61CB6D7CD00A43B7A /* 斗罗大陆.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "斗罗大陆.txt"; sourceTree = "<group>"; };
 		66A313B81CB78FBC00A43B7A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -253,6 +259,7 @@
 				669CD8D71C913E5500CC99D3 /* VCModels */,
 				669CD8D61C913E1400CC99D3 /* Tools */,
 				666266E11C859503004F133F /* TableViewCells */,
+				667AACD81C545D9400CD40E1 /* Main.storyboard */,
 				667AACEC1C545E9400CD40E1 /* ViewControllers */,
 				667AACF41C584F1900CD40E1 /* Resources */,
 				667AACCF1C545D9400CD40E1 /* Supporting Files */,
@@ -277,10 +284,14 @@
 			children = (
 				662225B91CC9F973001BE988 /* VCLoginViewController.h */,
 				662225BA1CC9F973001BE988 /* VCLoginViewController.m */,
+				669227C41CCDE6730045291E /* VCSignUpViewController.h */,
+				669227C51CCDE6730045291E /* VCSignUpViewController.m */,
 				666EECB61C81BEC600DF5621 /* VCLibraryTableViewController.h */,
 				666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */,
 				667AACE91C545E3E00CD40E1 /* VCPageViewController.h */,
 				667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */,
+				669227C71CCF59D10045291E /* VCBookStoreTableViewController.h */,
+				669227C81CCF59D20045291E /* VCBookStoreTableViewController.m */,
 				666EECB91C83C3E700DF5621 /* VCChapterTableViewController.h */,
 				666EECBA1C83C3E700DF5621 /* VCChapterTableViewController.m */,
 				66CA97FE1CB62E5400B52B5E /* VCSettingsTableViewController.h */,
@@ -293,7 +304,6 @@
 			isa = PBXGroup;
 			children = (
 				662225DF1CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle */,
-				667AACD81C545D9400CD40E1 /* Main.storyboard */,
 				66A313B81CB78FBC00A43B7A /* LaunchScreen.storyboard */,
 				667AACDB1C545D9400CD40E1 /* VCReader.xcdatamodeld */,
 				667AACDE1C545D9400CD40E1 /* Assets.xcassets */,
@@ -506,6 +516,7 @@
 				6643419D1C7A868A00580AEF /* VCChapter.m in Sources */,
 				66F8C3761C5D078100DF7611 /* VCTextView.m in Sources */,
 				662225A81CC3989E001BE988 /* VCBookMO+CoreDataProperties.m in Sources */,
+				669227C91CCF59D20045291E /* VCBookStoreTableViewController.m in Sources */,
 				667AACDD1C545D9400CD40E1 /* VCReader.xcdatamodeld in Sources */,
 				662225B01CC616DB001BE988 /* VCSyncEngine.m in Sources */,
 				66F8C3791C5D0AF300DF7611 /* VCView.m in Sources */,
@@ -519,6 +530,7 @@
 				666EECB81C81BEC600DF5621 /* VCLibraryTableViewController.m in Sources */,
 				667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */,
 				662225AD1CC3989E001BE988 /* VCReadingStatusMO.m in Sources */,
+				669227C61CCDE6730045291E /* VCSignUpViewController.m in Sources */,
 				664341A01C7BFA7C00580AEF /* VCPage.m in Sources */,
 				662225AA1CC3989E001BE988 /* VCChapterMO+CoreDataProperties.m in Sources */,
 				662225A91CC3989E001BE988 /* VCBookMO.m in Sources */,

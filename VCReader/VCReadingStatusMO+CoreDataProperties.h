@@ -2,7 +2,7 @@
 //  VCReadingStatusMO+CoreDataProperties.h
 //  VCReader
 //
-//  Created by victor on 4/21/16.
+//  Created by victor on 4/26/16.
 //  Copyright © 2016 VHHC. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -17,9 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, retain) NSString *bookName;
 @property (nonatomic) int16_t chapterNumber;
-@property (nonatomic) int16_t wordNumber;
-@property (nonatomic) NSTimeInterval updateTime;
+@property (nonatomic) NSTimeInterval timestamp;
 @property (nullable, nonatomic, retain) NSString *userID;
+@property (nonatomic) int16_t wordNumber;
 
 @end
 

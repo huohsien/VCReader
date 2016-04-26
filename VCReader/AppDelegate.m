@@ -10,7 +10,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import "AFNetworkActivityIndicatorManager.h"
 #import <TencentOpenAPI/TencentOAuth.h>
-
+#import "VCLoginViewController.h"
 
 @interface AppDelegate ()
 
@@ -18,6 +18,7 @@
 
 @implementation AppDelegate
 
+@synthesize navigationController = _navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
@@ -27,8 +28,33 @@
 //    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"STFangSong" size:21.0], NSFontAttributeName, nil] forState:UIControlStateNormal];
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:21.0], NSFontAttributeName, nil] forState:UIControlStateNormal];
     
-    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+//    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+//    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    [NSThread sleepForTimeInterval:1.0];
+    
+    _navigationController = [[UINavigationController alloc] init];
+    
+    NSString *tokenString = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+
+    if (!tokenString) {
+        
+        VCLoginViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"VCLoginViewController"];
+        [_navigationController setViewControllers:@[vc] animated:NO];
+
+        
+    } else {
+        
+        UITabBarController *vc = [storyboard instantiateViewControllerWithIdentifier:@"HomeTabBarController"];
+        [_navigationController setViewControllers:@[vc] animated:NO];
+
+    }
+    
+    self.window.rootViewController = _navigationController;
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
@@ -57,10 +83,23 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UITabBarController *vc = [storyboard instantiateViewControllerWithIdentifier:@"HomeTabBarController"];
+    _navigationController = [[UINavigationController alloc] init];
+    [_navigationController setViewControllers:@[vc] animated:NO];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.rootViewController = _navigationController;
+    [self.window makeKeyAndVisible];
+    
     return [TencentOAuth HandleOpenURL:url];
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+    
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
     return [TencentOAuth HandleOpenURL:url];
 }
 

@@ -35,8 +35,7 @@
     
     //hide tab bar
     self.tabBarController.tabBar.hidden = NO;
-    self.title = @"书架";
-    self.navigationController.title = @"书架";
+    
 
     _bookInfoArray = [NSArray arrayWithObjects:/*@{@"bookName":@"都市巨灵神",@"coverImageFileName":@"book3_cover"},*/@{@"bookName":@"斗破苍穹",@"coverImageFileName":@"book4_cover"},/*@{@"bookName":@"官神",@"coverImageFileName":@"book5_cover"},@{@"bookName":@"寻宝美利坚",@"coverImageFileName":@"book6_cover"},@{@"bookName":@"乐尊",@"coverImageFileName":@"book7_cover"},*/@{@"bookName":@"斗罗大陆",@"coverImageFileName":@"book8_cover"}, @{@"bookName":@"大主宰",@"coverImageFileName":@"book9_cover"},@{@"bookName":@"修真归来在都市",@"coverImageFileName":@"book10_cover"},@{@"bookName":@"重生完美时代",@"coverImageFileName":@"book11_cover"}, nil];
 
@@ -54,9 +53,10 @@
 -(void) viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
-    
+    self.navigationController.navigationBar.topItem.title = @"书架";
 
 }
+
 -(UIStatusBarStyle)preferredStatusBarStyle {
 
     return UIStatusBarStyleLightContent;
