@@ -37,6 +37,9 @@
     [self.nickNameLabel setText:[[NSUserDefaults standardUserDefaults] objectForKey:@"nickname"]];
     
     _headshot = [UIImage imageWithContentsOfFile:[[NSUserDefaults standardUserDefaults] objectForKey:@"headshot path"]];
+    if (!_headshot) {
+        _headshot = [UIImage imageNamed:@"headshot_placeholder"];
+    }
     [self.headshotImageView setImage:_headshot];
 
 }
