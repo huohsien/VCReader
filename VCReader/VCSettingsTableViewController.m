@@ -138,6 +138,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"token"];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"nickname"];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"login status"];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"headshot path"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
