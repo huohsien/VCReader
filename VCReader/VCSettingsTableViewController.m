@@ -32,23 +32,22 @@
     self.navigationController.navigationBar.barTintColor = [UIColor redColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.topItem.title = @"设置";
 
     
-    [self.nickNameLabel setText:[[NSUserDefaults standardUserDefaults] objectForKey:@"nickname"]];
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+
+    [self.nickNameLabel setText:[[NSUserDefaults standardUserDefaults] objectForKey:@"nickName"]];
     
     _headshot = [UIImage imageWithContentsOfFile:[[NSUserDefaults standardUserDefaults] objectForKey:@"headshot path"]];
     if (!_headshot) {
         _headshot = [UIImage imageNamed:@"headshot_placeholder"];
     }
     [self.headshotImageView setImage:_headshot];
-
-}
-
--(void) viewWillAppear:(BOOL)animated {
-    
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.topItem.title = @"设置";
-    
 }
 
 
@@ -139,7 +138,7 @@
 
 - (IBAction)logoutButtonPressed:(id)sender {
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"token"];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"nickname"];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"nickName"];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"login status"];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"headshot path"];
     [[NSUserDefaults standardUserDefaults] synchronize];

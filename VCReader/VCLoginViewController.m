@@ -52,7 +52,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         } else {
             
             [[NSUserDefaults standardUserDefaults] setObject:self.accountNameTextView.text forKey:@"token"];
-            [[NSUserDefaults standardUserDefaults] setObject:self.accountNameTextView.text forKey:@"nickname"];
+            [[NSUserDefaults standardUserDefaults] setObject:self.accountNameTextView.text forKey:@"nickName"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -138,7 +138,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         
         [self saveImage:[self getImageFromURL:response.jsonResponse[@"figureurl_qq_2"]] withFileName:@"headshot_100" inDirectory:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
         
-        [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"nickname"] forKey:@"nickname"];
+        [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"nickname"] forKey:@"nickName"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     
     } else {

@@ -11,6 +11,7 @@
 @interface VCSignUpViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *accountNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *nickNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 
 @end

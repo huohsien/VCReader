@@ -39,7 +39,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     return isReachable;
 }
 
--(void) userLoginWithAccountName:(NSString *)name password:(NSString *)password  success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
+-(void) userLoginWithAccountName:(NSString *)name password:(NSString *)password  success:(void (^)(NSURLSessionDataTask *task, id responseObject))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
 
     NSString* path = [NSString stringWithFormat:@"user_login.php?account_name=%@&account_password=%@", name, password];
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -55,7 +55,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     }];
 }
 
--(void) getReadingStatusForBookNamed:(NSString *)bookName success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
+-(void) getReadingStatusForBookNamed:(NSString *)bookName success:(void (^)(NSURLSessionDataTask *task, id responseObject))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
     
 //    if (![self connected]) {
 //        
@@ -80,7 +80,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     
 }
 
--(void) saveReadingStatusForBookNamed:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber timestamp:(NSTimeInterval)timestamp success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
+-(void) saveReadingStatusForBookNamed:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber timestamp:(NSTimeInterval)timestamp success:(void (^)(NSURLSessionDataTask *task, id responseObject))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
     
 //    if (![self connected]) {
 //        
@@ -93,7 +93,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     
     NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
 
-    [self PUT:encodedPath parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         if (success) {
             success(task, responseObject);
         }
@@ -105,4 +105,27 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     
 }
 
+-(void) signUPWithName:(NSString *)accountName password:(NSString *)accountPassword nickName:(NSString *)nickName email:(NSString *)email token:(NSString *)token timestamp:(NSTimeInterval)timestamp success:(void (^)(NSURLSessionDataTask *task, id responseObject))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
+    
+    NSString* path;
+    if (token) {
+        path = [NSString stringWithFormat:@"user_signup.php?account_name=%@&account_password=%@&nick_name=%@&email=%@&token=%@&timestamp=%@", accountName, accountPassword, nickName, email, token, [NSString stringWithFormat:@"%ld",(long)(timestamp * 1000.0)]];
+    } else {
+        path = [NSString stringWithFormat:@"user_signup.php?account_name=%@&account_password=%@&nick_name=%@&email=%@&timestamp=%@", accountName, accountPassword, nickName, email, [NSString stringWithFormat:@"%ld",(long)(timestamp * 1000.0)]];
+    }
+    NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
+    
+    [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        if (success) {
+            success(task, responseObject);
+        }
+    }failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (failure) {
+            failure(task, error);
+        }
+    }];
+    
+}
 @end

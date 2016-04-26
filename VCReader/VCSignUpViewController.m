@@ -7,6 +7,7 @@
 //
 
 #import "VCSignUpViewController.h"
+#import "VCReaderAPIClient.h"
 
 @interface VCSignUpViewController ()
 
@@ -28,6 +29,28 @@
 }
 
 - (IBAction)signUpButtonPressed:(id)sender {
+
+    NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970];
+    [[VCReaderAPIClient sharedClient] signUPWithName:self.accountNameTextField.text password:self.passwordTextField.text nickName:self.nickNameTextField.text email:self.emailTextField.text token:nil timestamp:timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSDictionary *dict = responseObject;
+        
+        if (dict[@"error"]) {
+            
+            [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+            
+        } else if (dict[@"success"]) {
+            // success
+            [[NSUserDefaults standardUserDefaults] setObject:self.nickNameTextField.text forKey:@"nickName"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+
+    }];
 }
 - (IBAction)viewTapped:(id)sender {
     
@@ -36,17 +59,5 @@
     [self.view endEditing:YES];
 }
 
-- (IBAction)signupButtonPressed:(id)sender {
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
