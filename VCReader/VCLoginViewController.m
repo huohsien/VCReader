@@ -51,13 +51,33 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         
         } else {
             
-            [[NSUserDefaults standardUserDefaults] setObject:self.accountNameTextView.text forKey:@"token"];
-            [[NSUserDefaults standardUserDefaults] setObject:self.accountNameTextView.text forKey:@"nickName"];
+            [[NSUserDefaults standardUserDefaults] setObject:dict[@"token"] forKey:@"token"];  //TODO: need to think about the redundancy of token being stored in both NSUserDefaults and Core Data
             [[NSUserDefaults standardUserDefaults] synchronize];
             
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
             [VCHelperClass appDelegate].window.rootViewController = nc;
+            
+            // logged in
+            //
+            NSManagedObjectContext *context = [VCCoreDataCenter sharedInstance].context;
+            VCUserMO *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:context];
+            user.accountName = self.accountNameTextView.text;
+            user.accountPassword = self.passwordTextView.text;
+            user.email = dict[@"email"];
+            user.token = dict[@"token"];
+            user.timestamp = [((NSString *)dict[@"timestamp"]) doubleValue]; // NSTimeInterval is the same as double
+            
+            // Save the context
+            NSError *error = nil;
+            if (![context save:&error]) {
+                NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
+                [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
+                abort();
+            }
+            
+            [VCCoreDataCenter sharedInstance].user = user;
+            
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
        

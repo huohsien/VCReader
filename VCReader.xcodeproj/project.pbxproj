@@ -52,6 +52,9 @@
 		668AB1BB1C5BDD1C00395099 /* VCHelperClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */; };
 		669227C61CCDE6730045291E /* VCSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227C51CCDE6730045291E /* VCSignUpViewController.m */; };
 		669227C91CCF59D20045291E /* VCBookStoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227C81CCF59D20045291E /* VCBookStoreTableViewController.m */; };
+		669227D41CD09E0A0045291E /* VCUserMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227D11CD09E0A0045291E /* VCUserMO+CoreDataProperties.m */; };
+		669227D51CD09E0A0045291E /* VCUserMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227D31CD09E0A0045291E /* VCUserMO.m */; };
+		669227D81CD09F820045291E /* VCCoreDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227D71CD09F820045291E /* VCCoreDataCenter.m */; };
 		669CD8DC1C95C0DB00CC99D3 /* 寻宝美利坚.txt in Resources */ = {isa = PBXBuildFile; fileRef = 669CD8DB1C95C0DB00CC99D3 /* 寻宝美利坚.txt */; };
 		66A313B71CB6D7CD00A43B7A /* 斗罗大陆.txt in Resources */ = {isa = PBXBuildFile; fileRef = 66A313B61CB6D7CD00A43B7A /* 斗罗大陆.txt */; };
 		66A313B91CB78FBC00A43B7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66A313B81CB78FBC00A43B7A /* LaunchScreen.storyboard */; };
@@ -134,6 +137,12 @@
 		669227C51CCDE6730045291E /* VCSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCSignUpViewController.m; sourceTree = "<group>"; };
 		669227C71CCF59D10045291E /* VCBookStoreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBookStoreTableViewController.h; sourceTree = "<group>"; };
 		669227C81CCF59D20045291E /* VCBookStoreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBookStoreTableViewController.m; sourceTree = "<group>"; };
+		669227D01CD09E0A0045291E /* VCUserMO+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VCUserMO+CoreDataProperties.h"; path = "VCReader/VCUserMO+CoreDataProperties.h"; sourceTree = "<group>"; };
+		669227D11CD09E0A0045291E /* VCUserMO+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "VCUserMO+CoreDataProperties.m"; path = "VCReader/VCUserMO+CoreDataProperties.m"; sourceTree = "<group>"; };
+		669227D21CD09E0A0045291E /* VCUserMO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCUserMO.h; path = VCReader/VCUserMO.h; sourceTree = "<group>"; };
+		669227D31CD09E0A0045291E /* VCUserMO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCUserMO.m; path = VCReader/VCUserMO.m; sourceTree = "<group>"; };
+		669227D61CD09F820045291E /* VCCoreDataCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCCoreDataCenter.h; path = VCReader/VCCoreDataCenter.h; sourceTree = "<group>"; };
+		669227D71CD09F820045291E /* VCCoreDataCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCCoreDataCenter.m; path = VCReader/VCCoreDataCenter.m; sourceTree = "<group>"; };
 		669CD8DB1C95C0DB00CC99D3 /* 寻宝美利坚.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "寻宝美利坚.txt"; sourceTree = "<group>"; };
 		66A313B61CB6D7CD00A43B7A /* 斗罗大陆.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "斗罗大陆.txt"; sourceTree = "<group>"; };
 		66A313B81CB78FBC00A43B7A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -180,6 +189,10 @@
 		6622255B1CBF968C001BE988 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				669227D01CD09E0A0045291E /* VCUserMO+CoreDataProperties.h */,
+				669227D11CD09E0A0045291E /* VCUserMO+CoreDataProperties.m */,
+				669227D21CD09E0A0045291E /* VCUserMO.h */,
+				669227D31CD09E0A0045291E /* VCUserMO.m */,
 				6622259C1CC3989E001BE988 /* VCBookMO+CoreDataProperties.h */,
 				6622259D1CC3989E001BE988 /* VCBookMO+CoreDataProperties.m */,
 				6622259E1CC3989E001BE988 /* VCBookMO.h */,
@@ -192,6 +205,8 @@
 				662225A51CC3989E001BE988 /* VCReadingStatusMO+CoreDataProperties.m */,
 				662225A61CC3989E001BE988 /* VCReadingStatusMO.h */,
 				662225A71CC3989E001BE988 /* VCReadingStatusMO.m */,
+				669227D61CD09F820045291E /* VCCoreDataCenter.h */,
+				669227D71CD09F820045291E /* VCCoreDataCenter.m */,
 			);
 			name = "Core Data";
 			path = ..;
@@ -513,6 +528,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				666EECBB1C83C3E700DF5621 /* VCChapterTableViewController.m in Sources */,
+				669227D81CD09F820045291E /* VCCoreDataCenter.m in Sources */,
 				6643419D1C7A868A00580AEF /* VCChapter.m in Sources */,
 				66F8C3761C5D078100DF7611 /* VCTextView.m in Sources */,
 				662225A81CC3989E001BE988 /* VCBookMO+CoreDataProperties.m in Sources */,
@@ -520,6 +536,7 @@
 				667AACDD1C545D9400CD40E1 /* VCReader.xcdatamodeld in Sources */,
 				662225B01CC616DB001BE988 /* VCSyncEngine.m in Sources */,
 				66F8C3791C5D0AF300DF7611 /* VCView.m in Sources */,
+				669227D51CD09E0A0045291E /* VCUserMO.m in Sources */,
 				6622254C1CBD39DA001BE988 /* VCReaderAPIClient.m in Sources */,
 				662225AC1CC3989E001BE988 /* VCReadingStatusMO+CoreDataProperties.m in Sources */,
 				66CA98001CB62E5400B52B5E /* VCSettingsTableViewController.m in Sources */,
@@ -529,6 +546,7 @@
 				668AB1BB1C5BDD1C00395099 /* VCHelperClass.m in Sources */,
 				666EECB81C81BEC600DF5621 /* VCLibraryTableViewController.m in Sources */,
 				667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */,
+				669227D41CD09E0A0045291E /* VCUserMO+CoreDataProperties.m in Sources */,
 				662225AD1CC3989E001BE988 /* VCReadingStatusMO.m in Sources */,
 				669227C61CCDE6730045291E /* VCSignUpViewController.m in Sources */,
 				664341A01C7BFA7C00580AEF /* VCPage.m in Sources */,
@@ -600,7 +618,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -637,7 +655,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

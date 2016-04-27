@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <TencentOpenAPI/TencentOAuth.h>
+#import "VCCoreDataCenter.h"
+#import "VCUserMO+CoreDataProperties.h"
+#import "VCReadingStatusMO+CoreDataProperties.h"
 
 extern NSString * const kTencentOAuthAppID;
 

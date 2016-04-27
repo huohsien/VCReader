@@ -14,12 +14,25 @@
         <attribute name="bookName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="chapterNumber" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="timestamp" attributeType="Date" syncable="YES"/>
-        <attribute name="userID" attributeType="String" syncable="YES"/>
         <attribute name="wordNumber" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="readingStatus" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="VCUserMO" syncable="YES">
+        <attribute name="accountName" attributeType="String" syncable="YES"/>
+        <attribute name="accountPassword" attributeType="String" syncable="YES"/>
+        <attribute name="email" attributeType="String" syncable="YES"/>
+        <attribute name="headshotFilePath" attributeType="String" syncable="YES"/>
+        <attribute name="loginType" attributeType="String" syncable="YES"/>
+        <attribute name="nickName" attributeType="String" syncable="YES"/>
+        <attribute name="timestamp" attributeType="Date" syncable="YES"/>
+        <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userID" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="readingStatus" maxCount="1" deletionRule="Cascade" destinationEntity="ReadingStatus" inverseName="user" inverseEntity="ReadingStatus" syncable="YES"/>
     </entity>
     <elements>
         <element name="Book" positionX="-2295" positionY="-2347" width="126" height="88"/>
         <element name="Chapter" positionX="-1998" positionY="-2302" width="128" height="88"/>
-        <element name="ReadingStatus" positionX="-2628" positionY="-2448" width="128" height="118"/>
+        <element name="User" positionX="-3141" positionY="-2214" width="128" height="193"/>
+        <element name="ReadingStatus" positionX="-2909" positionY="-2196" width="128" height="118"/>
     </elements>
 </model>

@@ -1,5 +1,5 @@
 //
-//  VCReadingStatusMO+CoreDataProperties.m
+//  VCUserMO+CoreDataProperties.m
 //  VCReader
 //
 //  Created by victor on 4/27/16.
@@ -9,14 +9,18 @@
 //  to delete and recreate this implementation file for your updated model.
 //
 
-#import "VCReadingStatusMO+CoreDataProperties.h"
+#import "VCUserMO+CoreDataProperties.h"
 
-@implementation VCReadingStatusMO (CoreDataProperties)
+@implementation VCUserMO (CoreDataProperties)
 
-@dynamic bookName;
-@dynamic chapterNumber;
+@dynamic accountName;
+@dynamic accountPassword;
+@dynamic email;
+@dynamic headshotFilePath;
+@dynamic nickName;
 @dynamic timestamp;
-@dynamic wordNumber;
-@dynamic user;
+@dynamic token;
+@dynamic userID;
+@dynamic readingStatus;
 
 @end

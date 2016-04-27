@@ -18,7 +18,6 @@
 
 @implementation AppDelegate
 
-@synthesize navigationController = _navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
@@ -32,27 +31,13 @@
 //    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     [NSThread sleepForTimeInterval:1.0];
     
-    _navigationController = [[UINavigationController alloc] init];
     
     NSString *tokenString = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-
-    if (!tokenString) {
-        
-        VCLoginViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"VCLoginViewController"];
-        [_navigationController setViewControllers:@[vc] animated:NO];
-
-        
-    } else {
-        
-        UITabBarController *vc = [storyboard instantiateViewControllerWithIdentifier:@"HomeTabBarController"];
-        [_navigationController setViewControllers:@[vc] animated:NO];
-
-    }
-    
-    self.window.rootViewController = _navigationController;
+    UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:(tokenString ? @"MainNavigationController" : @"LoginNavigationController")];
+    self.window.rootViewController = nc;
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -86,11 +71,9 @@
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UITabBarController *vc = [storyboard instantiateViewControllerWithIdentifier:@"HomeTabBarController"];
-    _navigationController = [[UINavigationController alloc] init];
-    [_navigationController setViewControllers:@[vc] animated:NO];
+    UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = _navigationController;
+    self.window.rootViewController = nc;
     [self.window makeKeyAndVisible];
     
     return [TencentOAuth HandleOpenURL:url];

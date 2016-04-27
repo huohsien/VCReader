@@ -21,8 +21,6 @@
 +(UIImage *) maskedImage:(UIImage *)image color:(UIColor *)color;
 +(UIColor *) changeUIColor:(UIColor *)uicolor alphaValueTo:(CGFloat)alpha;
 
-+(void)saveReadingStatusForBook:(NSString *)bookName andUserID:(NSString *)userID chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber inViewController:(UIViewController *)vc;
-+(VCReadingStatusMO *) getReadingStatusForBook:(NSString *)bookName andUserID:(NSString *)userID inViewController:(UIViewController *)vc;
 +(void) showErrorAlertViewWithTitle:(NSString *)title andMessage:(NSString *)message;
 +(NSString *)getCurrentEpochTimeInMilliSeconds;
 +(AppDelegate *) appDelegate;
