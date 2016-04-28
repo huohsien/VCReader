@@ -189,6 +189,7 @@
 		6622255B1CBF968C001BE988 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				667AACDB1C545D9400CD40E1 /* VCReader.xcdatamodeld */,
 				669227D01CD09E0A0045291E /* VCUserMO+CoreDataProperties.h */,
 				669227D11CD09E0A0045291E /* VCUserMO+CoreDataProperties.m */,
 				669227D21CD09E0A0045291E /* VCUserMO.h */,
@@ -320,7 +321,6 @@
 			children = (
 				662225DF1CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle */,
 				66A313B81CB78FBC00A43B7A /* LaunchScreen.storyboard */,
-				667AACDB1C545D9400CD40E1 /* VCReader.xcdatamodeld */,
 				667AACDE1C545D9400CD40E1 /* Assets.xcassets */,
 				664341AE1C7D56B800580AEF /* fonts */,
 				664341AD1C7D56A900580AEF /* book files */,
@@ -766,7 +766,8 @@
 				667AACDC1C545D9400CD40E1 /* VCReader.xcdatamodel */,
 			);
 			currentVersion = 667AACDC1C545D9400CD40E1 /* VCReader.xcdatamodel */;
-			path = VCReader.xcdatamodeld;
+			name = VCReader.xcdatamodeld;
+			path = VCReader/VCReader.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

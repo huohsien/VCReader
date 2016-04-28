@@ -30,6 +30,7 @@
 
 - (IBAction)signUpButtonPressed:(id)sender {
 
+    
     NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970];
     [[VCReaderAPIClient sharedClient] signUPWithName:self.accountNameTextField.text password:self.passwordTextField.text nickName:self.nickNameTextField.text email:self.emailTextField.text token:nil timestamp:timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
         

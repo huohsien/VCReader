@@ -33,6 +33,24 @@
     return self;
 }
 
+-(void) newUserWithAccoutnName:(NSString *)accountName accountPassword:(NSString *)accountPassword email:(NSString *)email headshotFilePath:(NSString *)headshotFilePath nickName:(NSString *)nickName {
+
+    VCUserMO *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:_context];
+    user.accountName = accountName;
+    user.accountPassword = accountPassword;
+    user.email = email;
+    user.headshotFilePath = headshotFilePath;
+    user.nickName = nickName;
+    
+    // Save the context
+    NSError *error = nil;
+    if (![_context save:&error]) {
+        NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
+        [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
+        abort();
+    }
+    _user = user;
+}
 
 -(VCUserMO *) getUser {
     
