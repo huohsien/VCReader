@@ -49,11 +49,13 @@ NSString * const kTencentOAuthAppID = @"1105244329";
             
             [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
         
-        } else {
+        } else if (dict[@"user_id"]) {
             
             [[NSUserDefaults standardUserDefaults] setObject:dict[@"user_id"] forKey:@"user id"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
+            [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:dict[@"account_name"] accountPassword:self.passwordTextView.text userID:dict[@"user_id"] email:dict[@"email"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
+                        
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
             [VCHelperClass appDelegate].window.rootViewController = nc;
@@ -159,8 +161,9 @@ NSString * const kTencentOAuthAppID = @"1105244329";
                     
                     [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:@"" accountPassword:@"" userID:dict[@"user_id"] email:@"" nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
                     
-                    [[VCCoreDataCenter sharedInstance] setCurrentUserWithUserID:dict[@"user_id"]];
-                    
+                    [[NSUserDefaults standardUserDefaults] setObject:dict[@"user_id"] forKey:@"user id"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+
                     [self.navigationController popViewControllerAnimated:YES];
                     
                 } else {

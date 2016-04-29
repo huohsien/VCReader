@@ -9,6 +9,7 @@
 #import "VCChapterTableViewController.h"
 #import "VCHelperClass.h"
 #import "VCReaderAPIClient.h"
+#import "VCCoreDataCenter.h"
 
 @interface VCChapterTableViewController ()
 
@@ -86,14 +87,14 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-//    [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:(int)indexPath.row wordNumber:0 inViewController:self];
+    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:(int)indexPath.row wordNumber:0];
     
 //    VCReadingStatusMO *readingStatus = [VCHelperClass getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
     
 //    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
 //        
-//        [self.navigationController popViewControllerAnimated:YES];
-//        
+        [self.navigationController popViewControllerAnimated:YES];
+//
 //    } failure:^(NSURLSessionDataTask *task, NSError *error) {
 //        
 //        [VCHelperClass showErrorAlertViewWithTitle:@"Web Error" andMessage:error.debugDescription];

@@ -10,6 +10,8 @@
 #import "VCChapterTableViewController.h"
 #import "VCTextView.h"
 #import "AppDelegate.h"
+#import "VCCoreDataCenter.h"
+#import "VCReadingStatusMO+CoreDataProperties.h"
 
 #define NUMBER_OF_PREFETCH_PAGES 1
 
@@ -339,13 +341,11 @@
 //            [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
 //            return;
 //        }
-//        int chapterNumber = [dict[@"chapter"] intValue];
-//        int wordNumber = [dict[@"word"] intValue];
-//        
+//
 //        [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:chapterNumber wordNumber:wordNumber inViewController:self];
 //        
-//        [self loadContent];
-//        
+        [self loadContent];
+//
 //    } failure:^(NSURLSessionDataTask *task, NSError *error) {
 //        NSString* errorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
 //        NSLog(@"errorResponse = %@", errorResponse);
@@ -383,8 +383,8 @@
         self.tabBarController.tabBar.hidden = YES;
     }
     
-//    [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber] inViewController:self];
-//    
+    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+//
 //    VCReadingStatusMO *readingStatus = [VCHelperClass getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
 //    
 //    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -401,10 +401,10 @@
 
     dispatch_async(dispatch_get_main_queue(), ^{
         
-//        VCReadingStatusMO *readingStatus = [VCHelperClass getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
-//        _chapterNumber = readingStatus.chapterNumber;
-//        _currentChapter = [[VCChapter alloc] initForVCBook:_book OfChapterNumber:_chapterNumber inViewController:self inViewingRect:_rectOfTextView];
-//        _pageNumber = [self getPageNumberFromWordNumber:readingStatus.wordNumber];
+        VCReadingStatusMO *readingStatus = [[VCCoreDataCenter sharedInstance] getReadingStatusForBook:_book.bookName];
+        _chapterNumber = readingStatus.chapterNumber;
+        _currentChapter = [[VCChapter alloc] initForVCBook:_book OfChapterNumber:_chapterNumber inViewController:self inViewingRect:_rectOfTextView];
+        _pageNumber = [self getPageNumberFromWordNumber:readingStatus.wordNumber];
         
         [self initPages]; // execute only once
 
@@ -437,10 +437,10 @@
 //        int chapterNumber = [dict[@"chapter"] intValue];
 //        int wordNumber = [dict[@"word"] intValue];
 //        
-//        [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:chapterNumber wordNumber:wordNumber inViewController:self];
-//        
-//        [self loadContent];
-//        
+//        [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:chapterNumber wordNumber:wordNumber];
+//
+        [self loadContent];
+//
 //    } failure:^(NSURLSessionDataTask *task, NSError *error) {
 //        NSString* errorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
 //        NSLog(@"errorResponse = %@", errorResponse);
@@ -453,8 +453,8 @@
 
 -(void) applicationWillResignActive:(NSNotification *)notification {
     
-//    [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber] inViewController:self];
-//    
+    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+//
 //    VCReadingStatusMO *readingStatus = [VCHelperClass getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
 //
 //    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -498,6 +498,8 @@
     }
     _pageNumber++;
     
+    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+
     [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         
         [self showThePageAt:_pageNumber];
@@ -529,6 +531,8 @@
         return;
     }
     _pageNumber--;
+
+    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 
     [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         

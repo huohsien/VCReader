@@ -7,6 +7,8 @@
 //
 
 #import "VCBook.h"
+#import "VCCoreDataCenter.h"
+
 @implementation VCBook {
     NSString *_fullBookDirectoryPath;
     NSMutableArray *_chapterTitleStringArray;
@@ -58,7 +60,7 @@
     }
     
     _totalNumberOfChapters = [[VCHelperClass getDatafromBook:_bookName withField:@"numberOfChapters"] intValue];
-
+    
 }
 
 -(void) loadContent {

@@ -47,7 +47,6 @@
             if (dict[@"user_id"]) {
                     [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:dict[@"account_name"] accountPassword:dict[@"account_password"] userID:dict[@"user_id"] email:dict[@"email"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
                 
-                [[VCCoreDataCenter sharedInstance] setCurrentUserWithUserID:dict[@"user_id"]];
 
                 
                 [self.navigationController popViewControllerAnimated:YES];

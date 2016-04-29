@@ -24,7 +24,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSTimeInterval timestamp;
 @property (nullable, nonatomic, retain) NSString *token;
 @property (nonatomic) int32_t userID;
-@property (nullable, nonatomic, retain) VCReadingStatusMO *readingStatus;
+@property (nullable, nonatomic, retain) NSSet<VCReadingStatusMO *> *readingStatus;
+
+@end
+
+@interface VCUserMO (CoreDataGeneratedAccessors)
+
+- (void)addReadingStatusObject:(VCReadingStatusMO *)value;
+- (void)removeReadingStatusObject:(VCReadingStatusMO *)value;
+- (void)addReadingStatus:(NSSet<VCReadingStatusMO *> *)values;
+- (void)removeReadingStatus:(NSSet<VCReadingStatusMO *> *)values;
 
 @end
 

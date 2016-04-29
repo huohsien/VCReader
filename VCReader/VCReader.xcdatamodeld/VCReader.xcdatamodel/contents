@@ -13,6 +13,7 @@
     <entity name="ReadingStatus" representedClassName="VCReadingStatusMO" syncable="YES">
         <attribute name="bookName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="chapterNumber" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="synced" attributeType="Boolean" syncable="YES"/>
         <attribute name="timestamp" attributeType="Date" syncable="YES"/>
         <attribute name="wordNumber" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="readingStatus" inverseEntity="User" syncable="YES"/>
@@ -27,12 +28,12 @@
         <attribute name="timestamp" attributeType="Date" syncable="YES"/>
         <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userID" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="readingStatus" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ReadingStatus" inverseName="user" inverseEntity="ReadingStatus" syncable="YES"/>
+        <relationship name="readingStatus" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ReadingStatus" inverseName="user" inverseEntity="ReadingStatus" syncable="YES"/>
     </entity>
     <elements>
         <element name="Book" positionX="-2295" positionY="-2347" width="126" height="88"/>
         <element name="Chapter" positionX="-1998" positionY="-2302" width="128" height="88"/>
-        <element name="ReadingStatus" positionX="-2567" positionY="-2295" width="128" height="118"/>
+        <element name="ReadingStatus" positionX="-2567" positionY="-2295" width="128" height="133"/>
         <element name="User" positionX="-2799" positionY="-2313" width="128" height="193"/>
     </elements>
 </model>
