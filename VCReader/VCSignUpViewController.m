@@ -32,7 +32,7 @@
 
     
     NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970];
-    [[VCReaderAPIClient sharedClient] signUPWithName:self.accountNameTextField.text password:self.passwordTextField.text nickName:self.nickNameTextField.text email:self.emailTextField.text token:nil timestamp:timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[VCReaderAPIClient sharedClient] signUPWithName:self.accountNameTextField.text password:self.passwordTextField.text nickName:self.nickNameTextField.text email:self.emailTextField.text token:nil timestamp:timestamp signupType:@"direct" success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSDictionary *dict = responseObject;
         
@@ -40,11 +40,16 @@
             
             [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
             
-        } else if (dict[@"success"]) {
+        } else  {
             // success
-            [[NSUserDefaults standardUserDefaults] setObject:self.nickNameTextField.text forKey:@"nickName"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [self.navigationController popViewControllerAnimated:YES];
+
+            if (dict[@"user_id"]) {
+                [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:self.accountNameTextField.text accountPassword:self.passwordTextField.text userID:dict[@"user_id"] email:self.emailTextField.text headshotFilePath:@"" nickName:self.nickNameTextField.text token:dict[@"token"] timestamp:[NSString stringWithFormat:@"%ld",(long)(timestamp * 1000.0)] signupType:@"direct"];
+                [self.navigationController popViewControllerAnimated:YES];
+            } else {
+                [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:@"Did Not Return User ID"];
+            }
+
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

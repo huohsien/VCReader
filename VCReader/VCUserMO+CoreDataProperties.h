@@ -2,7 +2,7 @@
 //  VCUserMO+CoreDataProperties.h
 //  VCReader
 //
-//  Created by victor on 4/27/16.
+//  Created by victor on 4/29/16.
 //  Copyright © 2016 VHHC. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *accountPassword;
 @property (nullable, nonatomic, retain) NSString *email;
 @property (nullable, nonatomic, retain) NSString *headshotFilePath;
+@property (nullable, nonatomic, retain) NSString *signupType;
 @property (nullable, nonatomic, retain) NSString *nickName;
 @property (nonatomic) NSTimeInterval timestamp;
 @property (nullable, nonatomic, retain) NSString *token;

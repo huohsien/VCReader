@@ -11,7 +11,6 @@
 @implementation VCCoreDataCenter
 
 @synthesize context = _context;
-@synthesize user = _user;
 
 +(VCCoreDataCenter *) sharedInstance {
     
@@ -33,7 +32,7 @@
     return self;
 }
 
--(void) newUserWithAccoutnName:(NSString *)accountName accountPassword:(NSString *)accountPassword email:(NSString *)email headshotFilePath:(NSString *)headshotFilePath nickName:(NSString *)nickName {
+-(void) newUserWithAccoutnName:(NSString *)accountName accountPassword:(NSString *)accountPassword userID:(NSString *)userID email:(NSString *)email headshotFilePath:(NSString *)headshotFilePath nickName:(NSString *)nickName token:(NSString *)token timestamp:(NSString *)timestamp signupType:(NSString *)signupType {
 
     VCUserMO *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:_context];
     user.accountName = accountName;
@@ -41,6 +40,11 @@
     user.email = email;
     user.headshotFilePath = headshotFilePath;
     user.nickName = nickName;
+    user.token = token;
+    user.timestamp = [timestamp doubleValue];
+    user.signupType = signupType;
+    user.userID = [userID intValue];
+    NSLog(@"%@,%@,%@,%@,%@,%@,%lf,%@,%d", user.accountName, user.accountPassword, user.email, user.headshotFilePath, user.nickName, user.token, user.timestamp, user.signupType, user.userID);
     
     // Save the context
     NSError *error = nil;
@@ -49,34 +53,36 @@
         [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
         abort();
     }
-    _user = user;
 }
 
--(VCUserMO *) getUser {
+-(VCUserMO *) getCurrentActiveUser {
     
-    if (!_user) {
+    
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSString *userIDString = [[NSUserDefaults standardUserDefaults] objectForKey:@"user id"];
+    if (!userIDString) {
         
-        // Retrieve all the shapes
-        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-        
-//        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bookName == %@", bookName];
-//        [fetchRequest setPredicate:predicate];
-        NSError *error = nil;
-        NSArray *userArray = [_context executeFetchRequest:fetchRequest error:&error];
-        
-        if (error) {
-            NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
-            abort();
-        }
-        _user = [userArray lastObject];
-        if (_user == nil) {
-            
-            [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not find user"];
-            
-        }
+        [VCHelperClass showErrorAlertViewWithTitle:@"NSUserDefaults Error" andMessage:@"Can not find user id"];
+
     }
     
-    return _user;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID == %@", userIDString];
+    [fetchRequest setPredicate:predicate];
+    NSError *error = nil;
+    NSArray *userArray = [_context executeFetchRequest:fetchRequest error:&error];
+    
+    if (error) {
+        NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
+        abort();
+    }
+    VCUserMO *user = [userArray lastObject];
+    if (user == nil) {
+        
+        [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not find user"];
+        
+    }
+    
+    return user;
 }
 
 -(void) saveReadingStatusForBook:(NSString *)bookName andUserID:(NSString *)userID chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber {
@@ -99,7 +105,6 @@
 
 -(VCReadingStatusMO *) getReadingStatusForBook:(NSString *)bookName andUserID:(NSString *)userID {
     
-    // Retrieve all the shapes
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"ReadingStatus"];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bookName == %@", bookName];

@@ -53,30 +53,12 @@ NSString * const kTencentOAuthAppID = @"1105244329";
             
             [[NSUserDefaults standardUserDefaults] setObject:dict[@"token"] forKey:@"token"];  //TODO: need to think about the redundancy of token being stored in both NSUserDefaults and Core Data
             [[NSUserDefaults standardUserDefaults] synchronize];
+            [[NSUserDefaults standardUserDefaults] setObject:dict[@"user_id"] forKey:@"user id"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
             [VCHelperClass appDelegate].window.rootViewController = nc;
-            
-            // logged in
-            //
-            NSManagedObjectContext *context = [VCCoreDataCenter sharedInstance].context;
-            VCUserMO *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:context];
-            user.accountName = self.accountNameTextView.text;
-            user.accountPassword = self.passwordTextView.text;
-            user.email = dict[@"email"];
-            user.token = dict[@"token"];
-            user.timestamp = [((NSString *)dict[@"timestamp"]) doubleValue]; // NSTimeInterval is the same as double
-            
-            // Save the context
-            NSError *error = nil;
-            if (![context save:&error]) {
-                NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
-                [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
-                abort();
-            }
-            
-            [VCCoreDataCenter sharedInstance].user = user;
             
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -120,6 +102,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         [_tencentOAuth getUserInfo];
         [[NSUserDefaults standardUserDefaults] setObject:_tencentOAuth.openId forKey:@"token"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
 
     }
     else
@@ -160,6 +143,46 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         
         [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"nickname"] forKey:@"nickName"];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970];
+        [[VCReaderAPIClient sharedClient] signUPWithName:@"" password:@"" nickName:[response.jsonResponse objectForKey:@"nickname"] email:@"" token:[[NSUserDefaults standardUserDefaults] objectForKey:@"token"] timestamp:timestamp signupType:@"QQ" success:^(NSURLSessionDataTask *task, id responseObject) {
+            
+            NSDictionary *dict = responseObject;
+            NSLog(@"response = %@", dict);
+            
+            if (dict[@"error"]) {
+                
+                [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+                
+            } else  {
+                // success
+                
+                if (dict[@"user_id"]) {
+                    
+                    [[NSUserDefaults standardUserDefaults] setObject:dict[@"user_id"] forKey:@"user id"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:@" " accountPassword:@" " userID:dict[@"user_id"] email:@" " headshotFilePath:[[NSUserDefaults standardUserDefaults] objectForKey:@"headshot path"] nickName:[[NSUserDefaults standardUserDefaults] objectForKey:@"nickName"] token:[[NSUserDefaults standardUserDefaults] objectForKey:@"token"] timestamp:[NSString stringWithFormat:@"%ld",(long)(timestamp * 1000.0)] signupType:@"QQ"];
+                    [self.navigationController popViewControllerAnimated:YES];
+                    
+                } else if (!dict[@"success"]) {
+                    
+                    [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:@"Did Not Return User ID"];
+                }
+                
+            }
+            
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+            
+        }];
+
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
+        [VCHelperClass appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        [VCHelperClass appDelegate].window.rootViewController = nc;
+        [[VCHelperClass appDelegate].window makeKeyAndVisible];
     
     } else {
         

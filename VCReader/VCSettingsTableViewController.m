@@ -8,6 +8,8 @@
 
 #import "VCSettingsTableViewController.h"
 #import "VCLoginViewController.h"
+#import "VCCoreDataCenter.h"
+#import "VCUserMO.h"
 
 @interface VCSettingsTableViewController ()
 
@@ -41,7 +43,11 @@
     
     [super viewWillAppear:animated];
 
-    [self.nickNameLabel setText:[[NSUserDefaults standardUserDefaults] objectForKey:@"nickName"]];
+    VCUserMO *user = [[VCCoreDataCenter sharedInstance] getCurrentActiveUser];
+    
+    if (user) {
+        [self.nickNameLabel setText:user.nickName];
+    }
     
     _headshot = [UIImage imageWithContentsOfFile:[[NSUserDefaults standardUserDefaults] objectForKey:@"headshot path"]];
     if (!_headshot) {
@@ -139,7 +145,6 @@
 - (IBAction)logoutButtonPressed:(id)sender {
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"token"];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"nickName"];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"login status"];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"headshot path"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     

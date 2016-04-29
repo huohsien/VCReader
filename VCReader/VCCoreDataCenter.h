@@ -14,9 +14,11 @@
 @interface VCCoreDataCenter : NSObject
 
 @property (strong, nonatomic) NSManagedObjectContext *context;
-@property (strong, nonatomic) VCUserMO *user;
 
 +(VCCoreDataCenter *) sharedInstance;
+
+-(void) newUserWithAccoutnName:(NSString *)accountName accountPassword:(NSString *)accountPassword userID:(NSString *)userID email:(NSString *)email headshotFilePath:(NSString *)headshotFilePath nickName:(NSString *)nickName token:(NSString *)token timestamp:(NSString *)timestamp signupType:(NSString *)signupType;
+-(VCUserMO *) getCurrentActiveUser;
 
 @end
 
