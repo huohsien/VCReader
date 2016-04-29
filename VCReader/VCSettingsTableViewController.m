@@ -141,12 +141,6 @@
     header.textLabel.textAlignment = NSTextAlignmentLeft;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    
-    return 35.0;
-}
 
 - (IBAction)touched:(id)sender {
     

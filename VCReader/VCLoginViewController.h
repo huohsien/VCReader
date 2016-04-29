@@ -19,4 +19,5 @@ extern NSString * const kTencentOAuthAppID;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextView;
 @property (strong, nonatomic) TencentOAuth *tencentOAuth;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end

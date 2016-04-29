@@ -467,6 +467,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="accountNameTextView" destination="phD-wL-PJB" id="PqA-0g-qnR"/>
+                        <outlet property="activityIndicator" destination="ze0-gi-aes" id="aNW-ix-pSM"/>
                         <outlet property="passwordTextView" destination="bX9-Iq-e5B" id="w2T-Fu-laF"/>
                     </connections>
                 </viewController>

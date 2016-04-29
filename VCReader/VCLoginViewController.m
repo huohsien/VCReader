@@ -99,6 +99,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         //  记录登录用户的OpenID、Token以及过期时间
 //        NSLog(@"token = %@", _tencentOAuth.openId);
         
+        [self.activityIndicator startAnimating];
         [_tencentOAuth getUserInfo];
         [[NSUserDefaults standardUserDefaults] setObject:_tencentOAuth.openId forKey:@"token"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -170,6 +171,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
                 }
                 
             }
+            [self.activityIndicator stopAnimating];
             
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
