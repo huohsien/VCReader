@@ -32,6 +32,7 @@
     //set navigation bar style
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationController.navigationBar.barTintColor = [UIColor redColor];
+    self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.topItem.title = @"设置";
@@ -128,6 +129,9 @@
 //}
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     
 //    header.textLabel.textColor = [UIColor redColor];
@@ -135,6 +139,13 @@
     CGRect headerFrame = header.frame;
     header.textLabel.frame = headerFrame;
     header.textLabel.textAlignment = NSTextAlignmentLeft;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    return 35.0;
 }
 
 - (IBAction)touched:(id)sender {

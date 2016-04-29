@@ -31,7 +31,8 @@
 //    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     [NSThread sleepForTimeInterval:1.0];
     
-    
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+
     NSString *tokenString = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -70,12 +71,7 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = nc;
-    [self.window makeKeyAndVisible];
-    
+
     return [TencentOAuth HandleOpenURL:url];
 }
 
