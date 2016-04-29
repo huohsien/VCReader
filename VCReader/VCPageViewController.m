@@ -383,7 +383,7 @@
         self.tabBarController.tabBar.hidden = YES;
     }
     
-    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+//    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 //
 //    VCReadingStatusMO *readingStatus = [VCHelperClass getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
 //    
@@ -498,6 +498,10 @@
     }
     _pageNumber++;
     
+    if (_pageNumber <= _currentChapter.pageArray.count - 1) {
+        [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+    }
+    
     [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         
         [self showThePageAt:_pageNumber];
@@ -530,6 +534,10 @@
     }
     _pageNumber--;
 
+    if (_pageNumber >= 0) {
+        [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+    }
+    
     [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         
         [self showThePageAt:_pageNumber];
