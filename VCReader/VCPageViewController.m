@@ -453,7 +453,7 @@
 
 -(void) applicationWillResignActive:(NSNotification *)notification {
     
-    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+//    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 //
 //    VCReadingStatusMO *readingStatus = [VCHelperClass getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
 //
@@ -498,8 +498,6 @@
     }
     _pageNumber++;
     
-    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
-
     [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         
         [self showThePageAt:_pageNumber];
@@ -531,8 +529,6 @@
         return;
     }
     _pageNumber--;
-
-    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 
     [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         
@@ -633,7 +629,8 @@
     _chapterNumber++;
     _pageNumber = 0;
 
-    
+    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+
     _previousChapter = _currentChapter;
     _currentChapter = _nextChapter;
     
@@ -684,6 +681,8 @@
     
     _chapterNumber--;
     _pageNumber = (int) _previousChapter.pageArray.count - 1;
+
+    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 
     _nextChapter = _currentChapter;
     _currentChapter = _previousChapter;

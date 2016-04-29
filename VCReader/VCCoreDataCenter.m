@@ -93,7 +93,7 @@
     }
     VCUserMO *user = [userArray lastObject];
     if (user == nil) {
-        
+    
         [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not find user"];
         
     }
