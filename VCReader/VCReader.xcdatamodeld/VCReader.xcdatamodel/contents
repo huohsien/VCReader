@@ -21,7 +21,7 @@
         <attribute name="accountName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="accountPassword" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="headshotFilePath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="headshotFileURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nickName" attributeType="String" syncable="YES"/>
         <attribute name="signupType" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" attributeType="Date" syncable="YES"/>
