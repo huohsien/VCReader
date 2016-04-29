@@ -51,8 +51,6 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         
         } else {
             
-            [[NSUserDefaults standardUserDefaults] setObject:dict[@"token"] forKey:@"token"];  //TODO: need to think about the redundancy of token being stored in both NSUserDefaults and Core Data
-            [[NSUserDefaults standardUserDefaults] synchronize];
             [[NSUserDefaults standardUserDefaults] setObject:dict[@"user_id"] forKey:@"user id"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
@@ -101,10 +99,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         
         [self.activityIndicator startAnimating];
         [_tencentOAuth getUserInfo];
-        [[NSUserDefaults standardUserDefaults] setObject:_tencentOAuth.openId forKey:@"token"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
         
-
     }
     else
     {
@@ -136,20 +131,22 @@ NSString * const kTencentOAuthAppID = @"1105244329";
 
 - (void)getUserInfoResponse:(APIResponse*) response {
     
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+
     if (URLREQUEST_SUCCEED == response.retCode && kOpenSDKErrorSuccess == response.detailRetCode) {
        
         NSLog(@"qq login response = %@", response.jsonResponse);
         
-        [self saveImage:[self getImageFromURL:response.jsonResponse[@"figureurl_qq_2"]] withFileName:@"headshot_100" inDirectory:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
+        [self saveImage:[self getImageFromURL:response.jsonResponse[@"figureurl_qq_2"]]];
         
         [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"nickname"] forKey:@"nickName"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970];
-        [[VCReaderAPIClient sharedClient] signUPWithName:@"" password:@"" nickName:[response.jsonResponse objectForKey:@"nickname"] email:@"" token:[[NSUserDefaults standardUserDefaults] objectForKey:@"token"] timestamp:timestamp signupType:@"QQ" success:^(NSURLSessionDataTask *task, id responseObject) {
+        [[VCReaderAPIClient sharedClient] signupWithName:@"" password:@"" nickName:[response.jsonResponse objectForKey:@"nickname"] email:@"" token:_tencentOAuth.openId timestamp:timestamp signupType:@"QQ" success:^(NSURLSessionDataTask *task, id responseObject) {
             
             NSDictionary *dict = responseObject;
-            NSLog(@"response = %@", dict);
+            NSLog(@"%s: response = %@", __PRETTY_FUNCTION__, dict);
             
             if (dict[@"error"]) {
                 
@@ -160,14 +157,15 @@ NSString * const kTencentOAuthAppID = @"1105244329";
                 
                 if (dict[@"user_id"]) {
                     
-                    [[NSUserDefaults standardUserDefaults] setObject:dict[@"user_id"] forKey:@"user id"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                    [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:@" " accountPassword:@" " userID:dict[@"user_id"] email:@" " headshotFilePath:[[NSUserDefaults standardUserDefaults] objectForKey:@"headshot path"] nickName:[[NSUserDefaults standardUserDefaults] objectForKey:@"nickName"] token:[[NSUserDefaults standardUserDefaults] objectForKey:@"token"] timestamp:[NSString stringWithFormat:@"%ld",(long)(timestamp * 1000.0)] signupType:@"QQ"];
+                    [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:@"" accountPassword:@"" userID:dict[@"user_id"] email:@"" nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
+                    
+                    [[VCCoreDataCenter sharedInstance] setCurrentUserWithUserID:dict[@"user_id"]];
+                    
                     [self.navigationController popViewControllerAnimated:YES];
                     
-                } else if (!dict[@"success"]) {
+                } else {
                     
-                    [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:@"Did Not Return User ID"];
+                    [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:@"User ID Missing"];
                 }
                 
             }
@@ -197,21 +195,18 @@ NSString * const kTencentOAuthAppID = @"1105244329";
 }
 
 -(UIImage *) getImageFromURL:(NSString *)fileURL {
-    UIImage * result;
     
     NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
-    result = [UIImage imageWithData:data];
+     UIImage * result = [UIImage imageWithData:data];
     
     return result;
 }
 
--(void) saveImage:(UIImage *)image withFileName:(NSString *)imageName inDirectory:(NSString *)directoryPath {
+-(void) saveImage:(UIImage *)image {
     
     if (image) {
         
-        NSString *path = [directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"png"]];
-        [[NSUserDefaults standardUserDefaults] setObject:path forKey:@"headshot path"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"headshot.png"]];
         
         [UIImagePNGRepresentation(image) writeToFile:path options:NSAtomicWrite error:nil];
     }

@@ -44,13 +44,15 @@
     
     [super viewWillAppear:animated];
 
-    VCUserMO *user = [[VCCoreDataCenter sharedInstance] getCurrentActiveUser];
+    VCUserMO *user = [VCCoreDataCenter sharedInstance].user;
     
     if (user) {
         [self.nickNameLabel setText:user.nickName];
     }
     
-    _headshot = [UIImage imageWithContentsOfFile:[[NSUserDefaults standardUserDefaults] objectForKey:@"headshot path"]];
+    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"headshot.png"]];
+
+    _headshot = [UIImage imageWithContentsOfFile:path];
     if (!_headshot) {
         _headshot = [UIImage imageNamed:@"headshot_placeholder"];
     }
@@ -148,10 +150,10 @@
 }
 
 - (IBAction)logoutButtonPressed:(id)sender {
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"token"];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"nickName"];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"headshot path"];
+
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"user id"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [[VCCoreDataCenter sharedInstance] clearCurrentActiveUser];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"LoginNavigationController"];

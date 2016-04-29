@@ -39,7 +39,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     return isReachable;
 }
 
--(void) signUPWithName:(NSString *)accountName password:(NSString *)accountPassword nickName:(NSString *)nickName email:(NSString *)email token:(NSString *)token timestamp:(NSTimeInterval)timestamp signupType:(NSString *)signupType success:(void (^)(NSURLSessionDataTask *task, id responseObject))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
+-(void) signupWithName:(NSString *)accountName password:(NSString *)accountPassword nickName:(NSString *)nickName email:(NSString *)email token:(NSString *)token timestamp:(NSTimeInterval)timestamp signupType:(NSString *)signupType success:(void (^)(NSURLSessionDataTask *task, id responseObject))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
     
     NSString* path;
     if (token) {

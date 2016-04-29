@@ -11,6 +11,7 @@
 @implementation VCCoreDataCenter
 
 @synthesize context = _context;
+@synthesize user = _user;
 
 +(VCCoreDataCenter *) sharedInstance {
     
@@ -32,19 +33,20 @@
     return self;
 }
 
--(void) newUserWithAccoutnName:(NSString *)accountName accountPassword:(NSString *)accountPassword userID:(NSString *)userID email:(NSString *)email headshotFilePath:(NSString *)headshotFilePath nickName:(NSString *)nickName token:(NSString *)token timestamp:(NSString *)timestamp signupType:(NSString *)signupType {
+-(void) newUserWithAccoutnName:(NSString *)accountName accountPassword:(NSString *)accountPassword userID:(NSString *)userID email:(NSString *)email nickName:(NSString *)nickName token:(NSString *)token timestamp:(NSString *)timestamp signupType:(NSString *)signupType {
+
+    NSLog(@"%s", __PRETTY_FUNCTION__);
 
     VCUserMO *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:_context];
     user.accountName = accountName;
     user.accountPassword = accountPassword;
     user.email = email;
-    user.headshotFilePath = headshotFilePath;
     user.nickName = nickName;
     user.token = token;
     user.timestamp = [timestamp doubleValue];
     user.signupType = signupType;
     user.userID = [userID intValue];
-    NSLog(@"%@,%@,%@,%@,%@,%@,%lf,%@,%d", user.accountName, user.accountPassword, user.email, user.headshotFilePath, user.nickName, user.token, user.timestamp, user.signupType, user.userID);
+    NSLog(@"%@,%@,%@,%@,%@,%lf,%@,%d", user.accountName, user.accountPassword, user.email, user.nickName, user.token, user.timestamp, user.signupType, user.userID);
     
     // Save the context
     NSError *error = nil;
@@ -53,18 +55,13 @@
         [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
         abort();
     }
+    _user = user;
 }
 
--(VCUserMO *) getCurrentActiveUser {
-    
+-(void) setCurrentUserWithUserID:(NSString *)userIDString {
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    NSString *userIDString = [[NSUserDefaults standardUserDefaults] objectForKey:@"user id"];
-    if (!userIDString) {
-        
-        [VCHelperClass showErrorAlertViewWithTitle:@"NSUserDefaults Error" andMessage:@"Can not find user id"];
 
-    }
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID == %@", userIDString];
     [fetchRequest setPredicate:predicate];
@@ -82,8 +79,14 @@
         
     }
     
-    return user;
+    _user = user;
 }
+
+-(void) clearCurrentActiveUser {
+    _user = nil;
+}
+
+
 
 -(void) saveReadingStatusForBook:(NSString *)bookName andUserID:(NSString *)userID chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber {
     

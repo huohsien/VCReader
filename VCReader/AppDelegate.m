@@ -11,6 +11,7 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import <TencentOpenAPI/TencentOAuth.h>
 #import "VCLoginViewController.h"
+#import "VCCoreDataCenter.h"
 
 @interface AppDelegate ()
 
@@ -33,11 +34,11 @@
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
-    NSString *tokenString = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
+    NSString *userID = [[NSUserDefaults standardUserDefaults] objectForKey:@"user id"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:(tokenString ? @"MainNavigationController" : @"LoginNavigationController")];
+    UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:(userID ? @"MainNavigationController" : @"LoginNavigationController")];
     self.window.rootViewController = nc;
     [self.window makeKeyAndVisible];
     
