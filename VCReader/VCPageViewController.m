@@ -629,7 +629,6 @@
     _chapterNumber++;
     _pageNumber = 0;
 
-    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 
     _previousChapter = _currentChapter;
     _currentChapter = _nextChapter;
@@ -659,7 +658,7 @@
 //    for (VCPage *p in _pageArray) {
 //        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
 //    }
-    
+    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 
     
     // organize new page views in the content view
@@ -682,7 +681,6 @@
     _chapterNumber--;
     _pageNumber = (int) _previousChapter.pageArray.count - 1;
 
-    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 
     _nextChapter = _currentChapter;
     _currentChapter = _previousChapter;
@@ -714,6 +712,7 @@
 //        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
 //    }
     
+    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 
     
     // organize new page views in the content view
