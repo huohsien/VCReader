@@ -11,7 +11,6 @@
 #import "VCTextView.h"
 #import "VCPageViewController.h"
 #import "VCPage.h"
-#import "VCHelperClass.h"
 
 @class VCPageViewController;
 

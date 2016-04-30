@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "VCCoreDataCenter.h"
 
 @interface VCSignUpViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *accountNameTextField;

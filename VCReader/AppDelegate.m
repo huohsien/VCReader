@@ -11,7 +11,6 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import <TencentOpenAPI/TencentOAuth.h>
 #import "VCLoginViewController.h"
-#import "VCCoreDataCenter.h"
 
 @interface AppDelegate ()
 

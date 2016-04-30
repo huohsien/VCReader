@@ -7,7 +7,6 @@
 //
 
 #import "VCLoginViewController.h"
-#import "VCReaderAPIClient.h"
 
 NSString * const kTencentOAuthAppID = @"1105244329";
 
@@ -47,7 +46,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         
         if (dict[@"error"]) {
             
-            [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
         
         } else if (dict[@"user_id"]) {
             
@@ -58,12 +57,12 @@ NSString * const kTencentOAuthAppID = @"1105244329";
                         
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
-            [VCHelperClass appDelegate].window.rootViewController = nc;
+            [VCTool appDelegate].window.rootViewController = nc;
             
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
        
-        [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+        [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
 
     }];
 
@@ -152,7 +151,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
             
             if (dict[@"error"]) {
                 
-                [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+                [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
                 
             } else  {
                 // success
@@ -168,7 +167,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
                     
                 } else {
                     
-                    [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:@"User ID Missing"];
+                    [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:@"User ID Missing"];
                 }
                 
             }
@@ -176,16 +175,16 @@ NSString * const kTencentOAuthAppID = @"1105244329";
             
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
-            [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
             
         }];
 
         
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
-        [VCHelperClass appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        [VCHelperClass appDelegate].window.rootViewController = nc;
-        [[VCHelperClass appDelegate].window makeKeyAndVisible];
+        [VCTool appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        [VCTool appDelegate].window.rootViewController = nc;
+        [[VCTool appDelegate].window makeKeyAndVisible];
     
     } else {
         

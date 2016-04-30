@@ -9,10 +9,13 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 
-#import "VCHelperClass.h"
+#import "VCTool.h"
 
 #ifdef __OBJC__
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #endif
+#import "VCTool.h"
+#import "VCCoreDataCenter.h"
+#import "VCReaderAPIClient.h"
 #endif /* PrefixHeader_pch */

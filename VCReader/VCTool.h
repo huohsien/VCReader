@@ -1,5 +1,5 @@
 //
-//  VCHelperClass.h
+//  VCTool.h
 //  VCReader
 //
 //  Created by victor on 1/30/16.
@@ -11,7 +11,7 @@
 #import "VCReadingStatusMO+CoreDataProperties.h"
 
 @import UIKit;
-@interface VCHelperClass : NSObject
+@interface VCTool : NSObject
 
 +(void) storeIntoBook:(NSString *)bookName withField:(NSString *)field andData:(id)data;
 +(id) getDatafromBook:(NSString *)bookName withField:(NSString *)field;
@@ -24,5 +24,7 @@
 +(void) showErrorAlertViewWithTitle:(NSString *)title andMessage:(NSString *)message;
 +(NSString *)getCurrentEpochTimeInMilliSeconds;
 +(AppDelegate *) appDelegate;
++(void) storeObject:(id)object withKey:(NSString *)key;
++(id) getObjectWithKey:(NSString *)key;
 
 @end

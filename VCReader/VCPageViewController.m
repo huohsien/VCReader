@@ -10,7 +10,6 @@
 #import "VCChapterTableViewController.h"
 #import "VCTextView.h"
 #import "AppDelegate.h"
-#import "VCCoreDataCenter.h"
 #import "VCReadingStatusMO+CoreDataProperties.h"
 
 #define NUMBER_OF_PREFETCH_PAGES 1
@@ -284,7 +283,7 @@
     [self.bottomStatusBarView setBackgroundColor:[UIColor colorWithPatternImage:[_backgroundImage crop:cropRect]]];
     
     // set color of the text in the status bars
-    UIColor *statusBarTextColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.7];
+    UIColor *statusBarTextColor = [VCTool changeUIColor:_textColor alphaValueTo:0.7];
     [self.chapterTitleLabel setTextColor:statusBarTextColor];
     [self.pageLabel setTextColor:statusBarTextColor];
     [self.batteryLabel setTextColor:statusBarTextColor];
@@ -315,8 +314,8 @@
     
     self.navigationController.navigationBar.hidden = YES;
     self.navigationController.navigationBar.barTintColor = [_backgroundImage averageColor];
-    self.navigationController.navigationBar.tintColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:0.5];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[VCHelperClass changeUIColor:_textColor alphaValueTo:0.5],NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
+    self.navigationController.navigationBar.tintColor = [VCTool changeUIColor:_textColor alphaValueTo:0.5];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[VCTool changeUIColor:_textColor alphaValueTo:0.5],NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chapter_list_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showChapters:)];
     
@@ -338,18 +337,18 @@
 //        
 //        NSDictionary *dict = self.jsonResponse;
 //        if (dict[@"error"]) {
-//            [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+//            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
 //            return;
 //        }
 //
-//        [VCHelperClass saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:chapterNumber wordNumber:wordNumber inViewController:self];
+//        [VCTool saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:chapterNumber wordNumber:wordNumber inViewController:self];
 //        
         [self loadContent];
 //
 //    } failure:^(NSURLSessionDataTask *task, NSError *error) {
 //        NSString* errorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
 //        NSLog(@"errorResponse = %@", errorResponse);
-//        [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+//        [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
 //        
 //    }];
 
@@ -385,7 +384,7 @@
     
 //    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 //
-//    VCReadingStatusMO *readingStatus = [VCHelperClass getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
+//    VCReadingStatusMO *readingStatus = [VCTool getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
 //    
 //    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
 //        
@@ -431,7 +430,7 @@
 //        
 //        NSDictionary *dict = self.jsonResponse;
 //        if (dict[@"error"]) {
-//            [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+//            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
 //            return;
 //        }
 //        int chapterNumber = [dict[@"chapter"] intValue];
@@ -444,7 +443,7 @@
 //    } failure:^(NSURLSessionDataTask *task, NSError *error) {
 //        NSString* errorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
 //        NSLog(@"errorResponse = %@", errorResponse);
-//        [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+//        [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
 //        
 //    }];
 
@@ -455,7 +454,7 @@
     
 //    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 //
-//    VCReadingStatusMO *readingStatus = [VCHelperClass getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
+//    VCReadingStatusMO *readingStatus = [VCTool getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
 //
 //    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
 //        
@@ -614,7 +613,7 @@
 //    }
     
 
-    [VCHelperClass removeAllSubviewsInView:self.contentView];
+    [VCTool removeAllSubviewsInView:self.contentView];
     
     // add all pages to the content view
     //
@@ -671,7 +670,7 @@
     
     // organize new page views in the content view
     
-    [VCHelperClass removeAllSubviewsInView:_contentView];
+    [VCTool removeAllSubviewsInView:_contentView];
     
     // add new views
     for (int i = 0; i < _pageArray.count; i++) {
@@ -725,7 +724,7 @@
     
     // organize new page views in the content view
     
-    [VCHelperClass removeAllSubviewsInView:_contentView];
+    [VCTool removeAllSubviewsInView:_contentView];
 
     // add new views
     for (int i = 0; i < _pageArray.count; i++) {
@@ -833,10 +832,10 @@
                                     /*"Battery is in use (discharging)*/ [UIImage imageNamed:@"battery_not_charging_icon"],
                                     /*Battery is charging*/ [UIImage imageNamed:@"battery_charging_icon"],
                                     /*Battery is fully charged*/ [UIImage imageNamed:@"battery_not_charging_icon"], nil];
-    UIColor *batteryIconColor = [VCHelperClass changeUIColor:_textColor alphaValueTo:1.0];
+    UIColor *batteryIconColor = [VCTool changeUIColor:_textColor alphaValueTo:1.0];
     
     UIImage *maskImage = [batteryStatusImages objectAtIndex:[[UIDevice currentDevice] batteryState]];
-    UIImage *image = [VCHelperClass maskedImage:maskImage color:batteryIconColor];
+    UIImage *image = [VCTool maskedImage:maskImage color:batteryIconColor];
     UIImage *batteryLevelIcon = [[UIDevice currentDevice] batteryState] != UIDeviceBatteryStateCharging ? [self adjustBatteryImage:image accordingToLevel:[[UIDevice currentDevice] batteryLevel]] : image;
     [self.batteryImageView setImage:batteryLevelIcon];
     

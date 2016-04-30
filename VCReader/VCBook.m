@@ -7,7 +7,6 @@
 //
 
 #import "VCBook.h"
-#import "VCCoreDataCenter.h"
 
 @implementation VCBook {
     NSString *_fullBookDirectoryPath;
@@ -59,7 +58,7 @@
         }
     }
     
-    _totalNumberOfChapters = [[VCHelperClass getDatafromBook:_bookName withField:@"numberOfChapters"] intValue];
+    _totalNumberOfChapters = [[VCTool getDatafromBook:_bookName withField:@"numberOfChapters"] intValue];
     
 }
 
@@ -79,7 +78,7 @@
 
 -(NSString *)getChapterTitleStringFromChapterNumber:(NSUInteger)chapterNumber {
 
-    NSMutableString *str = [[NSMutableString alloc] initWithString:[[VCHelperClass getDatafromBook:_bookName withField:@"titleOfChaptersArray"] objectAtIndex:chapterNumber]];
+    NSMutableString *str = [[NSMutableString alloc] initWithString:[[VCTool getDatafromBook:_bookName withField:@"titleOfChaptersArray"] objectAtIndex:chapterNumber]];
     return str;
 }
 
@@ -171,8 +170,8 @@
     _totalNumberOfChapters = count;
     
     [_chapterContentRangeStringArray addObject:NSStringFromRange(NSMakeRange(NSMaxRange(previousTitleRange) , _contentString.length - NSMaxRange(previousTitleRange)))];
-    [VCHelperClass storeIntoBook:_bookName withField:@"numberOfChapters" andData:@(count).stringValue];
-    [VCHelperClass storeIntoBook:_bookName withField:@"titleOfChaptersArray" andData:_chapterTitleStringArray];
+    [VCTool storeIntoBook:_bookName withField:@"numberOfChapters" andData:@(count).stringValue];
+    [VCTool storeIntoBook:_bookName withField:@"titleOfChaptersArray" andData:_chapterTitleStringArray];
 
 }
 

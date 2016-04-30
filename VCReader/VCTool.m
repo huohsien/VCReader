@@ -1,15 +1,15 @@
 //
-//  VCHelperClass.m
+//  VCTool.m
 //  VCReader
 //
 //  Created by victor on 1/30/16.
 //  Copyright © 2016 VHHC. All rights reserved.
 //
 
-#import "VCHelperClass.h"
+#import "VCTool.h"
 #import "UIAlertController+Window.h"
 
-@implementation VCHelperClass
+@implementation VCTool
 
 +(void) storeIntoBook:(NSString *)bookName withField:(NSString *)field andData:(id)data {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -108,6 +108,18 @@
 
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 
+}
+
++(void) storeObject:(id)object withKey:(NSString *)key {
+
+    [[NSUserDefaults standardUserDefaults] setObject:object forKey:key];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+}
+
++(id) getObjectWithKey:(NSString *)key {
+    
+    return [[NSUserDefaults standardUserDefaults] objectForKey:key];
 }
 
 @end

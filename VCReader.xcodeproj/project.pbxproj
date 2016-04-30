@@ -49,7 +49,7 @@
 		667AACDF1C545D9400CD40E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 667AACDE1C545D9400CD40E1 /* Assets.xcassets */; };
 		667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */; };
 		667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACF91C58B05C00CD40E1 /* VCBook.m */; };
-		668AB1BB1C5BDD1C00395099 /* VCHelperClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */; };
+		668AB1BB1C5BDD1C00395099 /* VCTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 668AB1BA1C5BDD1C00395099 /* VCTool.m */; };
 		669227C61CCDE6730045291E /* VCSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227C51CCDE6730045291E /* VCSignUpViewController.m */; };
 		669227C91CCF59D20045291E /* VCBookStoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227C81CCF59D20045291E /* VCBookStoreTableViewController.m */; };
 		669227D41CD09E0A0045291E /* VCUserMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227D11CD09E0A0045291E /* VCUserMO+CoreDataProperties.m */; };
@@ -130,8 +130,8 @@
 		667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPageViewController.m; sourceTree = "<group>"; };
 		667AACF81C58B05C00CD40E1 /* VCBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBook.h; sourceTree = "<group>"; };
 		667AACF91C58B05C00CD40E1 /* VCBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBook.m; sourceTree = "<group>"; };
-		668AB1B91C5BDD1C00395099 /* VCHelperClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCHelperClass.h; sourceTree = "<group>"; };
-		668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCHelperClass.m; sourceTree = "<group>"; };
+		668AB1B91C5BDD1C00395099 /* VCTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCTool.h; sourceTree = "<group>"; };
+		668AB1BA1C5BDD1C00395099 /* VCTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCTool.m; sourceTree = "<group>"; };
 		668AB1BD1C5BDF8900395099 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		669227C41CCDE6730045291E /* VCSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCSignUpViewController.h; sourceTree = "<group>"; };
 		669227C51CCDE6730045291E /* VCSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCSignUpViewController.m; sourceTree = "<group>"; };
@@ -332,8 +332,8 @@
 		669CD8D61C913E1400CC99D3 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				668AB1B91C5BDD1C00395099 /* VCHelperClass.h */,
-				668AB1BA1C5BDD1C00395099 /* VCHelperClass.m */,
+				668AB1B91C5BDD1C00395099 /* VCTool.h */,
+				668AB1BA1C5BDD1C00395099 /* VCTool.m */,
 				662225AE1CC616DB001BE988 /* VCSyncEngine.h */,
 				662225AF1CC616DB001BE988 /* VCSyncEngine.m */,
 				662225C51CCB7B7F001BE988 /* UIAlertController+Window.h */,
@@ -543,7 +543,7 @@
 				662225C41CCB7B17001BE988 /* UIAlertController+window.m in Sources */,
 				667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */,
 				666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */,
-				668AB1BB1C5BDD1C00395099 /* VCHelperClass.m in Sources */,
+				668AB1BB1C5BDD1C00395099 /* VCTool.m in Sources */,
 				666EECB81C81BEC600DF5621 /* VCLibraryTableViewController.m in Sources */,
 				667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */,
 				669227D41CD09E0A0045291E /* VCUserMO+CoreDataProperties.m in Sources */,

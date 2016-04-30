@@ -8,7 +8,6 @@
 
 #import "VCSettingsTableViewController.h"
 #import "VCLoginViewController.h"
-#import "VCCoreDataCenter.h"
 #import "VCUserMO.h"
 
 @interface VCSettingsTableViewController ()
@@ -153,11 +152,11 @@
 
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"user id"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [[VCCoreDataCenter sharedInstance] clearCurrentActiveUser];
+    [[VCCoreDataCenter sharedInstance] clearCurrentUser];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"LoginNavigationController"];
-    [VCHelperClass appDelegate].window.rootViewController = nc;
+    [VCTool appDelegate].window.rootViewController = nc;
 }
 
 

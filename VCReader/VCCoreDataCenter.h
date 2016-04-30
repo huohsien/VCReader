@@ -19,8 +19,7 @@
 +(VCCoreDataCenter *) sharedInstance;
 
 -(void) newUserWithAccoutnName:(NSString *)accountName accountPassword:(NSString *)accountPassword userID:(NSString *)userID email:(NSString *)email nickName:(NSString *)nickName token:(NSString *)token timestamp:(NSString *)timestamp signupType:(NSString *)signupType;
--(void) setCurrentUserWithUserID:(NSString *)userIDString;
--(void) clearCurrentActiveUser;
+-(void) clearCurrentUser;
 -(void) saveReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber;
 -(VCReadingStatusMO *) getReadingStatusForBook:(NSString *)bookName;
 

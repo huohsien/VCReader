@@ -7,7 +7,6 @@
 //
 
 #import "VCSignUpViewController.h"
-#import "VCReaderAPIClient.h"
 
 @interface VCSignUpViewController ()
 
@@ -39,7 +38,7 @@
         
         if (dict[@"error"]) {
             
-            [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
             
         } else  {
             // success
@@ -48,17 +47,16 @@
                     [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:dict[@"account_name"] accountPassword:dict[@"account_password"] userID:dict[@"user_id"] email:dict[@"email"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
                 
 
-                
                 [self.navigationController popViewControllerAnimated:YES];
             } else {
-                [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:@"Did Not Return User ID"];
+                [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:@"Did Not Return User ID"];
             }
 
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-        [VCHelperClass showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+        [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
 
     }];
 }

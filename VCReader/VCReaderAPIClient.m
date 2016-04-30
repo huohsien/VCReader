@@ -85,7 +85,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     
 //    if (![self connected]) {
 //        
-//        [VCHelperClass showErrorAlertViewWithTitle:@"Network" andMessage:@"Diconnected from internet"];
+//        [VCTool showErrorAlertViewWithTitle:@"Network" andMessage:@"Diconnected from internet"];
 //        return;
 //    }
     
@@ -110,7 +110,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     
 //    if (![self connected]) {
 //        
-//        [VCHelperClass showErrorAlertViewWithTitle:@"Network" andMessage:@"Diconnected from internet"];
+//        [VCTool showErrorAlertViewWithTitle:@"Network" andMessage:@"Diconnected from internet"];
 //        return;
 //    }
     

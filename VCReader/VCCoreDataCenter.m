@@ -39,18 +39,16 @@
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    
-    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"token == %@", token];
     [fetchRequest setPredicate:predicate];
     NSError *error = nil;
     NSArray *userArray = [_context executeFetchRequest:fetchRequest error:&error];
-    
     if (error) {
         NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
         abort();
     }
-    // no local record in core data
+    
+    // no local record in core data. create data.
     if (userArray.count == 0) {
     
         VCUserMO *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:_context];
@@ -68,40 +66,37 @@
         NSError *error = nil;
         if (![_context save:&error]) {
             NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
-            [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
+            [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
             abort();
         }
         _user = user;
     } else {
-        [self setCurrentUserWithUserID:userID];
+        // if data exits, switch curernt usre to it
+        [self hookupCurrentUserWithUserID:userID];
     }
 }
 
--(void) setCurrentUserWithUserID:(NSString *)userIDString {
+-(void) hookupCurrentUserWithUserID:(NSString *)userIDString {
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-
-    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID == %@", userIDString];
     [fetchRequest setPredicate:predicate];
     NSError *error = nil;
     NSArray *userArray = [_context executeFetchRequest:fetchRequest error:&error];
-    
     if (error) {
         NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
         abort();
     }
-    VCUserMO *user = [userArray lastObject];
-    if (user == nil) {
     
-        [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not find user"];
-        
-    }
+    VCUserMO *user = [userArray lastObject];
+    
+    if (user == nil)
+        [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not find user"];
     
     _user = user;
 }
 
--(void) clearCurrentActiveUser {
+-(void) clearCurrentUser {
     _user = nil;
 }
 
@@ -109,9 +104,7 @@
 
 -(void) saveReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber {
     
-    if (!_user) {
-        [self setCurrentUserWithUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
-    }
+    if (!_user) [self hookupCurrentUserWithUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
     
     VCReadingStatusMO *readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:_context];
     readingStatus.bookName = bookName;
@@ -122,32 +115,21 @@
     readingStatus.synced = NO;
     [_user addReadingStatusObject:readingStatus];
     
-    NSLog(@"%s reading status: chapter = %d, word = %d", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber);
-
     // Save the context
     NSError *error = nil;
     if (![_context save:&error]) {
         NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
-        [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
+        [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
         abort();
     }
+    NSLog(@"%s reading status: chapter = %d, word = %d", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber);
+
 }
 
 -(VCReadingStatusMO *) getReadingStatusForBook:(NSString *)bookName {
     
-    if (!_user) {
-        [self setCurrentUserWithUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
-    }
-//    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-//    
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID == %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
-//    [fetchRequest setPredicate:predicate];
-//    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
-//    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-//    [fetchRequest setSortDescriptors:sortDescriptors];
-//    NSError *error = nil;
-//    NSArray *statusArray = [_context executeFetchRequest:fetchRequest error:&error];
-    
+    if (!_user) [self hookupCurrentUserWithUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
+
     NSTimeInterval timestamp = 0.0;
     NSArray *readingStatusArray = [_user.readingStatus allObjects];
     int count = 0;
@@ -158,20 +140,16 @@
             chosen_index = count;
         }
         count++;
-//        NSLog(@"e: chapter = %d, word = %d t=%lf", readingStatus.chapterNumber, readingStatus.wordNumber, readingStatus.timestamp);
+//        NSLog(@"%s enumerate: chapter = %d, word = %d t=%lf", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber, readingStatus.timestamp);
     }
-//    if (error) {
-//        
-//        NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
-//        abort();
-//    }
+
     VCReadingStatusMO *readingStatus;
     if (readingStatusArray.count > 0) {
-        
+        // found reading status record
         readingStatus = [readingStatusArray objectAtIndex:chosen_index];
         
     } else {
-        
+        // no record. insert an initial record.
         readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:_context];
         readingStatus.bookName = bookName;
         readingStatus.chapterNumber = 0;
@@ -185,15 +163,14 @@
         NSError *error = nil;
         if (![_context save:&error]) {
             NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
-            [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
+            [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
             abort();
         }
     }
         
-    NSLog(@"%s reading status: chapter = %d, word = %d", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber);
+//    NSLog(@"%s reading status: chapter = %d, word = %d", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber);
     
-    if (readingStatus == nil)
-        [VCHelperClass showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not find user's reading status"];
+    if (readingStatus == nil) [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not find user's reading status"];
     
     return readingStatus;
 }
