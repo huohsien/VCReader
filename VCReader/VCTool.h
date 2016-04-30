@@ -22,7 +22,6 @@
 +(UIColor *) changeUIColor:(UIColor *)uicolor alphaValueTo:(CGFloat)alpha;
 
 +(void) showErrorAlertViewWithTitle:(NSString *)title andMessage:(NSString *)message;
-+(NSString *)getCurrentEpochTimeInMilliSeconds;
 +(AppDelegate *) appDelegate;
 +(void) storeObject:(id)object withKey:(NSString *)key;
 +(id) getObjectWithKey:(NSString *)key;

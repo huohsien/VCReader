@@ -143,7 +143,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"nickname"] forKey:@"nickName"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970];
+        NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970]  * 1000.0;
         [[VCReaderAPIClient sharedClient] signupWithName:@"" password:@"" nickName:[response.jsonResponse objectForKey:@"nickname"] email:@"" token:_tencentOAuth.openId timestamp:timestamp signupType:@"QQ" success:^(NSURLSessionDataTask *task, id responseObject) {
             
             NSDictionary *dict = responseObject;

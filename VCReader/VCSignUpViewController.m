@@ -31,7 +31,7 @@
    
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
-    NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970];
+    NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970] * 1000.0;
     [[VCReaderAPIClient sharedClient] signupWithName:self.accountNameTextField.text password:self.passwordTextField.text nickName:self.nickNameTextField.text email:self.emailTextField.text token:nil timestamp:timestamp signupType:@"direct" success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSDictionary *dict = responseObject;

@@ -39,31 +39,33 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     return isReachable;
 }
 
--(void) signupWithName:(NSString *)accountName password:(NSString *)accountPassword nickName:(NSString *)nickName email:(NSString *)email token:(NSString *)token timestamp:(NSTimeInterval)timestamp signupType:(NSString *)signupType success:(void (^)(NSURLSessionDataTask *task, id responseObject))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
+-(void) signupWithName:(NSString *)accountName
+              password:(NSString *)accountPassword
+              nickName:(NSString *)nickName email:(NSString *)email
+                 token:(NSString *)token timestamp:(NSTimeInterval)timestamp
+            signupType:(NSString *)signupType success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
     
-    NSString* path;
-    if (token) {
-        path = [NSString stringWithFormat:@"user_signup.php?account_name=%@&account_password=%@&nick_name=%@&email=%@&token=%@&timestamp=%@&signup_type=%@", accountName, accountPassword, nickName, email, token, [NSString stringWithFormat:@"%ld",(long)(timestamp * 1000.0)], signupType];
-    } else {
-        path = [NSString stringWithFormat:@"user_signup.php?account_name=%@&account_password=%@&nick_name=%@&email=%@&timestamp=%@&signup_type=%@", accountName, accountPassword, nickName, email, [NSString stringWithFormat:@"%ld",(long)(timestamp * 1000.0)], signupType];
-    }
+    NSMutableString *path = [NSMutableString stringWithFormat:@"user_signup.php?account_name=%@&account_password=%@&nick_name=%@&email=%@&timestamp=%@&signup_type=%@", accountName, accountPassword, nickName, email, [NSString stringWithFormat:@"%ld",(long)timestamp], signupType];
+    
+    if (token) [path appendString:[NSString stringWithFormat:@"&token=%@", token]];
+    
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
     
     [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        if (success) {
-            success(task, responseObject);
-        }
-    }failure:^(NSURLSessionDataTask *task, NSError *error) {
-        if (failure) {
-            failure(task, error);
-        }
+        
+        if (success) success(task, responseObject);
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        if (failure) failure(task, error);
+        
     }];
     
 }
 
--(void) userLoginWithAccountName:(NSString *)name password:(NSString *)password  success:(void (^)(NSURLSessionDataTask *task, id responseObject))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
+-(void) userLoginWithAccountName:(NSString *)name password:(NSString *)password  success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
 
     NSString* path = [NSString stringWithFormat:@"user_login.php?account_name=%@&account_password=%@", name, password];
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -71,62 +73,54 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
 
     [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        if (success) {
-            success(task, responseObject);
-        }
-    }failure:^(NSURLSessionDataTask *task, NSError *error) {
-        if (failure) {
-            failure(task, error);
-        }
+        
+        if (success) success(task, responseObject);
+
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        if (failure) failure(task, error);
+        
     }];
 }
 
--(void) getReadingStatusForBookNamed:(NSString *)bookName success:(void (^)(NSURLSessionDataTask *task, id responseObject))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
+-(void) getReadingStatusForBookNamed:(NSString *)bookName success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
     
-//    if (![self connected]) {
-//        
-//        [VCTool showErrorAlertViewWithTitle:@"Network" andMessage:@"Diconnected from internet"];
-//        return;
-//    }
-    
-    NSString* path = [NSString stringWithFormat:@"user_status_get.php?book_name=%@", bookName];
+    NSString *token = [VCCoreDataCenter sharedInstance].user.token;
+    NSString* path = [NSString stringWithFormat:@"user_status_get.php?token=%@&book_name=%@", token, bookName];
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
+    NSLog(@"%s --- http get path = %@", __PRETTY_FUNCTION__, encodedPath);
     
     [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        if (success) {
-            success(task, responseObject);
-        }
+        
+        if (success) success(task, responseObject);
+        
     }failure:^(NSURLSessionDataTask *task, NSError *error) {
-        if (failure) {
-            failure(task, error);
-        }
+        
+        if (failure) failure(task, error);
+        
     }];
     
 }
 
--(void) saveReadingStatusForBookNamed:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber timestamp:(NSTimeInterval)timestamp success:(void (^)(NSURLSessionDataTask *task, id responseObject))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
-    
-//    if (![self connected]) {
-//        
-//        [VCTool showErrorAlertViewWithTitle:@"Network" andMessage:@"Diconnected from internet"];
-//        return;
-//    }
-    
-    NSString* path = [NSString stringWithFormat:@"user_status_add.php?book_name=%@&current_reading_chapter=%d&current_reading_word=%d&timestamp=%@", bookName, chapterNumber, wordNumber, [NSString stringWithFormat:@"%ld",(long)(timestamp * 1000.0)]];
+-(void) addReadingStatusForBookNamed:(NSString *)bookName
+                          chapterNumber:(int)chapterNumber
+                             wordNumber:(int)wordNumber
+                              timestamp:(NSTimeInterval)timestamp success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
+    NSString *token = [VCCoreDataCenter sharedInstance].user.token;
+    NSString  *path = [NSString stringWithFormat:@"user_status_add.php?token=%@&book_name=%@&current_reading_chapter=%d&current_reading_word=%d&timestamp=%@", token, bookName, chapterNumber, wordNumber, [NSString stringWithFormat:@"%ld",(long)timestamp]];
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
 
     [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        if (success) {
-            success(task, responseObject);
-        }
+        
+        if (success) success(task, responseObject);
+        
     }failure:^(NSURLSessionDataTask *task, NSError *error) {
-        if (failure) {
-            failure(task, error);
-        }
+        
+        if (failure) failure(task, error);
+        
     }];
     
 }

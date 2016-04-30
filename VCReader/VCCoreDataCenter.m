@@ -34,6 +34,13 @@
     return self;
 }
 
+-(VCUserMO *)user {
+    if (!_user) {
+        [self hookupCurrentUserWithUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
+    }
+    return _user;
+}
+
 -(void) newUserWithAccoutnName:(NSString *)accountName accountPassword:(NSString *)accountPassword userID:(NSString *)userID email:(NSString *)email nickName:(NSString *)nickName token:(NSString *)token timestamp:(NSString *)timestamp signupType:(NSString *)signupType {
 
     NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -44,7 +51,7 @@
     NSError *error = nil;
     NSArray *userArray = [_context executeFetchRequest:fetchRequest error:&error];
     if (error) {
-        NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
+        NSLog(@"%s --- Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
         abort();
     }
     
@@ -60,15 +67,8 @@
         user.timestamp = [timestamp doubleValue];
         user.signupType = signupType;
         user.userID = [userID intValue];
-        NSLog(@"%@,%@,%@,%@,%@,%lf,%@,%d", user.accountName, user.accountPassword, user.email, user.nickName, user.token, user.timestamp, user.signupType, user.userID);
-        
-        // Save the context
-        NSError *error = nil;
-        if (![_context save:&error]) {
-            NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
-            [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
-            abort();
-        }
+//        NSLog(@"%s %@,%@,%@,%@,%@,%lf,%@,%d", __PRETTY_FUNCTION__, user.accountName, user.accountPassword, user.email, user.nickName, user.token, user.timestamp, user.signupType, user.userID);
+        [self saveContext];
         _user = user;
     } else {
         // if data exits, switch curernt usre to it
@@ -84,7 +84,7 @@
     NSError *error = nil;
     NSArray *userArray = [_context executeFetchRequest:fetchRequest error:&error];
     if (error) {
-        NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
+        NSLog(@"%s --- Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
         abort();
     }
     
@@ -100,79 +100,106 @@
     _user = nil;
 }
 
+-(VCReadingStatusMO *) updateReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber {
 
-
--(void) saveReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber {
-    
     if (!_user) [self hookupCurrentUserWithUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
     
-    VCReadingStatusMO *readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:_context];
+    VCReadingStatusMO *readingStatus = [self getReadingStatusForBook:bookName];
+    
+    if (!readingStatus) {
+        NSLog(@"%s --- should not come here!", __PRETTY_FUNCTION__); //readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:_context];
+    }
+    
     readingStatus.bookName = bookName;
     readingStatus.chapterNumber = chapterNumber;
     readingStatus.wordNumber = wordNumber;
-    NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970];
+    NSTimeInterval timestamp= [[NSDate new] timeIntervalSince1970] * 1000.0;
     readingStatus.timestamp = timestamp;
     readingStatus.synced = NO;
     [_user addReadingStatusObject:readingStatus];
+    [self saveContext];
     
-    // Save the context
-    NSError *error = nil;
-    if (![_context save:&error]) {
-        NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
-        [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
-        abort();
-    }
-    NSLog(@"%s reading status: chapter = %d, word = %d", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber);
+    NSLog(@"%s --- reading status: chapter = %d, word = %d timestamp = %13.0lf", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber, readingStatus.timestamp);
+    return readingStatus;
+}
 
+
+-(VCReadingStatusMO *) updateReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber timestampFromServer:(NSTimeInterval)timestampFromServer {
+    
+    if (!_user) [self hookupCurrentUserWithUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
+    
+    VCReadingStatusMO *readingStatus = [self getReadingStatusForBook:bookName];
+    
+    if (!readingStatus) {
+        NSLog(@"%s --- should not come here!", __PRETTY_FUNCTION__); //readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:_context];
+    }
+    if (timestampFromServer < readingStatus.timestamp) {
+        
+        NSLog(@"%s --- the data in core data is more updated so return without writing data (from web) into core data", __PRETTY_FUNCTION__);
+
+        return readingStatus;
+    }
+
+    readingStatus.bookName = bookName;
+    readingStatus.chapterNumber = chapterNumber;
+    readingStatus.wordNumber = wordNumber;
+    readingStatus.timestamp = timestampFromServer;
+    readingStatus.synced = YES;
+    if (_user.readingStatus.count != 0) {
+        [_user removeReadingStatusObject:[_user.readingStatus anyObject]];
+    }
+    [_user addReadingStatusObject:readingStatus];
+    [self saveContext];
+    
+    NSLog(@"%s --- reading status: chapter = %d, word = %d", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber);
+    return readingStatus;
 }
 
 -(VCReadingStatusMO *) getReadingStatusForBook:(NSString *)bookName {
     
     if (!_user) [self hookupCurrentUserWithUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
 
-    NSTimeInterval timestamp = 0.0;
-    NSArray *readingStatusArray = [_user.readingStatus allObjects];
-    int count = 0;
-    int chosen_index = 0;
-    for (VCReadingStatusMO *readingStatus in readingStatusArray) {
-        if (readingStatus.timestamp > timestamp) {
-            timestamp = readingStatus.timestamp;
-            chosen_index = count;
-        }
-        count++;
-//        NSLog(@"%s enumerate: chapter = %d, word = %d t=%lf", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber, readingStatus.timestamp);
-    }
+    VCReadingStatusMO *readingStatus = [_user.readingStatus anyObject];
 
-    VCReadingStatusMO *readingStatus;
-    if (readingStatusArray.count > 0) {
-        // found reading status record
-        readingStatus = [readingStatusArray objectAtIndex:chosen_index];
-        
+    if (readingStatus == nil) {
+        NSLog(@"%s --- can not find user's reading status", __PRETTY_FUNCTION__);
     } else {
-        // no record. insert an initial record.
-        readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:_context];
-        readingStatus.bookName = bookName;
-        readingStatus.chapterNumber = 0;
-        readingStatus.wordNumber = 0;
-        NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970];
-        readingStatus.timestamp = timestamp;
-        readingStatus.synced = NO;
-        [_user addReadingStatusObject:readingStatus];
-                
-        // Save the context
-        NSError *error = nil;
-        if (![_context save:&error]) {
-            NSLog(@"%s: Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
-            [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
-            abort();
-        }
+//        NSLog(@"%s --- chapter = %d, word = %d timestamp=%13.0lf", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber, readingStatus.timestamp);
     }
-        
-//    NSLog(@"%s reading status: chapter = %d, word = %d", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber);
-    
-    if (readingStatus == nil) [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not find user's reading status"];
-    
     return readingStatus;
+}
+
+-(void) initReadingStatusForBook:(NSString *)bookName isDummy:(BOOL)isDummy {
+    
+    if (!_user) [self hookupCurrentUserWithUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
+    
+    VCReadingStatusMO *readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:_context];
+    readingStatus.bookName = bookName;
+    readingStatus.chapterNumber = 0;
+    readingStatus.wordNumber = 0;
+    NSTimeInterval timestamp;
+    if (isDummy) {
+        timestamp = 0.0;
+    } else {
+        timestamp = [[NSDate new] timeIntervalSince1970]  * 1000.0;
+    }
+    
+    readingStatus.timestamp = timestamp;
+    readingStatus.synced = NO;
+    [_user addReadingStatusObject:readingStatus];
+    [self saveContext];
+    
+}
+
+-(void) saveContext {
+    
+    // Save the context
+    NSError *error = nil;
+    if (![_context save:&error]) {
+        NSLog(@"%s --- Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
+        [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
+        abort();
+    }
 }
 
 @end

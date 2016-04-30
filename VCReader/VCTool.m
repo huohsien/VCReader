@@ -96,13 +96,6 @@
     [alertController show];
 }
 
-+(NSString *)getCurrentEpochTimeInMilliSeconds {
-
-    NSDate *date = [NSDate new];
-    NSTimeInterval time = [date timeIntervalSince1970];
-    NSString *timestampString = [NSString stringWithFormat:@"%ld", (long)(time * 1000.0)];
-    return timestampString;
-}
 
 +(AppDelegate *) appDelegate {
 

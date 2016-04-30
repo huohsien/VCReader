@@ -84,21 +84,25 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:(int)indexPath.row wordNumber:0];
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+
+    VCReadingStatusMO *readingStatus = [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:(int)indexPath.row wordNumber:0];
+
     
-//    VCReadingStatusMO *readingStatus = [VCTool getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
-    
-//    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
-//        
+    [[VCReaderAPIClient sharedClient] addReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        readingStatus.synced = YES;
+        [[VCCoreDataCenter sharedInstance] saveContext];
+        
         [self.navigationController popViewControllerAnimated:YES];
-//
-//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        
-//        [VCTool showErrorAlertViewWithTitle:@"Web Error" andMessage:error.debugDescription];
-//
-//        NSLog(@"%s: Failure -- %@",__PRETTY_FUNCTION__, error);
-//
-//    }];
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        [VCTool showErrorAlertViewWithTitle:@"Web Error" andMessage:error.debugDescription];
+        
+        NSLog(@"%s: Failure -- %@",__PRETTY_FUNCTION__, error);
+        
+    }];
 }
 
 @end

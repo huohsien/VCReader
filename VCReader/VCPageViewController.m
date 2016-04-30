@@ -160,6 +160,7 @@
     VCChapter *_nextChapter;
     int _chapterNumber;
     int _pageNumber;
+    BOOL _isSyncing;
     
     // touch
     
@@ -250,13 +251,15 @@
     [_textRenderAttributionDict setObject:[UIColor colorWithPatternImage:_backgroundImage] forKey:@"background color"];
     [_textRenderAttributionDict setObject:_textColor forKey:@"text color"];
     
+    _isSyncing = NO;
+    
     // setup UIs
     //
     
     self.title = _book.bookName;
     
     CGSize sizeOfScreen = _rectOfScreen.size;
-    NSLog(@"screen resolution:%@", NSStringFromCGSize(sizeOfScreen));
+//    NSLog(@"screen resolution:%@", NSStringFromCGSize(sizeOfScreen));
     
     // resize bg image
     _backgroundImage = [_backgroundImage imageByScalingProportionallyToSize:sizeOfScreen];
@@ -329,29 +332,8 @@
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
     
-
+    [self syncReadingStatusData];
     
-//    [[VCReaderAPIClient sharedClient] getReadingStatusForBookNamed:_book.bookName success:^(NSURLSessionDataTask *task, id responseObject) {
-//        
-//        self.jsonResponse = responseObject;
-//        
-//        NSDictionary *dict = self.jsonResponse;
-//        if (dict[@"error"]) {
-//            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
-//            return;
-//        }
-//
-//        [VCTool saveReadingStatusForBook:_book.bookName andUserID:@"tester" chapterNumber:chapterNumber wordNumber:wordNumber inViewController:self];
-//        
-        [self loadContent];
-//
-//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        NSString* errorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
-//        NSLog(@"errorResponse = %@", errorResponse);
-//        [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
-//        
-//    }];
-
     [self.activityIndicator startAnimating];
 
     [self startMonitoringBattery];
@@ -360,6 +342,8 @@
 
 -(void) end {
     
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+
     if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
         
         // detect going back in navigation chain
@@ -382,21 +366,13 @@
         self.tabBarController.tabBar.hidden = YES;
     }
     
-//    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
-//
-//    VCReadingStatusMO *readingStatus = [VCTool getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
-//    
-//    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
-//        
-//        
-//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        
-//        NSLog(@"%s: Failure -- %@",__PRETTY_FUNCTION__, error);
-//        
-//    }];
+    [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+
 }
 
 - (void)loadContent {
+    
+    NSLog(@"%s", __PRETTY_FUNCTION__);
 
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -424,46 +400,16 @@
 
 -(void) applicationDidBecomeActive:(NSNotification *)notification {
     
-//    [[VCReaderAPIClient sharedClient] getReadingStatusForBookNamed:_book.bookName success:^(NSURLSessionDataTask *task, id responseObject) {
-//        
-//        self.jsonResponse = responseObject;
-//        
-//        NSDictionary *dict = self.jsonResponse;
-//        if (dict[@"error"]) {
-//            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
-//            return;
-//        }
-//        int chapterNumber = [dict[@"chapter"] intValue];
-//        int wordNumber = [dict[@"word"] intValue];
-//        
-//        [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:chapterNumber wordNumber:wordNumber];
-//
-        [self loadContent];
-//
-//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        NSString* errorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
-//        NSLog(@"errorResponse = %@", errorResponse);
-//        [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
-//        
-//    }];
+    [self syncReadingStatusData];
 
 }
 
 
 -(void) applicationWillResignActive:(NSNotification *)notification {
     
-//    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
-//
-//    VCReadingStatusMO *readingStatus = [VCTool getReadingStatusForBook:_book.bookName andUserID:@"tester" inViewController:self];
-//
-//    [[VCReaderAPIClient sharedClient] saveReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
-//        
-//
-//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//
-//        NSLog(@"%s: Failure -- %@",__PRETTY_FUNCTION__, error);
-//    
-//    }];
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+
+    [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 }
 
 
@@ -498,7 +444,7 @@
     _pageNumber++;
     
     if (_pageNumber <= _currentChapter.pageArray.count - 1) {
-        [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+        [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
     }
     
     [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
@@ -534,7 +480,7 @@
     _pageNumber--;
 
     if (_pageNumber >= 0) {
-        [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+        [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
     }
     
     [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
@@ -665,7 +611,7 @@
 //    for (VCPage *p in _pageArray) {
 //        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
 //    }
-    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+    [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 
     
     // organize new page views in the content view
@@ -719,7 +665,7 @@
 //        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
 //    }
     
-    [[VCCoreDataCenter sharedInstance] saveReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+    [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 
     
     // organize new page views in the content view
@@ -765,8 +711,136 @@
 
 }
 
+#pragma mark - syncing between core data and web server
 
+-(void) syncReadingStatusData {
+    
+    if (_isSyncing == YES) return;
+    
+    _isSyncing = YES;
+    
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    [[VCReaderAPIClient sharedClient] getReadingStatusForBookNamed:_book.bookName success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        self.jsonResponse = responseObject;
+        
+        NSDictionary *dict = self.jsonResponse;
+        
+        if (dict[@"error"]) {
+            if ([dict[@"error"][@"code"] isEqualToString:@"101"]) {
+                
+                NSLog(@"%s --- there is no datum on the server", __PRETTY_FUNCTION__);
+                
+                VCReadingStatusMO *readingStatus = [[VCCoreDataCenter sharedInstance] getReadingStatusForBook:_book.bookName];
+                
+                if (readingStatus) {
+                    
+                    NSLog(@"%s --- there are data in core data. Upload data to server", __PRETTY_FUNCTION__);
+                    
+                    [[VCReaderAPIClient sharedClient] addReadingStatusForBookNamed:_book.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
+                        
+                        readingStatus.synced = YES;
+                        [[VCCoreDataCenter sharedInstance] saveContext];
+                        
+                        NSLog(@"%s --- finish upload data to server. Now load page and ready for user to read", __PRETTY_FUNCTION__);
+                        
+                        [self loadContent];
+                        _isSyncing = NO;
+                        
+                    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                        
+                        [VCTool showErrorAlertViewWithTitle:@"Web Error" andMessage:error.debugDescription];
+                        
+                        NSLog(@"%s: Failure -- %@",__PRETTY_FUNCTION__, error);
 
+                        _isSyncing = NO;
+
+                    }];
+                    
+                } else {
+                    
+                    NSLog(@"%s --- no reading record in either server or core data", __PRETTY_FUNCTION__);
+                    [[VCCoreDataCenter sharedInstance] initReadingStatusForBook:_book.bookName isDummy:NO];
+                    
+                    NSLog(@"%s --- ready for user to read a new book", __PRETTY_FUNCTION__);
+                    
+                    [self loadContent];
+                    _isSyncing = NO;
+                    return;
+                }
+            }
+            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+            _isSyncing = NO;
+            return;
+        }
+        
+        NSTimeInterval timestampFromServer = [dict[@"timestamp"] doubleValue];
+        VCReadingStatusMO *readingStatus = [[VCCoreDataCenter sharedInstance] getReadingStatusForBook:_book.bookName];
+        
+        if (readingStatus) {
+            
+            if (readingStatus.timestamp > timestampFromServer) {
+                
+                NSLog(@"%s --- what were stored in core data are the lastest data. so update server", __PRETTY_FUNCTION__);
+                
+                [[VCReaderAPIClient sharedClient] addReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
+                    
+                    NSLog(@"%s --- server data updated. change synced flag to YES and load page", __PRETTY_FUNCTION__);
+                    
+                    readingStatus.synced = YES;
+                    [[VCCoreDataCenter sharedInstance] saveContext];
+                    
+                    NSLog(@"%s --- finish syncing server with core data. ready for users to read", __PRETTY_FUNCTION__);
+                    
+                    [self loadContent];
+                    _isSyncing = NO;
+
+                } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                    
+                    [VCTool showErrorAlertViewWithTitle:@"Web Error" andMessage:error.debugDescription];
+                    
+                    NSLog(@"%s: Failure -- %@",__PRETTY_FUNCTION__, error);
+                    
+                    _isSyncing = NO;
+
+                }];
+                
+            } else {
+                
+                NSLog(@"%s --- what were stored in the server are the lastest data so update core data", __PRETTY_FUNCTION__);
+                
+                NSTimeInterval timestampFromServer = [dict[@"timestamp"] doubleValue];
+                [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:dict[@"book_name"] chapterNumber:[dict[@"chapter"] intValue] wordNumber:[dict[@"word"] intValue] timestampFromServer:timestampFromServer];
+                
+                NSLog(@"%s --- finish syncing core data with data in server. ready for users to read", __PRETTY_FUNCTION__);
+                
+                [self loadContent];
+
+            }
+            
+        } else {
+            
+            NSLog(@"%s --- no core data record but got data in the server. first init a core data record", __PRETTY_FUNCTION__);
+            
+            [[VCCoreDataCenter sharedInstance] initReadingStatusForBook:dict[@"book_name"] isDummy:YES];
+            [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:dict[@"book_name"] chapterNumber:[dict[@"chapter"] intValue] wordNumber:[dict[@"word"] intValue] timestampFromServer:timestampFromServer];
+            
+            NSLog(@"%s --- finish syncing core data with data in server. ready for users to read", __PRETTY_FUNCTION__);
+            
+            [self loadContent];
+            
+        }
+        _isSyncing = NO;
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        NSString* errorResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+        NSLog(@"%s -- errorResponse = %@", __PRETTY_FUNCTION__, errorResponse);
+        [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+        _isSyncing = NO;
+
+    }];
+}
 
 #pragma mark time functions
 
