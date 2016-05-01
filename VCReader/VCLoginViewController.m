@@ -56,8 +56,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
             // clean up image file which might be left from the previous session
             [VCTool deleteFilename:@"headshot"];
             
-            [[NSUserDefaults standardUserDefaults] setObject:dict[@"user_id"] forKey:@"user id"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            [VCTool storeObject:dict[@"user_id"] withKey:@"user id"];
             
             [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:dict[@"account_name"] accountPassword:self.passwordTextView.text userID:dict[@"user_id"] email:dict[@"email"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
                         
@@ -158,8 +157,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         
         [VCTool saveImage:[VCTool getImageFromURL:response.jsonResponse[@"figureurl_qq_2"]]];
         
-        [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"nickname"] forKey:@"nickName"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [VCTool storeObject:[response.jsonResponse objectForKey:@"nickname"] withKey:@"nickName"];
         
         NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970]  * 1000.0;
         [[VCReaderAPIClient sharedClient] signupWithName:@"" password:@"" nickName:[response.jsonResponse objectForKey:@"nickname"] email:@"" token:_tencentOAuth.openId timestamp:timestamp signupType:@"QQ" success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -178,8 +176,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
                     
                     [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:@"" accountPassword:@"" userID:dict[@"user_id"] email:@"" nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
                     
-                    [[NSUserDefaults standardUserDefaults] setObject:dict[@"user_id"] forKey:@"user id"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [VCTool storeObject:dict[@"user_id"] withKey:@"user id"];
 
                     [self.navigationController popViewControllerAnimated:YES];
                     

@@ -36,7 +36,7 @@
 
 -(VCUserMO *)user {
     if (!_user) {
-        [self hookupCurrentUserWithUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
+        [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
     }
     return _user;
 }
@@ -102,7 +102,7 @@
 
 -(VCReadingStatusMO *) updateReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber {
 
-    if (!_user) [self hookupCurrentUserWithUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
+    if (!_user) [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
     
     VCReadingStatusMO *readingStatus = [self getReadingStatusForBook:bookName];
     
@@ -126,7 +126,7 @@
 
 -(VCReadingStatusMO *) updateReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber timestampFromServer:(NSTimeInterval)timestampFromServer {
     
-    if (!_user) [self hookupCurrentUserWithUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
+    if (!_user) [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
     
     VCReadingStatusMO *readingStatus = [self getReadingStatusForBook:bookName];
     
@@ -157,12 +157,17 @@
 
 -(VCReadingStatusMO *) getReadingStatusForBook:(NSString *)bookName {
     
-    if (!_user) [self hookupCurrentUserWithUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
+    if (!_user) [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
 
-    VCReadingStatusMO *readingStatus = [_user.readingStatus anyObject];
+    VCReadingStatusMO *readingStatus = nil;
+    
+    for (VCReadingStatusMO *rs in _user.readingStatus) {
+        if ([rs.bookName isEqualToString:bookName])
+            readingStatus = rs;
+    }
 
     if (readingStatus == nil) {
-        NSLog(@"%s --- can not find user's reading status", __PRETTY_FUNCTION__);
+        NSLog(@"%s --- can not find user's reading status of the given book", __PRETTY_FUNCTION__);
     } else {
 //        NSLog(@"%s --- chapter = %d, word = %d timestamp=%13.0lf", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber, readingStatus.timestamp);
     }
@@ -171,7 +176,7 @@
 
 -(void) initReadingStatusForBook:(NSString *)bookName isDummy:(BOOL)isDummy {
     
-    if (!_user) [self hookupCurrentUserWithUserID:[[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]];
+    if (!_user) [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
     
     VCReadingStatusMO *readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:_context];
     readingStatus.bookName = bookName;

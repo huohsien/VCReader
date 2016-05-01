@@ -33,7 +33,7 @@
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
-    NSString *userID = [[NSUserDefaults standardUserDefaults] objectForKey:@"user id"];
+    NSString *userID = [VCTool getObjectWithKey:@"user id"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

@@ -297,7 +297,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     
-    [[NSUserDefaults standardUserDefaults] setObject:_book.bookName forKey:@"name of the last read book"];
+    [VCTool storeObject:_book.bookName withKey:@"name of the last read book"];
 }
 
 -(void) start {
@@ -357,7 +357,7 @@
         [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
         vc.tabBarController.tabBar.hidden = NO;
         
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"name of the last read book"];
+        [VCTool storeObject:nil withKey:@"name of the last read book"];
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         
     } else {
@@ -420,7 +420,7 @@
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]) {
+    if ([VCTool getObjectWithKey:@"user id"]) {
         [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
     }
 }
@@ -771,6 +771,8 @@
 
                     }];
                     
+                    return;
+                    
                 } else {
                     
                     NSLog(@"%s --- no reading record in either server or core data", __PRETTY_FUNCTION__);
@@ -780,12 +782,11 @@
                     
                     [self loadContent];
                     _isSyncing = NO;
+                    
                     return;
                 }
+//                NSLog(@"%s --- got reading status in core data but not yet in server. probably not back from web yet!", __PRETTY_FUNCTION__);
             }
-            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
-            _isSyncing = NO;
-            return;
         }
         
         NSTimeInterval timestampFromServer = [dict[@"timestamp"] doubleValue];

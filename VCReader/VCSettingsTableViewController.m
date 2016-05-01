@@ -150,9 +150,9 @@
 
 - (IBAction)logoutButtonPressed:(id)sender {
 
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"user id"];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: @"name of the last read book"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [VCTool storeObject:nil withKey:@"user id"];
+    [VCTool storeObject:nil withKey:@"name of the last read book"];
+
     [VCTool deleteFilename:@"headshot.png"];
     [[VCCoreDataCenter sharedInstance] clearCurrentUser];
     
