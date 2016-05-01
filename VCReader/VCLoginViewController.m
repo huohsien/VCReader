@@ -40,6 +40,8 @@ NSString * const kTencentOAuthAppID = @"1105244329";
 
 - (IBAction)loginButtonPressed:(id)sender {
     
+    [self.loginButton setEnabled:NO];
+    
     [[VCReaderAPIClient sharedClient] userLoginWithAccountName:self.accountNameTextView.text password:self.passwordTextView.text success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSDictionary *dict = responseObject;
@@ -47,8 +49,12 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         if (dict[@"error"]) {
             
             [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+            [self.loginButton setEnabled:YES];
         
         } else if (dict[@"user_id"]) {
+            
+            // clean up image file which might be left from the previous session
+            [VCTool deleteFilename:@"headshot"];
             
             [[NSUserDefaults standardUserDefaults] setObject:dict[@"user_id"] forKey:@"user id"];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -63,6 +69,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
        
         [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+        [self.loginButton setEnabled:YES];
 
     }];
 
@@ -85,6 +92,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
     
     NSArray *permissions =  [NSArray arrayWithObjects:@"get_user_info", @"get_simple_userinfo", @"add_t", nil];
     [self.tencentOAuth authorize:permissions inSafari:NO];
+    [self.qqLoginButton setEnabled:NO];
 }
 
 #pragma mark - TencentLoginDelegate
@@ -105,16 +113,23 @@ NSString * const kTencentOAuthAppID = @"1105244329";
     else
     {
         NSLog(@"登录不成功 没有获取accesstoken");
+        [self.qqLoginButton setEnabled:YES];
+
     }
 }
 
 - (void)tencentDidNotLogin:(BOOL)cancelled
 {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    [self.qqLoginButton setEnabled:YES];
 
 }
 
 - (void)tencentDidNotNetWork
 {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    [self.qqLoginButton setEnabled:YES];
+    abort();
 
 }
 
@@ -122,11 +137,14 @@ NSString * const kTencentOAuthAppID = @"1105244329";
 
 - (void)tencentDidLogout
 {
-
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    abort();
 }
 
 - (void)responseDidReceived:(APIResponse*)response forMessage:(NSString *)message
 {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    abort();
 
 }
 
@@ -138,7 +156,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
        
         NSLog(@"qq login response = %@", response.jsonResponse);
         
-        [self saveImage:[self getImageFromURL:response.jsonResponse[@"figureurl_qq_2"]]];
+        [VCTool saveImage:[VCTool getImageFromURL:response.jsonResponse[@"figureurl_qq_2"]]];
         
         [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"nickname"] forKey:@"nickName"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -172,19 +190,19 @@ NSString * const kTencentOAuthAppID = @"1105244329";
                 
             }
             [self.activityIndicator stopAnimating];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
+            [VCTool appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+            [VCTool appDelegate].window.rootViewController = nc;
+            [[VCTool appDelegate].window makeKeyAndVisible];
             
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
             [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
-            
+            [self.qqLoginButton setEnabled:YES];
+
         }];
 
-        
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
-        [VCTool appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        [VCTool appDelegate].window.rootViewController = nc;
-        [[VCTool appDelegate].window makeKeyAndVisible];
     
     } else {
         
@@ -194,24 +212,6 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         [alert show];
     }
 
-}
-
--(UIImage *) getImageFromURL:(NSString *)fileURL {
-    
-    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
-     UIImage * result = [UIImage imageWithData:data];
-    
-    return result;
-}
-
--(void) saveImage:(UIImage *)image {
-    
-    if (image) {
-        
-        NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"headshot.png"]];
-        
-        [UIImagePNGRepresentation(image) writeToFile:path options:NSAtomicWrite error:nil];
-    }
 }
 
 @end

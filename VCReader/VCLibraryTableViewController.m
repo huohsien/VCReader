@@ -32,7 +32,8 @@
     self.navigationController.navigationBar.barTintColor = [UIColor redColor];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
-    
+    self.navigationController.navigationBar.topItem.title = @"书架";
+
     //hide tab bar
     self.tabBarController.tabBar.hidden = NO;
     
@@ -53,7 +54,6 @@
 -(void) viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.topItem.title = @"书架";
 
 }
 

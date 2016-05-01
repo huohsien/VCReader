@@ -343,6 +343,7 @@
 -(void) end {
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    
 
     if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
         
@@ -357,6 +358,7 @@
         vc.tabBarController.tabBar.hidden = NO;
         
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"name of the last read book"];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         
     } else {
         
@@ -367,6 +369,13 @@
     }
     
     [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+    [self syncReadingStatusData];
+
+}
+
+-(void)dealloc {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+
 
 }
 
@@ -399,7 +408,9 @@
 }
 
 -(void) applicationDidBecomeActive:(NSNotification *)notification {
-    
+
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+
     [self syncReadingStatusData];
 
 }
@@ -409,7 +420,9 @@
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
-    [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"user id"]) {
+        [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+    }
 }
 
 

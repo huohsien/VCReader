@@ -115,4 +115,44 @@
     return [[NSUserDefaults standardUserDefaults] objectForKey:key];
 }
 
++(UIImage *) getImageFromURL:(NSString *)fileURL {
+    
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
+    UIImage * result = [UIImage imageWithData:data];
+    
+    return result;
+}
+
++(void) saveImage:(UIImage *)image {
+    
+    if (image) {
+        
+        NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"headshot.png"]];
+        
+        [UIImagePNGRepresentation(image) writeToFile:path options:NSAtomicWrite error:nil];
+    }
+}
+
++(void) deleteFilename:(NSString *)filename {
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:filename];
+    NSError *error;
+    if ([fileManager fileExistsAtPath:filePath]) {
+        
+        BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+        if (success) {
+            NSLog(@"%s --- delete file successfully", __PRETTY_FUNCTION__);
+        }
+        else
+        {
+            NSLog(@"%s --- Could not delete file -:%@ ", __PRETTY_FUNCTION__, [error localizedDescription]);
+        }
+    } else {
+        NSLog(@"%s --- no file needs to be deleted", __PRETTY_FUNCTION__);
+    }
+}
+
 @end

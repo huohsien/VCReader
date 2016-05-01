@@ -25,5 +25,8 @@
 +(AppDelegate *) appDelegate;
 +(void) storeObject:(id)object withKey:(NSString *)key;
 +(id) getObjectWithKey:(NSString *)key;
++(UIImage *) getImageFromURL:(NSString *)fileURL;
++(void) saveImage:(UIImage *)image;
++(void) deleteFilename:(NSString *)filename;
 
 @end

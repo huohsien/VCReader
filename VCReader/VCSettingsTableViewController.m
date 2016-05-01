@@ -151,7 +151,9 @@
 - (IBAction)logoutButtonPressed:(id)sender {
 
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"user id"];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: @"name of the last read book"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [VCTool deleteFilename:@"headshot.png"];
     [[VCCoreDataCenter sharedInstance] clearCurrentUser];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
