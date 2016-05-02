@@ -17,12 +17,14 @@
 }
 
 @synthesize bookName = _bookName;
+@synthesize contentFilename = _contentFilename;
 @synthesize totalNumberOfChapters = _totalNumberOfChapters;
 
--(instancetype) initWithBookName:(NSString *)bookName {
+-(instancetype) initWithBookName:(NSString *)bookName contentFilename:(NSString *)contentFilename {
     self = [super init];
     if (self) {
         _bookName = bookName;
+        _contentFilename = contentFilename;
         
         [self setup];
     }
@@ -36,25 +38,22 @@
     _chapterContentRangeStringArray = [NSMutableArray new];
     _totalNumberOfChapters = 0;
     
-    [self loadContent];
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    _fullBookDirectoryPath = [self createDirectory:_bookName atFilePath:documentPath];
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    NSString *documentsPath = [paths objectAtIndex:0];
-    _fullBookDirectoryPath = [self createDirectory:_bookName atFilePath:documentsPath];
-    
-    BOOL isBookLoaded;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:_fullBookDirectoryPath]) { // Directory exists
-        NSArray *listOfFiles = [fileManager contentsOfDirectoryAtPath:_fullBookDirectoryPath error:nil];
+    BOOL isBookLoaded = NO;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:_fullBookDirectoryPath]) { // Directory exists
+        NSArray *listOfFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:_fullBookDirectoryPath error:nil];
         isBookLoaded = listOfFiles.count > 0 ? YES : NO;
     }
     
     if (!isBookLoaded) {
+        
+        [self loadContent];
         [self splitChapters];
         
         for (int i = 0; i < _chapterTitleStringArray.count; i++) {
             [self writeContentOfChapter:i];
-            // write title to storage
         }
     }
     
@@ -64,9 +63,50 @@
 
 -(void) loadContent {
 
-    NSURL *textURL = [[NSBundle mainBundle] URLForResource:_bookName withExtension:@"txt"];
+    NSString *path = [NSString stringWithFormat:@"%@/%@", kVCReaderBaseURLString, _contentFilename];
+    NSString *encodePath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"%@", encodePath);
+    NSURL  *url = [NSURL URLWithString:encodePath];
+    NSData *urlData = [NSData dataWithContentsOfURL:url];
+   
+    NSString *zipFilePath = nil;
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    if (urlData) {
+        
+        zipFilePath = [NSString stringWithFormat:@"%@/%@.zip", documentPath,_bookName];
+        [urlData writeToFile:zipFilePath atomically:YES];
+        
+    } else {
+        NSLog(@"%s -- fail to download compressed file of the book", __PRETTY_FUNCTION__);
+    }
+    [self createDirectory:@"temp" atFilePath:documentPath];
+    NSString *unzipFilePath = [documentPath stringByAppendingPathComponent:@"temp"];
+    
+    if (![SSZipArchive unzipFileAtPath:zipFilePath toDestination:unzipFilePath]) {
+        NSLog(@"%s --- unzip fail", __PRETTY_FUNCTION__);
+        abort();
+    };
     NSError *error = nil;
-    _contentString = [[NSString alloc] initWithContentsOfURL:textURL encoding:NSUTF8StringEncoding error:&error];
+
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:unzipFilePath error:&error];
+    if (error) {
+        NSLog(@"%s --- Error: %@", __PRETTY_FUNCTION__, error.debugDescription);
+        abort();
+    } else {
+        NSString *path = [NSString stringWithFormat:@"%@/%@", unzipFilePath, [directoryContent lastObject]];
+        NSLog(@"path = %@", path);
+        _contentString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+        if (error) {
+            NSLog(@"%s --- Error: %@", __PRETTY_FUNCTION__, error.debugDescription);
+            abort();
+        } else {
+            [[NSFileManager defaultManager] removeItemAtPath:unzipFilePath error:&error];
+            if (error) {
+                NSLog(@"%s --- Error: %@", __PRETTY_FUNCTION__, error.debugDescription);
+                abort();
+            }
+        }
+    }
 }
 
 -(void) writeContentOfChapter:(int)chapterNumber {

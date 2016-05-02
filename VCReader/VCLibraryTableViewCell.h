@@ -12,6 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *bookNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *bookCoverImage;
-
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *imageDownloadProgressIndicator;
 
 @end

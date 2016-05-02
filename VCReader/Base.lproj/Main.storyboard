@@ -11,6 +11,7 @@
         <!--书架-->
         <scene sceneID="vZC-Qb-9pT">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AOo-RN-rMZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController title="书架" id="gy7-W4-JTC" customClass="VCLibraryTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="xMM-Y3-oPo">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -24,7 +25,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="567" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book1_cover" translatesAutoresizingMaskIntoConstraints="NO" id="CTT-VY-ZkZ">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book_cover" translatesAutoresizingMaskIntoConstraints="NO" id="CTT-VY-ZkZ">
                                             <rect key="frame" x="20" y="10" width="60" height="80"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="egJ-94-Bmc"/>
@@ -37,19 +38,43 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="r2C-xT-whN">
+                                            <rect key="frame" x="-10" y="-10" width="20" height="20"/>
+                                        </activityIndicatorView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Lq8-b8-hPe" firstAttribute="leading" secondItem="CTT-VY-ZkZ" secondAttribute="trailing" constant="42" id="3Vo-Z7-uwT"/>
+                                        <constraint firstItem="r2C-xT-whN" firstAttribute="centerX" secondItem="CTT-VY-ZkZ" secondAttribute="centerX" id="DBe-gV-cL7"/>
                                         <constraint firstAttribute="bottom" secondItem="Lq8-b8-hPe" secondAttribute="bottom" constant="40" id="NmQ-me-8Mh"/>
+                                        <constraint firstItem="r2C-xT-whN" firstAttribute="centerY" secondItem="CTT-VY-ZkZ" secondAttribute="centerY" id="P38-Na-A7I"/>
                                         <constraint firstItem="CTT-VY-ZkZ" firstAttribute="leading" secondItem="ZjS-Np-q5Z" secondAttribute="leading" constant="20" id="PsV-f7-Hh9"/>
                                         <constraint firstItem="Lq8-b8-hPe" firstAttribute="top" secondItem="ZjS-Np-q5Z" secondAttribute="top" constant="39" id="ZSN-sx-o9m"/>
                                         <constraint firstItem="CTT-VY-ZkZ" firstAttribute="centerY" secondItem="ZjS-Np-q5Z" secondAttribute="centerY" id="c3Z-9n-TK6"/>
                                         <constraint firstAttribute="trailing" secondItem="Lq8-b8-hPe" secondAttribute="trailing" constant="8" id="gpd-aL-yLE"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="r2C-xT-whN"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <exclude reference="DBe-gV-cL7"/>
+                                            <exclude reference="P38-Na-A7I"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="r2C-xT-whN"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <include reference="DBe-gV-cL7"/>
+                                            <include reference="P38-Na-A7I"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="bookCoverImage" destination="CTT-VY-ZkZ" id="pTN-1v-n7X"/>
                                     <outlet property="bookNameLabel" destination="Lq8-b8-hPe" id="4FO-BR-nBP"/>
+                                    <outlet property="imageDownloadProgressIndicator" destination="r2C-xT-whN" id="3IO-Rl-RqK"/>
                                     <segue destination="BYZ-38-t0r" kind="show" identifier="showBookContent" id="BAq-SO-Pae"/>
                                 </connections>
                             </tableViewCell>
@@ -65,7 +90,6 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="orR-Ae-DQK"/>
                     </navigationItem>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="AOo-RN-rMZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-688.5" y="-2548"/>
         </scene>
@@ -1149,7 +1173,7 @@
     </scenes>
     <resources>
         <image name="QQ_icon" width="40" height="40"/>
-        <image name="book1_cover" width="60" height="80"/>
+        <image name="book_cover" width="60" height="75"/>
         <image name="book_shelf" width="30" height="30"/>
         <image name="headshot_placeholder" width="40" height="40"/>
         <image name="library" width="30" height="30"/>

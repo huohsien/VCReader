@@ -124,5 +124,23 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     }];
     
 }
+-(void) getBookListForUserWithID:(NSString *)userID success:(void (^)(NSURLSessionDataTask *task, id responseObject))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
+    
+    if (!userID) return;
+    NSString  *path = [NSString stringWithFormat:@"book_get_list.php?user_id=%@", userID];
+    NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
+    [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        if (success) success(task, responseObject);
+        
+    }failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        if (failure) failure(task, error);
+        
+    }];
+}
+
 
 @end

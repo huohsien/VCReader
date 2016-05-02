@@ -16,9 +16,10 @@
 
 @implementation VCLibraryTableViewController {
     
-    NSArray *_bookInfoArray;
     UIView *_activityView;
+
 }
+@synthesize jsonResponse = _jsonResponse;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,18 +38,32 @@
     //hide tab bar
     self.tabBarController.tabBar.hidden = NO;
     
-
-    _bookInfoArray = [NSArray arrayWithObjects:/*@{@"bookName":@"都市巨灵神",@"coverImageFileName":@"book3_cover"},*/@{@"bookName":@"斗破苍穹",@"coverImageFileName":@"book4_cover"},/*@{@"bookName":@"官神",@"coverImageFileName":@"book5_cover"},@{@"bookName":@"寻宝美利坚",@"coverImageFileName":@"book6_cover"},@{@"bookName":@"乐尊",@"coverImageFileName":@"book7_cover"},*/@{@"bookName":@"斗罗大陆",@"coverImageFileName":@"book8_cover"}, @{@"bookName":@"大主宰",@"coverImageFileName":@"book9_cover"}/*,@{@"bookName":@"修真归来在都市",@"coverImageFileName":@"book10_cover"},@{@"bookName":@"重生完美时代",@"coverImageFileName":@"book11_cover"}*/,@{@"bookName":@"偷天",@"coverImageFileName":@"book12_cover"}, nil];
+    self.jsonResponse = nil;
 
     NSString *nameOfLastReadBook = [VCTool getObjectWithKey:@"name of the last read book"];
     
     if (nameOfLastReadBook) {
         UIStoryboard*  sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         VCPageViewController *vc = [sb instantiateViewControllerWithIdentifier:@"VCPageViewController"];
-        VCBook *book = [[VCBook alloc] initWithBookName:nameOfLastReadBook];
+        VCBook *book = [[VCBook alloc] initWithBookName:nameOfLastReadBook contentFilename:nil]; // assume if you have read it. no need to split chapters again.
         vc.book = book;
         [self.navigationController pushViewController:vc animated:NO];
     }
+
+    
+//    [NSThread detachNewThreadSelector:@selector(showActivityView) toTarget:self withObject:nil];
+    [self showActivityView];
+
+    [[VCReaderAPIClient sharedClient] getBookListForUserWithID:[VCTool getObjectWithKey:@"user id"] success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        self.jsonResponse = responseObject;
+        [self.tableView reloadData];
+        [self hideActivityView];
+
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+     
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -73,7 +88,7 @@
         
         
         [NSThread detachNewThreadSelector:@selector(showActivityView) toTarget:self withObject:nil];
-        VCBook *book = [[VCBook alloc] initWithBookName:[(NSDictionary *)[_bookInfoArray objectAtIndex:indexPath.row] valueForKey:@"bookName"]];
+        VCBook *book = [[VCBook alloc] initWithBookName:[(NSDictionary *)[_jsonResponse objectAtIndex:indexPath.row] valueForKey:@"book_name"] contentFilename:[(NSDictionary *)[_jsonResponse objectAtIndex:indexPath.row] valueForKey:@"content_filename"]];
         [self hideActivityView];
 
         VCPageViewController *viewController = segue.destinationViewController;
@@ -117,18 +132,40 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _bookInfoArray.count;
+    return _jsonResponse.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     VCLibraryTableViewCell *cell = (VCLibraryTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"CellIdentifier" forIndexPath:indexPath];
     
     // Configure the cell...
-    NSString *bookNameString = [(NSDictionary *)[_bookInfoArray objectAtIndex:indexPath.row] valueForKey:@"bookName"];
+    NSString *bookNameString = [(NSDictionary *)[_jsonResponse objectAtIndex:indexPath.row] valueForKey:@"book_name"];
+
 //    NSLog(@"row:%ld name:%@", (long)indexPath.row, bookNameString);
+   
     [cell.bookNameLabel setText:bookNameString];
-    [cell.bookCoverImage setImage:[UIImage imageNamed:[(NSDictionary *)[_bookInfoArray objectAtIndex:indexPath.row] valueForKey:@"coverImageFileName"]]];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    NSString  *path = [NSString stringWithFormat:@"%@/%@", kVCReaderBaseURLString, [(NSDictionary *)[_jsonResponse objectAtIndex:indexPath.row] valueForKey:@"cover_image_filename"]];
+    NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
+    
+    [cell.imageDownloadProgressIndicator startAnimating];
+    
+    manager.responseSerializer = [AFImageResponseSerializer serializer];
+    [manager GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+
+        [cell.bookCoverImage setImage:(UIImage *)responseObject];
+        [cell.imageDownloadProgressIndicator stopAnimating];
+
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+
+        NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
+
+    }];
     
     return cell;
 }
@@ -152,7 +189,8 @@
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
         NSString *documentsPath = [paths objectAtIndex:0];
-        NSString *fullBookDirectoryPath = [self createDirectory:[(NSDictionary *)[_bookInfoArray objectAtIndex:indexPath.row] valueForKey:@"bookName"]  atFilePath:documentsPath];
+        NSString *fullBookDirectoryPath = [self createDirectory:[(NSDictionary *)[_jsonResponse objectAtIndex:indexPath.row] valueForKey:@"book_name"]  atFilePath:documentsPath];
+        
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if ([fileManager fileExistsAtPath:fullBookDirectoryPath]) { // Directory exists
             NSArray *listOfFiles = [fileManager contentsOfDirectoryAtPath:fullBookDirectoryPath error:nil];

@@ -18,4 +18,6 @@
 #import "VCTool.h"
 #import "VCCoreDataCenter.h"
 #import "VCReaderAPIClient.h"
+#import "SSZipArchive/SSZipArchive.h"
+
 #endif /* PrefixHeader_pch */

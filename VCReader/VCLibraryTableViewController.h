@@ -11,6 +11,11 @@
 #import "VCPageViewController.h"
 #import "VCBook.h"
 
+extern NSString * const kVCReaderBaseURLString;
+
+
 @interface VCLibraryTableViewController : UITableViewController
+
+@property (nonatomic, strong) NSArray *jsonResponse;
 
 @end
