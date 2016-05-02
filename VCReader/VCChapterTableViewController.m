@@ -98,9 +98,20 @@
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-        [VCTool showErrorAlertViewWithTitle:@"Web Error" andMessage:error.debugDescription];
+        if (error.code == -1009) { // connection offline
+            
+            readingStatus.synced = NO;
+            [[VCCoreDataCenter sharedInstance] saveContext];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+
         
-        NSLog(@"%s: Failure -- %@",__PRETTY_FUNCTION__, error);
+        } else {
+            
+            NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
+            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+        }
+
         
     }];
 }

@@ -20,6 +20,7 @@
 +(int) removeAllSubviewsInView:(UIView *)view;
 +(UIImage *) maskedImage:(UIImage *)image color:(UIColor *)color;
 +(UIColor *) changeUIColor:(UIColor *)uicolor alphaValueTo:(CGFloat)alpha;
++(UIColor *) adjustUIColor:(UIColor *)uicolor brightness:(CGFloat)brightness;
 
 +(void) showErrorAlertViewWithTitle:(NSString *)title andMessage:(NSString *)message;
 +(AppDelegate *) appDelegate;

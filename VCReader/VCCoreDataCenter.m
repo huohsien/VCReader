@@ -203,7 +203,7 @@
     if (![_context save:&error]) {
         NSLog(@"%s --- Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
         [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
-        abort();
+//        abort();
     }
 }
 

@@ -57,7 +57,16 @@
     return result;
 }
 
-
++(UIColor *) adjustUIColor:(UIColor *)uicolor brightness:(CGFloat)brightness {
+    
+    CGFloat h;
+    CGFloat s;
+    CGFloat b;
+    CGFloat a;
+    [uicolor getHue:&h saturation:&s brightness:&b alpha:&a];
+    
+    return [UIColor colorWithHue:h saturation:s brightness:brightness alpha:a];
+}
 
 +(UIColor *) changeUIColor:(UIColor *)uicolor alphaValueTo:(CGFloat)alpha {
     
@@ -90,7 +99,9 @@
                                                                              message:message
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        abort();
+    }];
     [alertController addAction:okAction];
     
     [alertController show];
