@@ -271,5 +271,49 @@
         [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
     }
 }
+#pragma mark - battery
+
+-(void) addBatteryLogWithPercentage:(double)percentage timestamp:(NSTimeInterval)timestamp {
+    
+    VCBatteryMO *battery = [NSEntityDescription insertNewObjectForEntityForName:@"Battery" inManagedObjectContext:_context];
+    battery.percentage = percentage;
+    battery.timestamp = timestamp;
+    [self saveContext];
+}
+-(void) clearAllofBatteryLog {
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Battery"];
+    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
+    
+    NSError *deleteError = nil;
+    [[[VCTool appDelegate] persistentStoreCoordinator] executeRequest:delete withContext:_context error:&deleteError];
+    [VCTool showAlertViewWithTitle:@"ClEAR ALL" andMessage:@"Complete"];
+}
+
+-(void) batteryLogDump {
+    
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Battery"];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    NSError *error = nil;
+    
+    NSArray *batteryInfoArray = [_context executeFetchRequest:fetchRequest error:&error];
+    NSMutableString *logString = [[NSMutableString alloc] initWithString:@""];
+    for (VCBatteryMO *battery in batteryInfoArray) {
+        [logString appendString:[NSString stringWithFormat:@"battery:%d%% timestamp:%@\n", (int)(battery.percentage * 100.0), [NSString stringWithFormat:@"%lf",battery.timestamp * 1000.0]]];
+        NSLog(@"battery:%d%% timestamp:%@", (int)(battery.percentage * 100.0), [NSString stringWithFormat:@"%lf",battery.timestamp * 1000.0]);
+    }
+
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [NSString stringWithFormat:@"%@/battery_log.txt", documentPath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+    }
+    [logString writeToFile:filePath atomically:YES encoding:NSStringEncodingConversionAllowLossy error:&error];
+    [VCTool showAlertViewWithTitle:@"DUMP" andMessage:@"Complete"];
+
+}
 
 @end

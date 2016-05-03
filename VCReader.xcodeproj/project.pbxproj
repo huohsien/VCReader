@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		41A2B5B578457A4DCECFA95E /* libPods-VCReader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B45A4D17CD603364319333 /* libPods-VCReader.a */; };
+		660C155C1CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C15591CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m */; };
+		660C155D1CD8EF0200C25553 /* VCBatteryMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C155B1CD8EF0200C25553 /* VCBatteryMO.m */; };
 		6622254C1CBD39DA001BE988 /* VCReaderAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622254B1CBD39DA001BE988 /* VCReaderAPIClient.m */; };
 		662225A81CC3989E001BE988 /* VCBookMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622259D1CC3989E001BE988 /* VCBookMO+CoreDataProperties.m */; };
 		662225A91CC3989E001BE988 /* VCBookMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622259F1CC3989E001BE988 /* VCBookMO.m */; };
@@ -56,6 +58,10 @@
 
 /* Begin PBXFileReference section */
 		0B4A3336345389BA90085697 /* Pods-VCReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VCReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VCReader/Pods-VCReader.debug.xcconfig"; sourceTree = "<group>"; };
+		660C15581CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VCBatteryMO+CoreDataProperties.h"; path = "VCReader/VCBatteryMO+CoreDataProperties.h"; sourceTree = "<group>"; };
+		660C15591CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "VCBatteryMO+CoreDataProperties.m"; path = "VCReader/VCBatteryMO+CoreDataProperties.m"; sourceTree = "<group>"; };
+		660C155A1CD8EF0200C25553 /* VCBatteryMO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCBatteryMO.h; path = VCReader/VCBatteryMO.h; sourceTree = "<group>"; };
+		660C155B1CD8EF0200C25553 /* VCBatteryMO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCBatteryMO.m; path = VCReader/VCBatteryMO.m; sourceTree = "<group>"; };
 		662068921C9C7B5000D00FEB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		6622254A1CBD39DA001BE988 /* VCReaderAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCReaderAPIClient.h; sourceTree = "<group>"; };
 		6622254B1CBD39DA001BE988 /* VCReaderAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCReaderAPIClient.m; sourceTree = "<group>"; };
@@ -178,6 +184,10 @@
 		6622255B1CBF968C001BE988 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				660C15581CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.h */,
+				660C15591CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m */,
+				660C155A1CD8EF0200C25553 /* VCBatteryMO.h */,
+				660C155B1CD8EF0200C25553 /* VCBatteryMO.m */,
 				667AACDB1C545D9400CD40E1 /* VCReader.xcdatamodeld */,
 				669227D01CD09E0A0045291E /* VCUserMO+CoreDataProperties.h */,
 				669227D11CD09E0A0045291E /* VCUserMO+CoreDataProperties.m */,
@@ -483,6 +493,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				660C155D1CD8EF0200C25553 /* VCBatteryMO.m in Sources */,
 				666EECBB1C83C3E700DF5621 /* VCChapterTableViewController.m in Sources */,
 				669227D81CD09F820045291E /* VCCoreDataCenter.m in Sources */,
 				6643419D1C7A868A00580AEF /* VCChapter.m in Sources */,
@@ -499,6 +510,7 @@
 				662225C41CCB7B17001BE988 /* UIAlertController+window.m in Sources */,
 				667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */,
 				666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */,
+				660C155C1CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m in Sources */,
 				668AB1BB1C5BDD1C00395099 /* VCTool.m in Sources */,
 				666EECB81C81BEC600DF5621 /* VCLibraryTableViewController.m in Sources */,
 				667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */,

@@ -233,10 +233,12 @@
     _charactersSpacing = 4.0;
     _rectOfScreen = [[UIScreen mainScreen] bounds];
 
-    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:186.0 / 255.0 green:159.0 / 255.0 blue:130.0 / 255.0 alpha:1.0] withRect:_rectOfScreen];
+    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:214 / 255.0 green:202 / 255.0 blue:130.0 / 181 alpha:1.0] withRect:_rectOfScreen];
+//    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:186.0 / 255.0 green:159.0 / 255.0 blue:130.0 / 255.0 alpha:1.0] withRect:_rectOfScreen];
 //    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed: 40.0 / 255.0 green: 40.0 / 255.0 blue: 40.0 / 255.0 alpha: 1.0] withRect:_rectOfScreen];
 //    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed: 0.0 / 255.0 green: 0.0 / 255.0 blue: 0.0 / 255.0 alpha: 1.0] withRect:_rectOfScreen];
-    _textColor = [UIColor colorWithRed: 56.0 / 255.0 green: 33.0 / 255.0 blue: 20.0 / 255.0 alpha: 1.0];
+//    _textColor = [UIColor colorWithRed: 56.0 / 255.0 green: 33.0 / 255.0 blue: 20.0 / 255.0 alpha: 1.0];
+    _textColor = [UIColor colorWithRed: 70 / 255.0 green: 65 / 255.0 blue: 56 / 255.0 alpha: 1.0];
 //    _textColor = [UIColor colorWithRed: 150.0 / 255.0 green: 150.0 / 255.0 blue: 150.0 / 255.0 alpha: 1.0];
 //    _textColor = [UIColor colorWithRed: 0.0 / 255.0 green: 255.0 / 255.0 blue: 0.0 / 255.0 alpha: 1.0];
 
@@ -977,6 +979,13 @@
         
         self.batteryLabel.text = [NSString stringWithFormat:@"%.0f%%", batteryLevel * 100.0f];
         
+        if ([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateUnplugged) {
+
+            [[VCCoreDataCenter sharedInstance] addBatteryLogWithPercentage:batteryLevel timestamp:[[NSDate new] timeIntervalSince1970]];
+
+        }
+
+        
     } else {
         
         self.batteryLabel.text = [NSString stringWithFormat:@"%.0f%%", 1.0 * 100.0f];
@@ -999,7 +1008,7 @@
     [self updateBatteryPercentage];
 
     [self updateBatteryIcon];
-
+    
 }
 -(void) batteryLevelDidChange:(NSNotification *)notification {
 

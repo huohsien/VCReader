@@ -11,6 +11,7 @@
 #import "VCReadingStatusMO.h"
 #import "VCUserMO.h"
 #import "VCBookMO.h"
+#import "VCBatteryMO.h"
 
 @interface VCCoreDataCenter : NSObject
 
@@ -31,6 +32,9 @@
 -(BOOL) updateBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
 -(void) setAttributesForBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath;
 -(NSArray *) getAllBooks;
+-(void)addBatteryLogWithPercentage:(double)percentage timestamp:(NSTimeInterval)timestamp;
+-(void) batteryLogDump;
+-(void) clearAllofBatteryLog;
 
 @end
 

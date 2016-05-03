@@ -63,7 +63,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 4;
 }
 
 //- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -131,8 +131,6 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
 
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     
 //    header.textLabel.textColor = [UIColor redColor];
@@ -161,5 +159,12 @@
     [VCTool appDelegate].window.rootViewController = nc;
 }
 
+- (IBAction)dumpButtonPressed:(id)sender {
+    
+    [[VCCoreDataCenter sharedInstance] batteryLogDump];
+}
+- (IBAction)clearButtonPressed:(id)sender {
+    [[VCCoreDataCenter sharedInstance] clearAllofBatteryLog];
+}
 
 @end

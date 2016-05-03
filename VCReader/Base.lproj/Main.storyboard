@@ -787,6 +787,104 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Battery" id="Eb4-PB-LuQ">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="n18-Q0-ecF">
+                                        <rect key="frame" x="0.0" y="271" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="n18-Q0-ecF" id="BMA-MB-xKN">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xYY-4n-1fZ">
+                                                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="100" id="Dw1-ZO-aKh"/>
+                                                        <constraint firstAttribute="height" constant="36" id="lgx-se-3k5"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" title="Dump">
+                                                        <color key="titleColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="Dw1-ZO-aKh"/>
+                                                            <exclude reference="lgx-se-3k5"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="Dw1-ZO-aKh"/>
+                                                            <include reference="lgx-se-3k5"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <connections>
+                                                        <action selector="dumpButtonPressed:" destination="4fw-uQ-PM0" eventType="touchUpInside" id="Bmc-cr-Rpn"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g5I-HN-Jsk">
+                                                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="100" id="WSO-js-Oh9"/>
+                                                        <constraint firstAttribute="height" constant="36" id="j3l-L8-gLl"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" title="Clear">
+                                                        <color key="titleColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="WSO-js-Oh9"/>
+                                                            <exclude reference="j3l-L8-gLl"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="WSO-js-Oh9"/>
+                                                            <include reference="j3l-L8-gLl"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <connections>
+                                                        <action selector="clearButtonPressed:" destination="4fw-uQ-PM0" eventType="touchUpInside" id="KgU-wz-BWi"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="g5I-HN-Jsk" firstAttribute="centerY" secondItem="BMA-MB-xKN" secondAttribute="centerY" id="2Uh-6e-lqG"/>
+                                                <constraint firstItem="xYY-4n-1fZ" firstAttribute="centerY" secondItem="BMA-MB-xKN" secondAttribute="centerY" id="gg4-uZ-Wah"/>
+                                                <constraint firstItem="xYY-4n-1fZ" firstAttribute="centerX" secondItem="BMA-MB-xKN" secondAttribute="centerX" id="lUR-lX-fbF"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="g5I-HN-Jsk" secondAttribute="trailing" constant="15" id="p2e-ar-Mcs"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="xYY-4n-1fZ"/>
+                                                    <exclude reference="g5I-HN-Jsk"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <exclude reference="gg4-uZ-Wah"/>
+                                                    <exclude reference="lUR-lX-fbF"/>
+                                                    <exclude reference="2Uh-6e-lqG"/>
+                                                    <exclude reference="p2e-ar-Mcs"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="widthClass=compact">
+                                                <mask key="subviews">
+                                                    <include reference="xYY-4n-1fZ"/>
+                                                    <include reference="g5I-HN-Jsk"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <include reference="gg4-uZ-Wah"/>
+                                                    <include reference="lUR-lX-fbF"/>
+                                                    <include reference="2Uh-6e-lqG"/>
+                                                    <include reference="p2e-ar-Mcs"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="4fw-uQ-PM0" id="clo-bJ-j0r"/>

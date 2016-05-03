@@ -109,6 +109,18 @@ static UIView *_activityView;
     [alertController show];
 }
 
++(void) showAlertViewWithTitle:(NSString *)title andMessage:(NSString *)message {
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+    
+    [alertController addAction:okAction];
+    
+    [alertController show];
+}
 
 +(AppDelegate *) appDelegate {
 

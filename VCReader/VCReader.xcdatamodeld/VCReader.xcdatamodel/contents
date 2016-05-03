@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
+    <entity name="Battery" representedClassName="VCBatteryMO" syncable="YES">
+        <attribute name="percentage" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="timestamp" attributeType="Date" syncable="YES"/>
+    </entity>
     <entity name="Book" representedClassName="VCBookMO" syncable="YES">
         <attribute name="contentFilePath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="coverImageFilePath" optional="YES" attributeType="String" syncable="YES"/>
@@ -39,5 +43,6 @@
         <element name="Chapter" positionX="-1998" positionY="-2302" width="128" height="88"/>
         <element name="ReadingStatus" positionX="-2567" positionY="-2295" width="128" height="133"/>
         <element name="User" positionX="-2756" positionY="-2637" width="128" height="208"/>
+        <element name="Battery" positionX="-2079" positionY="-2610" width="128" height="73"/>
     </elements>
 </model>
