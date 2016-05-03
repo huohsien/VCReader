@@ -16,7 +16,6 @@
 
 @implementation VCLibraryTableViewController {
     
-    UIView *_activityView;
     NSString *_documentPath;
 
 }
@@ -55,8 +54,8 @@
     }
 
     
-    [NSThread detachNewThreadSelector:@selector(showActivityView) toTarget:self withObject:nil];
-
+    [VCTool showActivityView];
+    
     [[VCReaderAPIClient sharedClient] getBookListForUserWithID:[VCTool getObjectWithKey:@"user id"] success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.jsonResponse = responseObject;
@@ -71,12 +70,12 @@
         
         _bookArray = [[VCCoreDataCenter sharedInstance] getAllBooks];
         [self.tableView reloadData];
-        [self hideActivityView];
+        [VCTool hideActivityView];
 
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         _bookArray = [[VCCoreDataCenter sharedInstance] getAllBooks];
         [self.tableView reloadData];
-        [self hideActivityView];
+        [VCTool hideActivityView];
 
     }];
      
@@ -102,43 +101,13 @@
 
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         
-        
-        [NSThread detachNewThreadSelector:@selector(showActivityView) toTarget:self withObject:nil];
+        [VCTool showActivityView];
         VCBook *book = [[VCBook alloc] initWithBookName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name contentFilename:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).contentFilePath];
-        [self hideActivityView];
+        [VCTool hideActivityView];
 
         VCPageViewController *viewController = segue.destinationViewController;
         viewController.book = book;
     }
-}
-
-#pragma mark - activity indicator view
-
--(void)showActivityView
-{
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-    UIWindow *window = delegate.window;
-    _activityView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, window.bounds.size.width, window.bounds.size.height)];
-    _activityView.backgroundColor = [UIColor blackColor];
-    _activityView.alpha = 0.5;
-    
-    UIActivityIndicatorView *activityWheel = [[UIActivityIndicatorView alloc] initWithFrame: CGRectMake(window.bounds.size.width / 2 - 12, window.bounds.size.height / 2 - 12, 24, 24)];
-    activityWheel.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
-    activityWheel.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
-                                      UIViewAutoresizingFlexibleRightMargin |
-                                      UIViewAutoresizingFlexibleTopMargin |
-                                      UIViewAutoresizingFlexibleBottomMargin);
-    [_activityView addSubview:activityWheel];
-    [window addSubview: _activityView];
-    
-    [[[_activityView subviews] objectAtIndex:0] startAnimating];
-}
-
--(void)hideActivityView
-{
-    [[[_activityView subviews] objectAtIndex:0] stopAnimating];
-    [_activityView removeFromSuperview];
-    _activityView = nil;
 }
 
 #pragma mark - Table view data source

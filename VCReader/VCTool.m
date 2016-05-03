@@ -9,6 +9,8 @@
 #import "VCTool.h"
 #import "UIAlertController+Window.h"
 
+static UIView *_activityView;
+
 @implementation VCTool
 
 +(void) storeIntoBook:(NSString *)bookName withField:(NSString *)field andData:(id)data {
@@ -166,4 +168,30 @@
     }
 }
 
++(void)showActivityView {
+    
+    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    UIWindow *window = delegate.window;
+    _activityView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, window.bounds.size.width, window.bounds.size.height)];
+    _activityView.backgroundColor = [UIColor blackColor];
+    _activityView.alpha = 0.5;
+    
+    UIActivityIndicatorView *activityWheel = [[UIActivityIndicatorView alloc] initWithFrame: CGRectMake(window.bounds.size.width / 2 - 12, window.bounds.size.height / 2 - 12, 24, 24)];
+    activityWheel.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+    activityWheel.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+                                      UIViewAutoresizingFlexibleRightMargin |
+                                      UIViewAutoresizingFlexibleTopMargin |
+                                      UIViewAutoresizingFlexibleBottomMargin);
+    [_activityView addSubview:activityWheel];
+    [window addSubview: _activityView];
+    
+    [[[_activityView subviews] objectAtIndex:0] startAnimating];
+}
+
++(void)hideActivityView {
+    
+    [[[_activityView subviews] objectAtIndex:0] stopAnimating];
+    [_activityView removeFromSuperview];
+    _activityView = nil;
+}
 @end

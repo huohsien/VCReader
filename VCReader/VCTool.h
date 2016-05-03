@@ -29,5 +29,7 @@
 +(UIImage *) getImageFromURL:(NSString *)fileURL;
 +(void) saveImage:(UIImage *)image;
 +(void) deleteFilename:(NSString *)filename;
++(void)showActivityView;
++(void)hideActivityView;
 
 @end
