@@ -82,8 +82,8 @@ NSString * const kTencentOAuthAppID = @"1105244329";
     [self.view endEditing:YES];
 }
 
-//-(IBAction)prepareForUnwind:(UIStoryboardSegue *)segue {
-//}
+#pragma mark - QQ
+
 
 - (IBAction)qqButtonPressed:(id)sender {
     

@@ -101,7 +101,7 @@
                         <viewControllerLayoutGuide type="top" id="XhK-Ih-8Nz"/>
                         <viewControllerLayoutGuide type="bottom" id="Kf6-Fp-fHI"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="VCView">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

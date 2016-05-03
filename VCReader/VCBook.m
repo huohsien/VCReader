@@ -13,6 +13,7 @@
     NSMutableArray *_chapterTitleStringArray;
     NSMutableArray *_chapterContentRangeStringArray;
     NSString *_contentString;
+    NSString *_documentPath;
 
 }
 
@@ -25,7 +26,8 @@
     if (self) {
         _bookName = bookName;
         _contentFilename = contentFilename;
-        
+        _documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
         [self setup];
     }
     return self;
@@ -38,8 +40,7 @@
     _chapterContentRangeStringArray = [NSMutableArray new];
     _totalNumberOfChapters = 0;
     
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    _fullBookDirectoryPath = [self createDirectory:_bookName atFilePath:documentPath];
+    _fullBookDirectoryPath = [self createDirectory:_bookName atFilePath:_documentPath];
     
     BOOL isBookLoaded = NO;
     if ([[NSFileManager defaultManager] fileExistsAtPath:_fullBookDirectoryPath]) { // Directory exists
@@ -70,21 +71,20 @@
     NSData *urlData = [NSData dataWithContentsOfURL:url];
    
     NSString *zipFilePath = nil;
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     if (urlData) {
         
-        zipFilePath = [NSString stringWithFormat:@"%@/%@.zip", documentPath,_bookName];
+        zipFilePath = [NSString stringWithFormat:@"%@/%@.zip", _documentPath,_bookName];
         [urlData writeToFile:zipFilePath atomically:YES];
         
     } else {
         NSLog(@"%s -- fail to download compressed file of the book", __PRETTY_FUNCTION__);
     }
-    [self createDirectory:@"temp" atFilePath:documentPath];
-    NSString *unzipFilePath = [documentPath stringByAppendingPathComponent:@"temp"];
+    [self createDirectory:@"temp" atFilePath:_documentPath];
+    NSString *unzipFilePath = [_documentPath stringByAppendingPathComponent:@"temp"];
     
     if (![SSZipArchive unzipFileAtPath:zipFilePath toDestination:unzipFilePath]) {
         NSLog(@"%s --- unzip fail", __PRETTY_FUNCTION__);
-        abort();
+//        abort();
     };
     NSError *error = nil;
 
@@ -98,7 +98,7 @@
         _contentString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
         if (error) {
             NSLog(@"%s --- Error: %@", __PRETTY_FUNCTION__, error.debugDescription);
-            abort();
+//            abort();
         } else {
             [[NSFileManager defaultManager] removeItemAtPath:unzipFilePath error:&error];
             if (error) {
@@ -118,7 +118,9 @@
 
 -(NSString *)getChapterTitleStringFromChapterNumber:(NSUInteger)chapterNumber {
 
-    NSMutableString *str = [[NSMutableString alloc] initWithString:[[VCTool getDatafromBook:_bookName withField:@"titleOfChaptersArray"] objectAtIndex:chapterNumber]];
+    NSArray *titleOfChaptersArray = [VCTool getDatafromBook:_bookName withField:@"titleOfChaptersArray"];
+    if (!titleOfChaptersArray) return nil;
+    NSMutableString *str = [[NSMutableString alloc] initWithString:[titleOfChaptersArray objectAtIndex:chapterNumber]];
     return str;
 }
 
@@ -133,6 +135,9 @@
 
 -(void) splitChapters {
     
+    if (!_contentString) {
+        return;
+    }
     NSError *error = NULL;
     __block int count = 0;
     __block NSString *previousChapterString = @"";

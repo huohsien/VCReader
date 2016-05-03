@@ -12,6 +12,8 @@
 #import <TencentOpenAPI/TencentOAuth.h>
 #import "VCLoginViewController.h"
 
+
+
 @interface AppDelegate ()
 
 @end
@@ -32,7 +34,7 @@
     [NSThread sleepForTimeInterval:1.0];
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
-
+    
     NSString *userID = [VCTool getObjectWithKey:@"user id"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

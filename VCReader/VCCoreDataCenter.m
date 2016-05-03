@@ -9,6 +9,8 @@
 #import "VCCoreDataCenter.h"
 #import "VCReadingStatusMO+CoreDataProperties.h"
 
+
+
 @implementation VCCoreDataCenter
 
 @synthesize context = _context;
@@ -41,6 +43,8 @@
     return _user;
 }
 
+#pragma mark - account
+
 -(void) newUserWithAccoutnName:(NSString *)accountName accountPassword:(NSString *)accountPassword userID:(NSString *)userID email:(NSString *)email nickName:(NSString *)nickName token:(NSString *)token timestamp:(NSString *)timestamp signupType:(NSString *)signupType {
 
     NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -51,7 +55,9 @@
     NSError *error = nil;
     NSArray *userArray = [_context executeFetchRequest:fetchRequest error:&error];
     if (error) {
-        NSLog(@"%s --- Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
+        
+        VCLOG(@"Unresolved error %@, %@",error,[error userInfo]);
+//        NSLog(@"%s --- Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
         abort();
     }
     
@@ -99,6 +105,8 @@
 -(void) clearCurrentUser {
     _user = nil;
 }
+
+#pragma mark - reading status
 
 -(VCReadingStatusMO *) updateReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber {
 
@@ -195,6 +203,64 @@
     [self saveContext];
     
 }
+#pragma mark - book
+
+-(BOOL) addBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
+ 
+    if (!_user) [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
+    
+    
+    for (VCBookMO *book in _user.books) {
+        if ([book.name isEqualToString:bookName])
+            return NO;
+    }
+    VCBookMO *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:_context];
+    book.name = bookName;
+    book.contentFilePath = contentFilePath;
+    book.coverImageFilePath = coverImageFilePath;
+    book.timestamp = [timestamp doubleValue];
+    [_user addBooksObject:book];
+    [self saveContext];
+    return YES;
+}
+
+-(BOOL) updateBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
+    
+    if (!_user) [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
+    
+    for (VCBookMO *book in _user.books) {
+        
+        if ([book.name isEqualToString:bookName]) {
+            
+            if ([timestamp doubleValue] > book.timestamp) {
+                // update
+                book.contentFilePath = contentFilePath;
+                book.coverImageFilePath = coverImageFilePath;
+                book.timestamp = [timestamp doubleValue];
+                [self saveContext];
+                
+                return YES;
+        
+            }
+        }
+    }
+
+    return NO;
+}
+
+-(NSArray *) getAllBooks {
+    
+    if (!_user) [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
+    
+    return [_user.books allObjects];
+}
+
+-(void) setAttributesForBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath {
+
+    [self updateBookNamed:bookName contentFilePath:contentFilePath coverImageFilePath:coverImageFilePath timestamp:[NSString stringWithFormat:@"%lf",DBL_MAX]];
+}
+
+#pragma mark - general tools
 
 -(void) saveContext {
     
@@ -203,7 +269,6 @@
     if (![_context save:&error]) {
         NSLog(@"%s --- Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
         [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
-//        abort();
     }
 }
 

@@ -20,4 +20,11 @@
 #import "VCReaderAPIClient.h"
 #import "SSZipArchive/SSZipArchive.h"
 
+#ifdef NDEBUG
+// do nothing
+#define VCLOG(...)
+#else
+#define VCLOG(fmt, ...) NSLog((@"%s [Line %d] --- " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#endif
+
 #endif /* PrefixHeader_pch */

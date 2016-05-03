@@ -155,6 +155,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		660C15571CD8BD4E00C25553 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				66F8C3771C5D0AF300DF7611 /* VCView.h */,
+				66F8C3781C5D0AF300DF7611 /* VCView.m */,
+				66F8C3741C5D078100DF7611 /* VCTextView.h */,
+				66F8C3751C5D078100DF7611 /* VCTextView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		662225491CBD395E001BE988 /* APIClients */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +241,7 @@
 		667AACCE1C545D9400CD40E1 /* VCReader */ = {
 			isa = PBXGroup;
 			children = (
+				660C15571CD8BD4E00C25553 /* Views */,
 				6622255B1CBF968C001BE988 /* Core Data */,
 				662225491CBD395E001BE988 /* APIClients */,
 				669CD8D71C913E5500CC99D3 /* VCModels */,
@@ -306,10 +318,6 @@
 			children = (
 				667AACF81C58B05C00CD40E1 /* VCBook.h */,
 				667AACF91C58B05C00CD40E1 /* VCBook.m */,
-				66F8C3741C5D078100DF7611 /* VCTextView.h */,
-				66F8C3751C5D078100DF7611 /* VCTextView.m */,
-				66F8C3771C5D0AF300DF7611 /* VCView.h */,
-				66F8C3781C5D0AF300DF7611 /* VCView.m */,
 				6643419B1C7A868A00580AEF /* VCChapter.h */,
 				6643419C1C7A868A00580AEF /* VCChapter.m */,
 				6643419E1C7BFA7C00580AEF /* VCPage.h */,

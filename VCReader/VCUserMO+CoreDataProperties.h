@@ -2,7 +2,7 @@
 //  VCUserMO+CoreDataProperties.h
 //  VCReader
 //
-//  Created by victor on 4/30/16.
+//  Created by victor on 5/3/16.
 //  Copyright © 2016 VHHC. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -12,7 +12,7 @@
 #import "VCUserMO.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
+@class VCBookMO;
 @interface VCUserMO (CoreDataProperties)
 
 @property (nullable, nonatomic, retain) NSString *accountName;
@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *token;
 @property (nonatomic) int32_t userID;
 @property (nullable, nonatomic, retain) NSSet<VCReadingStatusMO *> *readingStatus;
+@property (nullable, nonatomic, retain) NSSet<VCBookMO *> *books;
 
 @end
 
@@ -34,6 +35,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeReadingStatusObject:(VCReadingStatusMO *)value;
 - (void)addReadingStatus:(NSSet<VCReadingStatusMO *> *)values;
 - (void)removeReadingStatus:(NSSet<VCReadingStatusMO *> *)values;
+
+- (void)addBooksObject:(VCBookMO *)value;
+- (void)removeBooksObject:(VCBookMO *)value;
+- (void)addBooks:(NSSet<VCBookMO *> *)values;
+- (void)removeBooks:(NSSet<VCBookMO *> *)values;
 
 @end
 

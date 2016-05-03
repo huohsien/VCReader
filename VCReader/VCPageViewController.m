@@ -1059,6 +1059,7 @@
     
     _previousOffset = 0;
     _deltaOffset = 0;
+    _lastTouchedPointX = point.x;
     _lastTouchedPointY = point.y;
     _startTime = CACurrentMediaTime();
 
@@ -1085,8 +1086,9 @@
 //        
 //        [self startEditingInTheTextView];
 //    }
-    
+    CGFloat pointX = point.x;
     CGFloat pointY = point.y;
+    CGFloat xDisplacement = (pointX - _lastTouchedPointX);
     CGFloat yDisplacement = (pointY - _lastTouchedPointY);
 
     _deltaOffset = yDisplacement - _previousOffset;
@@ -1107,19 +1109,30 @@
     
 //    NSLog(@"%@", NSStringFromCGPoint(point));
 
+    CGFloat pointX = point.x;
     CGFloat pointY = point.y;
+    CGFloat xDisplacement = (pointX - _lastTouchedPointX);
     CGFloat yDisplacement = (pointY - _lastTouchedPointY);
     
 //    NSLog(@"moved distance %.0f",distance);
     
-    if (yDisplacement < -10) {
+    if (yDisplacement < -10 && xDisplacement < 300) {
         [self swipeUp:nil];
     }
-    if (yDisplacement > 10) {
+    if (yDisplacement > 10 && xDisplacement < 300) {
         [self swipeDown:nil];
     }
-    
-    if (yDisplacement < 10 && yDisplacement > -10 && _elapsedTime < 1.5 && _isEditingTextView == NO) {
+    if (xDisplacement > 300) {
+        
+        self.navigationController.navigationBar.hidden = NO;
+        [self showStatusBar:YES];
+        CGSize size = self.navigationController.navigationBar.frame.size;
+        NSLog(@"%@", NSStringFromCGSize(size));
+        [self.navigationController.navigationBar setFrame:CGRectMake(0, 20, size.width, size.height)];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+
+    if (yDisplacement < 10 && yDisplacement > -10 && _elapsedTime < 1.5 && _isEditingTextView == NO && xDisplacement < 300) {
         [self toggleNavigationBar];
     }
 }

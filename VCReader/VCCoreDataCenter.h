@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "VCUserMO.h"
 #import "VCReadingStatusMO.h"
-#import "VCUserMO+CoreDataProperties.h"
+#import "VCUserMO.h"
+#import "VCBookMO.h"
 
 @interface VCCoreDataCenter : NSObject
 
@@ -26,6 +27,10 @@
 -(VCReadingStatusMO *) getReadingStatusForBook:(NSString *)bookName;
 -(void) saveContext;
 -(void) initReadingStatusForBook:(NSString *)bookName isDummy:(BOOL)isDummy;
+-(BOOL) addBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
+-(BOOL) updateBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
+-(void) setAttributesForBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath;
+-(NSArray *) getAllBooks;
 
 @end
 

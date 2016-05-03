@@ -17,5 +17,6 @@ extern NSString * const kVCReaderBaseURLString;
 @interface VCLibraryTableViewController : UITableViewController
 
 @property (nonatomic, strong) NSArray *jsonResponse;
+@property (nonatomic, strong) NSArray *bookArray;
 
 @end
