@@ -22,7 +22,6 @@
 +(UIColor *) changeUIColor:(UIColor *)uicolor alphaValueTo:(CGFloat)alpha;
 +(UIColor *) adjustUIColor:(UIColor *)uicolor brightness:(CGFloat)brightness;
 
-+(void) showErrorAlertViewWithTitle:(NSString *)title andMessage:(NSString *)message;
 +(void) showAlertViewWithTitle:(NSString *)title andMessage:(NSString *)message;
 +(AppDelegate *) appDelegate;
 +(void) storeObject:(id)object withKey:(NSString *)key;
@@ -32,5 +31,6 @@
 +(void) deleteFilename:(NSString *)filename;
 +(void)showActivityView;
 +(void)hideActivityView;
++(NSString *)createDirectory:(NSString *)directoryName atFilePath:(NSString *)filePath;
 
 @end

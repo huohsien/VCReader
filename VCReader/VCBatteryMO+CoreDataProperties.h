@@ -2,7 +2,7 @@
 //  VCBatteryMO+CoreDataProperties.h
 //  VCReader
 //
-//  Created by victor on 5/3/16.
+//  Created by victor on 5/5/16.
 //  Copyright © 2016 VHHC. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface VCBatteryMO (CoreDataProperties)
 
-@property (nonatomic) double percentage;
+@property (nonatomic) double level;
 @property (nonatomic) NSTimeInterval timestamp;
 
 @end

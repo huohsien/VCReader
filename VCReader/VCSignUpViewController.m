@@ -9,10 +9,17 @@
 #import "VCSignUpViewController.h"
 
 @interface VCSignUpViewController ()
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *distanceBetweenCellPhoneTextFieldAndNicknameTextfieldConstraint;
 
 @end
 
 @implementation VCSignUpViewController
+
+//- (void)updateViewConstraints {
+//    [super updateViewConstraints];
+//    CGFloat factor = [UIScreen mainScreen].bounds.size.width / SCREEN_WIDTH_IN_IB_DESIGN;
+//    self.distanceBetweenCellPhoneTextFieldAndNicknameTextfieldConstraint.constant *= factor;
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,31 +39,31 @@
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
     NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970] * 1000.0;
-    [[VCReaderAPIClient sharedClient] signupWithName:self.accountNameTextField.text password:self.passwordTextField.text nickName:self.nickNameTextField.text email:self.emailTextField.text token:nil timestamp:timestamp signupType:@"direct" success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[VCReaderAPIClient sharedClient] signupWithName:self.accountNameTextField.text password:self.passwordTextField.text nickName:self.nickNameTextField.text phoneNumber:self.cellPhoneNumberTextField.text token:nil timestamp:timestamp signupType:@"direct" success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSDictionary *dict = responseObject;
         
         if (dict[@"error"]) {
             
-            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+            [VCTool showAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
             
         } else  {
             // success
 
             if (dict[@"user_id"]) {
-                    [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:dict[@"account_name"] accountPassword:dict[@"account_password"] userID:dict[@"user_id"] email:dict[@"email"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
+                    [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:dict[@"account_name"] accountPassword:dict[@"account_password"] userID:dict[@"user_id"] phoneNumber:dict[@"phone_number"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
                 
 
                 [self.navigationController popViewControllerAnimated:YES];
             } else {
-                [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:@"Did Not Return User ID"];
+                [VCTool showAlertViewWithTitle:@"web error" andMessage:@"Did Not Return User ID"];
             }
 
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-        [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+        [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
 
     }];
 }

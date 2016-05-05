@@ -41,11 +41,12 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
 
 -(void) signupWithName:(NSString *)accountName
               password:(NSString *)accountPassword
-              nickName:(NSString *)nickName email:(NSString *)email
+              nickName:(NSString *)nickName
+                 phoneNumber:(NSString *)phoneNumber
                  token:(NSString *)token timestamp:(NSTimeInterval)timestamp
             signupType:(NSString *)signupType success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
     
-    NSMutableString *path = [NSMutableString stringWithFormat:@"user_signup.php?account_name=%@&account_password=%@&nick_name=%@&email=%@&timestamp=%@&signup_type=%@", accountName, accountPassword, nickName, email, [NSString stringWithFormat:@"%ld",(long)timestamp], signupType];
+    NSMutableString *path = [NSMutableString stringWithFormat:@"user_signup.php?account_name=%@&account_password=%@&nick_name=%@&phone_number=%@&timestamp=%@&signup_type=%@", accountName, accountPassword, nickName, phoneNumber, [NSString stringWithFormat:@"%ld",(long)timestamp], signupType];
     
     if (token) [path appendString:[NSString stringWithFormat:@"&token=%@", token]];
     

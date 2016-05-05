@@ -785,7 +785,7 @@
                         } else {
                             
                             NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
-                            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+                            [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
                         }
                         _isSyncing = NO;
 
@@ -845,7 +845,7 @@
                         } else {
                             
                             NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
-                            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+                            [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
                         }
                         _isSyncing = NO;
                         
@@ -890,7 +890,7 @@
         } else {
             
             NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
-            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+            [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
         }
         _isSyncing = NO;
 
@@ -981,7 +981,7 @@
         
         if ([[UIDevice currentDevice] batteryState] == UIDeviceBatteryStateUnplugged) {
 
-            [[VCCoreDataCenter sharedInstance] addBatteryLogWithPercentage:batteryLevel timestamp:[[NSDate new] timeIntervalSince1970]];
+            [[VCCoreDataCenter sharedInstance] logBatteryLevel:batteryLevel timestamp:[[NSDate new] timeIntervalSince1970]];
 
         }
 

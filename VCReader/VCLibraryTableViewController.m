@@ -94,6 +94,11 @@
 }
 
 
+-(void) showActivityView {
+
+    [VCTool showActivityView];
+
+}
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showBookContent"])
@@ -101,7 +106,7 @@
 
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         
-        [VCTool showActivityView];
+        [NSThread detachNewThreadSelector:@selector(showActivityView) toTarget:self withObject:nil];
         VCBook *book = [[VCBook alloc] initWithBookName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name contentFilename:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).contentFilePath];
         [VCTool hideActivityView];
 
@@ -180,7 +185,7 @@
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
         NSString *documentsPath = [paths objectAtIndex:0];
-        NSString *fullBookDirectoryPath = [self createDirectory:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name  atFilePath:documentsPath];
+        NSString *fullBookDirectoryPath = [VCTool createDirectory:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name  atFilePath:documentsPath];
         
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if ([fileManager fileExistsAtPath:fullBookDirectoryPath]) { // Directory exists
@@ -207,19 +212,4 @@
     
 }
 
-#pragma mark - file manager
--(NSString *)createDirectory:(NSString *)directoryName atFilePath:(NSString *)filePath
-{
-    NSString *filePathAndDirectory = [filePath stringByAppendingPathComponent:directoryName];
-    NSError *error;
-    
-    if (![[NSFileManager defaultManager] createDirectoryAtPath:filePathAndDirectory
-                                   withIntermediateDirectories:NO
-                                                    attributes:nil
-                                                         error:&error])
-    {
-        //        NSLog(@"Create directory error: %@", error);
-    }
-    return filePathAndDirectory;
-}
 @end

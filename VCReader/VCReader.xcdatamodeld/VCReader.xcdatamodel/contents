@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
     <entity name="Battery" representedClassName="VCBatteryMO" syncable="YES">
-        <attribute name="percentage" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="level" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="timestamp" attributeType="Date" syncable="YES"/>
     </entity>
     <entity name="Book" representedClassName="VCBookMO" syncable="YES">
@@ -28,9 +28,9 @@
     <entity name="User" representedClassName="VCUserMO" syncable="YES">
         <attribute name="accountName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="accountPassword" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="headshotFileURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nickName" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="signupType" attributeType="String" syncable="YES"/>
         <attribute name="timestamp" attributeType="Date" syncable="YES"/>
         <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>

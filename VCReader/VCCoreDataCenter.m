@@ -45,7 +45,7 @@
 
 #pragma mark - account
 
--(void) newUserWithAccoutnName:(NSString *)accountName accountPassword:(NSString *)accountPassword userID:(NSString *)userID email:(NSString *)email nickName:(NSString *)nickName token:(NSString *)token timestamp:(NSString *)timestamp signupType:(NSString *)signupType {
+-(void) newUserWithAccoutnName:(NSString *)accountName accountPassword:(NSString *)accountPassword userID:(NSString *)userID phoneNumber:(NSString *)phoneNumber nickName:(NSString *)nickName token:(NSString *)token timestamp:(NSString *)timestamp signupType:(NSString *)signupType {
 
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
@@ -67,7 +67,7 @@
         VCUserMO *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:_context];
         user.accountName = accountName;
         user.accountPassword = accountPassword;
-        user.email = email;
+        user.phoneNumber = phoneNumber;
         user.nickName = nickName;
         user.token = token;
         user.timestamp = [timestamp doubleValue];
@@ -97,7 +97,7 @@
     VCUserMO *user = [userArray lastObject];
     
     if (user == nil)
-        [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not find user"];
+        [VCTool showAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not find user"];
     
     _user = user;
 }
@@ -268,18 +268,19 @@
     NSError *error = nil;
     if (![_context save:&error]) {
         NSLog(@"%s --- Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
-        [VCTool showErrorAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
+        [VCTool showAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
     }
 }
 #pragma mark - battery
 
--(void) addBatteryLogWithPercentage:(double)percentage timestamp:(NSTimeInterval)timestamp {
+-(void) logBatteryLevel:(double)level timestamp:(NSTimeInterval)timestamp {
     
     VCBatteryMO *battery = [NSEntityDescription insertNewObjectForEntityForName:@"Battery" inManagedObjectContext:_context];
-    battery.percentage = percentage;
+    battery.level = level;
     battery.timestamp = timestamp;
     [self saveContext];
 }
+
 -(void) clearAllofBatteryLog {
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Battery"];
@@ -301,9 +302,12 @@
     
     NSArray *batteryInfoArray = [_context executeFetchRequest:fetchRequest error:&error];
     NSMutableString *logString = [[NSMutableString alloc] initWithString:@""];
+    [logString appendString:@"times,battery level(percent)\n"];
     for (VCBatteryMO *battery in batteryInfoArray) {
-        [logString appendString:[NSString stringWithFormat:@"battery:%d%% timestamp:%@\n", (int)(battery.percentage * 100.0), [NSString stringWithFormat:@"%lf",battery.timestamp * 1000.0]]];
-        NSLog(@"battery:%d%% timestamp:%@", (int)(battery.percentage * 100.0), [NSString stringWithFormat:@"%lf",battery.timestamp * 1000.0]);
+        
+        [logString appendString:[NSString stringWithFormat:@"%.0lf,%d%%\n",battery.timestamp * 1000.0, (int)(battery.level * 100.0)]];
+        
+        NSLog(@"battery:%d%% timestamp:%@", (int)(battery.level * 100.0), [NSString stringWithFormat:@"%lf",battery.timestamp * 1000.0]);
     }
 
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];

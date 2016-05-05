@@ -39,7 +39,8 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:(userID ? @"MainNavigationController" : @"LoginNavigationController")];
+    NSString *identifier =userID ? @"MainNavigationController" : @"LoginNavigationController";
+    UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:identifier];
     self.window.rootViewController = nc;
     [self.window makeKeyAndVisible];
     

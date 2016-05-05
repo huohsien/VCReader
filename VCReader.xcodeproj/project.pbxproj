@@ -10,6 +10,7 @@
 		41A2B5B578457A4DCECFA95E /* libPods-VCReader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B45A4D17CD603364319333 /* libPods-VCReader.a */; };
 		660C155C1CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C15591CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m */; };
 		660C155D1CD8EF0200C25553 /* VCBatteryMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C155B1CD8EF0200C25553 /* VCBatteryMO.m */; };
+		660C15601CD9F51500C25553 /* VCSetPhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C155F1CD9F51500C25553 /* VCSetPhoneNumberViewController.m */; };
 		6622254C1CBD39DA001BE988 /* VCReaderAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622254B1CBD39DA001BE988 /* VCReaderAPIClient.m */; };
 		662225A81CC3989E001BE988 /* VCBookMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622259D1CC3989E001BE988 /* VCBookMO+CoreDataProperties.m */; };
 		662225A91CC3989E001BE988 /* VCBookMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622259F1CC3989E001BE988 /* VCBookMO.m */; };
@@ -62,6 +63,8 @@
 		660C15591CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "VCBatteryMO+CoreDataProperties.m"; path = "VCReader/VCBatteryMO+CoreDataProperties.m"; sourceTree = "<group>"; };
 		660C155A1CD8EF0200C25553 /* VCBatteryMO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCBatteryMO.h; path = VCReader/VCBatteryMO.h; sourceTree = "<group>"; };
 		660C155B1CD8EF0200C25553 /* VCBatteryMO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCBatteryMO.m; path = VCReader/VCBatteryMO.m; sourceTree = "<group>"; };
+		660C155E1CD9F51500C25553 /* VCSetPhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCSetPhoneNumberViewController.h; sourceTree = "<group>"; };
+		660C155F1CD9F51500C25553 /* VCSetPhoneNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCSetPhoneNumberViewController.m; sourceTree = "<group>"; };
 		662068921C9C7B5000D00FEB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		6622254A1CBD39DA001BE988 /* VCReaderAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCReaderAPIClient.h; sourceTree = "<group>"; };
 		6622254B1CBD39DA001BE988 /* VCReaderAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCReaderAPIClient.m; sourceTree = "<group>"; };
@@ -280,6 +283,8 @@
 		667AACEC1C545E9400CD40E1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				660C155E1CD9F51500C25553 /* VCSetPhoneNumberViewController.h */,
+				660C155F1CD9F51500C25553 /* VCSetPhoneNumberViewController.m */,
 				662225B91CC9F973001BE988 /* VCLoginViewController.h */,
 				662225BA1CC9F973001BE988 /* VCLoginViewController.m */,
 				669227C41CCDE6730045291E /* VCSignUpViewController.h */,
@@ -497,6 +502,7 @@
 				666EECBB1C83C3E700DF5621 /* VCChapterTableViewController.m in Sources */,
 				669227D81CD09F820045291E /* VCCoreDataCenter.m in Sources */,
 				6643419D1C7A868A00580AEF /* VCChapter.m in Sources */,
+				660C15601CD9F51500C25553 /* VCSetPhoneNumberViewController.m in Sources */,
 				66F8C3761C5D078100DF7611 /* VCTextView.m in Sources */,
 				662225A81CC3989E001BE988 /* VCBookMO+CoreDataProperties.m in Sources */,
 				669227C91CCF59D20045291E /* VCBookStoreViewController.m in Sources */,
@@ -586,7 +592,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -623,7 +629,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -635,6 +641,7 @@
 			baseConfigurationReference = 0B4A3336345389BA90085697 /* Pods-VCReader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -644,7 +651,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = VCReader/PrefixHeader.pch;
 				INFOPLIST_FILE = VCReader/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -672,6 +679,7 @@
 			baseConfigurationReference = 7448617C5C4D6839113C0905 /* Pods-VCReader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -681,7 +689,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = VCReader/PrefixHeader.pch;
 				INFOPLIST_FILE = VCReader/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

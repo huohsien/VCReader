@@ -21,7 +21,7 @@
 
 +(VCCoreDataCenter *) sharedInstance;
 
--(void) newUserWithAccoutnName:(NSString *)accountName accountPassword:(NSString *)accountPassword userID:(NSString *)userID email:(NSString *)email nickName:(NSString *)nickName token:(NSString *)token timestamp:(NSString *)timestamp signupType:(NSString *)signupType;
+-(void) newUserWithAccoutnName:(NSString *)accountName accountPassword:(NSString *)accountPassword userID:(NSString *)userID phoneNumber:(NSString *)phoneNumber nickName:(NSString *)nickName token:(NSString *)token timestamp:(NSString *)timestamp signupType:(NSString *)signupType;
 -(void) clearCurrentUser;
 -(VCReadingStatusMO *) updateReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber timestampFromServer:(NSTimeInterval)timestamp;
 -(VCReadingStatusMO *) updateReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber;
@@ -32,7 +32,7 @@
 -(BOOL) updateBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
 -(void) setAttributesForBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath;
 -(NSArray *) getAllBooks;
--(void)addBatteryLogWithPercentage:(double)percentage timestamp:(NSTimeInterval)timestamp;
+-(void) logBatteryLevel:(double)level timestamp:(NSTimeInterval)timestamp;
 -(void) batteryLogDump;
 -(void) clearAllofBatteryLog;
 

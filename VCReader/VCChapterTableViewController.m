@@ -104,12 +104,11 @@
             [[VCCoreDataCenter sharedInstance] saveContext];
             
             [self.navigationController popViewControllerAnimated:YES];
-
         
         } else {
             
             NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
-            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+            [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
         }
 
         

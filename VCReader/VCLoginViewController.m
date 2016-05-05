@@ -7,6 +7,7 @@
 //
 
 #import "VCLoginViewController.h"
+#import "VCSetPhoneNumberViewController.h"
 
 NSString * const kTencentOAuthAppID = @"1105244329";
 
@@ -25,10 +26,11 @@ NSString * const kTencentOAuthAppID = @"1105244329";
     [self setNeedsStatusBarAppearanceUpdate];
     
     //set navigation bar style
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationBar.barTintColor = [UIColor redColor];
+    [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
+    self.navigationBar.tintColor = [UIColor whiteColor];
+
 }
 
 
@@ -48,7 +50,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         
         if (dict[@"error"]) {
             
-            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+            [VCTool showAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
             [self.loginButton setEnabled:YES];
         
         } else if (dict[@"user_id"]) {
@@ -58,7 +60,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
             
             [VCTool storeObject:dict[@"user_id"] withKey:@"user id"];
             
-            [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:dict[@"account_name"] accountPassword:self.passwordTextView.text userID:dict[@"user_id"] email:dict[@"email"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
+            [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:dict[@"account_name"] accountPassword:self.passwordTextView.text userID:dict[@"user_id"] phoneNumber:dict[@"phone_number"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
                         
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
@@ -67,7 +69,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
        
-        [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+        [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
         [self.loginButton setEnabled:YES];
 
     }];
@@ -160,33 +162,51 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         [VCTool storeObject:[response.jsonResponse objectForKey:@"nickname"] withKey:@"nickName"];
         
         NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970]  * 1000.0;
-        [[VCReaderAPIClient sharedClient] signupWithName:@"" password:@"" nickName:[response.jsonResponse objectForKey:@"nickname"] email:@"" token:_tencentOAuth.openId timestamp:timestamp signupType:@"QQ" success:^(NSURLSessionDataTask *task, id responseObject) {
+        [[VCReaderAPIClient sharedClient] signupWithName:@"" password:@"" nickName:[response.jsonResponse objectForKey:@"nickname"] phoneNumber:@"" token:_tencentOAuth.openId timestamp:timestamp signupType:@"QQ" success:^(NSURLSessionDataTask *task, id responseObject) {
             
             NSDictionary *dict = responseObject;
             NSLog(@"%s: response = %@", __PRETTY_FUNCTION__, dict);
             
             if (dict[@"error"]) {
                 
-                [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+                [VCTool showAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
                 
             } else  {
                 // success
                 
                 if (dict[@"user_id"]) {
-                    
-                    [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:@"" accountPassword:@"" userID:dict[@"user_id"] email:@"" nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
-                    
-                    [VCTool storeObject:dict[@"user_id"] withKey:@"user id"];
-
-                    [self.navigationController popViewControllerAnimated:YES];
+                
+                    if(((NSString *)dict[@"phone_number"]).length > 0) {
+                        
+                        [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:@"" accountPassword:@"" userID:dict[@"user_id"] phoneNumber:dict[@"phone_number"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
+                        
+                        [VCTool storeObject:dict[@"user_id"] withKey:@"user id"];
+                        
+                        [self.navigationController popViewControllerAnimated:YES];
+                        
+                    } else {
+                        
+                        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                        VCSetPhoneNumberViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"SetPhoneNumberViewController"];
+                        vc.type = @"QQ";
+                        
+                        [self.navigationController presentViewController:vc animated:YES completion:nil];
+                        
+                        [self.activityIndicator stopAnimating];
+                        return;
+                    }
                     
                 } else {
                     
-                    [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:@"User ID Missing"];
+                    [VCTool showAlertViewWithTitle:@"web error" andMessage:@"User ID Missing"];
                 }
                 
             }
             [self.activityIndicator stopAnimating];
+            
+            
+            // go to main navigation chain
+            //
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
             [VCTool appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -195,7 +215,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
             
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
-            [VCTool showErrorAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+            [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
             [self.qqLoginButton setEnabled:YES];
 
         }];
@@ -204,9 +224,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
     } else {
         
         NSString *errMsg = [NSString stringWithFormat:@"errorMsg:%@\n%@", response.errorMsg, [response.jsonResponse objectForKey:@"msg"]];
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"操作失败" message:errMsg delegate:self cancelButtonTitle:@"我知道啦" otherButtonTitles: nil];
-        [alert show];
+        [VCTool showAlertViewWithTitle:@"操作失败" andMessage:errMsg];
     }
 
 }
