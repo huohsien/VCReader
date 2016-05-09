@@ -7,11 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <TencentOpenAPI/TencentOAuth.h>
 
-@interface VCSignUpViewController : UIViewController
+@interface VCSignUpViewController : UIViewController <TencentSessionDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *accountNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *nickNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *cellPhoneNumberTextField;
-
+@property (strong, nonatomic) TencentOAuth *tencentOAuth;
+@property (weak, nonatomic) IBOutlet UIButton *qqLoginButton;
+@property (weak, nonatomic) IBOutlet UIButton *signupButton;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end

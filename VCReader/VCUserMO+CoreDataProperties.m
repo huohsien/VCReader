@@ -2,7 +2,7 @@
 //  VCUserMO+CoreDataProperties.m
 //  VCReader
 //
-//  Created by victor on 5/4/16.
+//  Created by victor on 5/9/16.
 //  Copyright © 2016 VHHC. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,14 +15,15 @@
 
 @dynamic accountName;
 @dynamic accountPassword;
-@dynamic phoneNumber;
 @dynamic headshotFileURL;
-@dynamic signupType;
 @dynamic nickName;
+@dynamic phoneNumber;
+@dynamic signupType;
 @dynamic timestamp;
 @dynamic token;
 @dynamic userID;
-@dynamic readingStatus;
+@dynamic verified;
 @dynamic books;
+@dynamic readingStatus;
 
 @end

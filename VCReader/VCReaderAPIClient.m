@@ -39,16 +39,41 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     return isReachable;
 }
 
--(void) signupWithName:(NSString *)accountName
-              password:(NSString *)accountPassword
-              nickName:(NSString *)nickName
-                 phoneNumber:(NSString *)phoneNumber
-                 token:(NSString *)token timestamp:(NSTimeInterval)timestamp
-            signupType:(NSString *)signupType success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
+-(void) signupDirectlyWithName:(NSString *)accountName
+                      password:(NSString *)accountPassword
+                      nickName:(NSString *)nickName
+                   phoneNumber:(NSString *)phoneNumber
+                     timestamp:(NSTimeInterval)timestamp
+                       success:(void (^)(NSURLSessionDataTask *, id))success
+                       failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
     
-    NSMutableString *path = [NSMutableString stringWithFormat:@"user_signup.php?account_name=%@&account_password=%@&nick_name=%@&phone_number=%@&timestamp=%@&signup_type=%@", accountName, accountPassword, nickName, phoneNumber, [NSString stringWithFormat:@"%ld",(long)timestamp], signupType];
+    NSMutableString *path = [NSMutableString stringWithFormat:@"user_signup.php?account_name=%@&account_password=%@&nick_name=%@&phone_number=%@&timestamp=%@", accountName, accountPassword, nickName, phoneNumber, [NSString stringWithFormat:@"%ld",(long)timestamp]];
     
-    if (token) [path appendString:[NSString stringWithFormat:@"&token=%@", token]];
+    NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
+    
+    [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        if (success) success(task, responseObject);
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        if (failure) failure(task, error);
+        
+    }];
+    
+}
+
+// whether phone number is available or nil determines which one this api is for, signup or login.
+-(void) signupOrLoginToQQWithToken:(NSString *)token
+                          nickName:(NSString *)nickName
+                         timestamp:(NSTimeInterval)timestamp
+                           success:(void (^)(NSURLSessionDataTask *, id))success
+                           failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
+    
+    NSMutableString *path = [NSMutableString stringWithFormat:@"user_signup_login_qq.php?token=%@&nick_name=%@&timestamp=%@", token, nickName, [NSString stringWithFormat:@"%ld",(long)timestamp]];
+    
     
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     

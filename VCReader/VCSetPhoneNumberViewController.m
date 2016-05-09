@@ -19,45 +19,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.navigationBar.barStyle = UIBarStyleBlack;
-    self.navigationBar.barTintColor = [UIColor redColor];
-    self.navigationBar.translucent = NO;
-    [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
-    self.navigationBar.tintColor = [UIColor whiteColor];
-
-    [self.verifyCodeView setHidden:YES];
+    
+    //set status bar style
+    [self setNeedsStatusBarAppearanceUpdate];
+    
+    //set navigation bar style
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 - (IBAction)submitPhoneNumberButtonPressed:(id)sender {
     
+    [self.view endEditing:YES];
+    
     int length = (int)self.phoneNumberTextField.text.length;
-    if ((length != (10)) || (length != (11))) {
+    
+    if (length != 10 && length != 11) {
 
         self.phoneNumberTextField.text = @"";
         [VCTool showAlertViewWithTitle:@"错误" andMessage:@"手机号不正确"];
-        [self.view endEditing:YES];
 
-        return;
+    } else {
+        
+        [self.navigationController performSegueWithIdentifier:@"ShowPhoneVerificationViewController" sender:self];
     }
-    // call web api to send sms
-    //
-    
-    [self.setCellPhoneNumberView setHidden:YES];
-    [self.verifyCodeView setHidden:NO];
-    [self.view endEditing:YES];
 
-}
-
-- (IBAction)sendVerificationCodeButtonPressed:(id)sender {
-    [self.setCellPhoneNumberView setHidden:NO];
-    [self.verifyCodeView setHidden:YES];
-    [self.view endEditing:YES];
 }
 
 - (IBAction)viewTapped:(id)sender {

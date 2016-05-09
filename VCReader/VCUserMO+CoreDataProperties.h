@@ -2,7 +2,7 @@
 //  VCUserMO+CoreDataProperties.h
 //  VCReader
 //
-//  Created by victor on 5/4/16.
+//  Created by victor on 5/9/16.
 //  Copyright © 2016 VHHC. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -11,35 +11,38 @@
 
 #import "VCUserMO.h"
 
-NS_ASSUME_NONNULL_BEGIN
 @class VCBookMO;
+
+NS_ASSUME_NONNULL_BEGIN
+
 @interface VCUserMO (CoreDataProperties)
 
 @property (nullable, nonatomic, retain) NSString *accountName;
 @property (nullable, nonatomic, retain) NSString *accountPassword;
-@property (nullable, nonatomic, retain) NSString *phoneNumber;
 @property (nullable, nonatomic, retain) NSString *headshotFileURL;
-@property (nullable, nonatomic, retain) NSString *signupType;
 @property (nullable, nonatomic, retain) NSString *nickName;
+@property (nullable, nonatomic, retain) NSString *phoneNumber;
+@property (nullable, nonatomic, retain) NSString *signupType;
 @property (nonatomic) NSTimeInterval timestamp;
 @property (nullable, nonatomic, retain) NSString *token;
 @property (nonatomic) int32_t userID;
-@property (nullable, nonatomic, retain) NSSet<VCReadingStatusMO *> *readingStatus;
+@property (nonatomic) BOOL verified;
 @property (nullable, nonatomic, retain) NSSet<VCBookMO *> *books;
+@property (nullable, nonatomic, retain) NSSet<VCReadingStatusMO *> *readingStatus;
 
 @end
 
 @interface VCUserMO (CoreDataGeneratedAccessors)
 
-- (void)addReadingStatusObject:(VCReadingStatusMO *)value;
-- (void)removeReadingStatusObject:(VCReadingStatusMO *)value;
-- (void)addReadingStatus:(NSSet<VCReadingStatusMO *> *)values;
-- (void)removeReadingStatus:(NSSet<VCReadingStatusMO *> *)values;
-
 - (void)addBooksObject:(VCBookMO *)value;
 - (void)removeBooksObject:(VCBookMO *)value;
 - (void)addBooks:(NSSet<VCBookMO *> *)values;
 - (void)removeBooks:(NSSet<VCBookMO *> *)values;
+
+- (void)addReadingStatusObject:(VCReadingStatusMO *)value;
+- (void)removeReadingStatusObject:(VCReadingStatusMO *)value;
+- (void)addReadingStatus:(NSSet<VCReadingStatusMO *> *)values;
+- (void)removeReadingStatus:(NSSet<VCReadingStatusMO *> *)values;
 
 @end
 

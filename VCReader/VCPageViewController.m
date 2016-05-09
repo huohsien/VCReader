@@ -1095,9 +1095,9 @@
 //        
 //        [self startEditingInTheTextView];
 //    }
-    CGFloat pointX = point.x;
+//    CGFloat pointX = point.x;
     CGFloat pointY = point.y;
-    CGFloat xDisplacement = (pointX - _lastTouchedPointX);
+//    CGFloat xDisplacement = (pointX - _lastTouchedPointX);
     CGFloat yDisplacement = (pointY - _lastTouchedPointY);
 
     _deltaOffset = yDisplacement - _previousOffset;

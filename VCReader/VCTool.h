@@ -23,6 +23,7 @@
 +(UIColor *) adjustUIColor:(UIColor *)uicolor brightness:(CGFloat)brightness;
 
 +(void) showAlertViewWithTitle:(NSString *)title andMessage:(NSString *)message;
++(void) showAlertViewWithMessage:(NSString *)message handler:(void(^)(UIAlertAction *action))handler;
 +(AppDelegate *) appDelegate;
 +(void) storeObject:(id)object withKey:(NSString *)key;
 +(id) getObjectWithKey:(NSString *)key;

@@ -45,7 +45,14 @@
 
 #pragma mark - account
 
--(void) newUserWithAccoutnName:(NSString *)accountName accountPassword:(NSString *)accountPassword userID:(NSString *)userID phoneNumber:(NSString *)phoneNumber nickName:(NSString *)nickName token:(NSString *)token timestamp:(NSString *)timestamp signupType:(NSString *)signupType {
+-(void) newUserWithAccoutnName:(NSString *)accountName
+               accountPassword:(NSString *)accountPassword
+                        userID:(NSString *)userID
+                   phoneNumber:(NSString *)phoneNumber
+                      nickName:(NSString *)nickName
+                         token:(NSString *)token
+                     timestamp:(NSString *)timestamp
+                    signupType:(NSString *)signupType {
 
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
@@ -73,6 +80,8 @@
         user.timestamp = [timestamp doubleValue];
         user.signupType = signupType;
         user.userID = [userID intValue];
+        user.verified = YES;
+        
 //        NSLog(@"%s %@,%@,%@,%@,%@,%lf,%@,%d", __PRETTY_FUNCTION__, user.accountName, user.accountPassword, user.email, user.nickName, user.token, user.timestamp, user.signupType, user.userID);
         [self saveContext];
         _user = user;
@@ -80,6 +89,10 @@
         // if data exits, switch curernt usre to it
         [self hookupCurrentUserWithUserID:userID];
     }
+}
+
+-(void) setUserVerified {
+    
 }
 
 -(void) hookupCurrentUserWithUserID:(NSString *)userIDString {
@@ -288,7 +301,7 @@
     
     NSError *deleteError = nil;
     [[[VCTool appDelegate] persistentStoreCoordinator] executeRequest:delete withContext:_context error:&deleteError];
-    [VCTool showAlertViewWithTitle:@"ClEAR ALL" andMessage:@"Complete"];
+    [VCTool showAlertViewWithTitle:@"CLEAR ALL" andMessage:@"Complete"];
 }
 
 -(void) batteryLogDump {

@@ -7,19 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <TencentOpenAPI/TencentOAuth.h>
 #import "VCUserMO+CoreDataProperties.h"
 #import "VCReadingStatusMO+CoreDataProperties.h"
 
 extern NSString * const kTencentOAuthAppID;
 
-@interface VCLoginViewController : UIViewController <TencentSessionDelegate>
+@interface VCLoginViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *accountNameTextView;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextView;
-@property (strong, nonatomic) TencentOAuth *tencentOAuth;
-@property (weak, nonatomic) IBOutlet UIButton *qqLoginButton;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 @end
