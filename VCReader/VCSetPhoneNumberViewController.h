@@ -11,6 +11,6 @@
 @interface VCSetPhoneNumberViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIView *setCellPhoneNumberView;
-@property (weak, nonatomic) IBOutlet UITextField *phoneNumberTextField;
+@property (weak, nonatomic) IBOutlet UITextField *cellPhoneNumberTextField;
 @property (strong, nonatomic) NSString *type;
 @end

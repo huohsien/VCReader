@@ -133,7 +133,6 @@ NSString * const kTencentOAuthAppID = @"1105244329";
     } else {
         
         [_cellPhoneNumberTextField resignFirstResponder];
-//        [self signUpButtonPressed:nil];
     }
 }
 
@@ -145,7 +144,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         return;
     
     NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970] * 1000.0;
-    [[VCReaderAPIClient sharedClient] signupDirectlyWithName:self.accountNameTextField.text password:self.passwordTextField.text nickName:self.nickNameTextField.text phoneNumber:self.cellPhoneNumberTextField.text timestamp:timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[VCReaderAPIClient sharedClient] signupDirectlyWithName:self.accountNameTextField.text password:self.passwordTextField.text nickName:self.nickNameTextField.text timestamp:timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSDictionary *dict = responseObject;
         
@@ -157,11 +156,13 @@ NSString * const kTencentOAuthAppID = @"1105244329";
             // success
 
             if (dict[@"user_id"]) {
-                    [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:dict[@"account_name"] accountPassword:dict[@"account_password"] userID:dict[@"user_id"] phoneNumber:dict[@"phone_number"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:@"direct"];
+                    [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:dict[@"account_name"] accountPassword:dict[@"account_password"] userID:dict[@"user_id"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:@"direct"];
                 
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                VCPhoneVerificationViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"PhoneVerificationViewController"];
-                [self.navigationController presentViewController:vc animated:YES completion:nil];
+                UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"PhoneVerificationNavigationController"];
+                [VCTool appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+                [VCTool appDelegate].window.rootViewController = nc;
+                [[VCTool appDelegate].window makeKeyAndVisible];
                 
             } else {
                 [VCTool showAlertViewWithTitle:@"web error" andMessage:@"Did Not Return User ID"];
@@ -294,48 +295,31 @@ if (condition) { \
             
             NSDictionary *dict = responseObject;
             NSLog(@"%s: response = %@", __PRETTY_FUNCTION__, dict);
-            
-            if (dict[@"error"]) {
+        
+            [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:@"" accountPassword:@"" userID:dict[@"user_id"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:@"QQ"];
+                                                                 
+                                                                 
+            if ([(NSString *)dict[@"verified"] isEqualToString:@"1"]) {
                 
-                if ([((NSString *)dict[@"error"][@"code"]) isEqualToString:@"105"]) {
-                    
-                    [self.activityIndicator stopAnimating];
-                    
-                    // go to PhoneVerificationNavigationController
-                    
-                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                    UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"PhoneVerificationNavigationController"];
-                    [VCTool appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-                    [VCTool appDelegate].window.rootViewController = nc;
-                    [[VCTool appDelegate].window makeKeyAndVisible];
-                    
-                } else {
-                    
-                    [VCTool showAlertViewWithMessage:dict[@"error"][@"message"] handler:nil];
-                }
+                [[VCCoreDataCenter sharedInstance] setUserVerified];
+                [VCTool storeObject:dict[@"user_id"] withKey:@"user id"];
                 
-            } else  {
-                // success
+                // go to main navigation chain
+                //
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
+                [VCTool appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+                [VCTool appDelegate].window.rootViewController = nc;
+                [[VCTool appDelegate].window makeKeyAndVisible];
                 
-                if (dict[@"user_id"]) {
-                    
-                    
-                    [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:@"" accountPassword:@"" userID:dict[@"user_id"] phoneNumber:dict[@"phone_number"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:@"QQ"];
-                    
-                    [VCTool storeObject:dict[@"user_id"] withKey:@"user id"];
-                    
-                    // go to main navigation chain
-                    //
-                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                    UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];
-                    [VCTool appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-                    [VCTool appDelegate].window.rootViewController = nc;
-                    [[VCTool appDelegate].window makeKeyAndVisible];
-                    
-                } else {
-                    
-                    [VCTool showAlertViewWithTitle:@"web error" andMessage:@"User ID Missing"];
-                }
+            } else {
+                
+                
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"PhoneVerificationNavigationController"];
+                [VCTool appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+                [VCTool appDelegate].window.rootViewController = nc;
+                [[VCTool appDelegate].window makeKeyAndVisible];
                 
             }
             

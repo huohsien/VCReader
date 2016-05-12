@@ -48,7 +48,6 @@
 -(void) newUserWithAccoutnName:(NSString *)accountName
                accountPassword:(NSString *)accountPassword
                         userID:(NSString *)userID
-                   phoneNumber:(NSString *)phoneNumber
                       nickName:(NSString *)nickName
                          token:(NSString *)token
                      timestamp:(NSString *)timestamp
@@ -74,25 +73,29 @@
         VCUserMO *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:_context];
         user.accountName = accountName;
         user.accountPassword = accountPassword;
-        user.phoneNumber = phoneNumber;
         user.nickName = nickName;
         user.token = token;
         user.timestamp = [timestamp doubleValue];
         user.signupType = signupType;
         user.userID = [userID intValue];
-        user.verified = YES;
         
-//        NSLog(@"%s %@,%@,%@,%@,%@,%lf,%@,%d", __PRETTY_FUNCTION__, user.accountName, user.accountPassword, user.email, user.nickName, user.token, user.timestamp, user.signupType, user.userID);
         [self saveContext];
         _user = user;
     } else {
         // if data exits, switch curernt usre to it
         [self hookupCurrentUserWithUserID:userID];
+        
+        if (![_user.token isEqualToString:userID]) {
+            
+            VCLOG(@"Error: user id and token are not matching");
+        }
     }
 }
 
 -(void) setUserVerified {
     
+        _user.verified = true;
+        [self saveContext];
 }
 
 -(void) hookupCurrentUserWithUserID:(NSString *)userIDString {

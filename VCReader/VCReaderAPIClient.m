@@ -29,7 +29,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     
     self.responseSerializer = [AFJSONResponseSerializer serializer];
     self.requestSerializer = [AFJSONRequestSerializer serializer];
-
+    [self.requestSerializer setTimeoutInterval:25.0];
     return self;
     
 }
@@ -42,12 +42,11 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
 -(void) signupDirectlyWithName:(NSString *)accountName
                       password:(NSString *)accountPassword
                       nickName:(NSString *)nickName
-                   phoneNumber:(NSString *)phoneNumber
                      timestamp:(NSTimeInterval)timestamp
                        success:(void (^)(NSURLSessionDataTask *, id))success
                        failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
     
-    NSMutableString *path = [NSMutableString stringWithFormat:@"user_signup.php?account_name=%@&account_password=%@&nick_name=%@&phone_number=%@&timestamp=%@", accountName, accountPassword, nickName, phoneNumber, [NSString stringWithFormat:@"%ld",(long)timestamp]];
+    NSMutableString *path = [NSMutableString stringWithFormat:@"user_signup.php?account_name=%@&account_password=%@&nick_name=%@&timestamp=%@", accountName, accountPassword, nickName, [NSString stringWithFormat:@"%ld",(long)timestamp]];
     
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     

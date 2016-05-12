@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *cellPhoneNumberTextField;
 @property (strong, nonatomic) TencentOAuth *tencentOAuth;
 @property (weak, nonatomic) IBOutlet UIButton *qqLoginButton;
-@property (weak, nonatomic) IBOutlet UIButton *signupButton;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @end

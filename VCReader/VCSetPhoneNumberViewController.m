@@ -37,11 +37,11 @@
     
     [self.view endEditing:YES];
     
-    int length = (int)self.phoneNumberTextField.text.length;
+    int length = (int)self.cellPhoneNumberTextField.text.length;
     
     if (length != 10 && length != 11) {
 
-        self.phoneNumberTextField.text = @"";
+        self.cellPhoneNumberTextField.text = @"";
         [VCTool showAlertViewWithTitle:@"错误" andMessage:@"手机号不正确"];
 
     } else {
