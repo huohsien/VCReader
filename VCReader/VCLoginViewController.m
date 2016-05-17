@@ -52,11 +52,11 @@
         } else if (dict[@"user_id"]) {
             
             // clean up image file which might be left from the previous session
-            [VCTool deleteFilename:@"headshot"];
+            [VCTool deleteFilename:@"headshot.png"];
             
             [VCTool storeObject:dict[@"user_id"] withKey:@"user id"];
             
-            [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:dict[@"account_name"] accountPassword:self.passwordTextView.text userID:dict[@"user_id"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
+            [[VCCoreDataCenter sharedInstance] setUserWithToken:dict[@"token"] accountName:dict[@"account_name"] accountPassword:self.passwordTextView.text userID:dict[@"user_id"] nickName:dict[@"nick_name"]  timestamp:dict[@"timestamp"] signupType:dict[@"signup_type"]];
             
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"MainNavigationController"];

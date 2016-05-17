@@ -118,6 +118,17 @@ static UIView *_activityView;
     [alertController show];
 }
 
++(void) toastMessage:(NSString *)message {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    [alertController show];
+
+    int duration = 1; // duration in seconds
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    });
+}
 +(AppDelegate *) appDelegate {
 
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -144,11 +155,11 @@ static UIView *_activityView;
     return result;
 }
 
-+(void) saveImage:(UIImage *)image {
++(void) saveImage:(UIImage *)image withName:(NSString *)name {
     
     if (image) {
         
-        NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"headshot.png"]];
+        NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",name]];
         
         [UIImagePNGRepresentation(image) writeToFile:path options:NSAtomicWrite error:nil];
     }

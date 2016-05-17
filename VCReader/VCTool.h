@@ -24,11 +24,12 @@
 
 +(void) showAlertViewWithTitle:(NSString *)title andMessage:(NSString *)message;
 +(void) showAlertViewWithMessage:(NSString *)message handler:(void(^)(UIAlertAction *action))handler;
++(void) toastMessage:(NSString *)message;
 +(AppDelegate *) appDelegate;
 +(void) storeObject:(id)object withKey:(NSString *)key;
 +(id) getObjectWithKey:(NSString *)key;
 +(UIImage *) getImageFromURL:(NSString *)fileURL;
-+(void) saveImage:(UIImage *)image;
++(void) saveImage:(UIImage *)image withName:(NSString *)name;
 +(void) deleteFilename:(NSString *)filename;
 +(void)showActivityView;
 +(void)hideActivityView;

@@ -30,13 +30,23 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     self.responseSerializer = [AFJSONResponseSerializer serializer];
     self.requestSerializer = [AFJSONRequestSerializer serializer];
     [self.requestSerializer setTimeoutInterval:25.0];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkRequestDidFinish:) name:AFNetworkingTaskDidCompleteNotification object:nil];
     return self;
     
 }
 
--(BOOL) connected {
-    BOOL isReachable = [AFNetworkReachabilityManager sharedManager].reachable;
-    return isReachable;
+-(void)networkRequestDidFinish: (NSNotification *) notification {
+    
+    NSError *error = [notification.userInfo objectForKey:AFNetworkingTaskDidCompleteErrorKey];
+//    NSLog(@"%ld", (long)error.code);
+    if (error.code == -1009) {
+        [VCTool toastMessage:@"网络连线异常"];
+    }
+    
+    NSHTTPURLResponse *httpResponse = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+    if (httpResponse.statusCode == 401) {
+        NSLog(@"Error was 401");
+    }
 }
 
 -(void) signupDirectlyWithName:(NSString *)accountName
@@ -87,6 +97,29 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
         if (failure) failure(task, error);
         
     }];
+    
+}
+
+-(void) sendVerificationCodeToUserWithToken:(NSString *)token withPhoneNumber:(NSString *)phoneNumber success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
+
+    NSString* path = [NSString stringWithFormat:@"user_verify_phone_number?token=%@&phone_number=%@", token, phoneNumber];
+    NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
+    
+    [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        if (success) success(task, responseObject);
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        if (failure) failure(task, error);
+        
+    }];
+    
+}
+
+-(void) getUserVerificationStatusWithToken:(NSString *)token success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
     
 }
 

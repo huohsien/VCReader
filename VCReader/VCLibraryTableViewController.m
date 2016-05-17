@@ -149,17 +149,22 @@
         manager.responseSerializer = [AFImageResponseSerializer serializer];
         [manager GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
             
-            [cell.bookCoverImage setImage:(UIImage *)responseObject];
+            UIImage *image = responseObject;
+            [VCTool saveImage:image withName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name];
+            
+            [cell.bookCoverImage setImage:image];
             [cell.imageDownloadProgressIndicator stopAnimating];
             
         } failure:^(NSURLSessionTask *operation, NSError *error) {
-            
+
+            [cell.imageDownloadProgressIndicator stopAnimating];
+
             NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
             
         }];
     } else {
         
-        UIImage *image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@.jpg", _documentPath, ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name]];
+        UIImage *image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@.png", _documentPath, ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name]];
         [cell.bookCoverImage setImage:image];
     }
     

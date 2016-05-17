@@ -156,7 +156,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
             // success
 
             if (dict[@"user_id"]) {
-                    [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:dict[@"account_name"] accountPassword:dict[@"account_password"] userID:dict[@"user_id"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:@"direct"];
+                    [[VCCoreDataCenter sharedInstance] setUserWithToken:dict[@"token"] accountName:dict[@"account_name"] accountPassword:dict[@"account_password"] userID:dict[@"user_id"] nickName:dict[@"nick_name"] timestamp:dict[@"timestamp"] signupType:@"direct"];
                 
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                 UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"PhoneVerificationNavigationController"];
@@ -285,25 +285,21 @@ if (condition) { \
         
         NSLog(@"qq login response = %@", response.jsonResponse);
         
-        [VCTool saveImage:[VCTool getImageFromURL:response.jsonResponse[@"figureurl_qq_2"]]];
+        [VCTool saveImage:[VCTool getImageFromURL:response.jsonResponse[@"figureurl_qq_2"]] withName:@"headshot"];
         
         NSTimeInterval timestamp = [[NSDate new] timeIntervalSince1970]  * 1000.0;
-        [[VCReaderAPIClient sharedClient] signupOrLoginToQQWithToken:_tencentOAuth.openId
-                                                            nickName:[response.jsonResponse objectForKey:@"nickname"]
-                                                           timestamp:timestamp
-                                                             success:^(NSURLSessionDataTask *task, id responseObject) {
+        [[VCReaderAPIClient sharedClient] signupOrLoginToQQWithToken:_tencentOAuth.openId nickName:[response.jsonResponse objectForKey:@"nickname"] timestamp:timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
             
             NSDictionary *dict = responseObject;
             NSLog(@"%s: response = %@", __PRETTY_FUNCTION__, dict);
-        
-            [[VCCoreDataCenter sharedInstance] newUserWithAccoutnName:@"" accountPassword:@"" userID:dict[@"user_id"] nickName:dict[@"nick_name"] token:dict[@"token"] timestamp:dict[@"timestamp"] signupType:@"QQ"];
-                                                                 
+            [[VCCoreDataCenter sharedInstance] setUserWithToken:dict[@"token"] accountName:nil accountPassword:nil userID:dict[@"user_id"] nickName:dict[@"nick_name"] timestamp:dict[@"timestamp"] signupType:@"QQ"];
                                                                  
             if ([(NSString *)dict[@"verified"] isEqualToString:@"1"]) {
                 
                 [[VCCoreDataCenter sharedInstance] setUserVerified];
-                [VCTool storeObject:dict[@"user_id"] withKey:@"user id"];
-                
+//                [VCTool storeObject:dict[@"user_id"] withKey:@"user id"];
+                [VCTool storeObject:[NSString stringWithFormat:@"%d",[VCCoreDataCenter sharedInstance].user.userID] withKey:@"user id"];
+
                 // go to main navigation chain
                 //
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

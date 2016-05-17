@@ -45,13 +45,7 @@
 
 #pragma mark - account
 
--(void) newUserWithAccoutnName:(NSString *)accountName
-               accountPassword:(NSString *)accountPassword
-                        userID:(NSString *)userID
-                      nickName:(NSString *)nickName
-                         token:(NSString *)token
-                     timestamp:(NSString *)timestamp
-                    signupType:(NSString *)signupType {
+-(void) setUserWithToken:(NSString *)token accountName:(NSString *)accountName accountPassword:(NSString *)accountPassword userID:(NSString *)userID nickName:(NSString *)nickName timestamp:(NSString *)timestamp signupType:(NSString *)signupType {
 
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
