@@ -56,8 +56,8 @@
 
     
     [VCTool showActivityView];
-    
-    [[VCReaderAPIClient sharedClient] callAPI:@"book_get_list" params:@{@"token" : [VCTool getObjectWithKey:@"token"]} success:^(NSURLSessionDataTask *task, id responseObject) {
+    NSString *token = [VCTool getObjectWithKey:@"token"];
+    [[VCReaderAPIClient sharedClient] callAPI:@"book_get_list" params:@{@"token" : token} success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.jsonResponse = responseObject;
         

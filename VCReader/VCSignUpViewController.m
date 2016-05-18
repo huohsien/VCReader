@@ -303,10 +303,15 @@ return NO;\
             
             NSDictionary *dict = responseObject;
             NSLog(@"%s: response = %@", __PRETTY_FUNCTION__, dict);
+            
             [[VCCoreDataCenter sharedInstance] setUserWithToken:dict[@"token"] accountName:nil accountPassword:nil nickName:dict[@"nick_name"] timestamp:dict[@"timestamp"] signupType:@"QQ"];
             
             if ([(NSString *)dict[@"verified"] isEqualToString:@"1"]) {
                 
+                // for qq login
+                // put the token in NSUserDefaults
+                [VCTool storeObject:dict[@"token"] withKey:@"token"];
+
                 // go to main navigation chain
                 //
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
