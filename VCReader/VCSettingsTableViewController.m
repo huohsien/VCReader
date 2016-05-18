@@ -148,7 +148,7 @@
 
 - (IBAction)logoutButtonPressed:(id)sender {
 
-    [VCTool storeObject:nil withKey:@"user id"];
+    [VCTool storeObject:nil withKey:@"token"];
     [VCTool storeObject:nil withKey:@"name of the last read book"];
 
     [VCTool deleteFilename:@"headshot.png"];

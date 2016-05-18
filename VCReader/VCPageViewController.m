@@ -339,7 +339,7 @@
         if (finished) [self loadContent];
     }];
     
-    [self.activityIndicator startAnimating];
+    [VCTool showActivityView];
 
     [self startMonitoringBattery];
     [self StartTimerForClock];
@@ -400,8 +400,7 @@
         [self initPages]; // execute only once
 
         [self updateProgessInfo];
-        [self.activityIndicator stopAnimating];
-        [self.activityIndicator setHidden:YES];
+        [VCTool hideActivityView];
     });
     
 }
@@ -430,7 +429,7 @@
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
-    if ([VCTool getObjectWithKey:@"user id"]) {
+    if ([VCTool getObjectWithKey:@"token"]) {
         [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
     }
 }
@@ -748,7 +747,7 @@
 
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
-    [[VCReaderAPIClient sharedClient] getReadingStatusForBookNamed:_book.bookName success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[VCReaderAPIClient sharedClient] callAPI:@"user_status_get" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName} success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.jsonResponse = responseObject;
         
@@ -1181,7 +1180,6 @@
 
 -(void) updateProgessInfo {
 
-    self.chapterNumberLabel.text = [NSString stringWithFormat:@"%d章", _chapterNumber + 1];
     self.pageLabel.text = [NSString stringWithFormat:@"%d頁/%d頁", _pageNumber + 1, (int)_currentChapter.pageArray.count];
     if (_pageNumber != 0) {
         self.chapterTitleLabel.text = [_book getChapterTitleStringFromChapterNumber:_chapterNumber];

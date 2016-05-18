@@ -21,7 +21,6 @@
 @dynamic signupType;
 @dynamic timestamp;
 @dynamic token;
-@dynamic userID;
 @dynamic verified;
 @dynamic books;
 @dynamic readingStatus;

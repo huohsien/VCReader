@@ -38,14 +38,14 @@
 
 -(VCUserMO *)user {
     if (!_user) {
-        [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
+        [self hookupCurrentUserWithToken];
     }
     return _user;
 }
 
 #pragma mark - account
 
--(void) setUserWithToken:(NSString *)token accountName:(NSString *)accountName accountPassword:(NSString *)accountPassword userID:(NSString *)userID nickName:(NSString *)nickName timestamp:(NSString *)timestamp signupType:(NSString *)signupType {
+-(void) setUserWithToken:(NSString *)token accountName:(NSString *)accountName accountPassword:(NSString *)accountPassword nickName:(NSString *)nickName timestamp:(NSString *)timestamp signupType:(NSString *)signupType {
 
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
@@ -71,18 +71,13 @@
         user.token = token;
         user.timestamp = [timestamp doubleValue];
         user.signupType = signupType;
-        user.userID = [userID intValue];
         
         [self saveContext];
         _user = user;
     } else {
         // if data exits, switch curernt usre to it
-        [self hookupCurrentUserWithUserID:userID];
+        [self hookupCurrentUserWithToken];
         
-        if (![_user.token isEqualToString:userID]) {
-            
-            VCLOG(@"Error: user id and token are not matching");
-        }
     }
 }
 
@@ -92,10 +87,14 @@
         [self saveContext];
 }
 
--(void) hookupCurrentUserWithUserID:(NSString *)userIDString {
+-(void) hookupCurrentUserWithToken {
+    
+    NSString *token = [VCTool getObjectWithKey:@"token"];
+
+    if (!token) return;
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID == %@", userIDString];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"token == %@", token];
     [fetchRequest setPredicate:predicate];
     NSError *error = nil;
     NSArray *userArray = [_context executeFetchRequest:fetchRequest error:&error];
@@ -120,7 +119,7 @@
 
 -(VCReadingStatusMO *) updateReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber {
 
-    if (!_user) [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
+    if (!_user) [self hookupCurrentUserWithToken];
     
     VCReadingStatusMO *readingStatus = [self getReadingStatusForBook:bookName];
     
@@ -144,7 +143,7 @@
 
 -(VCReadingStatusMO *) updateReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber timestampFromServer:(NSTimeInterval)timestampFromServer {
     
-    if (!_user) [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
+    if (!_user) [self hookupCurrentUserWithToken];
     
     VCReadingStatusMO *readingStatus = [self getReadingStatusForBook:bookName];
     
@@ -175,7 +174,7 @@
 
 -(VCReadingStatusMO *) getReadingStatusForBook:(NSString *)bookName {
     
-    if (!_user) [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
+    if (!_user) [self hookupCurrentUserWithToken];
 
     VCReadingStatusMO *readingStatus = nil;
     
@@ -194,7 +193,7 @@
 
 -(void) initReadingStatusForBook:(NSString *)bookName isDummy:(BOOL)isDummy {
     
-    if (!_user) [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
+    if (!_user) [self hookupCurrentUserWithToken];
     
     VCReadingStatusMO *readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:_context];
     readingStatus.bookName = bookName;
@@ -217,7 +216,7 @@
 
 -(BOOL) addBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
  
-    if (!_user) [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
+    if (!_user) [self hookupCurrentUserWithToken];
     
     
     for (VCBookMO *book in _user.books) {
@@ -236,7 +235,7 @@
 
 -(BOOL) updateBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
     
-    if (!_user) [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
+    if (!_user) [self hookupCurrentUserWithToken];
     
     for (VCBookMO *book in _user.books) {
         
@@ -260,7 +259,7 @@
 
 -(NSArray *) getAllBooks {
     
-    if (!_user) [self hookupCurrentUserWithUserID:[VCTool getObjectWithKey:@"user id"]];
+    if (!_user) [self hookupCurrentUserWithToken];
     
     return [_user.books allObjects];
 }
@@ -269,6 +268,7 @@
 
     [self updateBookNamed:bookName contentFilePath:contentFilePath coverImageFilePath:coverImageFilePath timestamp:[NSString stringWithFormat:@"%lf",DBL_MAX]];
 }
+
 
 #pragma mark - general tools
 

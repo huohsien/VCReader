@@ -35,11 +35,11 @@
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
-    NSString *userID = [VCTool getObjectWithKey:@"user id"];
+    NSString *token = [VCTool getObjectWithKey:@"token"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    NSString *identifier =userID ? @"MainNavigationController" : @"LoginNavigationController";
+    NSString *identifier = token ? @"MainNavigationController" : @"LoginNavigationController";
     UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:identifier];
     self.window.rootViewController = nc;
     [self.window makeKeyAndVisible];

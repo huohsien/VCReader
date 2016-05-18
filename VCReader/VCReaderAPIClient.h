@@ -14,11 +14,12 @@ extern NSString * const kVCReaderBaseURLString;
 
 + (VCReaderAPIClient *) sharedClient;
 
--(void) signupDirectlyWithName:(NSString *)accountName password:(NSString *)accountPassword nickName:(NSString *)nickName timestamp:(NSTimeInterval)timestamp success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
--(void) signupOrLoginToQQWithToken:(NSString *)token nickName:(NSString *)nickName timestamp:(NSTimeInterval)timestamp success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
--(void) sendVerificationCodeToUserWithToken:(NSString *)token withPhoneNumber:(NSString *)phoneNumber success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
+-(void) callAPI:(NSString *)name params:(NSDictionary *)dict success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
 
--(void) setUserVerifiedWithToken:(NSString *)token success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
+-(void) signupDirectlyWithName:(NSString *)accountName password:(NSString *)accountPassword nickName:(NSString *)nickName timestamp:(NSTimeInterval)timestamp success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
+//-(void) signupOrLoginToQQWithToken:(NSString *)token nickName:(NSString *)nickName timestamp:(NSTimeInterval)timestamp success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
+-(void) sendVerificationCodeToUserWithToken:(NSString *)token withPhoneNumber:(NSString *)phoneNumber timestamp:(NSTimeInterval)timestamp success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
+
 -(void) getUserVerificationStatusWithToken:(NSString *)token success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
 
 

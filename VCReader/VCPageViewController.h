@@ -33,10 +33,8 @@
 @property (strong, nonatomic) UIView *contentView;
 
 @property (weak, nonatomic) IBOutlet UILabel *pageLabel;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *batteryLabel;
-@property (weak, nonatomic) IBOutlet UILabel *chapterNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chapterTitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *batteryImageView;
 @property (weak, nonatomic) IBOutlet UIView *topStatusBarView;

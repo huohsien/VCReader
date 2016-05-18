@@ -10,8 +10,8 @@
 		41A2B5B578457A4DCECFA95E /* libPods-VCReader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B45A4D17CD603364319333 /* libPods-VCReader.a */; };
 		660C155C1CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C15591CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m */; };
 		660C155D1CD8EF0200C25553 /* VCBatteryMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C155B1CD8EF0200C25553 /* VCBatteryMO.m */; };
-		660C15601CD9F51500C25553 /* VCSetPhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C155F1CD9F51500C25553 /* VCSetPhoneNumberViewController.m */; };
-		661A47FD1CE103E40032B152 /* VCPhoneVerificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 661A47FC1CE103E40032B152 /* VCPhoneVerificationViewController.m */; };
+		660C15601CD9F51500C25553 /* VCSetEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C155F1CD9F51500C25553 /* VCSetEmailViewController.m */; };
+		661A47FD1CE103E40032B152 /* VCEmailVerificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 661A47FC1CE103E40032B152 /* VCEmailVerificationViewController.m */; };
 		6622254C1CBD39DA001BE988 /* VCReaderAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622254B1CBD39DA001BE988 /* VCReaderAPIClient.m */; };
 		662225A81CC3989E001BE988 /* VCBookMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622259D1CC3989E001BE988 /* VCBookMO+CoreDataProperties.m */; };
 		662225A91CC3989E001BE988 /* VCBookMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622259F1CC3989E001BE988 /* VCBookMO.m */; };
@@ -63,10 +63,10 @@
 		660C15591CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "VCBatteryMO+CoreDataProperties.m"; path = "VCReader/VCBatteryMO+CoreDataProperties.m"; sourceTree = "<group>"; };
 		660C155A1CD8EF0200C25553 /* VCBatteryMO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCBatteryMO.h; path = VCReader/VCBatteryMO.h; sourceTree = "<group>"; };
 		660C155B1CD8EF0200C25553 /* VCBatteryMO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCBatteryMO.m; path = VCReader/VCBatteryMO.m; sourceTree = "<group>"; };
-		660C155E1CD9F51500C25553 /* VCSetPhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCSetPhoneNumberViewController.h; sourceTree = "<group>"; };
-		660C155F1CD9F51500C25553 /* VCSetPhoneNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCSetPhoneNumberViewController.m; sourceTree = "<group>"; };
-		661A47FB1CE103E40032B152 /* VCPhoneVerificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCPhoneVerificationViewController.h; sourceTree = "<group>"; };
-		661A47FC1CE103E40032B152 /* VCPhoneVerificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPhoneVerificationViewController.m; sourceTree = "<group>"; };
+		660C155E1CD9F51500C25553 /* VCSetEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCSetEmailViewController.h; sourceTree = "<group>"; };
+		660C155F1CD9F51500C25553 /* VCSetEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCSetEmailViewController.m; sourceTree = "<group>"; };
+		661A47FB1CE103E40032B152 /* VCEmailVerificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCEmailVerificationViewController.h; sourceTree = "<group>"; };
+		661A47FC1CE103E40032B152 /* VCEmailVerificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCEmailVerificationViewController.m; sourceTree = "<group>"; };
 		662068921C9C7B5000D00FEB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		6622254A1CBD39DA001BE988 /* VCReaderAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCReaderAPIClient.h; sourceTree = "<group>"; };
 		6622254B1CBD39DA001BE988 /* VCReaderAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCReaderAPIClient.m; sourceTree = "<group>"; };
@@ -298,10 +298,10 @@
 				666EECBA1C83C3E700DF5621 /* VCChapterTableViewController.m */,
 				66CA97FE1CB62E5400B52B5E /* VCSettingsTableViewController.h */,
 				66CA97FF1CB62E5400B52B5E /* VCSettingsTableViewController.m */,
-				660C155E1CD9F51500C25553 /* VCSetPhoneNumberViewController.h */,
-				660C155F1CD9F51500C25553 /* VCSetPhoneNumberViewController.m */,
-				661A47FB1CE103E40032B152 /* VCPhoneVerificationViewController.h */,
-				661A47FC1CE103E40032B152 /* VCPhoneVerificationViewController.m */,
+				660C155E1CD9F51500C25553 /* VCSetEmailViewController.h */,
+				660C155F1CD9F51500C25553 /* VCSetEmailViewController.m */,
+				661A47FB1CE103E40032B152 /* VCEmailVerificationViewController.h */,
+				661A47FC1CE103E40032B152 /* VCEmailVerificationViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -503,7 +503,7 @@
 				666EECBB1C83C3E700DF5621 /* VCChapterTableViewController.m in Sources */,
 				669227D81CD09F820045291E /* VCCoreDataCenter.m in Sources */,
 				6643419D1C7A868A00580AEF /* VCChapter.m in Sources */,
-				660C15601CD9F51500C25553 /* VCSetPhoneNumberViewController.m in Sources */,
+				660C15601CD9F51500C25553 /* VCSetEmailViewController.m in Sources */,
 				66F8C3761C5D078100DF7611 /* VCTextView.m in Sources */,
 				662225A81CC3989E001BE988 /* VCBookMO+CoreDataProperties.m in Sources */,
 				669227C91CCF59D20045291E /* VCBookStoreViewController.m in Sources */,
@@ -527,7 +527,7 @@
 				664341A01C7BFA7C00580AEF /* VCPage.m in Sources */,
 				662225AA1CC3989E001BE988 /* VCChapterMO+CoreDataProperties.m in Sources */,
 				662225A91CC3989E001BE988 /* VCBookMO.m in Sources */,
-				661A47FD1CE103E40032B152 /* VCPhoneVerificationViewController.m in Sources */,
+				661A47FD1CE103E40032B152 /* VCEmailVerificationViewController.m in Sources */,
 				667AACD41C545D9400CD40E1 /* AppDelegate.m in Sources */,
 				662225BB1CC9F973001BE988 /* VCLoginViewController.m in Sources */,
 				667AACD11C545D9400CD40E1 /* main.m in Sources */,

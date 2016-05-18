@@ -12,7 +12,6 @@
 #import "VCUserMO.h"
 
 @class VCBookMO;
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface VCUserMO (CoreDataProperties)
@@ -25,7 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *signupType;
 @property (nonatomic) NSTimeInterval timestamp;
 @property (nullable, nonatomic, retain) NSString *token;
-@property (nonatomic) int32_t userID;
 @property (nonatomic) BOOL verified;
 @property (nullable, nonatomic, retain) NSSet<VCBookMO *> *books;
 @property (nullable, nonatomic, retain) NSSet<VCReadingStatusMO *> *readingStatus;

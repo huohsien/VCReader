@@ -138,9 +138,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="IdK-H5-lw7">
-                                <rect key="frame" x="151" y="275" width="20" height="20"/>
-                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OCp-Gc-nZe">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="42"/>
                                 <subviews>
@@ -213,11 +210,9 @@
                             <constraint firstItem="EZH-hX-9R2" firstAttribute="leading" secondItem="o6f-Rs-PYw" secondAttribute="trailing" constant="4" id="TzS-ZW-zXO"/>
                             <constraint firstItem="o6f-Rs-PYw" firstAttribute="leading" secondItem="ajo-Vz-MnV" secondAttribute="trailing" constant="16" id="YS1-l0-1ZF"/>
                             <constraint firstItem="OCp-Gc-nZe" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ZCZ-4h-Dpg"/>
-                            <constraint firstItem="IdK-H5-lw7" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="cHD-WM-nuA"/>
                             <constraint firstItem="Kf6-Fp-fHI" firstAttribute="top" secondItem="ajo-Vz-MnV" secondAttribute="bottom" constant="9" id="eGT-TG-rhs"/>
                             <constraint firstItem="OS3-ek-Dod" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="fc6-OT-fZ9"/>
                             <constraint firstItem="Kf6-Fp-fHI" firstAttribute="top" secondItem="OS3-ek-Dod" secondAttribute="bottom" constant="9" id="l24-61-gzK"/>
-                            <constraint firstItem="IdK-H5-lw7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="r2L-v0-GKK"/>
                             <constraint firstItem="Kf6-Fp-fHI" firstAttribute="top" secondItem="o6f-Rs-PYw" secondAttribute="bottom" constant="9" id="svC-FM-fMT"/>
                             <constraint firstItem="Kf6-Fp-fHI" firstAttribute="top" secondItem="EZH-hX-9R2" secondAttribute="bottom" constant="9" id="t6H-6k-Crm"/>
                             <constraint firstItem="OCp-Gc-nZe" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ydG-cB-ITr"/>
@@ -230,7 +225,6 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="IdK-H5-lw7" id="ceM-gC-Orq"/>
                         <outlet property="batteryImageView" destination="o6f-Rs-PYw" id="zXc-UX-z8B"/>
                         <outlet property="batteryLabel" destination="EZH-hX-9R2" id="trp-jz-I45"/>
                         <outlet property="bottomStatusBarView" destination="8tC-nm-sWY" id="jFg-Cj-Huw"/>
@@ -1353,7 +1347,7 @@
         <!--认证手机号-->
         <scene sceneID="Uvz-vu-wgi">
             <objects>
-                <viewController title="认证手机号" id="aGO-vc-Qcf" customClass="VCSetPhoneNumberViewController" sceneMemberID="viewController">
+                <viewController title="认证手机号" id="aGO-vc-Qcf" customClass="VCSetEmailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OG3-I3-c1Q"/>
                         <viewControllerLayoutGuide type="bottom" id="upO-lL-9wv"/>
@@ -1381,13 +1375,13 @@
                                             </mask>
                                         </variation>
                                     </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号(目前只支持中国和台湾)" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="0CB-di-gn4">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入你的电子邮箱" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="0CB-di-gn4">
                                         <rect key="frame" x="51" y="141" width="304" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Yjg-Ys-uyk"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="phonePad" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="Yjg-Ys-uyk"/>
@@ -1420,7 +1414,7 @@
                                             </mask>
                                         </variation>
                                         <connections>
-                                            <action selector="submitPhoneNumberButtonPressed:" destination="aGO-vc-Qcf" eventType="touchUpInside" id="RbU-4c-4KX"/>
+                                            <action selector="submitEmailButtonPressed:" destination="aGO-vc-Qcf" eventType="touchUpInside" id="FNs-oL-vpT"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1485,27 +1479,19 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="BPP-hc-8eP">
-                                <rect key="frame" x="-10" y="-10" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.94936191099476441" green="0.94936191099476441" blue="0.94936191099476441" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="BPP-hc-8eP" firstAttribute="centerX" secondItem="7QA-Wv-lqK" secondAttribute="centerX" id="2rX-WW-SPv"/>
                             <constraint firstItem="zZp-y7-I2u" firstAttribute="trailing" secondItem="7QA-Wv-lqK" secondAttribute="trailingMargin" id="7vC-mv-NYo"/>
-                            <constraint firstItem="BPP-hc-8eP" firstAttribute="centerY" secondItem="7QA-Wv-lqK" secondAttribute="centerY" id="iGQ-f3-rnx"/>
                             <constraint firstItem="zZp-y7-I2u" firstAttribute="top" secondItem="OG3-I3-c1Q" secondAttribute="bottom" constant="42" id="ln9-z9-mgG"/>
                             <constraint firstItem="zZp-y7-I2u" firstAttribute="leading" secondItem="7QA-Wv-lqK" secondAttribute="leadingMargin" id="uSK-k6-Qhc"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="zZp-y7-I2u"/>
-                                <exclude reference="BPP-hc-8eP"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="2rX-WW-SPv"/>
-                                <exclude reference="iGQ-f3-rnx"/>
                                 <exclude reference="7vC-mv-NYo"/>
                                 <exclude reference="ln9-z9-mgG"/>
                                 <exclude reference="uSK-k6-Qhc"/>
@@ -1514,11 +1500,8 @@
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="zZp-y7-I2u"/>
-                                <include reference="BPP-hc-8eP"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="2rX-WW-SPv"/>
-                                <include reference="iGQ-f3-rnx"/>
                                 <include reference="7vC-mv-NYo"/>
                                 <include reference="ln9-z9-mgG"/>
                                 <include reference="uSK-k6-Qhc"/>
@@ -1528,15 +1511,14 @@
                             <outletCollection property="gestureRecognizers" destination="JFH-iU-Gky" appends="YES" id="CYC-Wq-Euc"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="认证手机号" id="A9e-HJ-EmL">
+                    <navigationItem key="navigationItem" title="邮箱认证" id="A9e-HJ-EmL">
                         <barButtonItem key="backBarButtonItem" title=" " id="ZeI-Kg-AHK"/>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
-                        <outlet property="cellPhoneNumberTextField" destination="0CB-di-gn4" id="UuZ-6L-dtw"/>
-                        <outlet property="setCellPhoneNumberView" destination="zZp-y7-I2u" id="m3G-TY-Pw9"/>
-                        <segue destination="668-B4-El0" kind="show" identifier="ShowPhoneVerificationViewController" id="j0u-aI-hYi"/>
+                        <outlet property="emailTextField" destination="0CB-di-gn4" id="4Xe-Dw-Muu"/>
+                        <segue destination="668-B4-El0" kind="show" identifier="ShowEmailVerificationViewController" id="j0u-aI-hYi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LAC-Jq-cGf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1551,7 +1533,7 @@
         <!--输入校验码-->
         <scene sceneID="pzQ-yu-bgb">
             <objects>
-                <viewController storyboardIdentifier="PhoneVerificationViewController" title="输入校验码" id="668-B4-El0" customClass="VCPhoneVerificationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhoneVerificationViewController" title="输入校验码" id="668-B4-El0" customClass="VCEmailVerificationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cOB-cJ-5b3"/>
                         <viewControllerLayoutGuide type="bottom" id="4GW-98-amd"/>
@@ -1563,7 +1545,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PDk-5Z-VGp">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="输入收到短信中的校验码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EtT-if-8x2">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="输入认证信中的校验码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EtT-if-8x2">
                                         <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="d5J-Cj-Hms"/>
@@ -1627,7 +1609,7 @@
                                             <constraint firstAttribute="height" constant="30" id="uee-0i-AhE"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad"/>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="uee-0i-AhE"/>
@@ -1744,6 +1726,9 @@
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
+                    <connections>
+                        <outlet property="verifyCodeTextField" destination="aY2-Jc-ghT" id="wd0-pz-6s1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JDX-5P-90f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1772,7 +1757,7 @@
         <!--Navigation Controller-->
         <scene sceneID="cti-UF-gso">
             <objects>
-                <navigationController storyboardIdentifier="PhoneVerificationNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="rwo-QJ-bM7" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="EmailVerificationNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="rwo-QJ-bM7" sceneMemberID="viewController">
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>

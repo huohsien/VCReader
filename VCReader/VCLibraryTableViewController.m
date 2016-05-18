@@ -51,12 +51,13 @@
         VCBook *book = [[VCBook alloc] initWithBookName:nameOfLastReadBook contentFilename:nil]; // assume if you have read it. no need to split chapters again.
         vc.book = book;
         [self.navigationController pushViewController:vc animated:NO];
+        return;
     }
 
     
     [VCTool showActivityView];
     
-    [[VCReaderAPIClient sharedClient] getBookListForUserWithID:[VCTool getObjectWithKey:@"user id"] success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[VCReaderAPIClient sharedClient] callAPI:@"book_get_list" params:@{@"token" : [VCTool getObjectWithKey:@"token"]} success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.jsonResponse = responseObject;
         
@@ -73,6 +74,7 @@
         [VCTool hideActivityView];
 
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         _bookArray = [[VCCoreDataCenter sharedInstance] getAllBooks];
         [self.tableView reloadData];
         [VCTool hideActivityView];
@@ -101,12 +103,11 @@
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"showBookContent"])
-    {
+    if ([segue.identifier isEqualToString:@"showBookContent"]) {
 
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         
-        [NSThread detachNewThreadSelector:@selector(showActivityView) toTarget:self withObject:nil];
+        [VCTool showActivityView];
         VCBook *book = [[VCBook alloc] initWithBookName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name contentFilename:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).contentFilePath];
         [VCTool hideActivityView];
 
