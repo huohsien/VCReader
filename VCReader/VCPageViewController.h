@@ -40,7 +40,7 @@
 @property (weak, nonatomic) IBOutlet UIView *topStatusBarView;
 @property (weak, nonatomic) IBOutlet UIView *bottomStatusBarView;
 
-@property (nonatomic, strong) NSDictionary *jsonResponse;
+@property (nonatomic, strong) NSDictionary *dict;
 
 
 @end

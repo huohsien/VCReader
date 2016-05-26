@@ -29,7 +29,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     
     self.responseSerializer = [AFJSONResponseSerializer serializer];
     self.requestSerializer = [AFJSONRequestSerializer serializer];
-    [self.requestSerializer setTimeoutInterval:25.0];
+    [self.requestSerializer setTimeoutInterval:10.0];
     
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkRequestDidFinish:) name:AFNetworkingTaskDidCompleteNotification object:nil];
@@ -51,7 +51,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
 //    }
 //}
 
--(void) callAPI:(NSString *)name params:(NSDictionary *)dict success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
+-(void) callAPI:(NSString *)name params:(NSDictionary *)dict success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure completion:(void (^)(BOOL finished))completion {
     
     NSMutableString *path = [[NSMutableString alloc] initWithFormat:@"%@.php?", name];
     
@@ -67,15 +67,18 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
         if (success) success(task, responseObject);
+        if (completion) completion(YES);
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         if (error.code == -1009 || error.code == -1004 || error.code == -1001) {
             [VCTool toastMessage:@"网络连线异常"];
             [VCTool hideActivityView];
+            if (completion) completion(YES);
             return;
         }
         if (failure) failure(task, error);
+        if (completion) completion(YES);
     }];
 }
 

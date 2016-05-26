@@ -79,7 +79,7 @@
         [self.tableView reloadData];
         [VCTool hideActivityView];
 
-    }];
+    } completion:nil];
      
 }
 

@@ -338,7 +338,7 @@ return NO;\
             [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
             [self.qqLoginButton setEnabled:YES];
             
-        }];
+        } completion:nil];
         //        [[VCReaderAPIClient sharedClient] signupOrLoginToQQWithToken:_tencentOAuth.openId nickName:[response.jsonResponse objectForKey:@"nickname"] timestamp:timestamp
         
     } else {

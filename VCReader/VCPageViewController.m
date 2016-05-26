@@ -186,7 +186,7 @@
 //@synthesize chapterNumber = _chapterNumber;
 //@synthesize pageNumber = _pageNumber;
 
-@synthesize jsonResponse = _jsonResponse;
+@synthesize dict;
 
 - (void)viewDidLoad {
     
@@ -742,18 +742,14 @@
         
         return;
     }
-    
     _isSyncing = YES;
-
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    
     
     [[VCReaderAPIClient sharedClient] callAPI:@"user_status_get" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName} success:^(NSURLSessionDataTask *task, id responseObject) {
         
-        self.jsonResponse = responseObject;
-        
-        NSDictionary *dict = self.jsonResponse;
-        
-        NSLog(@"%s --- response = %@", __PRETTY_FUNCTION__, dict);
+        self.dict = responseObject;
         
         if (dict[@"error"]) {
             
@@ -773,19 +769,13 @@
                         [[VCCoreDataCenter sharedInstance] saveContext];
                         
                         NSLog(@"%s --- finish upload data to server. Now load page and ready for user to read", __PRETTY_FUNCTION__);
-                        if (completion) completion(YES);
                         _isSyncing = NO;
                         
                     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                            
+                        NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
                         
-                        if (error.code == -1009) { // connection offline
-                            
-                            if (completion) completion(YES);                            
-                        } else {
-                            
-                            NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
-                            [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
-                        }
+                        [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
                         _isSyncing = NO;
 
                     }];
@@ -796,8 +786,6 @@
                     [[VCCoreDataCenter sharedInstance] initReadingStatusForBook:_book.bookName isDummy:NO];
                     
                     NSLog(@"%s --- ready for user to read a new book", __PRETTY_FUNCTION__);
-                    
-                    if (completion) completion(YES);
                     _isSyncing = NO;
                 }
                 
@@ -813,7 +801,7 @@
                 _isSyncing = NO;
             }
             
-        } else {
+        } else if (dict[@"token"]) {
         
             NSTimeInterval timestampFromServer = [dict[@"timestamp"] doubleValue];
             VCReadingStatusMO *readingStatus = [[VCCoreDataCenter sharedInstance] getReadingStatusForBook:_book.bookName];
@@ -833,19 +821,13 @@
                         
                         NSLog(@"%s --- finish syncing server with core data. ready for users to read", __PRETTY_FUNCTION__);
                         
-                        if (completion) completion(YES);
                         _isSyncing = NO;
 
                     } failure:^(NSURLSessionDataTask *task, NSError *error) {
                         
-                        if (error.code == -1009) { // connection offline
-                            
-                            if (completion) completion(YES);                            
-                        } else {
-                            
-                            NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
-                            [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
-                        }
+                        NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
+                        
+                        [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
                         _isSyncing = NO;
                         
                     }];
@@ -859,7 +841,6 @@
                     
                     NSLog(@"%s --- finish syncing core data with data in server. ready for users to read", __PRETTY_FUNCTION__);
                     
-                    if (completion) completion(YES);
                     _isSyncing = NO;
 
                 }
@@ -873,27 +854,18 @@
                 
                 NSLog(@"%s --- finish syncing core data with data in server. ready for users to read", __PRETTY_FUNCTION__);
                 
-                if (completion) completion(YES);
                 _isSyncing = NO;
 
             }
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
-        
-        if (error.code == -1009) { // connection offline
-            
-            if (completion) completion(YES);            
-
-        } else {
             
             NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
             [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
-        }
         _isSyncing = NO;
 
-    }];
+    } completion:completion];
 
 }
 

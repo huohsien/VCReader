@@ -73,7 +73,7 @@
         [VCTool hideActivityView];
         
         [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
-    }];
+    } completion:nil];
 }
 
 
