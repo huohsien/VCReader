@@ -12,5 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (strong, nonatomic) NSString *token;
+@property (strong, nonatomic) NSString *type;
 
 @end

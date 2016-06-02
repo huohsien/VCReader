@@ -26,6 +26,7 @@
     self.navigationController.navigationBar.barTintColor = [UIColor redColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationItem setHidesBackButton:YES];
 
 }
 
@@ -38,16 +39,23 @@
 
 - (IBAction)loginButtonPressed:(id)sender {
     
-    [self.loginButton setEnabled:NO];
+    [VCTool showActivityView];
     
     [[VCReaderAPIClient sharedClient] userLoginWithAccountName:self.accountNameTextView.text password:self.passwordTextView.text success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        [VCTool hideActivityView];
         
         NSDictionary *dict = responseObject;
         
         if (dict[@"error"]) {
             
-            [VCTool showAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
-            [self.loginButton setEnabled:YES];
+            if ([dict[@"error"][@"code"] isEqualToString:@"102"]) {
+                [VCTool toastMessage:@"账户密码错误，请重新输入"];
+            } else {
+                
+                [VCTool showAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];
+            }
+            
         
         } else if (dict[@"token"]) {
             
@@ -63,14 +71,26 @@
             [VCTool appDelegate].window.rootViewController = nc;
             
         }
+        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
        
         [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
-        [self.loginButton setEnabled:YES];
+        [VCTool hideActivityView];
 
     }];
 
 
+}
+- (IBAction)forgetPasswordButtonPressed:(id)sender {
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"EmailVerificationNavigationController"];
+    VCSetEmailViewController *vc = [nc.viewControllers firstObject];
+    vc.type = @"忘记账户密码";
+    
+    [VCTool appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [VCTool appDelegate].window.rootViewController = nc;
+    [[VCTool appDelegate].window makeKeyAndVisible];
 }
 
 - (IBAction)viewTapped:(id)sender {

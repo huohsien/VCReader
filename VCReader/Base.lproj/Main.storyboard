@@ -373,6 +373,9 @@
                                         <include reference="tQy-GY-B1p"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="forgetPasswordButtonPressed:" destination="Ih6-7H-UVu" eventType="touchUpInside" id="jZs-bp-oYg"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="账戶" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ar8-k0-Lwe">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
@@ -1092,7 +1095,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="Ih6-7H-UVu" kind="show" identifier="" id="ysB-hj-2xi"/>
+                                    <segue destination="Ih6-7H-UVu" kind="show" identifier="ToLoginViewController" id="ysB-hj-2xi"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="账户" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZF8-uS-GmJ">
@@ -1344,10 +1347,10 @@
             </objects>
             <point key="canvasLocation" x="-2367.75" y="-789.5"/>
         </scene>
-        <!--认证手机号-->
+        <!--Set Email View Controller-->
         <scene sceneID="Uvz-vu-wgi">
             <objects>
-                <viewController title="认证手机号" id="aGO-vc-Qcf" customClass="VCSetEmailViewController" sceneMemberID="viewController">
+                <viewController id="aGO-vc-Qcf" customClass="VCSetEmailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OG3-I3-c1Q"/>
                         <viewControllerLayoutGuide type="bottom" id="upO-lL-9wv"/>
@@ -1511,7 +1514,7 @@
                             <outletCollection property="gestureRecognizers" destination="JFH-iU-Gky" appends="YES" id="CYC-Wq-Euc"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="邮箱认证" id="A9e-HJ-EmL">
+                    <navigationItem key="navigationItem" id="A9e-HJ-EmL">
                         <barButtonItem key="backBarButtonItem" title=" " id="ZeI-Kg-AHK"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="stop" id="crp-3b-Sps">
                             <connections>

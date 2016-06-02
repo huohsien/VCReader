@@ -124,7 +124,7 @@ static UIView *_activityView;
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     [alertController show];
 
-    int duration = 1; // duration in seconds
+    int duration = 2; // duration in seconds
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [alertController dismissViewControllerAnimated:YES completion:nil];
     });

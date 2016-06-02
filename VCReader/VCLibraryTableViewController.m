@@ -55,8 +55,8 @@
     NSString *nameOfLastReadBook = [VCTool getObjectWithKey:@"name of the last read book"];
     
     if (nameOfLastReadBook) {
-        UIStoryboard*  sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        VCPageViewController *vc = [sb instantiateViewControllerWithIdentifier:@"VCPageViewController"];
+        UIStoryboard*  storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        VCPageViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"VCPageViewController"];
         VCBook *book = [[VCBook alloc] initWithBookName:nameOfLastReadBook contentFilename:nil]; // assume if you have read it. no need to split chapters again.
         vc.book = book;
         [self.navigationController pushViewController:vc animated:NO];

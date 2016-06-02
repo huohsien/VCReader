@@ -65,7 +65,7 @@
             
         } else {
             [VCTool toastMessage:@"验证失败，重新发送"];
-            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+            [self.navigationController popViewControllerAnimated:YES];
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
