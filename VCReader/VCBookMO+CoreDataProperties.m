@@ -2,7 +2,7 @@
 //  VCBookMO+CoreDataProperties.m
 //  VCReader
 //
-//  Created by victor on 5/3/16.
+//  Created by victor on 6/2/16.
 //  Copyright © 2016 VHHC. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -13,11 +13,11 @@
 
 @implementation VCBookMO (CoreDataProperties)
 
-@dynamic name;
 @dynamic contentFilePath;
 @dynamic coverImageFilePath;
+@dynamic name;
 @dynamic timestamp;
 @dynamic chapters;
-@dynamic user;
+@dynamic users;
 
 @end

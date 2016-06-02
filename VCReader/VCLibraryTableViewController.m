@@ -17,13 +17,17 @@
 @implementation VCLibraryTableViewController {
     
     NSString *_documentPath;
+    BOOL _isUpdatingBook;
 
 }
 @synthesize jsonResponse = _jsonResponse;
 @synthesize bookArray = _bookArray;
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    
+    _isUpdatingBook = NO;
     
     _documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
@@ -43,6 +47,11 @@
     self.jsonResponse = nil;
     self.bookArray = nil;
 
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor redColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self action:@selector(updateBooksOfCurrentUser) forControlEvents:UIControlEventValueChanged];
+    
     NSString *nameOfLastReadBook = [VCTool getObjectWithKey:@"name of the last read book"];
     
     if (nameOfLastReadBook) {
@@ -53,14 +62,31 @@
         [self.navigationController pushViewController:vc animated:NO];
         return;
     }
-
     
-    [VCTool showActivityView];
+    [self updateBooksOfCurrentUser];
+    
+}
+
+
+- (void) updateBooksOfCurrentUser {
+
+    if (_isUpdatingBook == YES) return;
+    
+    VCLOG(@"invoke");
+    
+    _isUpdatingBook = YES;
+    
     NSString *token = [VCTool getObjectWithKey:@"token"];
+    
+    if (self.refreshControl.isRefreshing == NO)
+        [VCTool showActivityView];
+    
     [[VCReaderAPIClient sharedClient] callAPI:@"book_get_list" params:@{@"token" : token} success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.jsonResponse = responseObject;
         
+        [[VCCoreDataCenter sharedInstance] clearAllBooksForCurrentUser];
+
         for (NSDictionary *dict in _jsonResponse) {
             
             if(![[VCCoreDataCenter sharedInstance] addBookNamed:dict[@"book_name"] contentFilePath:dict[@"content_filename"] coverImageFilePath:dict[@"cover_image_filename"] timestamp:dict[@"timestamp"]]) {
@@ -71,22 +97,47 @@
         
         _bookArray = [[VCCoreDataCenter sharedInstance] getAllBooks];
         [self.tableView reloadData];
-        [VCTool hideActivityView];
-
+        
+        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-        _bookArray = [[VCCoreDataCenter sharedInstance] getAllBooks];
-        [self.tableView reloadData];
+        
+        
+    } completion:^(BOOL finished) {
+        
+        _isUpdatingBook = NO;
         [VCTool hideActivityView];
+        
+        // End the refreshing
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"MMM d, h:mm a"];
+        formatter.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
+        NSString *title = [NSString stringWithFormat:@"最近更新: %@", [formatter stringFromDate:[NSDate date]]];
+        NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+        NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+        self.refreshControl.attributedTitle = attributedTitle;
+        
+        [self.refreshControl endRefreshing];
 
-    } completion:nil];
-     
+    }];
+
 }
 
 -(void) viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.topItem.title = @"书架";
+    
+    if ([[VCCoreDataCenter sharedInstance] getAllBooks].count == 0) {
+        
+        [self updateBooksOfCurrentUser];
+        
+    } else {
+        
+        _bookArray = [[VCCoreDataCenter sharedInstance] getAllBooks];
+        [self.tableView reloadData];
+    }
   
 }
 
@@ -119,7 +170,30 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    
+    if (_bookArray.count > 0) {
+        
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        self.tableView.backgroundView = nil;
+        return 1;
+
+    } else {
+        
+        CGFloat padding = 4.0;
+        
+        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(padding, 0, self.view.bounds.size.width - 2 * padding, self.view.bounds.size.height)];
+        
+        messageLabel.text = @"目前您的书架没有书，可下拉刷新书架或是到书库选择新书";
+        messageLabel.textColor = [UIColor blackColor];
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = NSTextAlignmentCenter;
+//        messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
+        [messageLabel sizeToFit];
+        
+        self.tableView.backgroundView = messageLabel;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        return 0;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

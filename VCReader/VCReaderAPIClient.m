@@ -8,7 +8,8 @@
 
 #import "VCReaderAPIClient.h"
 
-NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
+//NSString * const kVCReaderBaseURLString = @"http://vhhc.homedns.org";
+NSString * const kVCReaderBaseURLString = @"http://api.vhhc.dyndns.org";
 
 @implementation VCReaderAPIClient
 
@@ -74,9 +75,13 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
         if (error.code == -1009 || error.code == -1004 || error.code == -1001) {
             [VCTool toastMessage:@"网络连线异常"];
             [VCTool hideActivityView];
-            if (completion) completion(YES);
-            return;
+
+        } else {
+        
+            NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+            [VCTool showAlertViewWithTitle:@"web error" andMessage:[NSString stringWithFormat:@"%@\n response = %@", error.debugDescription, errResponse]];
         }
+        
         if (failure) failure(task, error);
         if (completion) completion(YES);
     }];
@@ -134,28 +139,8 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     
 }
 
--(void) sendVerificationCodeToUserWithToken:(NSString *)token withPhoneNumber:(NSString *)phoneNumber timestamp:(NSTimeInterval)timestamp success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
 
-    NSString* path = [NSString stringWithFormat:@"user_send_phone_verify_code.php?token=%@&phone_number=%@&timestamp=%@", token, phoneNumber, [NSString stringWithFormat:@"%ld",(long)timestamp]];
-    NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
-    
-    [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        
-        if (success) success(task, responseObject);
-        
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
-        if (failure) failure(task, error);
-        
-    }];
-    
-}
 
--(void) getUserVerificationStatusWithToken:(NSString *)token success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
-    
-}
 
 -(void) userLoginWithAccountName:(NSString *)name password:(NSString *)password  success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure {
 
@@ -216,23 +201,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.VHHC.dyndns.org";
     }];
     
 }
--(void) getBookListForUserWithID:(NSString *)userID success:(void (^)(NSURLSessionDataTask *task, id responseObject))success failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
-    
-    if (!userID) return;
-    NSString  *path = [NSString stringWithFormat:@"book_get_list.php?token=%@", userID];
-    NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
-    [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        
-        if (success) success(task, responseObject);
-        
-    }failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
-        if (failure) failure(task, error);
-        
-    }];
-}
+
 
 
 @end

@@ -13,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *accountNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *nickNameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *cellPhoneNumberTextField;
+
 @property (strong, nonatomic) TencentOAuth *tencentOAuth;
 @property (weak, nonatomic) IBOutlet UIButton *qqLoginButton;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;

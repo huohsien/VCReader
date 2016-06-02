@@ -257,11 +257,29 @@
     return NO;
 }
 
+-(void) clearAllBooksForCurrentUser {
+    
+    if (!_user) [self hookupCurrentUserWithToken];
+
+    NSSet *books = _user.books;
+    [_user removeBooks:books];
+    [self saveContext];
+
+}
+
 -(NSArray *) getAllBooks {
     
     if (!_user) [self hookupCurrentUserWithToken];
     
-    return [_user.books allObjects];
+    NSMutableArray *books = [NSMutableArray arrayWithArray:[_user.books allObjects]];
+    NSArray *sortedArray;
+    sortedArray = [books sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSTimeInterval first = [(VCBookMO*)a timestamp];
+        NSTimeInterval second = [(VCBookMO*)b timestamp];
+        return (first > second);
+    }];
+    
+    return sortedArray;
 }
 
 -(void) setAttributesForBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath {
@@ -276,11 +294,14 @@
     
     // Save the context
     NSError *error = nil;
+    
     if (![_context save:&error]) {
+    
         NSLog(@"%s --- Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
         [VCTool showAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
     }
 }
+
 #pragma mark - battery
 
 -(void) logBatteryLevel:(double)level timestamp:(NSTimeInterval)timestamp {

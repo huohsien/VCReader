@@ -50,12 +50,14 @@
     
     if (!isBookLoaded) {
         
+        [VCTool showActivityView];
         [self loadContent];
         [self splitChapters];
         
         for (int i = 0; i < _chapterTitleStringArray.count; i++) {
             [self writeContentOfChapter:i];
         }
+        [VCTool hideActivityView];
     }
     
     _totalNumberOfChapters = [[VCTool getDatafromBook:_bookName withField:@"numberOfChapters"] intValue];
@@ -73,7 +75,8 @@
     NSString *zipFilePath = nil;
     if (urlData) {
         
-        zipFilePath = [NSString stringWithFormat:@"%@/%@.zip", _documentPath,_bookName];
+        NSString *bookName = [[_contentFilename componentsSeparatedByString:@"/"] lastObject];
+        zipFilePath = [NSString stringWithFormat:@"%@/%@", _documentPath,bookName];
         [urlData writeToFile:zipFilePath atomically:YES];
         
     } else {
@@ -90,17 +93,30 @@
 
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:unzipFilePath error:&error];
     if (error) {
+        
         NSLog(@"%s --- Error: %@", __PRETTY_FUNCTION__, error.debugDescription);
         abort();
+        
     } else {
+        
         NSString *path = [NSString stringWithFormat:@"%@/%@", unzipFilePath, [directoryContent lastObject]];
         NSLog(@"path = %@", path);
         _contentString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+        
         if (error) {
+            
             NSLog(@"%s --- Error: %@", __PRETTY_FUNCTION__, error.debugDescription);
-//            abort();
+            abort();
+            
         } else {
+            
             [[NSFileManager defaultManager] removeItemAtPath:unzipFilePath error:&error];
+            if (error) {
+                NSLog(@"%s --- Error: %@", __PRETTY_FUNCTION__, error.debugDescription);
+                abort();
+            }
+            
+            [[NSFileManager defaultManager] removeItemAtPath:zipFilePath error:&error];
             if (error) {
                 NSLog(@"%s --- Error: %@", __PRETTY_FUNCTION__, error.debugDescription);
                 abort();

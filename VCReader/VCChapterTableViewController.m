@@ -86,33 +86,38 @@
 
     NSLog(@"%s", __PRETTY_FUNCTION__);
 
+    [VCTool showActivityView];
+    
     VCReadingStatusMO *readingStatus = [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:(int)indexPath.row wordNumber:0];
 
+    NSString *chapter = [NSString stringWithFormat:@"%d", readingStatus.chapterNumber];
+    NSString *word = [NSString stringWithFormat:@"%d", readingStatus.wordNumber];
+    NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)readingStatus.timestamp];
     
-    [[VCReaderAPIClient sharedClient] addReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[VCReaderAPIClient sharedClient] callAPI:@"user_status_add" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName, @"current_reading_chapter" : chapter, @"current_reading_word" : word, @"timestamp" : timestamp} success:^(NSURLSessionDataTask *task, id responseObject) {
         
         readingStatus.synced = YES;
         [[VCCoreDataCenter sharedInstance] saveContext];
         
-        [self.navigationController popViewControllerAnimated:YES];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-        if (error.code == -1009) { // connection offline
-            
-            readingStatus.synced = NO;
-            [[VCCoreDataCenter sharedInstance] saveContext];
-            
-            [self.navigationController popViewControllerAnimated:YES];
         
-        } else {
-            
-            NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
-            [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
-        }
-
+        readingStatus.synced = NO;
+        [[VCCoreDataCenter sharedInstance] saveContext];
         
+        
+        NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
+        [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+        
+        
+    } completion:^(BOOL finished) {
+        
+        [VCTool hideActivityView];
+        [self.navigationController popViewControllerAnimated:YES];
+    
     }];
+    
 }
 
 @end

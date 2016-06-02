@@ -79,6 +79,16 @@
 
 }
 
+- (IBAction)stopButtonPressed:(id)sender {
+
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"LoginNavigationController"];
+    [VCTool appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [VCTool appDelegate].window.rootViewController = nc;
+    [[VCTool appDelegate].window makeKeyAndVisible];
+    
+}
+
 - (IBAction)viewTapped:(id)sender {
 
     // dismiss keyboard

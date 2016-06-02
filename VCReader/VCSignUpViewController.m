@@ -57,7 +57,6 @@ NSString * const kTencentOAuthAppID = @"1105244329";
     [_accountNameTextField addTarget:self action:@selector(accountNameTextFieldEditingDidEnd) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_passwordTextField addTarget:self action:@selector(passwordTextFieldEditingDidEnd) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_nickNameTextField addTarget:self action:@selector(nickNameTextFieldEditingDidEnd) forControlEvents:UIControlEventEditingDidEndOnExit];
-    [_cellPhoneNumberTextField addTarget:self action:@selector(cellPhoneNumberTextFieldDidEnd) forControlEvents:UIControlEventEditingDidEndOnExit];
     
 }
 
@@ -125,29 +124,11 @@ NSString * const kTencentOAuthAppID = @"1105244329";
         
     } else {
         
-        [_cellPhoneNumberTextField becomeFirstResponder];
+        [_nickNameTextField becomeFirstResponder];
         
     }
 }
 
--(void) cellPhoneNumberTextFieldDidEnd {
-    
-    
-    if ([self.cellPhoneNumberTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length != 10 ||
-        [self.cellPhoneNumberTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length != 11) {
-        
-        [VCTool showAlertViewWithMessage:@"请输入手机号：中國為11碼，台灣為10碼" handler:^(UIAlertAction *action) {
-            
-            [_cellPhoneNumberTextField becomeFirstResponder];
-            
-        }];
-        
-        
-    } else {
-        
-        [_cellPhoneNumberTextField resignFirstResponder];
-    }
-}
 
 - (IBAction)signUpButtonPressed:(id)sender {
     
@@ -170,10 +151,13 @@ NSString * const kTencentOAuthAppID = @"1105244329";
             // success
             
             if (dict[@"token"]) {
+                
                 [[VCCoreDataCenter sharedInstance] setUserWithToken:dict[@"token"] accountName:dict[@"account_name"] accountPassword:dict[@"account_password"] nickName:dict[@"nick_name"] timestamp:dict[@"timestamp"] signupType:@"direct"];
                 
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                 UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"EmailVerificationNavigationController"];
+                VCSetEmailViewController *vc = [nc.viewControllers firstObject];
+                vc.token = dict[@"token"];
                 [VCTool appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
                 [VCTool appDelegate].window.rootViewController = nc;
                 [[VCTool appDelegate].window makeKeyAndVisible];
@@ -206,10 +190,7 @@ return NO;\
     
     conditionAndErrorMessage([self.nickNameTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length < 2,"昵称不可少於2个字！")
     
-    NSLog(@"%lu", [self.cellPhoneNumberTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length);
-    conditionAndErrorMessage([self.cellPhoneNumberTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length != 10 &&
-                             [self.cellPhoneNumberTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length != 11,"请输入手机号：中國為11碼，台灣為10碼")
-    
+   
     return YES;
 }
 

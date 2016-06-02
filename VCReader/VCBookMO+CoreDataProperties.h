@@ -2,7 +2,7 @@
 //  VCBookMO+CoreDataProperties.h
 //  VCReader
 //
-//  Created by victor on 5/3/16.
+//  Created by victor on 6/2/16.
 //  Copyright © 2016 VHHC. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,12 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface VCBookMO (CoreDataProperties)
 
-@property (nullable, nonatomic, retain) NSString *name;
 @property (nullable, nonatomic, retain) NSString *contentFilePath;
 @property (nullable, nonatomic, retain) NSString *coverImageFilePath;
+@property (nullable, nonatomic, retain) NSString *name;
 @property (nonatomic) NSTimeInterval timestamp;
 @property (nullable, nonatomic, retain) NSSet<VCChapterMO *> *chapters;
-@property (nullable, nonatomic, retain) VCUserMO *user;
+@property (nullable, nonatomic, retain) NSSet<VCUserMO *> *users;
 
 @end
 
@@ -30,6 +30,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeChaptersObject:(VCChapterMO *)value;
 - (void)addChapters:(NSSet<VCChapterMO *> *)values;
 - (void)removeChapters:(NSSet<VCChapterMO *> *)values;
+
+- (void)addUsersObject:(VCUserMO *)value;
+- (void)removeUsersObject:(VCUserMO *)value;
+- (void)addUsers:(NSSet<VCUserMO *> *)values;
+- (void)removeUsers:(NSSet<VCUserMO *> *)values;
 
 @end
 

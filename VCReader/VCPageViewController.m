@@ -763,7 +763,11 @@
                     
                     NSLog(@"%s --- there are data in core data. Upload data to server", __PRETTY_FUNCTION__);
                     
-                    [[VCReaderAPIClient sharedClient] addReadingStatusForBookNamed:_book.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
+                    NSString *chapter = [NSString stringWithFormat:@"%d", readingStatus.chapterNumber];
+                    NSString *word = [NSString stringWithFormat:@"%d", readingStatus.wordNumber];
+                    NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)readingStatus.timestamp];
+                    
+                    [[VCReaderAPIClient sharedClient] callAPI:@"user_status_add" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName, @"current_reading_chapter" : chapter, @"current_reading_word" : word, @"timestamp" : timestamp} success:^(NSURLSessionDataTask *task, id responseObject) {
                         
                         readingStatus.synced = YES;
                         [[VCCoreDataCenter sharedInstance] saveContext];
@@ -778,7 +782,7 @@
                         [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
                         _isSyncing = NO;
 
-                    }];
+                    } completion:nil];
                     
                 } else {
                     
@@ -812,7 +816,11 @@
                     
                     NSLog(@"%s --- what were stored in core data are the lastest data. so update server", __PRETTY_FUNCTION__);
                     
-                    [[VCReaderAPIClient sharedClient] addReadingStatusForBookNamed:readingStatus.bookName chapterNumber:readingStatus.chapterNumber wordNumber:readingStatus.wordNumber timestamp:readingStatus.timestamp success:^(NSURLSessionDataTask *task, id responseObject) {
+                    NSString *chapter = [NSString stringWithFormat:@"%d", readingStatus.chapterNumber];
+                    NSString *word = [NSString stringWithFormat:@"%d", readingStatus.wordNumber];
+                    NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)readingStatus.timestamp];
+                    
+                    [[VCReaderAPIClient sharedClient] callAPI:@"user_status_add" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName, @"current_reading_chapter" : chapter, @"current_reading_word" : word, @"timestamp" : timestamp} success:^(NSURLSessionDataTask *task, id responseObject) {
                         
                         NSLog(@"%s --- server data updated. change synced flag to YES and load page", __PRETTY_FUNCTION__);
                         
@@ -830,7 +838,7 @@
                         [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
                         _isSyncing = NO;
                         
-                    }];
+                    } completion:nil];
                     
                 } else {
                     
@@ -860,9 +868,8 @@
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            
-            NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
-            [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
+        NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+        NSLog(@"%s --- Failure: %@\n response =%@", __PRETTY_FUNCTION__, error.debugDescription, errResponse);
         _isSyncing = NO;
 
     } completion:completion];

@@ -152,6 +152,7 @@
     [VCTool storeObject:nil withKey:@"name of the last read book"];
 
     [VCTool deleteFilename:@"headshot.png"];
+    [[VCCoreDataCenter sharedInstance] clearAllBooksForCurrentUser];
     [[VCCoreDataCenter sharedInstance] clearCurrentUser];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

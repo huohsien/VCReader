@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -23,7 +23,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="342" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="book_cover" translatesAutoresizingMaskIntoConstraints="NO" id="CTT-VY-ZkZ">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CTT-VY-ZkZ">
                                             <rect key="frame" x="20" y="10" width="60" height="80"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="Lic-5e-xa3"/>
@@ -1002,7 +1002,7 @@
                                     <outlet property="delegate" destination="OOg-2e-2Wu" id="hx4-Dj-zPB"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vub-Wo-Wlm">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入6～12位字符密码" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vub-Wo-Wlm">
                                 <rect key="frame" x="51" y="141" width="304" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="2KK-xl-Pac"/>
@@ -1513,6 +1513,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="邮箱认证" id="A9e-HJ-EmL">
                         <barButtonItem key="backBarButtonItem" title=" " id="ZeI-Kg-AHK"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="crp-3b-Sps">
+                            <connections>
+                                <action selector="stopButtonPressed:" destination="aGO-vc-Qcf" id="5fv-Yj-TvP"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
@@ -1777,7 +1782,6 @@
     </scenes>
     <resources>
         <image name="QQ_icon" width="40" height="40"/>
-        <image name="book_cover" width="60" height="75"/>
         <image name="book_shelf" width="30" height="30"/>
         <image name="headshot_placeholder" width="40" height="40"/>
         <image name="library" width="30" height="30"/>

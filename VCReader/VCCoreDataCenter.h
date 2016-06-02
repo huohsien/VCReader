@@ -31,6 +31,8 @@
 -(void) initReadingStatusForBook:(NSString *)bookName isDummy:(BOOL)isDummy;
 -(BOOL) addBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
 -(BOOL) updateBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
+-(void) clearAllBooksForCurrentUser;
+
 -(void) setAttributesForBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath;
 -(NSArray *) getAllBooks;
 -(void) logBatteryLevel:(double)level timestamp:(NSTimeInterval)timestamp;
