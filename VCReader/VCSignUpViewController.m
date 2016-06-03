@@ -238,7 +238,7 @@ return NO;\
         
     } else {
         NSLog(@"登录不成功 没有获取accesstoken");
-        [self.qqLoginButton setEnabled:YES];
+        [VCTool hideActivityView];
         
     }
 }
@@ -246,13 +246,13 @@ return NO;\
 - (void)tencentDidNotLogin:(BOOL)cancelled {
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    abort();
+    [VCTool hideActivityView];
 }
 
 - (void)tencentDidNotNetWork {
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
-    abort();
+    [VCTool hideActivityView];
     
 }
 
@@ -319,7 +319,7 @@ return NO;\
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
             [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
-            [self.qqLoginButton setEnabled:YES];
+            [VCTool hideActivityView];
             
         } completion:nil];
         //        [[VCReaderAPIClient sharedClient] signupOrLoginToQQWithToken:_tencentOAuth.openId nickName:[response.jsonResponse objectForKey:@"nickname"] timestamp:timestamp
@@ -328,7 +328,7 @@ return NO;\
         
         NSString *errMsg = [NSString stringWithFormat:@"errorMsg:%@\n%@", response.errorMsg, [response.jsonResponse objectForKey:@"msg"]];
         [VCTool showAlertViewWithTitle:@"操作失败" andMessage:errMsg];
-        [self.qqLoginButton setEnabled:YES];
+        [VCTool hideActivityView];
         
     }
     

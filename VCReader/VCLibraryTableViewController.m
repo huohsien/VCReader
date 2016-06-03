@@ -47,6 +47,9 @@
     self.jsonResponse = nil;
     self.bookArray = nil;
 
+    // table view
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
+    
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor redColor];
     self.refreshControl.tintColor = [UIColor whiteColor];
