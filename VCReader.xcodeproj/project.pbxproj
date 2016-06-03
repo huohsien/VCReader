@@ -33,7 +33,6 @@
 		662225E01CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 662225DF1CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		6643419D1C7A868A00580AEF /* VCChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419C1C7A868A00580AEF /* VCChapter.m */; };
 		664341A01C7BFA7C00580AEF /* VCPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419F1C7BFA7C00580AEF /* VCPage.m */; };
-		664341A51C7D102600580AEF /* Kaiti.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 664341A41C7D0E9200580AEF /* Kaiti.ttc */; };
 		666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */; };
 		6668596C1C9683110046C8E8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6668596E1C9683110046C8E8 /* Localizable.strings */; };
 		666EECB81C81BEC600DF5621 /* VCLibraryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */; };
@@ -51,7 +50,6 @@
 		669227D41CD09E0A0045291E /* VCUserMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227D11CD09E0A0045291E /* VCUserMO+CoreDataProperties.m */; };
 		669227D51CD09E0A0045291E /* VCUserMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227D31CD09E0A0045291E /* VCUserMO.m */; };
 		669227D81CD09F820045291E /* VCCoreDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227D71CD09F820045291E /* VCCoreDataCenter.m */; };
-		66A313DD1CB796B400A43B7A /* STFangSong.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 664341A61C7D11C700580AEF /* STFangSong.ttf */; };
 		66CA98001CB62E5400B52B5E /* VCSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66CA97FF1CB62E5400B52B5E /* VCSettingsTableViewController.m */; };
 		66F8C3761C5D078100DF7611 /* VCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C3751C5D078100DF7611 /* VCTextView.m */; };
 		66F8C3791C5D0AF300DF7611 /* VCView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C3781C5D0AF300DF7611 /* VCView.m */; };
@@ -101,8 +99,6 @@
 		6643419C1C7A868A00580AEF /* VCChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCChapter.m; sourceTree = "<group>"; };
 		6643419E1C7BFA7C00580AEF /* VCPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCPage.h; sourceTree = "<group>"; };
 		6643419F1C7BFA7C00580AEF /* VCPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPage.m; sourceTree = "<group>"; };
-		664341A41C7D0E9200580AEF /* Kaiti.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kaiti.ttc; sourceTree = "<group>"; };
-		664341A61C7D11C700580AEF /* STFangSong.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = STFangSong.ttf; sourceTree = "<group>"; };
 		666266E21C8596DB004F133F /* VCLibraryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCLibraryTableViewCell.h; sourceTree = "<group>"; };
 		666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCLibraryTableViewCell.m; sourceTree = "<group>"; };
 		6668596D1C9683110046C8E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -216,15 +212,6 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		664341AE1C7D56B800580AEF /* fonts */ = {
-			isa = PBXGroup;
-			children = (
-				664341A61C7D11C700580AEF /* STFangSong.ttf */,
-				664341A41C7D0E9200580AEF /* Kaiti.ttc */,
-			);
-			name = fonts;
-			sourceTree = "<group>";
-		};
 		666266E11C859503004F133F /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -311,7 +298,6 @@
 			children = (
 				662225DF1CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle */,
 				667AACDE1C545D9400CD40E1 /* Assets.xcassets */,
-				664341AE1C7D56B800580AEF /* fonts */,
 				6668596E1C9683110046C8E8 /* Localizable.strings */,
 			);
 			name = Resources;
@@ -437,8 +423,6 @@
 			files = (
 				662225E01CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				6668596C1C9683110046C8E8 /* Localizable.strings in Resources */,
-				66A313DD1CB796B400A43B7A /* STFangSong.ttf in Resources */,
-				664341A51C7D102600580AEF /* Kaiti.ttc in Resources */,
 				667AACDF1C545D9400CD40E1 /* Assets.xcassets in Resources */,
 				667AACDA1C545D9400CD40E1 /* Main.storyboard in Resources */,
 			);
