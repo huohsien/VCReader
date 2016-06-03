@@ -271,10 +271,10 @@
 		667AACEC1C545E9400CD40E1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				662225B91CC9F973001BE988 /* VCLoginViewController.h */,
-				662225BA1CC9F973001BE988 /* VCLoginViewController.m */,
 				669227C41CCDE6730045291E /* VCSignUpViewController.h */,
 				669227C51CCDE6730045291E /* VCSignUpViewController.m */,
+				662225B91CC9F973001BE988 /* VCLoginViewController.h */,
+				662225BA1CC9F973001BE988 /* VCLoginViewController.m */,
 				666EECB61C81BEC600DF5621 /* VCLibraryTableViewController.h */,
 				666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */,
 				667AACE91C545E3E00CD40E1 /* VCPageViewController.h */,
