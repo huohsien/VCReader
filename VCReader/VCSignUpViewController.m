@@ -16,15 +16,20 @@ NSString * const kTencentOAuthAppID = @"1105244329";
 @end
 
 @implementation UIView (FindTheFirstResponder)
-- (UIView *)findTheFirstResponder
+
+-(UIView *)findTheFirstResponder
 {
     if (self.isFirstResponder) {
+ 
         return self;
     }
     
     for (UIView *subView in self.subviews) {
+        
         UIView *firstResponder = [subView findTheFirstResponder];
+        
         if (firstResponder != nil) {
+            
             return firstResponder;
         }
     }
@@ -40,17 +45,10 @@ NSString * const kTencentOAuthAppID = @"1105244329";
 
 
 -(void)viewDidLoad {
+    
     [super viewDidLoad];
-    
-    //set status bar style
-    [self setNeedsStatusBarAppearanceUpdate];
-    
-    //set navigation bar style
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
+
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     
     
@@ -60,9 +58,10 @@ NSString * const kTencentOAuthAppID = @"1105244329";
     
 }
 
+
+
 -(void)applicationDidBecomeActive:(NSNotification *)notification {
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
     
     [VCTool hideActivityView];
     
@@ -132,7 +131,6 @@ NSString * const kTencentOAuthAppID = @"1105244329";
 
 - (IBAction)signUpButtonPressed:(id)sender {
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
     
     if(![self checkFormValidity])
         return;

@@ -191,7 +191,7 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    [self baseInit];
+    
     [self setup];
 }
 
@@ -214,37 +214,23 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleDefault;
-}
 
 -(BOOL)prefersStatusBarHidden {
     
     return _statusBarHidden;
 }
 
--(void) baseInit {
-    
+-(void) setup {
+ 
     _topMargin = 0;
     _bottomMargin = 0;
     _horizontalMargin = 10;
     _textLineSpacing = 15;
     _charactersSpacing = 4.0;
     _rectOfScreen = [[UIScreen mainScreen] bounds];
-
+    
     _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:214 / 255.0 green:202 / 255.0 blue:130.0 / 181 alpha:1.0] withRect:_rectOfScreen];
-//    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:186.0 / 255.0 green:159.0 / 255.0 blue:130.0 / 255.0 alpha:1.0] withRect:_rectOfScreen];
-//    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed: 40.0 / 255.0 green: 40.0 / 255.0 blue: 40.0 / 255.0 alpha: 1.0] withRect:_rectOfScreen];
-//    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed: 0.0 / 255.0 green: 0.0 / 255.0 blue: 0.0 / 255.0 alpha: 1.0] withRect:_rectOfScreen];
-//    _textColor = [UIColor colorWithRed: 56.0 / 255.0 green: 33.0 / 255.0 blue: 20.0 / 255.0 alpha: 1.0];
     _textColor = [UIColor colorWithRed: 70 / 255.0 green: 65 / 255.0 blue: 56 / 255.0 alpha: 1.0];
-//    _textColor = [UIColor colorWithRed: 150.0 / 255.0 green: 150.0 / 255.0 blue: 150.0 / 255.0 alpha: 1.0];
-//    _textColor = [UIColor colorWithRed: 0.0 / 255.0 green: 255.0 / 255.0 blue: 0.0 / 255.0 alpha: 1.0];
-
-}
-
--(void) setup {
     
     // init objects and vars
     //
@@ -258,7 +244,8 @@
     // setup UIs
     //
     
-    self.title = _book.bookName;
+//    self.title = _book.bookName;
+    self.title = @"";
     
     CGSize sizeOfScreen = _rectOfScreen.size;
 //    NSLog(@"screen resolution:%@", NSStringFromCGSize(sizeOfScreen));
@@ -280,7 +267,7 @@
     [self.view sendSubviewToBack:_contentView];
     
 
-    // set status bars' color
+    // set page status bars' color
     [self.topStatusBarView setBackgroundColor:[UIColor colorWithPatternImage:_backgroundImage]];
     
     // crop background image to match the bottom part
@@ -302,6 +289,11 @@
     [VCTool storeObject:_book.bookName withKey:@"name of the last read book"];
 }
 
+-(void) goBack {
+
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 -(void) start {
     
     // init vars
@@ -314,18 +306,22 @@
     
     // custom UI settings for status bar and navigation bar
     
-    [self setNeedsStatusBarAppearanceUpdate];
     [self showStatusBar:NO];
-    UIColor *textColorInNavigationBar = [VCTool changeUIColor:_textColor alphaValueTo:0.7];
-    self.navigationController.navigationBar.hidden = YES;
-    self.navigationController.navigationBar.barTintColor = [VCTool adjustUIColor:[_backgroundImage averageColor] brightness:0.8];
-    self.navigationController.navigationBar.tintColor = textColorInNavigationBar;
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:textColorInNavigationBar,NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
-    self.navigationController.navigationBar.translucent = YES;
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chapter_list_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showChapters:)];
     
+    UIColor *textColorInNavigationBar = [VCTool adjustUIColor:_textColor brightenFactor:2];
+    UIColor *navigationBarColor = [VCTool adjustUIColor:[_backgroundImage averageColor] brightenFactor:1.06];
+    
+    self.navigationController.navigationBar.hidden = YES;
+    self.navigationController.navigationBar.barTintColor = navigationBarColor;
+    self.navigationController.navigationBar.tintColor = textColorInNavigationBar;
+    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chapter_list_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showChapters:)];
     NSArray *actionButtonItems = @[item];
     self.navigationItem.rightBarButtonItems = actionButtonItems;
+    
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle:@"<返回" style:UIBarButtonItemStyleBordered target:self action:@selector(goBack)];
+    self.navigationItem.leftBarButtonItem = newBackButton;
     
     self.tabBarController.tabBar.hidden = YES;
     
@@ -350,6 +346,8 @@
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
 
+    // because the view controller "color theme" here is different from default, so when being navigated out, this controller has the responsibility to restore the default color theme
+    //
     if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
         
         // detect going back in navigation chain
@@ -373,22 +371,25 @@
         self.tabBarController.tabBar.hidden = YES;
     }
     
-    [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
     
-    NSLog(@"%s --- call syncReadingStatusData", __PRETTY_FUNCTION__);
+    
+    [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
+
+    
+    VCLOG(@"call syncReadingStatusData");
     [self syncReadingStatusDataWithCompletion:nil];
 
 }
 
 -(void)dealloc {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-
+    
+    VCLOG();
 
 }
 
 - (void)loadContent {
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    VCLOG();
 
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -415,9 +416,8 @@
 
 -(void) applicationDidBecomeActive:(NSNotification *)notification {
 
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    VCLOG(@"call syncReadingStatusData");
 
-    NSLog(@"%s --- call syncReadingStatusData", __PRETTY_FUNCTION__);
     [self syncReadingStatusDataWithCompletion:^(BOOL finished) {
         if (finished) [self loadContent];
     }];
@@ -427,8 +427,8 @@
 
 -(void) applicationWillResignActive:(NSNotification *)notification {
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-
+    VCLOG();
+    
     if ([VCTool getObjectWithKey:@"token"]) {
         [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
     }
@@ -451,7 +451,6 @@
 
 -(void)swipeUp:(id)sender {
     
-//    NSLog(@"%s",__PRETTY_FUNCTION__);
     if (_chapterNumber == _book.totalNumberOfChapters - 1 && _pageNumber == _currentChapter.pageArray.count - 1) {
         
         NSLog(@"%s: hit the last page of the book", __PRETTY_FUNCTION__);
@@ -489,7 +488,6 @@
 
 -(void)swipeDown:(id)sender {
     
-//    NSLog(@"%s",__PRETTY_FUNCTION__);
     if (_chapterNumber == 0 && _pageNumber == 0) {
      
         [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
@@ -633,6 +631,7 @@
 //    for (VCPage *p in _pageArray) {
 //        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
 //    }
+    
     [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
 
     
@@ -743,9 +742,8 @@
         return;
     }
     _isSyncing = YES;
-    NSLog(@"%s", __PRETTY_FUNCTION__);
     
-    
+    VCLOG();
     
     [[VCReaderAPIClient sharedClient] callAPI:@"user_status_get" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName} success:^(NSURLSessionDataTask *task, id responseObject) {
         

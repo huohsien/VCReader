@@ -16,26 +16,15 @@
 @implementation VCLoginViewController
 
 - (void)viewDidLoad {
+
     [super viewDidLoad];
 
-    //set status bar style
-    [self setNeedsStatusBarAppearanceUpdate];
-    
-    //set navigation bar style
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationItem setHidesBackButton:YES];
 
 }
 
 
 
--(UIStatusBarStyle)preferredStatusBarStyle {
-    
-    return UIStatusBarStyleLightContent;
-}
 
 - (IBAction)loginButtonPressed:(id)sender {
     

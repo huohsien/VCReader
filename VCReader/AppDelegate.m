@@ -23,17 +23,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-//    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"STFangSong" size:21.0], NSFontAttributeName, nil]];
-    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:21.0], NSFontAttributeName, nil]];
-    
-//    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"STFangSong" size:21.0], NSFontAttributeName, nil] forState:UIControlStateNormal];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:21.0], NSFontAttributeName, nil] forState:UIControlStateNormal];
+    // set general default style for view controllers
+    //
+    [[UINavigationBar appearance] setBarTintColor:[UIColor redColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:21.0], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil]];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:18.0], NSFontAttributeName, nil] forState:UIControlStateNormal];
     
 //    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 //    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    
+    // make launch screen stay longer than 1 sec
     [NSThread sleepForTimeInterval:1.0];
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    VCLOG();
     
     NSString *token = [VCTool getObjectWithKey:@"token"];
     
@@ -73,14 +77,14 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    VCLOG();
 
     return [TencentOAuth HandleOpenURL:url];
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    VCLOG();
     
     return [TencentOAuth HandleOpenURL:url];
 }

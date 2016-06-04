@@ -59,7 +59,7 @@ static UIView *_activityView;
     return result;
 }
 
-+(UIColor *) adjustUIColor:(UIColor *)uicolor brightness:(CGFloat)brightness {
++(UIColor *) adjustUIColor:(UIColor *)uicolor brightenFactor:(CGFloat)factor {
     
     CGFloat h;
     CGFloat s;
@@ -67,7 +67,7 @@ static UIView *_activityView;
     CGFloat a;
     [uicolor getHue:&h saturation:&s brightness:&b alpha:&a];
     
-    return [UIColor colorWithHue:h saturation:s brightness:brightness alpha:a];
+    return [UIColor colorWithHue:h saturation:s brightness:b * factor alpha:a];
 }
 
 +(UIColor *) changeUIColor:(UIColor *)uicolor alphaValueTo:(CGFloat)alpha {

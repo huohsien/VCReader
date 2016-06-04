@@ -171,13 +171,17 @@
         NSRange range = [match rangeAtIndex:0];
         NSString *title = [_contentString substringWithRange:range];
         
+        VCLOG(@"%@",title);
+        
         unichar charaterBeforeTitle;
 
         if (range.location != 0) {
             
             charaterBeforeTitle = [_contentString characterAtIndex:(range.location - 1)];
             if (charaterBeforeTitle != '\r' && charaterBeforeTitle != '\n' && charaterBeforeTitle != ' ') {
-                NSLog(@"%s: might have a problem splitting chapters.\n problematic chapter title = %@ previous title = %@", __PRETTY_FUNCTION__, title, [_chapterTitleStringArray objectAtIndex:count-1]);
+                if ([_chapterTitleStringArray count] > 0) {
+                    NSLog(@"%s: might have a problem splitting chapters.\n problematic chapter title = %@ previous title = %@", __PRETTY_FUNCTION__, title, [_chapterTitleStringArray objectAtIndex:(count-1)]);
+                }
                 return ;
             }
         }

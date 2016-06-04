@@ -31,17 +31,10 @@
     
     _documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
-    //set status bar style
-    [self setNeedsStatusBarAppearanceUpdate];
-    
-    //set navigation bar style
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    self.navigationController.navigationBar.barTintColor = [UIColor redColor];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
+
     self.navigationController.navigationBar.topItem.title = @"书架";
 
-    //hide tab bar
+    //show tab bar
     self.tabBarController.tabBar.hidden = NO;
     
     self.jsonResponse = nil;
@@ -142,11 +135,6 @@
         [self.tableView reloadData];
     }
   
-}
-
--(UIStatusBarStyle)preferredStatusBarStyle {
-
-    return UIStatusBarStyleLightContent;
 }
 
 
