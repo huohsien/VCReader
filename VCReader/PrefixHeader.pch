@@ -12,19 +12,32 @@
 #import "VCTool.h"
 
 #ifdef __OBJC__
+
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #endif
+
 #import "VCTool.h"
 #import "VCCoreDataCenter.h"
 #import "VCReaderAPIClient.h"
 #import "SSZipArchive/SSZipArchive.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
 #ifdef NDEBUG
+
 // do nothing
 #define VCLOG(...)
+
 #else
-#define VCLOG(fmt, ...) NSLog((@"%s [Line %d] --- " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+
+#define VCLOG(fmt, ...) DDLogVerbose((@"%s [Line %d] --- " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+
+#endif
+
+#ifdef LOGGING_ON
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+#else
+static const DDLogLevel ddLogLevel = DDLogLevelOff;
 #endif
 
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
@@ -34,4 +47,6 @@
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
 #define SCREEN_WIDTH_IN_IB_DESIGN 375.0f
+
+
 #endif /* PrefixHeader_pch */

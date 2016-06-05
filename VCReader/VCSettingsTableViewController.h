@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@import MessageUI;
 
-@interface VCSettingsTableViewController : UITableViewController
+@interface VCSettingsTableViewController : UITableViewController<MFMailComposeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @property (weak, nonatomic) IBOutlet UILabel *nickNameLabel;

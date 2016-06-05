@@ -68,7 +68,7 @@
 
     if (_isUpdatingBook == YES) return;
     
-    VCLOG(@"invoke");
+    VCLOG();
     
     _isUpdatingBook = YES;
     

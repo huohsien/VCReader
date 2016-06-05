@@ -165,13 +165,36 @@ static UIView *_activityView;
     }
 }
 
++(NSString *) saveData:(NSData *)data toFileNamed:(NSString *)filename {
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:filename];
+    NSError *error;
+
+    if ([fileManager fileExistsAtPath:filePath]) {
+        
+        BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+        if (success) {
+            NSLog(@"%s --- delete file successfully", __PRETTY_FUNCTION__);
+        } else {
+            NSLog(@"%s --- Could not delete file -:%@ ", __PRETTY_FUNCTION__, [error localizedDescription]);
+        }
+    } else {
+        NSLog(@"%s --- no file needs to be deleted", __PRETTY_FUNCTION__);
+    }
+    
+    [data writeToFile:filePath atomically:YES];
+    return filePath;
+}
+
 +(void) deleteFilename:(NSString *)filename {
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    
     NSString *filePath = [documentsPath stringByAppendingPathComponent:filename];
     NSError *error;
+    
     if ([fileManager fileExistsAtPath:filePath]) {
         
         BOOL success = [fileManager removeItemAtPath:filePath error:&error];
@@ -230,6 +253,7 @@ static UIView *_activityView;
 }
 
 #pragma mark - file manager
+
 +(NSString *)createDirectory:(NSString *)directoryName atFilePath:(NSString *)filePath
 {
     NSString *filePathAndDirectory = [filePath stringByAppendingPathComponent:directoryName];
@@ -244,4 +268,28 @@ static UIView *_activityView;
     }
     return filePathAndDirectory;
 }
+
+#pragma mark - Log
+
++(NSMutableArray *)errorLogData {
+    
+    NSUInteger maximumLogFilesToReturn = MIN([VCTool appDelegate].fileLogger.logFileManager.maximumNumberOfLogFiles, 10);
+    
+    NSMutableArray *errorLogFiles = [NSMutableArray arrayWithCapacity:maximumLogFilesToReturn];
+    
+    DDFileLogger *logger = [VCTool appDelegate].fileLogger;
+    
+    NSArray *sortedLogFileInfos = [logger.logFileManager sortedLogFileInfos];
+    
+    for (int i = 0; i < MIN(sortedLogFileInfos.count, maximumLogFilesToReturn); i++) {
+        
+        DDLogFileInfo *logFileInfo = [sortedLogFileInfos objectAtIndex:i];
+        
+        NSData *fileData = [NSData dataWithContentsOfFile:logFileInfo.filePath];
+        
+        [errorLogFiles addObject:fileData];
+    }
+    return errorLogFiles;
+}
+
 @end

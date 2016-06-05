@@ -63,7 +63,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.vhhc.dyndns.org";
     
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
+    VCLOG(@"encoded path = %@", encodedPath);
     
     [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         

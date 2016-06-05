@@ -34,11 +34,15 @@
 
 +(UIImage *) getImageFromURL:(NSString *)fileURL;
 +(void) saveImage:(UIImage *)image withName:(NSString *)name;
+
++(NSString *) saveData:(NSData *)data toFileNamed:(NSString *)filename;
 +(void) deleteFilename:(NSString *)filename;
 
 +(void)showActivityView;
 +(void)hideActivityView;
 
 +(NSString *)createDirectory:(NSString *)directoryName atFilePath:(NSString *)filePath;
+
++(NSMutableArray *)errorLogData;
 
 @end

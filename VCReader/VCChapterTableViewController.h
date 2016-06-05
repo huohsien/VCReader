@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "VCBook.h"
-@interface VCChapterTableViewController : UITableViewController
+@interface VCChapterTableViewController : UITableViewController<UITableViewDelegate>
 
 @property (nonatomic, strong) VCBook *book;
 @property (assign) int chapterNumber;

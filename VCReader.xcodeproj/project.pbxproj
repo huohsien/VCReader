@@ -33,6 +33,10 @@
 		662225E01CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 662225DF1CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		6643419D1C7A868A00580AEF /* VCChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419C1C7A868A00580AEF /* VCChapter.m */; };
 		664341A01C7BFA7C00580AEF /* VCPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419F1C7BFA7C00580AEF /* VCPage.m */; };
+		665B535D1D02C5F80030F635 /* VCCommentComposerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B535B1D02C5F80030F635 /* VCCommentComposerViewController.m */; };
+		665B535E1D02C5F80030F635 /* VCCommentComposerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 665B535C1D02C5F80030F635 /* VCCommentComposerViewController.xib */; };
+		665B53611D02CA770030F635 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B53601D02CA770030F635 /* UIPlaceHolderTextView.m */; };
+		665B53631D043A020030F635 /* VCPlaintextResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B53621D043A020030F635 /* VCPlaintextResponseSerializer.m */; };
 		666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */; };
 		6668596C1C9683110046C8E8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6668596E1C9683110046C8E8 /* Localizable.strings */; };
 		666EECB81C81BEC600DF5621 /* VCLibraryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */; };
@@ -99,6 +103,13 @@
 		6643419C1C7A868A00580AEF /* VCChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCChapter.m; sourceTree = "<group>"; };
 		6643419E1C7BFA7C00580AEF /* VCPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCPage.h; sourceTree = "<group>"; };
 		6643419F1C7BFA7C00580AEF /* VCPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPage.m; sourceTree = "<group>"; };
+		665B535A1D02C5F80030F635 /* VCCommentComposerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCCommentComposerViewController.h; sourceTree = "<group>"; };
+		665B535B1D02C5F80030F635 /* VCCommentComposerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCCommentComposerViewController.m; sourceTree = "<group>"; };
+		665B535C1D02C5F80030F635 /* VCCommentComposerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VCCommentComposerViewController.xib; sourceTree = "<group>"; };
+		665B535F1D02CA770030F635 /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
+		665B53601D02CA770030F635 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
+		665B53621D043A020030F635 /* VCPlaintextResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPlaintextResponseSerializer.m; sourceTree = "<group>"; };
+		665B53641D043A480030F635 /* VCPlaintextResponseSerializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VCPlaintextResponseSerializer.h; sourceTree = "<group>"; };
 		666266E21C8596DB004F133F /* VCLibraryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCLibraryTableViewCell.h; sourceTree = "<group>"; };
 		666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCLibraryTableViewCell.m; sourceTree = "<group>"; };
 		6668596D1C9683110046C8E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -164,6 +175,8 @@
 		660C15571CD8BD4E00C25553 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				665B535F1D02CA770030F635 /* UIPlaceHolderTextView.h */,
+				665B53601D02CA770030F635 /* UIPlaceHolderTextView.m */,
 				66F8C3771C5D0AF300DF7611 /* VCView.h */,
 				66F8C3781C5D0AF300DF7611 /* VCView.m */,
 				66F8C3741C5D078100DF7611 /* VCTextView.h */,
@@ -177,6 +190,8 @@
 			children = (
 				6622254A1CBD39DA001BE988 /* VCReaderAPIClient.h */,
 				6622254B1CBD39DA001BE988 /* VCReaderAPIClient.m */,
+				665B53641D043A480030F635 /* VCPlaintextResponseSerializer.h */,
+				665B53621D043A020030F635 /* VCPlaintextResponseSerializer.m */,
 			);
 			name = APIClients;
 			sourceTree = "<group>";
@@ -289,6 +304,9 @@
 				660C155F1CD9F51500C25553 /* VCSetEmailViewController.m */,
 				661A47FB1CE103E40032B152 /* VCEmailVerificationViewController.h */,
 				661A47FC1CE103E40032B152 /* VCEmailVerificationViewController.m */,
+				665B535A1D02C5F80030F635 /* VCCommentComposerViewController.h */,
+				665B535B1D02C5F80030F635 /* VCCommentComposerViewController.m */,
+				665B535C1D02C5F80030F635 /* VCCommentComposerViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -423,6 +441,7 @@
 			files = (
 				662225E01CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				6668596C1C9683110046C8E8 /* Localizable.strings in Resources */,
+				665B535E1D02C5F80030F635 /* VCCommentComposerViewController.xib in Resources */,
 				667AACDF1C545D9400CD40E1 /* Assets.xcassets in Resources */,
 				667AACDA1C545D9400CD40E1 /* Main.storyboard in Resources */,
 			);
@@ -500,6 +519,7 @@
 				66CA98001CB62E5400B52B5E /* VCSettingsTableViewController.m in Sources */,
 				662225C41CCB7B17001BE988 /* UIAlertController+window.m in Sources */,
 				667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */,
+				665B53611D02CA770030F635 /* UIPlaceHolderTextView.m in Sources */,
 				666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */,
 				660C155C1CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m in Sources */,
 				668AB1BB1C5BDD1C00395099 /* VCTool.m in Sources */,
@@ -510,10 +530,12 @@
 				669227C61CCDE6730045291E /* VCSignUpViewController.m in Sources */,
 				664341A01C7BFA7C00580AEF /* VCPage.m in Sources */,
 				662225AA1CC3989E001BE988 /* VCChapterMO+CoreDataProperties.m in Sources */,
+				665B535D1D02C5F80030F635 /* VCCommentComposerViewController.m in Sources */,
 				662225A91CC3989E001BE988 /* VCBookMO.m in Sources */,
 				661A47FD1CE103E40032B152 /* VCEmailVerificationViewController.m in Sources */,
 				667AACD41C545D9400CD40E1 /* AppDelegate.m in Sources */,
 				662225BB1CC9F973001BE988 /* VCLoginViewController.m in Sources */,
+				665B53631D043A020030F635 /* VCPlaintextResponseSerializer.m in Sources */,
 				667AACD11C545D9400CD40E1 /* main.m in Sources */,
 				662225AB1CC3989E001BE988 /* VCChapterMO.m in Sources */,
 			);
@@ -639,6 +661,18 @@
 				INFOPLIST_FILE = VCReader/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/CocoaLumberjack\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/SSZipArchive\"",
+					"-DLOGGING_ON",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

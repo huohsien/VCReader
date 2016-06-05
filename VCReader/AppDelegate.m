@@ -13,16 +13,25 @@
 #import "VCLoginViewController.h"
 
 
-
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
-
+@synthesize fileLogger = _fileLogger;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    // Initialize logging
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    _fileLogger = [[DDFileLogger alloc] init]; // File Logger
+    _fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+    _fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+    [DDLog addLogger:_fileLogger];
+    DDLogInfo(@"log file at: %@", [[_fileLogger currentLogFileInfo] filePath]);
+
     // set general default style for view controllers
     //
     [[UINavigationBar appearance] setBarTintColor:[UIColor redColor]];

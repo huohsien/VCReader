@@ -7,6 +7,6 @@ target 'VCReader' do
 
 pod 'AFNetworking', '~>3.0'
 pod 'SSZipArchive', '~> 1.1'
-
+pod 'CocoaLumberjack'
 end
 
