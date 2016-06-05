@@ -63,7 +63,7 @@
     [manager POST:fullwebPath parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
         NSURL *fileURL = [NSURL fileURLWithPath:fullPath];
-        NSString *fileName = [NSString stringWithFormat:@"%ld", (long)([[NSDate date] timeIntervalSinceReferenceDate] * 1000)];
+        NSString *fileName = [NSString stringWithFormat:@"%ld", (long)([[NSDate date] timeIntervalSince1970] * 1000)];
         
         [formData appendPartWithFileURL:fileURL name:@"upfile" fileName:fileName mimeType:@"text/plain" error:NULL];
         
