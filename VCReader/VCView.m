@@ -42,14 +42,14 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+    VCLOG();
     
     [_nextResponder touchesBegan:touches withEvent:event];
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"%s",__PRETTY_FUNCTION__);
+    VCLOG();
 
     [_nextResponder touchesEnded:touches withEvent:event];
 }

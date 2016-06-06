@@ -199,7 +199,7 @@
     // Configure the cell...
     NSString *bookNameString = ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name;
 
-//    NSLog(@"row:%ld name:%@", (long)indexPath.row, bookNameString);
+//    VCLOG(@"row:%ld name:%@", (long)indexPath.row, bookNameString);
    
     [cell.bookNameLabel setText:bookNameString];
     
@@ -207,7 +207,7 @@
     
     NSString  *path = [NSString stringWithFormat:@"%@/%@", kVCReaderBaseURLString, ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).coverImageFilePath];
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
+    VCLOG(@"encoded path = %@", encodedPath);
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@.jpg", _documentPath, ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name]]) {
 
@@ -225,7 +225,7 @@
 
             [cell.imageDownloadProgressIndicator stopAnimating];
 
-            NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
+            VCLOG(@"Failure: %@", error.debugDescription);
             
         }];
     } else {
@@ -264,7 +264,7 @@
             if (listOfFiles.count > 0) {
                 NSError *error = nil;
                 [fileManager removeItemAtPath:fullBookDirectoryPath error:&error];
-                NSLog(@"%s:%@", __PRETTY_FUNCTION__, error.description);
+                VCLOG(@"Error:%@", error.description);
             }
         }
         

@@ -136,7 +136,7 @@
     UIGraphicsEndImageContext();
     
     if(newImage == nil)
-        NSLog(@"could not scale image");
+        VCLOG(@"could not scale image");
     
     
     return newImage ;
@@ -248,7 +248,7 @@
     self.title = @"";
     
     CGSize sizeOfScreen = _rectOfScreen.size;
-//    NSLog(@"screen resolution:%@", NSStringFromCGSize(sizeOfScreen));
+//    VCLOG(@"screen resolution:%@", NSStringFromCGSize(sizeOfScreen));
     
     // resize bg image
     _backgroundImage = [_backgroundImage imageByScalingProportionallyToSize:sizeOfScreen];
@@ -330,7 +330,7 @@
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
     
-    NSLog(@"%s --- call syncReadingStatusData", __PRETTY_FUNCTION__);
+    VCLOG(@"call syncReadingStatusData");
     [self syncReadingStatusDataWithCompletion:^(BOOL finished) {
         if (finished) [self loadContent];
     }];
@@ -343,7 +343,7 @@
 
 -(void) end {
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    VCLOG();
     
 
     // because the view controller "color theme" here is different from default, so when being navigated out, this controller has the responsibility to restore the default color theme
@@ -453,7 +453,7 @@
     
     if (_chapterNumber == _book.totalNumberOfChapters - 1 && _pageNumber == _currentChapter.pageArray.count - 1) {
         
-        NSLog(@"%s: hit the last page of the book", __PRETTY_FUNCTION__);
+        VCLOG(@"hit the last page of the book");
         
         [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
             
@@ -531,7 +531,7 @@
         if (wordNumber < [[_currentChapter.firstWordCountOfEachPage objectAtIndex:i] intValue]) {
             return  i - 1;
         }
-//        NSLog(@"word number = %d", [[_currentChapter.firstWordCountOfEachPage objectAtIndex:i] intValue]);
+//        VCLOG(@"word number = %d", [[_currentChapter.firstWordCountOfEachPage objectAtIndex:i] intValue]);
     }
     
     return (int)_currentChapter.firstWordCountOfEachPage.count - 1;
@@ -575,7 +575,7 @@
     }
     
 //    for (VCPage *p in _pageArray) {
-//        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
+//        VCLOG(@"c:%d p:%d", p.chapterNumber, p.pageNumber);
 //    }
     
 
@@ -629,7 +629,7 @@
     }
     
 //    for (VCPage *p in _pageArray) {
-//        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
+//        VCLOG(@"c:%d p:%d", p.chapterNumber, p.pageNumber);
 //    }
     
     [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
@@ -683,7 +683,7 @@
     }
     
 //    for (VCPage *p in _pageArray) {
-//        NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, p.chapterNumber, p.pageNumber);
+//        VCLOG(@"c:%d p:%d", p.chapterNumber, p.pageNumber);
 //    }
     
     [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
@@ -706,7 +706,7 @@
 
 -(void)showThePageAt:(int)pageNumber {
     
-//    NSLog(@"%s: c:%d p:%d", __PRETTY_FUNCTION__, _chapterNumber, pageNumber);
+//    VCLOG(@"c:%d p:%d", _chapterNumber, pageNumber);
     
     for (int i = 0; i < _pageArray.count; i++) {
         
@@ -753,13 +753,13 @@
             
             if ([dict[@"error"][@"code"] isEqualToString:@"101"]) {
                 
-                NSLog(@"%s --- there is no datum on the server", __PRETTY_FUNCTION__);
+                VCLOG(@"there is no datum on the server");
                 
                 VCReadingStatusMO *readingStatus = [[VCCoreDataCenter sharedInstance] getReadingStatusForBook:_book.bookName];
                 
                 if (readingStatus) {
                     
-                    NSLog(@"%s --- there are data in core data. Upload data to server", __PRETTY_FUNCTION__);
+                    VCLOG(@"there are data in core data. Upload data to server");
                     
                     NSString *chapter = [NSString stringWithFormat:@"%d", readingStatus.chapterNumber];
                     NSString *word = [NSString stringWithFormat:@"%d", readingStatus.wordNumber];
@@ -770,12 +770,12 @@
                         readingStatus.synced = YES;
                         [[VCCoreDataCenter sharedInstance] saveContext];
                         
-                        NSLog(@"%s --- finish upload data to server. Now load page and ready for user to read", __PRETTY_FUNCTION__);
+                        VCLOG(@"finish upload data to server. Now load page and ready for user to read");
                         _isSyncing = NO;
                         
                     } failure:^(NSURLSessionDataTask *task, NSError *error) {
                             
-                        NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
+                        VCLOG(@"Failure: %@", error.debugDescription);
                         
                         [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
                         _isSyncing = NO;
@@ -784,22 +784,22 @@
                     
                 } else {
                     
-                    NSLog(@"%s --- no reading record in either server or core data", __PRETTY_FUNCTION__);
+                    VCLOG(@"no reading record in either server or core data");
                     [[VCCoreDataCenter sharedInstance] initReadingStatusForBook:_book.bookName isDummy:NO];
                     
-                    NSLog(@"%s --- ready for user to read a new book", __PRETTY_FUNCTION__);
+                    VCLOG(@"ready for user to read a new book");
                     _isSyncing = NO;
                 }
                 
             }  else if ([dict[@"error"][@"code"] isEqualToString:@"100"]) {
                 
-                NSLog(@"%s --- The book is not found on the server", __PRETTY_FUNCTION__);
+                VCLOG(@"The book is not found on the server");
                 [self.navigationController popViewControllerAnimated:YES];
                 _isSyncing = NO;
 
             } else {
                 
-                NSLog(@"%s --- %@", __PRETTY_FUNCTION__, dict);
+                VCLOG(@"dict=%@", dict);
                 _isSyncing = NO;
             }
             
@@ -812,7 +812,7 @@
                 
                 if (readingStatus.timestamp > timestampFromServer) {
                     
-                    NSLog(@"%s --- what were stored in core data are the lastest data. so update server", __PRETTY_FUNCTION__);
+                    VCLOG(@"what were stored in core data are the lastest data. so update server");
                     
                     NSString *chapter = [NSString stringWithFormat:@"%d", readingStatus.chapterNumber];
                     NSString *word = [NSString stringWithFormat:@"%d", readingStatus.wordNumber];
@@ -820,18 +820,18 @@
                     
                     [[VCReaderAPIClient sharedClient] callAPI:@"user_status_add" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName, @"current_reading_chapter" : chapter, @"current_reading_word" : word, @"timestamp" : timestamp} success:^(NSURLSessionDataTask *task, id responseObject) {
                         
-                        NSLog(@"%s --- server data updated. change synced flag to YES and load page", __PRETTY_FUNCTION__);
+                        VCLOG(@"server data updated. change synced flag to YES and load page");
                         
                         readingStatus.synced = YES;
                         [[VCCoreDataCenter sharedInstance] saveContext];
                         
-                        NSLog(@"%s --- finish syncing server with core data. ready for users to read", __PRETTY_FUNCTION__);
+                        VCLOG(@"finish syncing server with core data. ready for users to read");
                         
                         _isSyncing = NO;
 
                     } failure:^(NSURLSessionDataTask *task, NSError *error) {
                         
-                        NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
+                        VCLOG(@"Failure: %@", error.debugDescription);
                         
                         [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
                         _isSyncing = NO;
@@ -840,12 +840,12 @@
                     
                 } else {
                     
-                    NSLog(@"%s --- what were stored in the server are the lastest data so update core data", __PRETTY_FUNCTION__);
+                    VCLOG(@"what were stored in the server are the lastest data so update core data");
                     
                     NSTimeInterval timestampFromServer = [dict[@"timestamp"] doubleValue];
                     [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:dict[@"book_name"] chapterNumber:[dict[@"chapter"] intValue] wordNumber:[dict[@"word"] intValue] timestampFromServer:timestampFromServer];
                     
-                    NSLog(@"%s --- finish syncing core data with data in server. ready for users to read", __PRETTY_FUNCTION__);
+                    VCLOG(@"finish syncing core data with data in server. ready for users to read");
                     
                     _isSyncing = NO;
 
@@ -853,12 +853,12 @@
                 
             } else {
                 
-                NSLog(@"%s --- no core data record but got data in the server. first init a core data record", __PRETTY_FUNCTION__);
+                VCLOG(@"no core data record but got data in the server. first init a core data record");
                 
                 [[VCCoreDataCenter sharedInstance] initReadingStatusForBook:dict[@"book_name"] isDummy:YES];
                 [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:dict[@"book_name"] chapterNumber:[dict[@"chapter"] intValue] wordNumber:[dict[@"word"] intValue] timestampFromServer:timestampFromServer];
                 
-                NSLog(@"%s --- finish syncing core data with data in server. ready for users to read", __PRETTY_FUNCTION__);
+                VCLOG(@"finish syncing core data with data in server. ready for users to read");
                 
                 _isSyncing = NO;
 
@@ -867,7 +867,7 @@
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
-        NSLog(@"%s --- Failure: %@\n response =%@", __PRETTY_FUNCTION__, error.debugDescription, errResponse);
+        VCLOG(@"Failure: %@\n response =%@", error.debugDescription, errResponse);
         _isSyncing = NO;
 
     } completion:completion];
@@ -880,7 +880,7 @@
     
     self.currentTimeLabel.text = [self getCurrentTimeShortString];
     
-//    NSLog(@"update clock view");
+//    VCLOG(@"update clock view");
 }
 
 -(NSString *)getCurrentTimeShortString {
@@ -909,18 +909,17 @@
 
 -(void)StartTimerForClock {
     
-//    NSLog(@"%s",__PRETTY_FUNCTION__);
     
     [self updateTimeOnClock];
     
     int seconds = [[self getCurrentTimeSeconds] intValue];
     if (seconds != 0) {
         [self performSelector:@selector(StartTimerForClock) withObject:nil afterDelay:(60 - seconds)];
-//        NSLog(@"compensation delay - %d", (60 - seconds));
+//        VCLOG(@"compensation delay - %d", (60 - seconds));
         return;
     }
     
-//    NSLog(@"start timer");
+//    VCLOG(@"start timer");
     
     NSTimer *timer = [NSTimer timerWithTimeInterval:60
                                              target:self
@@ -1022,7 +1021,6 @@
     
     VCPage *page = [_pageArray objectAtIndex:NUMBER_OF_PREFETCH_PAGES + _pageNumber];
     VCTextView *textView = page.textView;
-//    NSLog(@"%s: text = %@", __PRETTY_FUNCTION__, textView.text);
     [textView setEditable:YES];
     [textView setSelectable:YES];
     [textView becomeFirstResponder];
@@ -1035,12 +1033,10 @@
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
-//    NSLog(@"%s",__PRETTY_FUNCTION__);
 
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.view];
     
-//    NSLog(@"%@", NSStringFromCGPoint(point));
     
     _previousOffset = 0;
     _deltaOffset = 0;
@@ -1052,12 +1048,10 @@
 
 - (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     
-//    NSLog(@"%s",__PRETTY_FUNCTION__);
     
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.view];
     
-//    NSLog(@"%@", NSStringFromCGPoint(point));
     
     _elapsedTime = CACurrentMediaTime() - _startTime;
     
@@ -1087,19 +1081,16 @@
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
-//    NSLog(@"%s",__PRETTY_FUNCTION__);
 
     UITouch *touch = [touches anyObject];
     CGPoint point = [touch locationInView:self.view];
     
-//    NSLog(@"%@", NSStringFromCGPoint(point));
 
     CGFloat pointX = point.x;
     CGFloat pointY = point.y;
     CGFloat xDisplacement = (pointX - _lastTouchedPointX);
     CGFloat yDisplacement = (pointY - _lastTouchedPointY);
     
-//    NSLog(@"moved distance %.0f",distance);
     
     if (yDisplacement < -10 && xDisplacement < 300) {
         [self swipeUp:nil];
@@ -1112,7 +1103,7 @@
         self.navigationController.navigationBar.hidden = NO;
         [self showStatusBar:YES];
         CGSize size = self.navigationController.navigationBar.frame.size;
-        NSLog(@"%@", NSStringFromCGSize(size));
+        VCLOG(@"%@", NSStringFromCGSize(size));
         [self.navigationController.navigationBar setFrame:CGRectMake(0, 20, size.width, size.height)];
         [self.navigationController popViewControllerAnimated:YES];
     }

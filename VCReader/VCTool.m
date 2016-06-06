@@ -176,12 +176,12 @@ static UIView *_activityView;
         
         BOOL success = [fileManager removeItemAtPath:filePath error:&error];
         if (success) {
-            NSLog(@"%s --- delete file successfully", __PRETTY_FUNCTION__);
+            VCLOG(@"delete file successfully");
         } else {
-            NSLog(@"%s --- Could not delete file -:%@ ", __PRETTY_FUNCTION__, [error localizedDescription]);
+            VCLOG(@"Could not delete file :%@ ", [error localizedDescription]);
         }
     } else {
-        NSLog(@"%s --- no file needs to be deleted", __PRETTY_FUNCTION__);
+        VCLOG(@"no file needs to be deleted");
     }
     
     [data writeToFile:filePath atomically:YES];
@@ -199,14 +199,14 @@ static UIView *_activityView;
         
         BOOL success = [fileManager removeItemAtPath:filePath error:&error];
         if (success) {
-            NSLog(@"%s --- delete file successfully", __PRETTY_FUNCTION__);
+            VCLOG(@"delete file successfully");
         }
         else
         {
-            NSLog(@"%s --- Could not delete file -:%@ ", __PRETTY_FUNCTION__, [error localizedDescription]);
+            VCLOG(@"Could not delete file -:%@ ", [error localizedDescription]);
         }
     } else {
-        NSLog(@"%s --- no file needs to be deleted", __PRETTY_FUNCTION__);
+        VCLOG(@"no file needs to be deleted");
     }
 }
 
@@ -264,7 +264,7 @@ static UIView *_activityView;
                                                     attributes:nil
                                                          error:&error])
     {
-        //        NSLog(@"Create directory error: %@", error);
+        //        VCLOG(@"Create directory error: %@", error);
     }
     return filePathAndDirectory;
 }

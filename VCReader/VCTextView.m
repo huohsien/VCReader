@@ -17,12 +17,12 @@
     for (UIView *v in view.subviews) {
         if ([v isKindOfClass:[VCTextView class]]) {
             
-            NSLog(@"%s: found", __PRETTY_FUNCTION__);
+            VCLOG(@"found");
             [v removeFromSuperview];
             
         } else {
             
-            NSLog(@"%s: not found", __PRETTY_FUNCTION__);
+            VCLOG(@"not found");
 
         }
     }

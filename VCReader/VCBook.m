@@ -68,7 +68,7 @@
 
     NSString *path = [NSString stringWithFormat:@"%@/%@", kVCReaderBaseURLString, _contentFilename];
     NSString *encodePath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"%@", encodePath);
+    VCLOG(@"%@", encodePath);
     NSURL  *url = [NSURL URLWithString:encodePath];
     NSData *urlData = [NSData dataWithContentsOfURL:url];
    
@@ -80,13 +80,13 @@
         [urlData writeToFile:zipFilePath atomically:YES];
         
     } else {
-        NSLog(@"%s -- fail to download compressed file of the book", __PRETTY_FUNCTION__);
+        VCLOG(@"fail to download compressed file of the book");
     }
     [self createDirectory:@"temp" atFilePath:_documentPath];
     NSString *unzipFilePath = [_documentPath stringByAppendingPathComponent:@"temp"];
     
     if (![SSZipArchive unzipFileAtPath:zipFilePath toDestination:unzipFilePath]) {
-        NSLog(@"%s --- unzip fail", __PRETTY_FUNCTION__);
+        VCLOG(@"unzip fail");
 //        abort();
     };
     NSError *error = nil;
@@ -94,31 +94,31 @@
     NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:unzipFilePath error:&error];
     if (error) {
         
-        NSLog(@"%s --- Error: %@", __PRETTY_FUNCTION__, error.debugDescription);
+        VCLOG(@"Error: %@", error.debugDescription);
         abort();
         
     } else {
         
         NSString *path = [NSString stringWithFormat:@"%@/%@", unzipFilePath, [directoryContent lastObject]];
-        NSLog(@"path = %@", path);
+        VCLOG(@"path = %@", path);
         _contentString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
         
         if (error) {
             
-            NSLog(@"%s --- Error: %@", __PRETTY_FUNCTION__, error.debugDescription);
+            VCLOG(@"Error: %@", error.debugDescription);
             abort();
             
         } else {
             
             [[NSFileManager defaultManager] removeItemAtPath:unzipFilePath error:&error];
             if (error) {
-                NSLog(@"%s --- Error: %@", __PRETTY_FUNCTION__, error.debugDescription);
+                VCLOG(@"Error: %@", error.debugDescription);
                 abort();
             }
             
             [[NSFileManager defaultManager] removeItemAtPath:zipFilePath error:&error];
             if (error) {
-                NSLog(@"%s --- Error: %@", __PRETTY_FUNCTION__, error.debugDescription);
+                VCLOG(@"Error: %@", error.debugDescription);
                 abort();
             }
         }
@@ -180,7 +180,7 @@
             charaterBeforeTitle = [_contentString characterAtIndex:(range.location - 1)];
             if (charaterBeforeTitle != '\r' && charaterBeforeTitle != '\n' && charaterBeforeTitle != ' ') {
                 if ([_chapterTitleStringArray count] > 0) {
-                    NSLog(@"%s: might have a problem splitting chapters.\n problematic chapter title = %@ previous title = %@", __PRETTY_FUNCTION__, title, [_chapterTitleStringArray objectAtIndex:(count-1)]);
+                    VCLOG(@"might have a problem splitting chapters.\n problematic chapter title = %@ previous title = %@", title, [_chapterTitleStringArray objectAtIndex:(count-1)]);
                 }
                 return ;
             }
@@ -202,7 +202,7 @@
                 previousChapterString = title;
                 previousTitleRange = range;
 
-                NSLog(@"%s: might have a problem splitting cuz the length of the chapter is less than 100.\n Chapter =%@, count = %d", __PRETTY_FUNCTION__, title, count);
+                VCLOG(@"might have a problem splitting cuz the length of the chapter is less than 100.\n Chapter =%@, count = %d", title, count);
 
             }
 
@@ -215,7 +215,7 @@
         [_chapterContentRangeStringArray addObject:str];
         count++;
 
-        NSLog(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
+        VCLOG(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
 
         previousChapterString = title;
         previousTitleRange = range;
@@ -230,7 +230,7 @@
     [_chapterContentRangeStringArray addObject:string];
     count++;
 
-    NSLog(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
+    VCLOG(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
     
     _totalNumberOfChapters = count;
     
@@ -266,7 +266,7 @@
         
 
     }];
-//    NSLog(@"%@", content);
+//    VCLOG(@"%@", content);
     _contentString = content;
     
 }
@@ -333,7 +333,7 @@
                                                     attributes:nil
                                                          error:&error])
     {
-//        NSLog(@"Create directory error: %@", error);
+//        VCLOG(@"Create directory error: %@", error);
     }
     return filePathAndDirectory;
 }

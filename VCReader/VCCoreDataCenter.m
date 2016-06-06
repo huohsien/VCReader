@@ -47,7 +47,7 @@
 
 -(void) setUserWithToken:(NSString *)token accountName:(NSString *)accountName accountPassword:(NSString *)accountPassword nickName:(NSString *)nickName timestamp:(NSString *)timestamp signupType:(NSString *)signupType {
 
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    VCLOG();
 
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"token == %@", token];
@@ -57,7 +57,6 @@
     if (error) {
         
         VCLOG(@"Unresolved error %@, %@",error,[error userInfo]);
-//        NSLog(@"%s --- Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
         abort();
     }
     
@@ -99,7 +98,7 @@
     NSError *error = nil;
     NSArray *userArray = [_context executeFetchRequest:fetchRequest error:&error];
     if (error) {
-        NSLog(@"%s --- Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
+        VCLOG(@"Unresolved error %@, %@",error,[error userInfo]);
         abort();
     }
     
@@ -124,7 +123,7 @@
     VCReadingStatusMO *readingStatus = [self getReadingStatusForBook:bookName];
     
     if (!readingStatus) {
-        NSLog(@"%s --- should not come here!", __PRETTY_FUNCTION__); //readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:_context];
+        VCLOG(@"should not come here!"); //readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:_context];
     }
     
     readingStatus.bookName = bookName;
@@ -136,7 +135,7 @@
     [_user addReadingStatusObject:readingStatus];
     [self saveContext];
     
-    NSLog(@"%s --- reading status: chapter = %d, word = %d timestamp = %13.0lf", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber, readingStatus.timestamp);
+    VCLOG(@"reading status: chapter = %d, word = %d timestamp = %13.0lf", readingStatus.chapterNumber, readingStatus.wordNumber, readingStatus.timestamp);
     return readingStatus;
 }
 
@@ -148,11 +147,11 @@
     VCReadingStatusMO *readingStatus = [self getReadingStatusForBook:bookName];
     
     if (!readingStatus) {
-        NSLog(@"%s --- should not come here!", __PRETTY_FUNCTION__); //readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:_context];
+        VCLOG(@"should not come here!"); //readingStatus = [NSEntityDescription insertNewObjectForEntityForName:@"ReadingStatus" inManagedObjectContext:_context];
     }
     if (timestampFromServer < readingStatus.timestamp) {
         
-        NSLog(@"%s --- the data in core data is more updated so return without writing data (from web) into core data", __PRETTY_FUNCTION__);
+        VCLOG(@"the data in core data is more updated so return without writing data (from web) into core data");
 
         return readingStatus;
     }
@@ -168,7 +167,7 @@
     [_user addReadingStatusObject:readingStatus];
     [self saveContext];
     
-    NSLog(@"%s --- reading status: chapter = %d, word = %d", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber);
+    VCLOG(@"reading status: chapter = %d, word = %d", readingStatus.chapterNumber, readingStatus.wordNumber);
     return readingStatus;
 }
 
@@ -184,9 +183,9 @@
     }
 
     if (readingStatus == nil) {
-        NSLog(@"%s --- can not find user's reading status of the given book", __PRETTY_FUNCTION__);
+        VCLOG(@"can not find user's reading status of the given book");
     } else {
-//        NSLog(@"%s --- chapter = %d, word = %d timestamp=%13.0lf", __PRETTY_FUNCTION__, readingStatus.chapterNumber, readingStatus.wordNumber, readingStatus.timestamp);
+//        VCLOG(@"chapter = %d, word = %d timestamp=%13.0lf", readingStatus.chapterNumber, readingStatus.wordNumber, readingStatus.timestamp);
     }
     return readingStatus;
 }
@@ -297,7 +296,7 @@
     
     if (![_context save:&error]) {
     
-        NSLog(@"%s --- Unresolved error %@, %@",__PRETTY_FUNCTION__,error,[error userInfo]);
+        VCLOG(@"Unresolved error %@, %@",error,[error userInfo]);
         [VCTool showAlertViewWithTitle:@"Core Data Error" andMessage:@"Can not save data"];
     }
 }
@@ -338,7 +337,7 @@
         
         [logString appendString:[NSString stringWithFormat:@"%.0lf,%d%%\n",battery.timestamp * 1000.0, (int)(battery.level * 100.0)]];
         
-        NSLog(@"battery:%d%% timestamp:%@", (int)(battery.level * 100.0), [NSString stringWithFormat:@"%lf",battery.timestamp * 1000.0]);
+        VCLOG(@"battery:%d%% timestamp:%@", (int)(battery.level * 100.0), [NSString stringWithFormat:@"%lf",battery.timestamp * 1000.0]);
     }
 
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];

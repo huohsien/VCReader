@@ -223,19 +223,19 @@ return NO;\
 #pragma mark - TencentLoginDelegate
 
 - (void)tencentDidLogin {
-    NSLog(@"登录完成");
+    VCLOG(@"登录完成");
     
     [VCTool hideActivityView];
     
     if (_tencentOAuth.accessToken && 0 != [_tencentOAuth.accessToken length]) {
         //  记录登录用户的OpenID、Token以及过期时间
-        //        NSLog(@"token = %@", _tencentOAuth.openId);
+        //        VCLOG(@"token = %@", _tencentOAuth.openId);
         
         [self.activityIndicator startAnimating];
         [_tencentOAuth getUserInfo];
         
     } else {
-        NSLog(@"登录不成功 没有获取accesstoken");
+        VCLOG(@"登录不成功 没有获取accesstoken");
         [VCTool hideActivityView];
         
     }
@@ -243,13 +243,13 @@ return NO;\
 
 - (void)tencentDidNotLogin:(BOOL)cancelled {
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    VCLOG();
     [VCTool hideActivityView];
 }
 
 - (void)tencentDidNotNetWork {
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    VCLOG();
     [VCTool hideActivityView];
     
 }
@@ -258,23 +258,21 @@ return NO;\
 
 - (void)tencentDidLogout {
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    abort();
+    VCLOG();
 }
 
 - (void)responseDidReceived:(APIResponse*)response forMessage:(NSString *)message {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    abort();
-    
+
+    VCLOG();
 }
 
 - (void)getUserInfoResponse:(APIResponse*) response {
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    VCLOG();
     
     if (URLREQUEST_SUCCEED == response.retCode && kOpenSDKErrorSuccess == response.detailRetCode) {
         
-        NSLog(@"qq login response = %@", response.jsonResponse);
+        VCLOG(@"qq login response = %@", response.jsonResponse);
         
         [VCTool saveImage:[VCTool getImageFromURL:response.jsonResponse[@"figureurl_qq_2"]] withName:@"headshot"];
         
@@ -283,7 +281,7 @@ return NO;\
         [[VCReaderAPIClient sharedClient] callAPI:@"user_signup_login_qq" params:@{@"token" : _tencentOAuth.openId, @"nick_name" : [response.jsonResponse objectForKey:@"nickname"], @"timestamp" : timestamp} success:^(NSURLSessionDataTask *task, id responseObject) {
             
             NSDictionary *dict = responseObject;
-            NSLog(@"%s: response = %@", __PRETTY_FUNCTION__, dict);
+            VCLOG(@"response = %@", dict);
             
             [[VCCoreDataCenter sharedInstance] setUserWithToken:dict[@"token"] accountName:nil accountPassword:nil nickName:dict[@"nick_name"] timestamp:dict[@"timestamp"] signupType:@"QQ"];
             

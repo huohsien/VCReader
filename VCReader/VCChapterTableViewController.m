@@ -84,7 +84,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    VCLOG();
 
     [VCTool showActivityView];
     
@@ -107,7 +107,7 @@
         [[VCCoreDataCenter sharedInstance] saveContext];
         
         
-        NSLog(@"%s --- Failure: %@", __PRETTY_FUNCTION__, error.debugDescription);
+        VCLOG(@"Failure: %@", error.debugDescription);
         [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
         
         

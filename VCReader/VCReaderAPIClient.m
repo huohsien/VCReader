@@ -41,14 +41,14 @@ NSString * const kVCReaderBaseURLString = @"http://api.vhhc.dyndns.org";
 //-(void)networkRequestDidFinish: (NSNotification *) notification {
 //    
 //    NSError *error = [notification.userInfo objectForKey:AFNetworkingTaskDidCompleteErrorKey];
-////    NSLog(@"%ld", (long)error.code);
+////    VCLOG(@"%ld", (long)error.code);
 //    if (error.code == -1009 || error.code == -1004) {
 //        [VCTool toastMessage:@"网络连线异常"];
 //    }
 //    
 //    NSHTTPURLResponse *httpResponse = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
 //    if (httpResponse.statusCode == 401) {
-//        NSLog(@"Error was 401");
+//        VCLOG(@"Error was 401");
 //    }
 //}
 
@@ -99,7 +99,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.vhhc.dyndns.org";
     
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
+    VCLOG(@"encoded path = %@", encodedPath);
     
     [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -125,7 +125,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.vhhc.dyndns.org";
     
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
+    VCLOG(@"encoded path = %@", encodedPath);
     
     [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -147,7 +147,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.vhhc.dyndns.org";
     NSString* path = [NSString stringWithFormat:@"user_login.php?account_name=%@&account_password=%@", name, password];
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
+    VCLOG(@"encoded path = %@", encodedPath);
 
     [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -166,7 +166,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.vhhc.dyndns.org";
     NSString* path = [NSString stringWithFormat:@"user_status_get.php?token=%@&book_name=%@", token, bookName];
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSLog(@"%s --- http get path = %@", __PRETTY_FUNCTION__, encodedPath);
+    VCLOG(@"http get path = %@", encodedPath);
     
     [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -188,7 +188,7 @@ NSString * const kVCReaderBaseURLString = @"http://api.vhhc.dyndns.org";
     NSString  *path = [NSString stringWithFormat:@"user_status_add.php?token=%@&book_name=%@&current_reading_chapter=%d&current_reading_word=%d&timestamp=%@", token, bookName, chapterNumber, wordNumber, [NSString stringWithFormat:@"%ld",(long)timestamp]];
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSLog(@"%s: encoded path = %@", __PRETTY_FUNCTION__, encodedPath);
+    VCLOG(@"encoded path = %@", encodedPath);
 
     [self GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
