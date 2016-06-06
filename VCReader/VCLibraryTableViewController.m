@@ -266,11 +266,13 @@
 
 -(NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewRowAction *reload = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"重載" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+    NSString * bookName = ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name;
+    
+    UITableViewRowAction *reload = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
         NSString *documentsPath = [paths objectAtIndex:0];
-        NSString *fullBookDirectoryPath = [VCTool createDirectory:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name  atFilePath:documentsPath];
+        NSString *fullBookDirectoryPath = [VCTool createDirectory:bookName  atFilePath:documentsPath];
         
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if ([fileManager fileExistsAtPath:fullBookDirectoryPath]) { // Directory exists
@@ -284,7 +286,25 @@
         
         // hide the action in cell
         [self.tableView setEditing:NO animated:YES];
+        // remove book from the current usr in core data
+        [[VCCoreDataCenter sharedInstance] removeForCurrentUserBookNamed:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name];
+        // remove book info store in users default
+        [VCTool removeFromBook:bookName withField:@"numberOfChapters"];
+        [VCTool removeFromBook:bookName withField:@"titleOfChaptersArray"];
+        [VCTool removeFromBook:bookName withField:@"wordCountOfTheBookForTheFirstWordInChapters"];
+        [VCTool removeFromBook:bookName withField:@"numberOfWords"];
+
+        _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
+
+        [self.tableView reloadData];
+        [[VCReaderAPIClient sharedClient] callAPI:@"user_remove_book" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : bookName} success:^(NSURLSessionDataTask *task, id responseObject) {
+            VCLOG(@"success in removing a book for the current user in the cloud db");
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            VCLOG(@"Failed:%@", error.debugDescription);
+        } completion:nil];
+        
     }];
+    
     
     reload.backgroundColor = [UIColor redColor];
     

@@ -244,6 +244,35 @@
     [self saveContext];
 }
 
+-(void) removeForCurrentUserBookNamed:(NSString *)bookName {
+    
+    if (!_user) [self hookupCurrentUserWithToken];
+    
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", bookName];
+    [fetchRequest setPredicate:predicate];
+    NSError *error = nil;
+    NSArray *userArray = [_context executeFetchRequest:fetchRequest error:&error];
+    
+    if (error) {
+        
+        VCLOG(@"Unresolved error %@, %@",error,[error userInfo]);
+        abort();
+    }
+    
+    VCBookMO *book = nil;
+    if (userArray.count == 0) {
+        
+        VCLOG(@"No book in core data. This should not happen.");
+        return;
+    } else {
+        book = [userArray firstObject];
+    }
+
+    [_user removeBooksObject:book];
+    [self saveContext];
+}
+
 -(BOOL) addBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
     
     VCBookMO *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:_context];

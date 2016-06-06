@@ -20,6 +20,12 @@ static UIView *_activityView;
     [defaults synchronize];
 }
 
++(void) removeFromBook:(NSString *)bookName withField:(NSString *)field {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:[NSString stringWithFormat:@"%@_%@", bookName, field]];
+    [defaults synchronize];
+}
+
 +(id) getDatafromBook:(NSString *)bookName withField:(NSString *)field {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *dict = [defaults objectForKey:[NSString stringWithFormat:@"%@_%@", bookName, field]];
