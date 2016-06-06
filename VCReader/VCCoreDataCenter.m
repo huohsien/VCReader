@@ -213,21 +213,44 @@
 }
 #pragma mark - book
 
--(BOOL) addForCurrentUserBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
+-(void) addForCurrentUserBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
  
     if (!_user) [self hookupCurrentUserWithToken];
     
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", bookName];
+    [fetchRequest setPredicate:predicate];
+    NSError *error = nil;
+    NSArray *userArray = [_context executeFetchRequest:fetchRequest error:&error];
     
-    for (VCBookMO *book in _user.books) {
-        if ([book.name isEqualToString:bookName])
-            return NO;
+    if (error) {
+        
+        VCLOG(@"Unresolved error %@, %@",error,[error userInfo]);
+        abort();
     }
-    VCBookMO *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:_context];
+    VCBookMO *book = nil;
+    if (userArray.count == 0) {
+        
+        VCLOG(@"No book in core data. This should not happen.");
+        book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:_context];
+    } else {
+        book = [userArray firstObject];
+    }
     book.name = bookName;
     book.contentFilePath = contentFilePath;
     book.coverImageFilePath = coverImageFilePath;
     book.timestamp = [timestamp doubleValue];
     [_user addBooksObject:book];
+    [self saveContext];
+}
+
+-(BOOL) addBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
+    
+    VCBookMO *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:_context];
+    book.name = bookName;
+    book.contentFilePath = contentFilePath;
+    book.coverImageFilePath = coverImageFilePath;
+    book.timestamp = [timestamp doubleValue];
     [self saveContext];
     return YES;
 }
@@ -264,6 +287,16 @@
     [_user removeBooks:books];
     [self saveContext];
 
+}
+
+-(void) clearAllBooks {
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Book"];
+    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
+    
+    NSError *deleteError = nil;
+    [[[VCTool appDelegate] persistentStoreCoordinator] executeRequest:delete withContext:_context error:&deleteError];
+    
 }
 
 -(NSArray *) getForCurrentUserAllBooks {

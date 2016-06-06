@@ -51,10 +51,7 @@
     VCLOG();
     
     _isUpdatingBook = YES;
-    
-    if (self.refreshControl.isRefreshing == NO)
-        [VCTool showActivityView];
-    
+        
     [[VCReaderAPIClient sharedClient] callAPI:@"book_get_list" params:@{@"token" : @""} success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.jsonResponse = responseObject;
@@ -63,10 +60,8 @@
         
         for (NSDictionary *dict in _jsonResponse) {
             
-            if(![[VCCoreDataCenter sharedInstance] addForCurrentUserBookNamed:dict[@"book_name"] contentFilePath:dict[@"content_filename"] coverImageFilePath:dict[@"cover_image_filename"] timestamp:dict[@"timestamp"]]) {
-                
-                [[VCCoreDataCenter sharedInstance] updateForCurrentUserBookNamed:dict[@"book_name"] contentFilePath:dict[@"content_filename"] coverImageFilePath:dict[@"cover_image_filename"] timestamp:dict[@"timestamp"]];
-            }
+            [[VCCoreDataCenter sharedInstance] addForCurrentUserBookNamed:dict[@"book_name"] contentFilePath:dict[@"content_filename"] coverImageFilePath:dict[@"cover_image_filename"] timestamp:dict[@"timestamp"]];
+    
         }
         
         _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
@@ -80,7 +75,6 @@
     } completion:^(BOOL finished) {
         
         _isUpdatingBook = NO;
-        [VCTool hideActivityView];
         
         // End the refreshing
         
@@ -161,7 +155,6 @@
     
     NSString  *path = [NSString stringWithFormat:@"%@/%@", kVCReaderBaseURLString, ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).coverImageFilePath];
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    VCLOG(@"encoded path = %@", encodedPath);
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@.jpg", _documentPath, ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name]]) {
         

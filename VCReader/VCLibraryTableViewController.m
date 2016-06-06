@@ -48,6 +48,8 @@
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self action:@selector(updateBooksOfCurrentUser) forControlEvents:UIControlEventValueChanged];
     
+    [self updateAllBooks];
+
     NSString *nameOfLastReadBook = [VCTool getObjectWithKey:@"name of the last read book"];
     
     if (nameOfLastReadBook) {
@@ -59,36 +61,28 @@
         return;
     }
     
-    [self updateBooksOfCurrentUser];
     
 }
 
-
-- (void) updateBooksOfCurrentUser {
-
+-(void)updateBooksWithToken:(NSString *)token {
+    
     if (_isUpdatingBook == YES) return;
     
     VCLOG();
     
     _isUpdatingBook = YES;
     
-    NSString *token = [VCTool getObjectWithKey:@"token"];
-    
-    if (self.refreshControl.isRefreshing == NO)
-        [VCTool showActivityView];
     
     [[VCReaderAPIClient sharedClient] callAPI:@"book_get_list" params:@{@"token" : token} success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.jsonResponse = responseObject;
         
         [[VCCoreDataCenter sharedInstance] clearAllBooksForCurrentUser];
-
+        
         for (NSDictionary *dict in _jsonResponse) {
             
-            if(![[VCCoreDataCenter sharedInstance] addForCurrentUserBookNamed:dict[@"book_name"] contentFilePath:dict[@"content_filename"] coverImageFilePath:dict[@"cover_image_filename"] timestamp:dict[@"timestamp"]]) {
-                
-                [[VCCoreDataCenter sharedInstance] updateForCurrentUserBookNamed:dict[@"book_name"] contentFilePath:dict[@"content_filename"] coverImageFilePath:dict[@"cover_image_filename"] timestamp:dict[@"timestamp"]];
-            }
+            [[VCCoreDataCenter sharedInstance] addForCurrentUserBookNamed:dict[@"book_name"] contentFilePath:dict[@"content_filename"] coverImageFilePath:dict[@"cover_image_filename"] timestamp:dict[@"timestamp"]];
+            
         }
         
         _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
@@ -102,7 +96,6 @@
     } completion:^(BOOL finished) {
         
         _isUpdatingBook = NO;
-        [VCTool hideActivityView];
         
         // End the refreshing
         
@@ -115,9 +108,20 @@
         self.refreshControl.attributedTitle = attributedTitle;
         
         [self.refreshControl endRefreshing];
-
+        
     }];
+    
+}
 
+- (void) updateBooksOfCurrentUser {
+
+    NSString *token = [VCTool getObjectWithKey:@"token"];
+    [self updateBooksWithToken:token];
+}
+
+-(void)updateAllBooks {
+    
+    [self updateBooksWithToken:@""];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -218,7 +222,6 @@
     
     NSString  *path = [NSString stringWithFormat:@"%@/%@", kVCReaderBaseURLString, ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).coverImageFilePath];
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    VCLOG(@"encoded path = %@", encodedPath);
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@.jpg", _documentPath, ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name]]) {
 

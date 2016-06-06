@@ -103,8 +103,7 @@
                             <exclude reference="KQQ-UI-lvI"/>
                         </mask>
                     </variation>
-                    <variation key="widthClass=compact" misplaced="YES">
-                        <rect key="frame" x="8" y="348" width="100" height="34"/>
+                    <variation key="widthClass=compact">
                         <mask key="constraints">
                             <include reference="7Nt-qS-hMB"/>
                             <include reference="KQQ-UI-lvI"/>
