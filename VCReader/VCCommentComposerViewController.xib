@@ -76,8 +76,7 @@
                             <exclude reference="hfZ-NI-q79"/>
                         </mask>
                     </variation>
-                    <variation key="widthClass=compact" misplaced="YES">
-                        <rect key="frame" x="289" y="350" width="100" height="30"/>
+                    <variation key="widthClass=compact">
                         <mask key="constraints">
                             <include reference="f8C-xq-izI"/>
                             <include reference="hfZ-NI-q79"/>
@@ -95,7 +94,7 @@
                         <constraint firstAttribute="height" constant="30" id="KQQ-UI-lvI"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="返回">
+                    <state key="normal" title="取消">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <variation key="default">
@@ -104,7 +103,8 @@
                             <exclude reference="KQQ-UI-lvI"/>
                         </mask>
                     </variation>
-                    <variation key="widthClass=compact">
+                    <variation key="widthClass=compact" misplaced="YES">
+                        <rect key="frame" x="8" y="348" width="100" height="34"/>
                         <mask key="constraints">
                             <include reference="7Nt-qS-hMB"/>
                             <include reference="KQQ-UI-lvI"/>

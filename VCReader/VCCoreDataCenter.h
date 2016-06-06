@@ -28,13 +28,14 @@
 -(VCReadingStatusMO *) updateReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber;
 -(VCReadingStatusMO *) getReadingStatusForBook:(NSString *)bookName;
 -(void) saveContext;
+
 -(void) initReadingStatusForBook:(NSString *)bookName isDummy:(BOOL)isDummy;
--(BOOL) addBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
--(BOOL) updateBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
+-(BOOL) addForCurrentUserBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
+-(BOOL) updateForCurrentUserBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
 -(void) clearAllBooksForCurrentUser;
+-(NSArray *) getForCurrentUserAllBooks;
 
 -(void) setAttributesForBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath;
--(NSArray *) getAllBooks;
 -(void) logBatteryLevel:(double)level timestamp:(NSTimeInterval)timestamp;
 -(void) batteryLogDump;
 -(void) clearAllofBatteryLog;

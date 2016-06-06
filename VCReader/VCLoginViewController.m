@@ -39,7 +39,7 @@
         if (dict[@"error"]) {
             
             if ([dict[@"error"][@"code"] isEqualToString:@"102"]) {
-                [VCTool toastMessage:@"账户密码错误，请重新输入"];
+                [VCTool showAlertViewWithMessage:@"账户密码错误，请重新输入"];
             } else {
                 
                 [VCTool showAlertViewWithTitle:@"web error" andMessage:dict[@"error"][@"message"]];

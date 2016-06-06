@@ -106,6 +106,18 @@ static UIView *_activityView;
     [alertController show];
 }
 
++(void) showAlertViewWithMessage:(NSString *)message {
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"错误"
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:nil];
+    
+    [alertController addAction:okAction];
+    [alertController show];
+}
+
 +(void) showAlertViewWithMessage:(NSString *)message handler:(void(^)(UIAlertAction *action))handler {
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"错误"

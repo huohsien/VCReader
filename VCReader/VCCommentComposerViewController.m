@@ -34,13 +34,13 @@
     
     if (self.commentTextView.text.length > 200) {
         
-        [VCTool toastMessage:@"您的建议字数超过200字限制"];
+        [VCTool showAlertViewWithMessage:@"您的建议字数超过200字限制"];
         return;
     }
     
     if ([self.commentTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length < 4) {
         
-        [VCTool toastMessage:@"建议或问题字数太少啦，多写一点吧！"];
+        [VCTool showAlertViewWithMessage:@"建议或问题字数太少啦，多写一点吧！"];
         return;
         
     }

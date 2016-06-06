@@ -213,7 +213,7 @@
 }
 #pragma mark - book
 
--(BOOL) addBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
+-(BOOL) addForCurrentUserBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
  
     if (!_user) [self hookupCurrentUserWithToken];
     
@@ -232,7 +232,7 @@
     return YES;
 }
 
--(BOOL) updateBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
+-(BOOL) updateForCurrentUserBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
     
     if (!_user) [self hookupCurrentUserWithToken];
     
@@ -266,7 +266,7 @@
 
 }
 
--(NSArray *) getAllBooks {
+-(NSArray *) getForCurrentUserAllBooks {
     
     if (!_user) [self hookupCurrentUserWithToken];
     
@@ -283,7 +283,7 @@
 
 -(void) setAttributesForBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath {
 
-    [self updateBookNamed:bookName contentFilePath:contentFilePath coverImageFilePath:coverImageFilePath timestamp:[NSString stringWithFormat:@"%lf",DBL_MAX]];
+    [self updateForCurrentUserBookNamed:bookName contentFilePath:contentFilePath coverImageFilePath:coverImageFilePath timestamp:[NSString stringWithFormat:@"%lf",DBL_MAX]];
 }
 
 

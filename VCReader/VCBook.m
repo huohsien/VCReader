@@ -12,6 +12,7 @@
     NSString *_fullBookDirectoryPath;
     NSMutableArray *_chapterTitleStringArray;
     NSMutableArray *_chapterContentRangeStringArray;
+    NSMutableArray *_wordCountOfTheBookForTheFirstWordInChapters;
     NSString *_contentString;
     NSString *_documentPath;
 
@@ -38,11 +39,14 @@
     
     _chapterTitleStringArray = [NSMutableArray new];
     _chapterContentRangeStringArray = [NSMutableArray new];
+    _wordCountOfTheBookForTheFirstWordInChapters = [NSMutableArray new];
+    
     _totalNumberOfChapters = 0;
     
     _fullBookDirectoryPath = [self createDirectory:_bookName atFilePath:_documentPath];
     
     BOOL isBookLoaded = NO;
+    
     if ([[NSFileManager defaultManager] fileExistsAtPath:_fullBookDirectoryPath]) { // Directory exists
         NSArray *listOfFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:_fullBookDirectoryPath error:nil];
         isBookLoaded = listOfFiles.count > 0 ? YES : NO;
@@ -102,6 +106,8 @@
         NSString *path = [NSString stringWithFormat:@"%@/%@", unzipFilePath, [directoryContent lastObject]];
         VCLOG(@"path = %@", path);
         _contentString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+        VCLOG(@"number of words:%lu", (unsigned long)_contentString.length);
+        [VCTool storeIntoBook:_bookName withField:@"numberOfWords" andData:@(_contentString.length).stringValue];
         
         if (error) {
             
@@ -158,6 +164,7 @@
     __block int count = 0;
     __block NSString *previousChapterString = @"";
     __block NSRange previousTitleRange;
+    __block long wordCount = 0;
     
     previousTitleRange = NSMakeRange(0, 0);
     
@@ -213,6 +220,10 @@
         
         NSString *str = NSStringFromRange(contentRange);
         [_chapterContentRangeStringArray addObject:str];
+        [_wordCountOfTheBookForTheFirstWordInChapters addObject:@(wordCount).stringValue];
+        wordCount += contentRange.length;
+        VCLOG(@"word count = %ld", wordCount);
+        
         count++;
 
         VCLOG(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
@@ -235,8 +246,12 @@
     _totalNumberOfChapters = count;
     
     [_chapterContentRangeStringArray addObject:NSStringFromRange(NSMakeRange(NSMaxRange(previousTitleRange) , _contentString.length - NSMaxRange(previousTitleRange)))];
+
+    // save parsed info on the book into user's default
+    //
     [VCTool storeIntoBook:_bookName withField:@"numberOfChapters" andData:@(count).stringValue];
     [VCTool storeIntoBook:_bookName withField:@"titleOfChaptersArray" andData:_chapterTitleStringArray];
+    [VCTool storeIntoBook:_bookName withField:@"wordCountOfTheBookForTheFirstWordInChapters" andData:_wordCountOfTheBookForTheFirstWordInChapters];
 
 }
 

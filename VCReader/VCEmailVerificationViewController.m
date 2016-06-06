@@ -64,7 +64,7 @@
             
             
         } else {
-            [VCTool toastMessage:@"验证失败，重新发送"];
+            [VCTool showAlertViewWithMessage:@"验证失败，重新发送"];
             [self.navigationController popViewControllerAnimated:YES];
         }
         

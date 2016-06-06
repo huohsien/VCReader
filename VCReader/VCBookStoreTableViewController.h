@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VCBookStoreTableViewCell.h"
+#import "VCBook.h"
+#import "VCLibraryTableViewController.h"
+
+extern NSString * const kVCReaderBaseURLString;
 
 @interface VCBookStoreTableViewController : UITableViewController
+
+@property (nonatomic, strong) NSArray *jsonResponse;
+@property (nonatomic, strong) NSArray *bookArray;
 
 @end

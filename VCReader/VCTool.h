@@ -24,6 +24,7 @@
 +(UIColor *) adjustUIColor:(UIColor *)uicolor brightenFactor:(CGFloat)factor;
 
 +(void) showAlertViewWithTitle:(NSString *)title andMessage:(NSString *)message;
++(void) showAlertViewWithMessage:(NSString *)message;
 +(void) showAlertViewWithMessage:(NSString *)message handler:(void(^)(UIAlertAction *action))handler;
 +(void) toastMessage:(NSString *)message;
 

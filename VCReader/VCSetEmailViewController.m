@@ -74,11 +74,11 @@
                 
                 if ([dict[@"error"][@"code"] isEqualToString:@"108"]) {
                     
-                    [VCTool toastMessage:@"邮箱格式错误，请重新输入"];
+                    [VCTool showAlertViewWithMessage:@"邮箱格式错误，请重新输入"];
                     
                 } else if ([dict[@"error"][@"code"] isEqualToString:@"112"]) {
                     
-                    [VCTool toastMessage:@"输入邮箱已被使用，请输入其它邮箱"];
+                    [VCTool showAlertViewWithMessage:@"输入邮箱已被使用，请输入其它邮箱"];
                     
                 } else {
                     
@@ -110,11 +110,11 @@
                 
                 if ([dict[@"error"][@"code"] isEqualToString:@"108"]) {
                     
-                    [VCTool toastMessage:@"邮箱格式错误，请重新输入"];
+                    [VCTool showAlertViewWithMessage:@"邮箱格式错误，请重新输入"];
                     
                 } else if ([dict[@"error"][@"code"] isEqualToString:@"111"]) {
                     
-                    [VCTool toastMessage:@"找不到此邮箱，请输入注册时填写的邮箱"];
+                    [VCTool showAlertViewWithMessage:@"找不到此邮箱，请输入注册时填写的邮箱"];
                     
                 } else {
                     

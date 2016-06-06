@@ -85,13 +85,13 @@
 
         for (NSDictionary *dict in _jsonResponse) {
             
-            if(![[VCCoreDataCenter sharedInstance] addBookNamed:dict[@"book_name"] contentFilePath:dict[@"content_filename"] coverImageFilePath:dict[@"cover_image_filename"] timestamp:dict[@"timestamp"]]) {
+            if(![[VCCoreDataCenter sharedInstance] addForCurrentUserBookNamed:dict[@"book_name"] contentFilePath:dict[@"content_filename"] coverImageFilePath:dict[@"cover_image_filename"] timestamp:dict[@"timestamp"]]) {
                 
-                [[VCCoreDataCenter sharedInstance] updateBookNamed:dict[@"book_name"] contentFilePath:dict[@"content_filename"] coverImageFilePath:dict[@"cover_image_filename"] timestamp:dict[@"timestamp"]];
+                [[VCCoreDataCenter sharedInstance] updateForCurrentUserBookNamed:dict[@"book_name"] contentFilePath:dict[@"content_filename"] coverImageFilePath:dict[@"cover_image_filename"] timestamp:dict[@"timestamp"]];
             }
         }
         
-        _bookArray = [[VCCoreDataCenter sharedInstance] getAllBooks];
+        _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
         [self.tableView reloadData];
         
         
@@ -125,26 +125,25 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.topItem.title = @"书架";
     
-    if ([[VCCoreDataCenter sharedInstance] getAllBooks].count == 0) {
+    if ([[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks].count == 0) {
         
         [self updateBooksOfCurrentUser];
         
     } else {
         
-        _bookArray = [[VCCoreDataCenter sharedInstance] getAllBooks];
+        _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
         [self.tableView reloadData];
     }
   
 }
-
 
 -(void) showActivityView {
 
     [VCTool showActivityView];
 
 }
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"showBookContent"]) {
 
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
@@ -198,10 +197,22 @@
     
     // Configure the cell...
     NSString *bookNameString = ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name;
-
-//    VCLOG(@"row:%ld name:%@", (long)indexPath.row, bookNameString);
-   
     [cell.bookNameLabel setText:bookNameString];
+    
+    NSString *numberOfWordsString = [VCTool getDatafromBook:bookNameString withField:@"numberOfWords"];
+    long numberOfWords = [numberOfWordsString intValue];
+
+    if (numberOfWords > 0) {
+        
+        VCReadingStatusMO *status = [[VCCoreDataCenter sharedInstance] getReadingStatusForBook:bookNameString];
+        NSString *wordCountOfTheBookForTheFirstWordInTheChapter = [[VCTool getDatafromBook:bookNameString withField:@"wordCountOfTheBookForTheFirstWordInChapters"] objectAtIndex:status.chapterNumber];
+        long currentReadWordPosition = [wordCountOfTheBookForTheFirstWordInTheChapter intValue] + status.wordNumber;
+        float progress = (float)currentReadWordPosition / (float)numberOfWords * 100.0f;
+        
+        [cell.readingProgressLabel setText:[NSString stringWithFormat:@"已读 %3.1f%%", progress]];
+    } else {
+        [cell.readingProgressLabel setText:[NSString stringWithFormat:@"未读"]];
+    }
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
