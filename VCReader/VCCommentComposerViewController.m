@@ -20,12 +20,16 @@
 
     [super viewDidLoad];
     [self.commentTextView becomeFirstResponder];
+    [self.commentTextView setDelegate:self];
+    
+    UIToolbar *keyboardDoneButtonView = [[UIToolbar alloc] init];
+    [keyboardDoneButtonView sizeToFit];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleBordered target:self action:@selector(doneClicked:)];
+    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:doneButton, nil]];
+    self.commentTextView.inputAccessoryView = keyboardDoneButtonView;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 - (IBAction)submitButtonPressed:(id)sender {
     
     if (self.commentTextView.text.length > 200) {
@@ -113,10 +117,16 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 - (IBAction)cancelButtonPressed:(id)sender {
     
     [self dismissViewControllerAnimated:YES completion:nil];
 
+}
+
+- (IBAction)tapped:(id)sender {
+    
+    [self.view endEditing:YES];
 }
 
 
@@ -125,6 +135,12 @@
 {
     VCLOG(@"Recieved Data: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     
+}
+
+- (IBAction)doneClicked:(id)sender
+{
+    VCLOG(@"Done Clicked.");
+    [self.view endEditing:YES];
 }
 
 @end

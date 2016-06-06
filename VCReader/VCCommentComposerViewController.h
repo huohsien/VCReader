@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UIPlaceHolderTextView.h"
 
-@interface VCCommentComposerViewController : UIViewController<NSURLConnectionDataDelegate>
+@interface VCCommentComposerViewController : UIViewController<NSURLConnectionDataDelegate, UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIPlaceHolderTextView *commentTextView;
 

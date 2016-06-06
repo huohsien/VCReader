@@ -116,6 +116,7 @@
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.82867719240000004" green="0.82867719240000004" blue="0.82867719240000004" alpha="1" colorSpace="calibratedRGB"/>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="5Ek-kU-pYr" firstAttribute="top" secondItem="Z0M-eo-LD9" secondAttribute="bottom" constant="8" id="36S-At-KQP"/>
                 <constraint firstItem="8ec-ro-WSK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="BZQ-fi-YIi"/>
@@ -168,6 +169,14 @@
                     <include reference="P2j-II-vxa"/>
                 </mask>
             </variation>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="79R-Tq-8zN" appends="YES" id="xVs-mr-n7w"/>
+            </connections>
         </view>
+        <tapGestureRecognizer cancelsTouchesInView="NO" id="79R-Tq-8zN">
+            <connections>
+                <action selector="tapped:" destination="-1" id="YWD-nC-krn"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>

@@ -37,6 +37,7 @@
 		665B535E1D02C5F80030F635 /* VCCommentComposerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 665B535C1D02C5F80030F635 /* VCCommentComposerViewController.xib */; };
 		665B53611D02CA770030F635 /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B53601D02CA770030F635 /* UIPlaceHolderTextView.m */; };
 		665B53631D043A020030F635 /* VCPlaintextResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B53621D043A020030F635 /* VCPlaintextResponseSerializer.m */; };
+		665B53671D0533B10030F635 /* VCBookStoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B53661D0533B10030F635 /* VCBookStoreTableViewController.m */; };
 		666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */; };
 		6668596C1C9683110046C8E8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6668596E1C9683110046C8E8 /* Localizable.strings */; };
 		666EECB81C81BEC600DF5621 /* VCLibraryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */; };
@@ -50,7 +51,6 @@
 		667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACF91C58B05C00CD40E1 /* VCBook.m */; };
 		668AB1BB1C5BDD1C00395099 /* VCTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 668AB1BA1C5BDD1C00395099 /* VCTool.m */; };
 		669227C61CCDE6730045291E /* VCSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227C51CCDE6730045291E /* VCSignUpViewController.m */; };
-		669227C91CCF59D20045291E /* VCBookStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227C81CCF59D20045291E /* VCBookStoreViewController.m */; };
 		669227D41CD09E0A0045291E /* VCUserMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227D11CD09E0A0045291E /* VCUserMO+CoreDataProperties.m */; };
 		669227D51CD09E0A0045291E /* VCUserMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227D31CD09E0A0045291E /* VCUserMO.m */; };
 		669227D81CD09F820045291E /* VCCoreDataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227D71CD09F820045291E /* VCCoreDataCenter.m */; };
@@ -110,6 +110,8 @@
 		665B53601D02CA770030F635 /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		665B53621D043A020030F635 /* VCPlaintextResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPlaintextResponseSerializer.m; sourceTree = "<group>"; };
 		665B53641D043A480030F635 /* VCPlaintextResponseSerializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VCPlaintextResponseSerializer.h; sourceTree = "<group>"; };
+		665B53651D0533B10030F635 /* VCBookStoreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBookStoreTableViewController.h; sourceTree = "<group>"; };
+		665B53661D0533B10030F635 /* VCBookStoreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBookStoreTableViewController.m; sourceTree = "<group>"; };
 		666266E21C8596DB004F133F /* VCLibraryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCLibraryTableViewCell.h; sourceTree = "<group>"; };
 		666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCLibraryTableViewCell.m; sourceTree = "<group>"; };
 		6668596D1C9683110046C8E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -134,8 +136,6 @@
 		668AB1BD1C5BDF8900395099 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		669227C41CCDE6730045291E /* VCSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCSignUpViewController.h; sourceTree = "<group>"; };
 		669227C51CCDE6730045291E /* VCSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCSignUpViewController.m; sourceTree = "<group>"; };
-		669227C71CCF59D10045291E /* VCBookStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBookStoreViewController.h; sourceTree = "<group>"; };
-		669227C81CCF59D20045291E /* VCBookStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBookStoreViewController.m; sourceTree = "<group>"; };
 		669227D01CD09E0A0045291E /* VCUserMO+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VCUserMO+CoreDataProperties.h"; path = "VCReader/VCUserMO+CoreDataProperties.h"; sourceTree = "<group>"; };
 		669227D11CD09E0A0045291E /* VCUserMO+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "VCUserMO+CoreDataProperties.m"; path = "VCReader/VCUserMO+CoreDataProperties.m"; sourceTree = "<group>"; };
 		669227D21CD09E0A0045291E /* VCUserMO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCUserMO.h; path = VCReader/VCUserMO.h; sourceTree = "<group>"; };
@@ -292,10 +292,10 @@
 				662225BA1CC9F973001BE988 /* VCLoginViewController.m */,
 				666EECB61C81BEC600DF5621 /* VCLibraryTableViewController.h */,
 				666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */,
+				665B53651D0533B10030F635 /* VCBookStoreTableViewController.h */,
+				665B53661D0533B10030F635 /* VCBookStoreTableViewController.m */,
 				667AACE91C545E3E00CD40E1 /* VCPageViewController.h */,
 				667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */,
-				669227C71CCF59D10045291E /* VCBookStoreViewController.h */,
-				669227C81CCF59D20045291E /* VCBookStoreViewController.m */,
 				666EECB91C83C3E700DF5621 /* VCChapterTableViewController.h */,
 				666EECBA1C83C3E700DF5621 /* VCChapterTableViewController.m */,
 				66CA97FE1CB62E5400B52B5E /* VCSettingsTableViewController.h */,
@@ -509,7 +509,6 @@
 				660C15601CD9F51500C25553 /* VCSetEmailViewController.m in Sources */,
 				66F8C3761C5D078100DF7611 /* VCTextView.m in Sources */,
 				662225A81CC3989E001BE988 /* VCBookMO+CoreDataProperties.m in Sources */,
-				669227C91CCF59D20045291E /* VCBookStoreViewController.m in Sources */,
 				667AACDD1C545D9400CD40E1 /* VCReader.xcdatamodeld in Sources */,
 				662225B01CC616DB001BE988 /* VCSyncEngine.m in Sources */,
 				66F8C3791C5D0AF300DF7611 /* VCView.m in Sources */,
@@ -521,6 +520,7 @@
 				667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */,
 				665B53611D02CA770030F635 /* UIPlaceHolderTextView.m in Sources */,
 				666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */,
+				665B53671D0533B10030F635 /* VCBookStoreTableViewController.m in Sources */,
 				660C155C1CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m in Sources */,
 				668AB1BB1C5BDD1C00395099 /* VCTool.m in Sources */,
 				666EECB81C81BEC600DF5621 /* VCLibraryTableViewController.m in Sources */,

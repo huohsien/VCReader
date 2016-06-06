@@ -563,7 +563,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="gy7-W4-JTC" kind="relationship" relationship="viewControllers" id="ppl-zy-mSH"/>
-                        <segue destination="WNN-ON-2aG" kind="relationship" relationship="viewControllers" id="A1w-lZ-RJu"/>
+                        <segue destination="7Bg-i4-g5t" kind="relationship" relationship="viewControllers" id="KNE-5q-bMB"/>
                         <segue destination="4fw-uQ-PM0" kind="relationship" relationship="viewControllers" id="hlW-wR-MQI"/>
                     </connections>
                 </tabBarController>
@@ -572,23 +572,109 @@
             <point key="canvasLocation" x="-2365.5" y="-1559"/>
         </scene>
         <!--书库-->
-        <scene sceneID="3o3-3Z-p92">
+        <scene sceneID="lUX-EX-sl6">
             <objects>
-                <viewController id="WNN-ON-2aG" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="zCr-55-Ev2"/>
-                        <viewControllerLayoutGuide type="bottom" id="b6b-BA-ro6"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="4F3-vl-o98">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <tableViewController id="7Bg-i4-g5t" customClass="VCBookStoreTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="El8-Xa-SNE">
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.949361911" green="0.949361911" blue="0.949361911" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="书库" image="library" id="Xar-SW-OtG"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bfW-iZ-cge" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="n22-mk-xe7">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="n22-mk-xe7" id="cG7-Ox-X3o">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="超級學神" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aan-jE-cxF">
+                                            <rect key="frame" x="122" y="39" width="437" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="Qmo-fi-lhf"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Qmo-fi-lhf"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                                                <rect key="frame" x="132" y="39" width="212" height="20"/>
+                                                <mask key="constraints">
+                                                    <include reference="Qmo-fi-lhf"/>
+                                                </mask>
+                                            </variation>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="irj-R3-fhW">
+                                            <rect key="frame" x="20" y="10" width="60" height="80"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="80" id="P3x-gQ-v5g"/>
+                                                <constraint firstAttribute="width" constant="60" id="ohL-cc-tKU"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="ohL-cc-tKU"/>
+                                                    <exclude reference="P3x-gQ-v5g"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="ohL-cc-tKU"/>
+                                                    <include reference="P3x-gQ-v5g"/>
+                                                </mask>
+                                            </variation>
+                                        </imageView>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="I14-el-r5J">
+                                            <rect key="frame" x="-10" y="-10" width="20" height="20"/>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="aan-jE-cxF" firstAttribute="leading" secondItem="irj-R3-fhW" secondAttribute="trailing" constant="42" id="1ap-E8-RLR"/>
+                                        <constraint firstItem="irj-R3-fhW" firstAttribute="centerY" secondItem="cG7-Ox-X3o" secondAttribute="centerY" id="ArP-od-BbZ"/>
+                                        <constraint firstItem="I14-el-r5J" firstAttribute="centerX" secondItem="irj-R3-fhW" secondAttribute="centerX" id="MM1-MH-sG8"/>
+                                        <constraint firstItem="I14-el-r5J" firstAttribute="centerY" secondItem="irj-R3-fhW" secondAttribute="centerY" id="ZRZ-uI-MT5"/>
+                                        <constraint firstItem="irj-R3-fhW" firstAttribute="leading" secondItem="cG7-Ox-X3o" secondAttribute="leading" constant="30" id="my2-7u-MB5"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="aan-jE-cxF"/>
+                                            <exclude reference="irj-R3-fhW"/>
+                                            <exclude reference="I14-el-r5J"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <exclude reference="ArP-od-BbZ"/>
+                                            <exclude reference="my2-7u-MB5"/>
+                                            <exclude reference="MM1-MH-sG8"/>
+                                            <exclude reference="ZRZ-uI-MT5"/>
+                                            <exclude reference="1ap-E8-RLR"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="aan-jE-cxF"/>
+                                            <include reference="irj-R3-fhW"/>
+                                            <include reference="I14-el-r5J"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <include reference="ArP-od-BbZ"/>
+                                            <include reference="my2-7u-MB5"/>
+                                            <include reference="MM1-MH-sG8"/>
+                                            <include reference="ZRZ-uI-MT5"/>
+                                            <include reference="1ap-E8-RLR"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="7Bg-i4-g5t" id="ZJP-Kq-LAM"/>
+                            <outlet property="delegate" destination="7Bg-i4-g5t" id="82m-eE-g8c"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="书库" image="library" id="Atj-Oa-r80"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bQ2-iX-D4S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-688.5" y="-1756"/>
+            <point key="canvasLocation" x="-689.25" y="-1755.5"/>
         </scene>
         <!--Chapter Table View Controller-->
         <scene sceneID="Tzi-IO-zZB">
