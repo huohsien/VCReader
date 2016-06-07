@@ -29,13 +29,14 @@
         _contentFilename = contentFilename;
         _documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 
-        [self setup];
+        if (![self setup])
+            return nil;
     }
     return self;
 }
 
 
--(void) setup {
+-(BOOL) setup {
     
     _chapterTitleStringArray = [NSMutableArray new];
     _chapterContentRangeStringArray = [NSMutableArray new];
@@ -55,7 +56,9 @@
     if (!isBookLoaded) {
         
         [VCTool showActivityView];
-        [self loadContent];
+        if (![self loadContent])
+            return NO;
+        
         [self splitChapters];
         
         for (int i = 0; i < _chapterTitleStringArray.count; i++) {
@@ -65,10 +68,10 @@
     }
     
     _totalNumberOfChapters = [[VCTool getDatafromBook:_bookName withField:@"numberOfChapters"] intValue];
-    
+    return YES;
 }
 
--(void) loadContent {
+-(BOOL)loadContent{
 
     NSString *path = [NSString stringWithFormat:@"%@/%@", kVCReaderBaseURLString, _contentFilename];
     NSString *encodePath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -91,7 +94,8 @@
     
     if (![SSZipArchive unzipFileAtPath:zipFilePath toDestination:unzipFilePath]) {
         VCLOG(@"unzip fail");
-//        abort();
+        [VCTool toastMessage:@"无法下载书籍"];
+        return NO;
     };
     NSError *error = nil;
 
@@ -103,6 +107,9 @@
         
     } else {
         
+        if ([directoryContent count] == 0) {
+
+        }
         NSString *path = [NSString stringWithFormat:@"%@/%@", unzipFilePath, [directoryContent lastObject]];
         VCLOG(@"path = %@", path);
         _contentString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
@@ -112,7 +119,6 @@
         if (error) {
             
             VCLOG(@"Error: %@", error.debugDescription);
-            abort();
             
         } else {
             
@@ -129,6 +135,7 @@
             }
         }
     }
+    return YES;
 }
 
 -(void) writeContentOfChapter:(int)chapterNumber {

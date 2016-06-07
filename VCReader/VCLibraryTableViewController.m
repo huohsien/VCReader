@@ -55,8 +55,10 @@
         UIStoryboard*  storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         VCPageViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"VCPageViewController"];
         VCBook *book = [[VCBook alloc] initWithBookName:nameOfLastReadBook contentFilename:nil]; // assume if you have read it. no need to split chapters again.
-        vc.book = book;
-        [self.navigationController pushViewController:vc animated:NO];
+        if (book) {
+            vc.book = book;
+            [self.navigationController pushViewController:vc animated:NO];
+        }
         return;
     }
     
@@ -131,6 +133,25 @@
 
     [VCTool showActivityView];
 
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    
+    if ([identifier isEqualToString:@"showBookContent"]) {
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+        
+        [VCTool showActivityView];
+        VCBook *book = [[VCBook alloc] initWithBookName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name contentFilename:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).contentFilePath];
+        [VCTool hideActivityView];
+        if (!book) {
+            
+            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+            return NO;
+        }
+
+    }
+    return YES;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

@@ -744,6 +744,7 @@
     _isSyncing = YES;
     
     VCLOG();
+    if (!_book) return;
     
     [[VCReaderAPIClient sharedClient] callAPI:@"user_status_get" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         
