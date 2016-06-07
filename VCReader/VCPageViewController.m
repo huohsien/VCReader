@@ -745,7 +745,7 @@
     
     VCLOG();
     
-    [[VCReaderAPIClient sharedClient] callAPI:@"user_status_get" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName} success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[VCReaderAPIClient sharedClient] callAPI:@"user_status_get" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.dict = responseObject;
         
@@ -765,7 +765,7 @@
                     NSString *word = [NSString stringWithFormat:@"%d", readingStatus.wordNumber];
                     NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)readingStatus.timestamp];
                     
-                    [[VCReaderAPIClient sharedClient] callAPI:@"user_status_add" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName, @"current_reading_chapter" : chapter, @"current_reading_word" : word, @"timestamp" : timestamp} success:^(NSURLSessionDataTask *task, id responseObject) {
+                    [[VCReaderAPIClient sharedClient] callAPI:@"user_status_add" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName, @"current_reading_chapter" : chapter, @"current_reading_word" : word, @"timestamp" : timestamp} showErrorMessage:YES  success:^(NSURLSessionDataTask *task, id responseObject) {
                         
                         readingStatus.synced = YES;
                         [[VCCoreDataCenter sharedInstance] saveContext];
@@ -818,7 +818,7 @@
                     NSString *word = [NSString stringWithFormat:@"%d", readingStatus.wordNumber];
                     NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)readingStatus.timestamp];
                     
-                    [[VCReaderAPIClient sharedClient] callAPI:@"user_status_add" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName, @"current_reading_chapter" : chapter, @"current_reading_word" : word, @"timestamp" : timestamp} success:^(NSURLSessionDataTask *task, id responseObject) {
+                    [[VCReaderAPIClient sharedClient] callAPI:@"user_status_add" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName, @"current_reading_chapter" : chapter, @"current_reading_word" : word, @"timestamp" : timestamp} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
                         
                         VCLOG(@"server data updated. change synced flag to YES and load page");
                         

@@ -60,7 +60,7 @@
         
         NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)([[NSDate new] timeIntervalSince1970] * 1000.0)];
         
-        [[VCReaderAPIClient sharedClient] callAPI:@"user_send_email_verify_code" params:@{@"token" : _token, @"email" : self.emailTextField.text, @"timestamp" : timestamp} success:^(NSURLSessionDataTask *task, id responseObject) {
+        [[VCReaderAPIClient sharedClient] callAPI:@"user_send_email_verify_code" params:@{@"token" : _token, @"email" : self.emailTextField.text, @"timestamp" : timestamp} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
             
             NSDictionary *dict = responseObject;
             
@@ -96,7 +96,7 @@
     } else if ([_type isEqualToString:@"忘记账户密码"]) {
         
         
-        [[VCReaderAPIClient sharedClient] callAPI:@"user_send_email_password" params:@{@"email" : self.emailTextField.text} success:^(NSURLSessionDataTask *task, id responseObject) {
+        [[VCReaderAPIClient sharedClient] callAPI:@"user_send_email_password" params:@{@"email" : self.emailTextField.text} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
             
             NSDictionary *dict = responseObject;
             

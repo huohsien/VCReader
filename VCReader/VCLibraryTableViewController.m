@@ -48,7 +48,6 @@
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self action:@selector(updateAllBooksOfCurrentUser) forControlEvents:UIControlEventValueChanged];
     
-    [self updateAllBooksOfCurrentUser];
 
     NSString *nameOfLastReadBook = [VCTool getObjectWithKey:@"name of the last read book"];
     
@@ -64,7 +63,20 @@
     
 }
 
+-(void) viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.topItem.title = @"书架";
+    
+    [self updateAllBooksOfCurrentUserAndShowErrorMessage:NO];
+    
+}
+
 -(void)updateAllBooksOfCurrentUser {
+    [self updateAllBooksOfCurrentUserAndShowErrorMessage:YES];
+}
+
+-(void)updateAllBooksOfCurrentUserAndShowErrorMessage:(BOOL)showErrorMessage {
     
     if (_isUpdatingBook == YES) return;
     
@@ -74,7 +86,7 @@
     
     NSString *token = [VCTool getObjectWithKey:@"token"];
     
-    [[VCReaderAPIClient sharedClient] callAPI:@"book_get_list" params:@{@"token" : token} success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[VCReaderAPIClient sharedClient] callAPI:@"book_get_list" params:@{@"token" : token} showErrorMessage:showErrorMessage success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.jsonResponse = responseObject;
         
@@ -112,16 +124,6 @@
 
     }];
     
-}
-
-
--(void) viewWillAppear:(BOOL)animated {
-    
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.topItem.title = @"书架";
-
-    [self updateAllBooksOfCurrentUser];
-
 }
 
 -(void) showActivityView {
@@ -280,7 +282,7 @@
         _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
 
         [self.tableView reloadData];
-        [[VCReaderAPIClient sharedClient] callAPI:@"user_remove_book" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : bookName} success:^(NSURLSessionDataTask *task, id responseObject) {
+        [[VCReaderAPIClient sharedClient] callAPI:@"user_remove_book" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : bookName} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
             VCLOG(@"success in removing a book for the current user in the cloud db");
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             VCLOG(@"Failed:%@", error.debugDescription);

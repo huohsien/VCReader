@@ -43,7 +43,19 @@
     
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.topItem.title = @"书库";
+    [self updateAllBooksAndShowErrorMessage:NO];
+    
+}
+
 -(void)updateAllBooks {
+    [self updateAllBooksAndShowErrorMessage:YES];
+}
+
+-(void)updateAllBooksAndShowErrorMessage:(BOOL)showErrorMessage  {
     
     if (_isUpdatingBook == YES) return;
     
@@ -51,7 +63,7 @@
     
     _isUpdatingBook = YES;
         
-    [[VCReaderAPIClient sharedClient] callAPI:@"book_get_list" params:@{@"token" : @""} success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[VCReaderAPIClient sharedClient] callAPI:@"book_get_list" params:@{@"token" : @""} showErrorMessage:showErrorMessage success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.jsonResponse = responseObject;
         
@@ -90,13 +102,7 @@
     
 }
 
--(void)viewWillAppear:(BOOL)animated {
-    
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.topItem.title = @"书库";
-    [self updateAllBooks];
 
-}
 
 
 -(void)showActivityView {
@@ -227,7 +233,7 @@
     NSString *bookName = ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name;
     NSString *token = [VCTool getObjectWithKey:@"token"];
     
-    [[VCReaderAPIClient sharedClient] callAPI:@"user_add_book" params:@{@"token" : token, @"book_name" : bookName} success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[VCReaderAPIClient sharedClient] callAPI:@"user_add_book" params:@{@"token" : token, @"book_name" : bookName} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
       
         VCLOG(@"success");
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];

@@ -14,7 +14,7 @@ extern NSString * const kVCReaderBaseURLString;
 
 + (VCReaderAPIClient *) sharedClient;
 
--(void) callAPI:(NSString *)name params:(NSDictionary *)dict success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure completion:(void (^)(BOOL finished))completion;
+-(void) callAPI:(NSString *)name params:(NSDictionary *)dict showErrorMessage:(BOOL)showErrorMessage success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure completion:(void (^)(BOOL finished))completion;
 
 -(void) signupDirectlyWithName:(NSString *)accountName password:(NSString *)accountPassword nickName:(NSString *)nickName timestamp:(NSTimeInterval)timestamp success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure;
 

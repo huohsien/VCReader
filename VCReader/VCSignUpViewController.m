@@ -278,7 +278,7 @@ return NO;\
         
         NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)([[NSDate new] timeIntervalSince1970]  * 1000.0)];
         
-        [[VCReaderAPIClient sharedClient] callAPI:@"user_signup_login_qq" params:@{@"token" : _tencentOAuth.openId, @"nick_name" : [response.jsonResponse objectForKey:@"nickname"], @"timestamp" : timestamp} success:^(NSURLSessionDataTask *task, id responseObject) {
+        [[VCReaderAPIClient sharedClient] callAPI:@"user_signup_login_qq" params:@{@"token" : _tencentOAuth.openId, @"nick_name" : [response.jsonResponse objectForKey:@"nickname"], @"timestamp" : timestamp} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
             
             NSDictionary *dict = responseObject;
             VCLOG(@"response = %@", dict);

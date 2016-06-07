@@ -223,11 +223,8 @@
     NSError *error = nil;
     NSArray *userArray = [_context executeFetchRequest:fetchRequest error:&error];
     
-    if (error) {
-        
-        VCLOG(@"Unresolved error %@, %@",error,[error userInfo]);
-        abort();
-    }
+    if (error) VCLOG(@"Unresolved error %@, %@",error,[error userInfo]);
+    
     VCBookMO *book = nil;
     if (userArray.count == 0) {
         

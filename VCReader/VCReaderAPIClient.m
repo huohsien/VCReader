@@ -52,13 +52,14 @@ NSString * const kVCReaderBaseURLString = @"http://api.vhhc.dyndns.org";
 //    }
 //}
 
--(void) callAPI:(NSString *)name params:(NSDictionary *)dict success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure completion:(void (^)(BOOL finished))completion {
+-(void) callAPI:(NSString *)name params:(NSDictionary *)dict showErrorMessage:(BOOL)showErrorMessage success:(void (^)(NSURLSessionDataTask *, id))success failure:(void (^)(NSURLSessionDataTask *, NSError *))failure completion:(void (^)(BOOL finished))completion {
     
     NSMutableString *path = [[NSMutableString alloc] initWithFormat:@"%@.php?", name];
     
     for (NSString *param in dict) {
         [path appendFormat:@"%@=%@&", param, [dict objectForKey:param]];
     }
+    
     [path deleteCharactersInRange:NSMakeRange(path.length - 1, 1)];
     
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -73,13 +74,13 @@ NSString * const kVCReaderBaseURLString = @"http://api.vhhc.dyndns.org";
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
         if (error.code == -1009 || error.code == -1004 || error.code == -1001) {
-            [VCTool toastMessage:@"网络连线异常"];
+            if (showErrorMessage) [VCTool toastMessage:@"网络连线异常"];
             [VCTool hideActivityView];
 
         } else {
         
             NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
-            [VCTool showAlertViewWithTitle:@"web error" andMessage:[NSString stringWithFormat:@"%@\n response = %@", error.debugDescription, errResponse]];
+            if (showErrorMessage) [VCTool showAlertViewWithTitle:@"web error" andMessage:[NSString stringWithFormat:@"%@\n response = %@", error.debugDescription, errResponse]];
         }
         
         if (failure) failure(task, error);

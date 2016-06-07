@@ -43,7 +43,7 @@
     
     NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)([[NSDate new] timeIntervalSince1970] * 1000.0)];
     
-    [[VCReaderAPIClient sharedClient] callAPI:@"user_check_email_verify_code" params:@{@"code" : self.verifyCodeTextField.text, @"token" : _token, @"timestamp" : timestamp} success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[VCReaderAPIClient sharedClient] callAPI:@"user_check_email_verify_code" params:@{@"code" : self.verifyCodeTextField.text, @"token" : _token, @"timestamp" : timestamp} showErrorMessage:YES  success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSDictionary *dict = responseObject;
        

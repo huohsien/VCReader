@@ -91,7 +91,7 @@
 
     NSString *timestamp = [NSString stringWithFormat:@"%ld", (long) ([[NSDate new] timeIntervalSince1970] * 1000.0f)];
     
-    [[VCReaderAPIClient sharedClient] callAPI:@"report_add_comment" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"comment" : self.commentTextView.text, @"timestamp" : timestamp} success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[VCReaderAPIClient sharedClient] callAPI:@"report_add_comment" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"comment" : self.commentTextView.text, @"timestamp" : timestamp} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSDictionary *dict = responseObject;
         
