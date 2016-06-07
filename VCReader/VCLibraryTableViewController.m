@@ -46,9 +46,9 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor redColor];
     self.refreshControl.tintColor = [UIColor whiteColor];
-    [self.refreshControl addTarget:self action:@selector(updateBooksOfCurrentUser) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(updateAllBooksOfCurrentUser) forControlEvents:UIControlEventValueChanged];
     
-    [self updateAllBooks];
+    [self updateAllBooksOfCurrentUser];
 
     NSString *nameOfLastReadBook = [VCTool getObjectWithKey:@"name of the last read book"];
     
@@ -64,7 +64,7 @@
     
 }
 
--(void)updateBooksWithToken:(NSString *)token {
+-(void)updateAllBooksOfCurrentUser {
     
     if (_isUpdatingBook == YES) return;
     
@@ -72,6 +72,7 @@
     
     _isUpdatingBook = YES;
     
+    NSString *token = [VCTool getObjectWithKey:@"token"];
     
     [[VCReaderAPIClient sharedClient] callAPI:@"book_get_list" params:@{@"token" : token} success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -85,17 +86,12 @@
             
         }
         
-        _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
-        [self.tableView reloadData];
-        
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-        
+
         
     } completion:^(BOOL finished) {
-        
-        _isUpdatingBook = NO;
         
         // End the refreshing
         
@@ -109,36 +105,23 @@
         
         [self.refreshControl endRefreshing];
         
+        _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
+        [self.tableView reloadData];
+        
+        _isUpdatingBook = NO;
+
     }];
     
 }
 
-- (void) updateBooksOfCurrentUser {
-
-    NSString *token = [VCTool getObjectWithKey:@"token"];
-    [self updateBooksWithToken:token];
-}
-
--(void)updateAllBooks {
-    
-    [self updateBooksWithToken:@""];
-}
 
 -(void) viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.topItem.title = @"书架";
-    
-    if ([[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks].count == 0) {
-        
-        [self updateBooksOfCurrentUser];
-        
-    } else {
-        
-        _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
-        [self.tableView reloadData];
-    }
-  
+
+    [self updateAllBooksOfCurrentUser];
+
 }
 
 -(void) showActivityView {
@@ -177,7 +160,7 @@
         
         UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(padding, 0, self.view.bounds.size.width - 2 * padding, self.view.bounds.size.height)];
         
-        messageLabel.text = @"目前您的书架没有书，可下拉刷新书架或是到书库选择新书";
+        messageLabel.text = @"目前您的书架没有书，请尝试下拉刷新书架或是到书库选择新书";
         messageLabel.textColor = [UIColor blackColor];
         messageLabel.numberOfLines = 0;
         messageLabel.textAlignment = NSTextAlignmentCenter;

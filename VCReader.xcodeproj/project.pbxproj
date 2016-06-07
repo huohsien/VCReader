@@ -39,6 +39,8 @@
 		665B53631D043A020030F635 /* VCPlaintextResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B53621D043A020030F635 /* VCPlaintextResponseSerializer.m */; };
 		665B53671D0533B10030F635 /* VCBookStoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B53661D0533B10030F635 /* VCBookStoreTableViewController.m */; };
 		665B536A1D0585EF0030F635 /* VCBookStoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B53691D0585EF0030F635 /* VCBookStoreTableViewCell.m */; };
+		665B536E1D06A2F70030F635 /* VCFontSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B536C1D06A2F70030F635 /* VCFontSettingViewController.m */; };
+		665B536F1D06A2F70030F635 /* VCFontSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 665B536D1D06A2F70030F635 /* VCFontSettingViewController.xib */; };
 		666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */; };
 		6668596C1C9683110046C8E8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6668596E1C9683110046C8E8 /* Localizable.strings */; };
 		666EECB81C81BEC600DF5621 /* VCLibraryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */; };
@@ -114,6 +116,9 @@
 		665B53661D0533B10030F635 /* VCBookStoreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBookStoreTableViewController.m; sourceTree = "<group>"; };
 		665B53681D0585EF0030F635 /* VCBookStoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBookStoreTableViewCell.h; sourceTree = "<group>"; };
 		665B53691D0585EF0030F635 /* VCBookStoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBookStoreTableViewCell.m; sourceTree = "<group>"; };
+		665B536B1D06A2F70030F635 /* VCFontSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCFontSettingViewController.h; sourceTree = "<group>"; };
+		665B536C1D06A2F70030F635 /* VCFontSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCFontSettingViewController.m; sourceTree = "<group>"; };
+		665B536D1D06A2F70030F635 /* VCFontSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VCFontSettingViewController.xib; sourceTree = "<group>"; };
 		666266E21C8596DB004F133F /* VCLibraryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCLibraryTableViewCell.h; sourceTree = "<group>"; };
 		666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCLibraryTableViewCell.m; sourceTree = "<group>"; };
 		6668596D1C9683110046C8E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -311,6 +316,9 @@
 				665B535A1D02C5F80030F635 /* VCCommentComposerViewController.h */,
 				665B535B1D02C5F80030F635 /* VCCommentComposerViewController.m */,
 				665B535C1D02C5F80030F635 /* VCCommentComposerViewController.xib */,
+				665B536B1D06A2F70030F635 /* VCFontSettingViewController.h */,
+				665B536C1D06A2F70030F635 /* VCFontSettingViewController.m */,
+				665B536D1D06A2F70030F635 /* VCFontSettingViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -444,6 +452,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				662225E01CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				665B536F1D06A2F70030F635 /* VCFontSettingViewController.xib in Resources */,
 				6668596C1C9683110046C8E8 /* Localizable.strings in Resources */,
 				665B535E1D02C5F80030F635 /* VCCommentComposerViewController.xib in Resources */,
 				667AACDF1C545D9400CD40E1 /* Assets.xcassets in Resources */,
@@ -543,6 +552,7 @@
 				665B53631D043A020030F635 /* VCPlaintextResponseSerializer.m in Sources */,
 				667AACD11C545D9400CD40E1 /* main.m in Sources */,
 				662225AB1CC3989E001BE988 /* VCChapterMO.m in Sources */,
+				665B536E1D06A2F70030F635 /* VCFontSettingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

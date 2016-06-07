@@ -273,17 +273,22 @@
     [self saveContext];
 }
 
--(BOOL) addBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
+-(NSArray *)getForCurrentUserAllBooks {
     
-    VCBookMO *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:_context];
-    book.name = bookName;
-    book.contentFilePath = contentFilePath;
-    book.coverImageFilePath = coverImageFilePath;
-    book.timestamp = [timestamp doubleValue];
-    [self saveContext];
-    return YES;
+    if (!_user) [self hookupCurrentUserWithToken];
+    
+    NSMutableArray *books = [NSMutableArray arrayWithArray:[_user.books allObjects]];
+    NSArray *sortedArray;
+    sortedArray = [books sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSTimeInterval first = [(VCBookMO*)a timestamp];
+        NSTimeInterval second = [(VCBookMO*)b timestamp];
+        return (first > second);
+    }];
+    
+    return sortedArray;
 }
 
+/*
 -(BOOL) updateForCurrentUserBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
     
     if (!_user) [self hookupCurrentUserWithToken];
@@ -307,8 +312,8 @@
 
     return NO;
 }
-
--(void) clearAllBooksForCurrentUser {
+*/
+-(void)clearAllBooksForCurrentUser {
     
     if (!_user) [self hookupCurrentUserWithToken];
 
@@ -318,7 +323,41 @@
 
 }
 
--(void) clearAllBooks {
+-(void)addBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Book"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", bookName];
+    NSError *error = nil;
+    [fetchRequest setPredicate:predicate];
+    NSArray *bookArray = [_context executeFetchRequest:fetchRequest error:&error];
+
+    if (error)
+        VCLOG(@"Unresolved error %@, %@",error,[error userInfo]);
+    
+    if (bookArray.count == 0) {
+        VCBookMO *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:_context];
+        book.name = bookName;
+        book.contentFilePath = contentFilePath;
+        book.coverImageFilePath = coverImageFilePath;
+        book.timestamp = [timestamp doubleValue];
+        [self saveContext];
+    } else if (bookArray.count == 1) {
+        VCBookMO *book = (VCBookMO *)[bookArray firstObject];
+        if (book.timestamp < [timestamp doubleValue]) {
+            VCLOG(@"add a book with the same name as one's in Book Entity if the try-to-be-added book record is more updated than the one in the local storage");
+            book.name = bookName;
+            book.contentFilePath = contentFilePath;
+            book.coverImageFilePath = coverImageFilePath;
+            book.timestamp = [timestamp doubleValue];
+            [self saveContext];
+        }
+    } else {
+        VCLOG(@"something wrong about book instances");
+    }
+}
+
+/*
+-(void)clearAllBooks {
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Book"];
     NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
@@ -327,27 +366,29 @@
     [[[VCTool appDelegate] persistentStoreCoordinator] executeRequest:delete withContext:_context error:&deleteError];
     
 }
+*/
+-(NSArray *)getAllBooks {
+    
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    NSError *error = nil;
+    NSArray *bookArray = [_context executeFetchRequest:fetchRequest error:&error];
 
--(NSArray *) getForCurrentUserAllBooks {
-    
-    if (!_user) [self hookupCurrentUserWithToken];
-    
-    NSMutableArray *books = [NSMutableArray arrayWithArray:[_user.books allObjects]];
-    NSArray *sortedArray;
-    sortedArray = [books sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        NSTimeInterval first = [(VCBookMO*)a timestamp];
-        NSTimeInterval second = [(VCBookMO*)b timestamp];
-        return (first > second);
-    }];
-    
-    return sortedArray;
+    if (error)
+        VCLOG(@"Unresolved error %@, %@",error,[error userInfo]);
+
+    return bookArray;
+
 }
 
+/*
 -(void) setAttributesForBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath {
 
     [self updateForCurrentUserBookNamed:bookName contentFilePath:contentFilePath coverImageFilePath:coverImageFilePath timestamp:[NSString stringWithFormat:@"%lf",DBL_MAX]];
 }
-
+*/
 
 #pragma mark - general tools
 

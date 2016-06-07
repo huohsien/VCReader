@@ -30,16 +30,21 @@
 -(void) saveContext;
 
 -(void) initReadingStatusForBook:(NSString *)bookName isDummy:(BOOL)isDummy;
+
 -(void) addForCurrentUserBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
--(BOOL) updateForCurrentUserBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
+//-(BOOL) updateForCurrentUserBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
 -(void) removeForCurrentUserBookNamed:(NSString *)bookName;
 -(void) clearAllBooksForCurrentUser;
--(BOOL) addBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
--(void) clearAllBooks;
+
+//-(void) setAttributesForBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath;
+
+-(void) addBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
+//-(void) clearAllBooks;
+-(NSArray *)getAllBooks;
+
 
 -(NSArray *) getForCurrentUserAllBooks;
 
--(void) setAttributesForBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath;
 -(void) logBatteryLevel:(double)level timestamp:(NSTimeInterval)timestamp;
 -(void) batteryLogDump;
 -(void) clearAllofBatteryLog;

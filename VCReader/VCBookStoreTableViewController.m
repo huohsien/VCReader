@@ -16,7 +16,7 @@
 @synthesize jsonResponse = _jsonResponse;
 @synthesize bookArray = _bookArray;
 
-- (void)viewDidLoad {
+-(void)viewDidLoad {
     
     [super viewDidLoad];
     
@@ -39,12 +39,11 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor redColor];
     self.refreshControl.tintColor = [UIColor whiteColor];
-    [self.refreshControl addTarget:self action:@selector(updateBooks) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(updateAllBooks) forControlEvents:UIControlEventValueChanged];
     
 }
 
-
-- (void) updateBooks {
+-(void)updateAllBooks {
     
     if (_isUpdatingBook == YES) return;
     
@@ -56,25 +55,23 @@
         
         self.jsonResponse = responseObject;
         
-        [[VCCoreDataCenter sharedInstance] clearAllBooksForCurrentUser];
+//        [[VCCoreDataCenter sharedInstance] clearAllBooks];
         
         for (NSDictionary *dict in _jsonResponse) {
             
-            [[VCCoreDataCenter sharedInstance] addForCurrentUserBookNamed:dict[@"book_name"] contentFilePath:dict[@"content_filename"] coverImageFilePath:dict[@"cover_image_filename"] timestamp:dict[@"timestamp"]];
+            [[VCCoreDataCenter sharedInstance] addBookNamed:dict[@"book_name"] contentFilePath:dict[@"content_filename"] coverImageFilePath:dict[@"cover_image_filename"] timestamp:dict[@"timestamp"]];
     
         }
-        
-        _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
-        [self.tableView reloadData];
         
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-        
+
         
     } completion:^(BOOL finished) {
         
-        _isUpdatingBook = NO;
+        _bookArray = [[VCCoreDataCenter sharedInstance] getAllBooks];
+        [self.tableView reloadData];
         
         // End the refreshing
         
@@ -87,21 +84,22 @@
         self.refreshControl.attributedTitle = attributedTitle;
         
         [self.refreshControl endRefreshing];
-        
+        _isUpdatingBook = NO;
+
     }];
     
 }
 
--(void) viewWillAppear:(BOOL)animated {
+-(void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.topItem.title = @"书库";
-    [self updateBooks];
+    [self updateAllBooks];
 
 }
 
 
--(void) showActivityView {
+-(void)showActivityView {
     
     [VCTool showActivityView];
     
@@ -124,7 +122,7 @@
         
         UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(padding, 0, self.view.bounds.size.width - 2 * padding, self.view.bounds.size.height)];
         
-        messageLabel.text = @"目前您的书库没有书，可下拉刷新书库";
+        messageLabel.text = @"目前您的书库没有书，请尝试下拉刷新书库";
         messageLabel.textColor = [UIColor blackColor];
         messageLabel.numberOfLines = 0;
         messageLabel.textAlignment = NSTextAlignmentCenter;
