@@ -89,6 +89,7 @@
     
     NSString *token = [VCTool getObjectWithKey:@"token"];
     
+    VCLOG(@"callAPI");
     [[VCReaderAPIClient sharedClient] callAPI:@"book_get_list" params:@{@"token" : token} showErrorMessage:showErrorMessage success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.jsonResponse = responseObject;
@@ -304,6 +305,8 @@
         _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
 
         [self.tableView reloadData];
+        
+        VCLOG(@"callAPI");
         [[VCReaderAPIClient sharedClient] callAPI:@"user_remove_book" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : bookName} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
             VCLOG(@"success in removing a book for the current user in the cloud db");
         } failure:^(NSURLSessionDataTask *task, NSError *error) {

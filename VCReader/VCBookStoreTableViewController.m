@@ -62,10 +62,9 @@
     
     if (_isUpdatingBook == YES) return;
     
-    VCLOG();
     
     _isUpdatingBook = YES;
-        
+    VCLOG(@"callAPI");
     [[VCReaderAPIClient sharedClient] callAPI:@"book_get_list" params:@{@"token" : @""} showErrorMessage:showErrorMessage success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.jsonResponse = responseObject;
@@ -236,6 +235,7 @@
     NSString *bookName = ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name;
     NSString *token = [VCTool getObjectWithKey:@"token"];
     
+    VCLOG(@"callAPI");
     [[VCReaderAPIClient sharedClient] callAPI:@"user_add_book" params:@{@"token" : token, @"book_name" : bookName} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
       
         VCLOG(@"success");

@@ -192,36 +192,6 @@
     
     [super viewDidLoad];
     
-    [self setup];
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    
-    [super viewWillAppear:animated];
-    [self start];
-}
-
--(void)viewWillDisappear:(BOOL)animated {
-    
-    [super viewWillDisappear:animated];
-    [self end];
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
--(BOOL)prefersStatusBarHidden {
-    
-    return _statusBarHidden;
-}
-
--(void) setup {
- 
     _topMargin = 0;
     _bottomMargin = 0;
     _horizontalMargin = 10;
@@ -244,11 +214,11 @@
     // setup UIs
     //
     
-//    self.title = _book.bookName;
+    //    self.title = _book.bookName;
     self.title = @"";
     
     CGSize sizeOfScreen = _rectOfScreen.size;
-//    VCLOG(@"screen resolution:%@", NSStringFromCGSize(sizeOfScreen));
+    //    VCLOG(@"screen resolution:%@", NSStringFromCGSize(sizeOfScreen));
     
     // resize bg image
     _backgroundImage = [_backgroundImage imageByScalingProportionallyToSize:sizeOfScreen];
@@ -266,7 +236,7 @@
     [self.view addSubview:_contentView];
     [self.view sendSubviewToBack:_contentView];
     
-
+    
     // set page status bars' color
     [self.topStatusBarView setBackgroundColor:[UIColor colorWithPatternImage:_backgroundImage]];
     
@@ -280,7 +250,7 @@
     [self.pageLabel setTextColor:statusBarTextColor];
     [self.batteryLabel setTextColor:statusBarTextColor];
     [self.currentTimeLabel setTextColor:statusBarTextColor];
-
+    
     //
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -289,13 +259,10 @@
     [VCTool storeObject:_book.bookName withKey:@"name of the last read book"];
 }
 
--(void) goBack {
-
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void) start {
+-(void)viewWillAppear:(BOOL)animated {
     
+    [super viewWillAppear:animated];
+
     // init vars
     //
     
@@ -316,8 +283,10 @@
     self.navigationController.navigationBar.tintColor = textColorInNavigationBar;
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chapter_list_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showChapters:)];
-    NSArray *actionButtonItems = @[item];
+    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chapter_list_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showChapters:)];
+    UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithTitle:@"同步" style:UIBarButtonItemStylePlain target:self action:@selector(syncReadingStatusDataAndShowErrorMessage)];
+    
+    NSArray *actionButtonItems = @[item1,item2];
     self.navigationItem.rightBarButtonItems = actionButtonItems;
     
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle:@"<返回" style:UIBarButtonItemStyleBordered target:self action:@selector(goBack)];
@@ -331,21 +300,22 @@
     }
     
     VCLOG(@"call syncReadingStatusData");
-    [self syncReadingStatusDataWithCompletion:^(BOOL finished) {
+    [self syncReadingStatusDataAndShowErrorMessage:NO completion:^(BOOL finished) {
         if (finished) [self loadContent];
     }];
     
     [VCTool showActivityView];
-
+    
     [self startMonitoringBattery];
     [self StartTimerForClock];
+    
 }
 
--(void) end {
+-(void)viewWillDisappear:(BOOL)animated {
     
-    VCLOG();
-    
+    [super viewWillDisappear:animated];
 
+    VCLOG();
     // because the view controller "color theme" here is different from default, so when being navigated out, this controller has the responsibility to restore the default color theme
     //
     if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
@@ -374,23 +344,26 @@
     
     
     [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
-
+    
     
     VCLOG(@"call syncReadingStatusData");
-    [self syncReadingStatusDataWithCompletion:nil];
-
+    [self syncReadingStatusDataAndShowErrorMessage:NO completion:nil];
+    
 }
 
--(void)dealloc {
+-(BOOL)prefersStatusBarHidden {
     
-    VCLOG();
+    return _statusBarHidden;
+}
 
+-(void) goBack {
+
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)loadContent {
     
     VCLOG();
-
     dispatch_async(dispatch_get_main_queue(), ^{
         
         VCReadingStatusMO *readingStatus = [[VCCoreDataCenter sharedInstance] getReadingStatusForBook:_book.bookName];
@@ -418,7 +391,7 @@
 
     VCLOG(@"call syncReadingStatusData");
 
-    [self syncReadingStatusDataWithCompletion:^(BOOL finished) {
+    [self syncReadingStatusDataAndShowErrorMessage:NO completion:^(BOOL finished) {
         if (finished) [self loadContent];
     }];
 
@@ -734,8 +707,12 @@
 
 #pragma mark - syncing between core data and web server
 
+-(void) syncReadingStatusDataAndShowErrorMessage {
 
--(void) syncReadingStatusDataWithCompletion:(void (^)(BOOL finished))completion {
+    [self syncReadingStatusDataAndShowErrorMessage:YES completion:nil ];
+}
+
+-(void) syncReadingStatusDataAndShowErrorMessage:(BOOL)showErrorMessage completion:(void (^)(BOOL finished))completion {
     
     if (_isSyncing == YES) {
         
@@ -746,7 +723,8 @@
     VCLOG();
     if (!_book) return;
     
-    [[VCReaderAPIClient sharedClient] callAPI:@"user_status_get" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
+    VCLOG(@"callAPI");
+    [[VCReaderAPIClient sharedClient] callAPI:@"user_status_get" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName} showErrorMessage:showErrorMessage success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.dict = responseObject;
         
@@ -766,6 +744,7 @@
                     NSString *word = [NSString stringWithFormat:@"%d", readingStatus.wordNumber];
                     NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)readingStatus.timestamp];
                     
+                    VCLOG(@"callAPI");
                     [[VCReaderAPIClient sharedClient] callAPI:@"user_status_add" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName, @"current_reading_chapter" : chapter, @"current_reading_word" : word, @"timestamp" : timestamp} showErrorMessage:YES  success:^(NSURLSessionDataTask *task, id responseObject) {
                         
                         readingStatus.synced = YES;
@@ -819,6 +798,7 @@
                     NSString *word = [NSString stringWithFormat:@"%d", readingStatus.wordNumber];
                     NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)readingStatus.timestamp];
                     
+                    VCLOG(@"callAPI");
                     [[VCReaderAPIClient sharedClient] callAPI:@"user_status_add" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName, @"current_reading_chapter" : chapter, @"current_reading_word" : word, @"timestamp" : timestamp} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
                         
                         VCLOG(@"server data updated. change synced flag to YES and load page");

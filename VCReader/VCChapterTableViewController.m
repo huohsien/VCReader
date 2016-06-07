@@ -94,6 +94,7 @@
     NSString *word = [NSString stringWithFormat:@"%d", readingStatus.wordNumber];
     NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)readingStatus.timestamp];
     
+    VCLOG(@"callAPI");
     [[VCReaderAPIClient sharedClient] callAPI:@"user_status_add" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName, @"current_reading_chapter" : chapter, @"current_reading_word" : word, @"timestamp" : timestamp} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
         
         readingStatus.synced = YES;
