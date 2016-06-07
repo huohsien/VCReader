@@ -41,12 +41,15 @@
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self action:@selector(updateAllBooks) forControlEvents:UIControlEventValueChanged];
     
+    _bookArray = [[VCCoreDataCenter sharedInstance] getAllBooks];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.topItem.title = @"书库";
+
     [self updateAllBooksAndShowErrorMessage:NO];
     
 }
