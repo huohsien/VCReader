@@ -34,7 +34,7 @@
     self.bookArray = nil;
     
     // table view
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 50, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 45, 0);
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor redColor];

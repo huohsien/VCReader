@@ -234,7 +234,7 @@
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:self.backgroundImage]];
     [_contentView setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:_contentView];
-    [self.view sendSubviewToBack:_contentView];
+//    [self.view sendSubviewToBack:_contentView];
     
     
     // set page status bars' color
@@ -284,12 +284,13 @@
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     
     UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chapter_list_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showChapters:)];
-    UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithTitle:@"同步" style:UIBarButtonItemStylePlain target:self action:@selector(syncReadingStatusDataAndShowErrorMessage)];
+    UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sync_progress_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(syncReadingStatusDataAndShowErrorMessage)];
     
     NSArray *actionButtonItems = @[item1,item2];
     self.navigationItem.rightBarButtonItems = actionButtonItems;
     
-    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle:@"<返回" style:UIBarButtonItemStyleBordered target:self action:@selector(goBack)];
+//    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle:@"<返回" style:UIBarButtonItemStyleBordered target:self action:@selector(goBack)];
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back_icon"] style:UIBarButtonItemStyleBordered target:self action:@selector(goBack)];
     self.navigationItem.leftBarButtonItem = newBackButton;
     
     self.tabBarController.tabBar.hidden = YES;
