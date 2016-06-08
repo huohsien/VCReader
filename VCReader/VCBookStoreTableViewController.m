@@ -24,9 +24,10 @@
     
     _documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
-    
-    self.navigationController.navigationBar.topItem.title = @"书架";
-    
+    // setup navigation bar
+    if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+        [self.navigationController.navigationBar setTranslucent:NO];
+    }
     //show tab bar
     self.tabBarController.tabBar.hidden = NO;
     
@@ -162,7 +163,7 @@
     NSString  *path = [NSString stringWithFormat:@"%@/%@", kVCReaderBaseURLString, ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).coverImageFilePath];
     NSString *encodedPath = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@.jpg", _documentPath, ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name]]) {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@.png", _documentPath, ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name]]) {
         
         [cell.imageDownloadProgressIndicator startAnimating];
         manager.responseSerializer = [AFImageResponseSerializer serializer];
