@@ -235,6 +235,8 @@
     [_contentView setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:_contentView];
 //    [self.view sendSubviewToBack:_contentView];
+    [self.view bringSubviewToFront:self.topStatusBarView];
+    [self.view bringSubviewToFront:self.bottomStatusBarView];
     
     
     // set page status bars' color
@@ -250,6 +252,7 @@
     [self.pageLabel setTextColor:statusBarTextColor];
     [self.batteryLabel setTextColor:statusBarTextColor];
     [self.currentTimeLabel setTextColor:statusBarTextColor];
+    [self.totalBookReadProgressLabel setTextColor:statusBarTextColor];
     
     //
     
@@ -1130,7 +1133,19 @@
 
 -(void) updateProgessInfo {
 
-    self.pageLabel.text = [NSString stringWithFormat:@"%d頁/%d頁", _pageNumber + 1, (int)_currentChapter.pageArray.count];
+    NSString *numberOfWordsString = [VCTool getDatafromBook:_book.bookName withField:@"numberOfWords"];
+    long numberOfWords = [numberOfWordsString intValue];
+    
+
+    NSString *wordCountOfTheBookForTheFirstWordInTheChapter = [[VCTool getDatafromBook:_book.bookName withField:@"wordCountOfTheBookForTheFirstWordInChapters"] objectAtIndex:_chapterNumber];
+    long currentReadWordPosition = [wordCountOfTheBookForTheFirstWordInTheChapter intValue] + [self getWordNumberFromPageNumber:_pageNumber];
+    
+    float progress = (float)currentReadWordPosition / (float)numberOfWords * 100.0f;
+    
+    [self.totalBookReadProgressLabel setText:[NSString stringWithFormat:@"%3.1f%%", progress]];
+    
+    self.pageLabel.text = [NSString stringWithFormat:@"%d/%d", _pageNumber + 1, (int)_currentChapter.pageArray.count];
+    
     if (_pageNumber != 0) {
         self.chapterTitleLabel.text = [_book getChapterTitleStringFromChapterNumber:_chapterNumber];
     } else {

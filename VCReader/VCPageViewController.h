@@ -39,6 +39,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *batteryImageView;
 @property (weak, nonatomic) IBOutlet UIView *topStatusBarView;
 @property (weak, nonatomic) IBOutlet UIView *bottomStatusBarView;
+@property (weak, nonatomic) IBOutlet UILabel *totalBookReadProgressLabel;
 
 @property (nonatomic, strong) NSDictionary *dict;
 
