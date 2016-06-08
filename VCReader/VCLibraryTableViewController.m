@@ -71,6 +71,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.topItem.title = @"书架";
     
+    
     [self updateAllBooksOfCurrentUserAndShowErrorMessage:NO];
     
 }
@@ -156,6 +157,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
     if ([segue.identifier isEqualToString:@"showBookContent"]) {
 
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
@@ -209,16 +211,21 @@
     
     // Configure the cell...
     NSString *bookNameString = ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name;
+    if ([bookNameString isEqualToString:@"怪厨"]) {
+        VCLOG();
+    }
     [cell.bookNameLabel setText:bookNameString];
     
     NSString *numberOfWordsString = [VCTool getDatafromBook:bookNameString withField:@"numberOfWords"];
     long numberOfWords = [numberOfWordsString intValue];
 
-    if (numberOfWords > 0) {
+    VCReadingStatusMO *status = [[VCCoreDataCenter sharedInstance] getReadingStatusForBook:bookNameString];
+    int chapterNumber = status.chapterNumber;
+    NSString *wordCountOfTheBookForTheFirstWordInTheChapter = [[VCTool getDatafromBook:bookNameString withField:@"wordCountOfTheBookForTheFirstWordInChapters"] objectAtIndex:chapterNumber];
+    long currentReadWordPosition = [wordCountOfTheBookForTheFirstWordInTheChapter intValue] + status.wordNumber;
+    
+    if (numberOfWords > 0 && currentReadWordPosition > 0) {
         
-        VCReadingStatusMO *status = [[VCCoreDataCenter sharedInstance] getReadingStatusForBook:bookNameString];
-        NSString *wordCountOfTheBookForTheFirstWordInTheChapter = [[VCTool getDatafromBook:bookNameString withField:@"wordCountOfTheBookForTheFirstWordInChapters"] objectAtIndex:status.chapterNumber];
-        long currentReadWordPosition = [wordCountOfTheBookForTheFirstWordInTheChapter intValue] + status.wordNumber;
         float progress = (float)currentReadWordPosition / (float)numberOfWords * 100.0f;
         
         [cell.readingProgressLabel setText:[NSString stringWithFormat:@"已读 %3.1f%%", progress]];

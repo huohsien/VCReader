@@ -118,6 +118,7 @@
 
 -(VCReadingStatusMO *) updateReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber {
 
+    VCLOG();
     if (!_user) [self hookupCurrentUserWithToken];
     
     VCReadingStatusMO *readingStatus = [self getReadingStatusForBook:bookName];
@@ -142,6 +143,7 @@
 
 -(VCReadingStatusMO *) updateReadingStatusForBook:(NSString *)bookName chapterNumber:(int)chapterNumber wordNumber:(int)wordNumber timestampFromServer:(NSTimeInterval)timestampFromServer {
     
+    VCLOG();
     if (!_user) [self hookupCurrentUserWithToken];
     
     VCReadingStatusMO *readingStatus = [self getReadingStatusForBook:bookName];
@@ -161,9 +163,9 @@
     readingStatus.wordNumber = wordNumber;
     readingStatus.timestamp = timestampFromServer;
     readingStatus.synced = YES;
-    if (_user.readingStatus.count != 0) {
-        [_user removeReadingStatusObject:[_user.readingStatus anyObject]];
-    }
+//    if (_user.readingStatus.count != 0) {
+//        [_user removeReadingStatusObject:[_user.readingStatus anyObject]];
+//    }
     [_user addReadingStatusObject:readingStatus];
     [self saveContext];
     
@@ -178,19 +180,20 @@
     VCReadingStatusMO *readingStatus = nil;
     
     for (VCReadingStatusMO *rs in _user.readingStatus) {
+        VCLOG(@"loop through books for user with token= %@ and book name = %@", _user.token, rs.bookName);
         if ([rs.bookName isEqualToString:bookName])
             readingStatus = rs;
     }
 
     if (readingStatus == nil) {
         VCLOG(@"can not find user's reading status of the given book");
-    } else {
-//        VCLOG(@"chapter = %d, word = %d timestamp=%13.0lf", readingStatus.chapterNumber, readingStatus.wordNumber, readingStatus.timestamp);
     }
     return readingStatus;
 }
 
 -(void) initReadingStatusForBook:(NSString *)bookName isDummy:(BOOL)isDummy {
+    
+    VCLOG();
     
     if (!_user) [self hookupCurrentUserWithToken];
     
