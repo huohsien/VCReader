@@ -340,10 +340,10 @@
                                         <exclude reference="ajo-Vz-MnV"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <exclude reference="4cl-6m-dA2"/>
-                                        <exclude reference="Y60-W7-gMr"/>
                                         <exclude reference="0pZ-Dm-WV1"/>
                                         <exclude reference="XvU-iI-Ia8"/>
+                                        <exclude reference="4cl-6m-dA2"/>
+                                        <exclude reference="Y60-W7-gMr"/>
                                         <exclude reference="1g3-pF-Gv8"/>
                                         <exclude reference="jk3-Aq-1Ai"/>
                                         <exclude reference="4wR-ry-0sS"/>
@@ -361,10 +361,10 @@
                                         <include reference="ajo-Vz-MnV"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <include reference="4cl-6m-dA2"/>
-                                        <include reference="Y60-W7-gMr"/>
                                         <include reference="0pZ-Dm-WV1"/>
                                         <include reference="XvU-iI-Ia8"/>
+                                        <include reference="4cl-6m-dA2"/>
+                                        <include reference="Y60-W7-gMr"/>
                                         <include reference="1g3-pF-Gv8"/>
                                         <include reference="jk3-Aq-1Ai"/>
                                         <include reference="4wR-ry-0sS"/>

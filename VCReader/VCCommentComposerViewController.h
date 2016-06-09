@@ -12,5 +12,6 @@
 @interface VCCommentComposerViewController : UIViewController<NSURLConnectionDataDelegate, UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIPlaceHolderTextView *commentTextView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end

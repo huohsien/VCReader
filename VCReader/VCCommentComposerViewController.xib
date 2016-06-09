@@ -3,12 +3,12 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VCCommentComposerViewController">
             <connections>
                 <outlet property="commentTextView" destination="Z0M-eo-LD9" id="65n-Qd-lta"/>
+                <outlet property="scrollView" destination="eY0-Op-FNg" id="x0F-uy-18S"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -17,160 +17,95 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Z0M-eo-LD9" customClass="UIPlaceHolderTextView">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eY0-Op-FNg">
+                    <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W6R-zP-fXU" userLabel="contentView">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="388"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="反馈吐槽" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ec-ro-WSK">
+                                    <rect key="frame" x="8" y="8" width="72" height="22"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                    <color key="textColor" white="0.3257250578" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Z0M-eo-LD9" customClass="UIPlaceHolderTextView">
+                                    <rect key="frame" x="8" y="38" width="584" height="300"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="300" id="jPZ-ws-BDW"/>
+                                    </constraints>
+                                    <color key="textColor" red="0.3294117647" green="0.21960784310000001" blue="0.08235294118" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="请输入您的建议或问题"/>
+                                    </userDefinedRuntimeAttributes>
+                                </textView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ek-kU-pYr">
+                                    <rect key="frame" x="8" y="346" width="100" height="34"/>
+                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="100" id="flI-Me-xpl"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <state key="normal" title="取消">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="cancelButtonPressed:" destination="-1" eventType="touchUpInside" id="Y4p-0l-bQX"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ue-OC-gTq">
+                                    <rect key="frame" x="492" y="346" width="100" height="34"/>
+                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="100" id="w7g-bW-f7z"/>
+                                    </constraints>
+                                    <state key="normal" title="提交"/>
+                                    <connections>
+                                        <action selector="submitButtonPressed:" destination="-1" eventType="touchUpInside" id="LmI-HP-ZAc"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.89411764705882346" green="0.93725490196078431" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstItem="8ec-ro-WSK" firstAttribute="top" secondItem="W6R-zP-fXU" secondAttribute="top" constant="8" id="27J-Ws-NFi"/>
+                                <constraint firstItem="5Ek-kU-pYr" firstAttribute="top" secondItem="Z0M-eo-LD9" secondAttribute="bottom" constant="8" id="AtE-TU-efi"/>
+                                <constraint firstAttribute="trailing" secondItem="Z0M-eo-LD9" secondAttribute="trailing" constant="8" id="KCH-2p-caq"/>
+                                <constraint firstItem="8ec-ro-WSK" firstAttribute="leading" secondItem="W6R-zP-fXU" secondAttribute="leading" constant="8" id="Rqz-4l-7pj"/>
+                                <constraint firstItem="7ue-OC-gTq" firstAttribute="trailing" secondItem="Z0M-eo-LD9" secondAttribute="trailing" id="WTX-fD-mCm"/>
+                                <constraint firstItem="7ue-OC-gTq" firstAttribute="centerY" secondItem="5Ek-kU-pYr" secondAttribute="centerY" id="ZsV-Ui-BAZ"/>
+                                <constraint firstAttribute="bottom" secondItem="5Ek-kU-pYr" secondAttribute="bottom" constant="8" id="bEJ-5n-Vzd"/>
+                                <constraint firstItem="5Ek-kU-pYr" firstAttribute="leading" secondItem="Z0M-eo-LD9" secondAttribute="leading" id="qX5-yz-DqW"/>
+                                <constraint firstItem="Z0M-eo-LD9" firstAttribute="leading" secondItem="8ec-ro-WSK" secondAttribute="leading" id="su2-qt-oRt"/>
+                                <constraint firstItem="Z0M-eo-LD9" firstAttribute="top" secondItem="8ec-ro-WSK" secondAttribute="bottom" constant="8" id="tlQ-81-60c"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="273" id="ep9-3V-WMv"/>
+                        <constraint firstItem="W6R-zP-fXU" firstAttribute="top" secondItem="eY0-Op-FNg" secondAttribute="top" id="3Ls-6Z-9jn"/>
+                        <constraint firstAttribute="trailing" secondItem="W6R-zP-fXU" secondAttribute="trailing" id="58M-Et-38x"/>
+                        <constraint firstItem="W6R-zP-fXU" firstAttribute="leading" secondItem="eY0-Op-FNg" secondAttribute="leading" id="98Q-zJ-yOx"/>
+                        <constraint firstAttribute="bottom" secondItem="W6R-zP-fXU" secondAttribute="bottom" id="I1E-hv-UMs"/>
                     </constraints>
-                    <color key="textColor" red="0.3294117647" green="0.21960784310000001" blue="0.08235294118" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="请输入您的建议或问题"/>
-                    </userDefinedRuntimeAttributes>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="ep9-3V-WMv"/>
-                        </mask>
-                    </variation>
-                    <variation key="widthClass=compact">
-                        <mask key="constraints">
-                            <include reference="ep9-3V-WMv"/>
-                        </mask>
-                    </variation>
-                </textView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="反馈吐槽" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ec-ro-WSK">
-                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="80" id="EGY-za-YEh"/>
-                        <constraint firstAttribute="height" constant="21" id="OEH-FC-hWw"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="EGY-za-YEh"/>
-                            <exclude reference="OEH-FC-hWw"/>
-                        </mask>
-                    </variation>
-                    <variation key="widthClass=compact">
-                        <mask key="constraints">
-                            <include reference="EGY-za-YEh"/>
-                            <include reference="OEH-FC-hWw"/>
-                        </mask>
-                    </variation>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ue-OC-gTq">
-                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="f8C-xq-izI"/>
-                        <constraint firstAttribute="width" constant="100" id="hfZ-NI-q79"/>
-                    </constraints>
-                    <state key="normal" title="提交"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="f8C-xq-izI"/>
-                            <exclude reference="hfZ-NI-q79"/>
-                        </mask>
-                    </variation>
-                    <variation key="widthClass=compact">
-                        <mask key="constraints">
-                            <include reference="f8C-xq-izI"/>
-                            <include reference="hfZ-NI-q79"/>
-                        </mask>
-                    </variation>
-                    <connections>
-                        <action selector="submitButtonPressed:" destination="-1" eventType="touchUpInside" id="LmI-HP-ZAc"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ek-kU-pYr">
-                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="100" id="7Nt-qS-hMB"/>
-                        <constraint firstAttribute="height" constant="30" id="KQQ-UI-lvI"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="取消">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="7Nt-qS-hMB"/>
-                            <exclude reference="KQQ-UI-lvI"/>
-                        </mask>
-                    </variation>
-                    <variation key="widthClass=compact">
-                        <mask key="constraints">
-                            <include reference="7Nt-qS-hMB"/>
-                            <include reference="KQQ-UI-lvI"/>
-                        </mask>
-                    </variation>
-                    <connections>
-                        <action selector="cancelButtonPressed:" destination="-1" eventType="touchUpInside" id="Y4p-0l-bQX"/>
-                    </connections>
-                </button>
+                </scrollView>
             </subviews>
             <color key="backgroundColor" red="0.949361911" green="0.949361911" blue="0.949361911" alpha="1" colorSpace="calibratedRGB"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="5Ek-kU-pYr" firstAttribute="top" secondItem="Z0M-eo-LD9" secondAttribute="bottom" constant="8" id="36S-At-KQP"/>
-                <constraint firstItem="8ec-ro-WSK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="BZQ-fi-YIi"/>
-                <constraint firstItem="7ue-OC-gTq" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="HOX-hI-vd7"/>
-                <constraint firstItem="7ue-OC-gTq" firstAttribute="top" secondItem="Z0M-eo-LD9" secondAttribute="bottom" constant="8" id="P2j-II-vxa"/>
-                <constraint firstItem="5Ek-kU-pYr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="Y9Y-Jj-rjW"/>
-                <constraint firstItem="Z0M-eo-LD9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="Zxo-Dz-gVQ"/>
-                <constraint firstAttribute="trailingMargin" secondItem="Z0M-eo-LD9" secondAttribute="trailing" id="elZ-oU-r9q"/>
-                <constraint firstItem="8ec-ro-WSK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" id="iqM-XO-aq0">
-                    <variation key="widthClass=compact" constant="30"/>
-                </constraint>
-                <constraint firstItem="Z0M-eo-LD9" firstAttribute="top" secondItem="8ec-ro-WSK" secondAttribute="bottom" constant="10" id="yIt-aO-dGJ"/>
+                <constraint firstItem="W6R-zP-fXU" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="UrJ-kd-KYS"/>
+                <constraint firstItem="eY0-Op-FNg" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="kCp-7I-Kap"/>
+                <constraint firstItem="eY0-Op-FNg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="sSr-cR-deE"/>
+                <constraint firstAttribute="trailing" secondItem="eY0-Op-FNg" secondAttribute="trailing" id="uHo-Yx-tVA"/>
+                <constraint firstAttribute="bottom" secondItem="eY0-Op-FNg" secondAttribute="bottom" id="wFo-RV-6NL"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-            <variation key="default">
-                <mask key="subviews">
-                    <exclude reference="Z0M-eo-LD9"/>
-                    <exclude reference="8ec-ro-WSK"/>
-                    <exclude reference="7ue-OC-gTq"/>
-                    <exclude reference="5Ek-kU-pYr"/>
-                </mask>
-                <mask key="constraints">
-                    <exclude reference="BZQ-fi-YIi"/>
-                    <exclude reference="iqM-XO-aq0"/>
-                    <exclude reference="Zxo-Dz-gVQ"/>
-                    <exclude reference="elZ-oU-r9q"/>
-                    <exclude reference="yIt-aO-dGJ"/>
-                    <exclude reference="36S-At-KQP"/>
-                    <exclude reference="Y9Y-Jj-rjW"/>
-                    <exclude reference="HOX-hI-vd7"/>
-                    <exclude reference="P2j-II-vxa"/>
-                </mask>
-            </variation>
-            <variation key="widthClass=compact">
-                <mask key="subviews">
-                    <include reference="Z0M-eo-LD9"/>
-                    <include reference="8ec-ro-WSK"/>
-                    <include reference="7ue-OC-gTq"/>
-                    <include reference="5Ek-kU-pYr"/>
-                </mask>
-                <mask key="constraints">
-                    <include reference="BZQ-fi-YIi"/>
-                    <include reference="iqM-XO-aq0"/>
-                    <include reference="Zxo-Dz-gVQ"/>
-                    <include reference="elZ-oU-r9q"/>
-                    <include reference="yIt-aO-dGJ"/>
-                    <include reference="36S-At-KQP"/>
-                    <include reference="Y9Y-Jj-rjW"/>
-                    <include reference="HOX-hI-vd7"/>
-                    <include reference="P2j-II-vxa"/>
-                </mask>
-            </variation>
             <connections>
                 <outletCollection property="gestureRecognizers" destination="79R-Tq-8zN" appends="YES" id="xVs-mr-n7w"/>
             </connections>
+            <point key="canvasLocation" x="808" y="-20"/>
         </view>
         <tapGestureRecognizer cancelsTouchesInView="NO" id="79R-Tq-8zN">
             <connections>
