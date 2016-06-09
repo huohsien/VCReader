@@ -163,6 +163,7 @@
     BOOL _isSyncing;
     BOOL _animating;
     UIImageView *_imageView;
+    CGFloat _currentRotationalPosition;
 
     
     // touch
@@ -300,6 +301,10 @@
     [button addTarget:self action:@selector(syncReadingStatusDataAndShowErrorMessage) forControlEvents:UIControlEventTouchUpInside];
     _imageView.center = button.center;
     
+    button.imageView.clipsToBounds = NO;
+    button.imageView.contentMode = UIViewContentModeCenter;
+    _currentRotationalPosition = 0;
+    
     UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chapter_list_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showChapters:)];
     UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithCustomView:button];
     
@@ -430,9 +435,12 @@
 
 - (void) animateImageView {
     
-    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-        _imageView.transform = CGAffineTransformMakeRotation(M_PI);
+    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        _imageView.transform = CGAffineTransformMakeRotation( _currentRotationalPosition + M_PI);
     } completion:^(BOOL finished) {
+        
+        _currentRotationalPosition += M_PI;
+        
         if (_animating) {
             // if flag still set, keep spinning with constant speed
             [self animateImageView];
@@ -443,12 +451,14 @@
 - (void) startSpin {
     if (!_animating) {
         _animating = YES;
+        VCLOG(@"animating");
         [self animateImageView];
     }
 }
 
 - (void) stopSpin {
     // set the flag to stop spinning after one last 90 degree increment
+    VCLOG(@"stop animating");
     _animating = NO;
 }
 
