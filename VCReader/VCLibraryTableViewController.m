@@ -50,10 +50,10 @@
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self action:@selector(updateAllBooksOfCurrentUser) forControlEvents:UIControlEventValueChanged];
     
-
     NSString *nameOfLastReadBook = [VCTool getObjectWithKey:@"nameOfTheLastReadBook"];
     
     if (nameOfLastReadBook) {
+        
         UIStoryboard*  storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         VCPageViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"VCPageViewController"];
         VCBook *book = [[VCBook alloc] initWithBookName:nameOfLastReadBook contentFilename:nil]; // assume if you have read it. no need to split chapters again.
@@ -63,6 +63,7 @@
         }
         return;
     }
+
     
     _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
     
@@ -73,7 +74,15 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.topItem.title = @"书架";
     
-    
+    if (_bootTobeRead) {
+        
+        UIStoryboard*  storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        VCPageViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"VCPageViewController"];
+        vc.book = _bootTobeRead;
+        [self.navigationController pushViewController:vc animated:NO];
+        return;
+    }
+
     [self updateAllBooksOfCurrentUserAndShowErrorMessage:NO];
     
 }
