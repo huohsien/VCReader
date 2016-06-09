@@ -239,8 +239,28 @@
     [[VCReaderAPIClient sharedClient] callAPI:@"user_add_book" params:@{@"token" : token, @"book_name" : bookName} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
       
         VCLOG(@"success");
+        NSDictionary *dict = responseObject;
+        
+        if ([dict[@"error"][@"code"] isEqualToString:@"113"]) {
+            [VCTool showAlertViewWithMessage:@"所选书籍已在您的书架收藏中"];
+            return;
+        }
+        
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         [VCTool toastMessage:@"所选书籍已加入您的书架"];
+    
+        for (UIViewController *vc in [self.tabBarController viewControllers]) {
+            VCLOG(@"loop through tab view controller:%@", vc.title);
+            if ([vc.title isEqualToString:@"书架"]) {
+                [VCTool showActivityView];
+                VCBook *book = [[VCBook alloc] initWithBookName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name contentFilename:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).contentFilePath];
+                [VCTool hideActivityView];
+                VCLibraryTableViewController *libraryTableViewController = (VCLibraryTableViewController *)vc;
+                libraryTableViewController.bootTobeRead = book;
+                [self.tabBarController setSelectedViewController:libraryTableViewController];
+                return;
+            }
+        }
     
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         VCLOG(@"error");

@@ -18,5 +18,6 @@ extern NSString * const kVCReaderBaseURLString;
 
 @property (nonatomic, strong) NSArray *jsonResponse;
 @property (nonatomic, strong) NSArray *bookArray;
+@property (nonnull, strong) VCBook *bootTobeRead;
 
 @end

@@ -26,7 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle:@"<返回" style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     self.navigationItem.leftBarButtonItem = newBackButton;
 }
 

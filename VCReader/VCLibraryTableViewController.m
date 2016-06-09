@@ -22,6 +22,7 @@
 }
 @synthesize jsonResponse = _jsonResponse;
 @synthesize bookArray = _bookArray;
+@synthesize bootTobeRead = _bootTobeRead;
 
 - (void)viewDidLoad {
     
@@ -50,7 +51,7 @@
     [self.refreshControl addTarget:self action:@selector(updateAllBooksOfCurrentUser) forControlEvents:UIControlEventValueChanged];
     
 
-    NSString *nameOfLastReadBook = [VCTool getObjectWithKey:@"name of the last read book"];
+    NSString *nameOfLastReadBook = [VCTool getObjectWithKey:@"nameOfTheLastReadBook"];
     
     if (nameOfLastReadBook) {
         UIStoryboard*  storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -160,15 +161,19 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([segue.identifier isEqualToString:@"showBookContent"]) {
-
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         
-        [VCTool showActivityView];
-        VCBook *book = [[VCBook alloc] initWithBookName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name contentFilename:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).contentFilePath];
-        [VCTool hideActivityView];
+        if (!_bootTobeRead) {
+            
+            [VCTool showActivityView];
+            _bootTobeRead = [[VCBook alloc] initWithBookName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name contentFilename:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).contentFilePath];
+            [VCTool hideActivityView];
+        }
 
+        
         VCPageViewController *viewController = segue.destinationViewController;
-        viewController.book = book;
+        viewController.book = _bootTobeRead;
+        _bootTobeRead = nil;
     }
 }
 
@@ -201,20 +206,18 @@
     }
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _bookArray.count;
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     VCLibraryTableViewCell *cell = (VCLibraryTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"CellIdentifier" forIndexPath:indexPath];
     
     // Configure the cell...
     NSString *bookNameString = ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name;
-    if ([bookNameString isEqualToString:@"怪厨"]) {
-        VCLOG();
-    }
+
     [cell.bookNameLabel setText:bookNameString];
     
     NSString *numberOfWordsString = [VCTool getDatafromBook:bookNameString withField:@"numberOfWords"];
@@ -234,6 +237,7 @@
         [cell.readingProgressLabel setText:[NSString stringWithFormat:@"未读"]];
     }
     
+    // download image for the cover of the book
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSString  *path = [NSString stringWithFormat:@"%@/%@", kVCReaderBaseURLString, ((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).coverImageFilePath];

@@ -114,7 +114,7 @@
 - (IBAction)logoutButtonPressed:(id)sender {
 
     [VCTool storeObject:nil withKey:@"token"];
-    [VCTool storeObject:nil withKey:@"name of the last read book"];
+    [VCTool storeObject:nil withKey:@"nameOfTheLastReadBook"];
 
     [VCTool deleteFilename:@"headshot.png"];
     [[VCCoreDataCenter sharedInstance] clearAllBooksForCurrentUser];

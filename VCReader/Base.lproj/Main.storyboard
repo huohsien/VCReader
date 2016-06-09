@@ -741,7 +741,7 @@
         <!--书库-->
         <scene sceneID="lUX-EX-sl6">
             <objects>
-                <tableViewController id="7Bg-i4-g5t" customClass="VCBookStoreTableViewController" sceneMemberID="viewController">
+                <tableViewController title="书库" id="7Bg-i4-g5t" customClass="VCBookStoreTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="El8-Xa-SNE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -850,6 +850,7 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="书库" image="library" id="Atj-Oa-r80"/>
+                    <navigationItem key="navigationItem" title="书库" id="7yZ-bq-TKa"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bQ2-iX-D4S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1043,7 +1044,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="文字段落设置" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iYD-Lc-l6c">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="文字大小及行距设置" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iYD-Lc-l6c">
                                                     <rect key="frame" x="15" y="0.0" width="325" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>

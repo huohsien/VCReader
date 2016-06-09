@@ -10,6 +10,7 @@
 #import "VCBookStoreTableViewCell.h"
 #import "VCBook.h"
 #import "VCLibraryTableViewController.h"
+#import "VCPageViewController.h"
 
 extern NSString * const kVCReaderBaseURLString;
 

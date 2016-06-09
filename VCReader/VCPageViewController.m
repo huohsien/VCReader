@@ -259,7 +259,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     
-    [VCTool storeObject:_book.bookName withKey:@"name of the last read book"];
+    [VCTool storeObject:_book.bookName withKey:@"nameOfTheLastReadBook"];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -335,7 +335,7 @@
         [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UIFont systemFontOfSize:21.0]}];
         vc.tabBarController.tabBar.hidden = NO;
         
-        [VCTool storeObject:nil withKey:@"name of the last read book"];
+        [VCTool storeObject:nil withKey:@"nameOfTheLastReadBook"];
         [[NSNotificationCenter defaultCenter] removeObserver:self];
         
     } else {
