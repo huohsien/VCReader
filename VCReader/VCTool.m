@@ -8,6 +8,7 @@
 
 #import "VCTool.h"
 #import "UIAlertController+Window.h"
+#import <QuartzCore/QuartzCore.h>
 
 static UIView *_activityView;
 
@@ -309,5 +310,6 @@ static UIView *_activityView;
     }
     return errorLogFiles;
 }
+
 
 @end

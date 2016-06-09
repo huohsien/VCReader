@@ -161,6 +161,9 @@
     int _chapterNumber;
     int _pageNumber;
     BOOL _isSyncing;
+    BOOL _animating;
+    UIImageView *_imageView;
+
     
     // touch
     
@@ -270,6 +273,7 @@
     //
     
     _isEditingTextView = NO;
+    _animating = NO;
     
     // setup UIs
     //
@@ -287,9 +291,19 @@
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     [self.navigationController.navigationBar setTranslucent:YES];
 
-    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chapter_list_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showChapters:)];
-    UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sync_progress_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(syncReadingStatusDataAndShowErrorMessage)];
+    _imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sync_progress_icon"]];
+    _imageView.autoresizingMask = UIViewAutoresizingNone;
+    _imageView.contentMode = UIViewContentModeCenter;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, 0, 40, 40);
+    [button addSubview:_imageView];
+    [button addTarget:self action:@selector(syncReadingStatusDataAndShowErrorMessage) forControlEvents:UIControlEventTouchUpInside];
+    _imageView.center = button.center;
     
+    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chapter_list_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showChapters:)];
+    UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+
     NSArray *actionButtonItems = @[item1,item2];
     self.navigationItem.rightBarButtonItems = actionButtonItems;
     
@@ -412,6 +426,31 @@
     }
 }
 
+#pragma mark - animation
+
+- (void) animateImageView {
+    
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        _imageView.transform = CGAffineTransformMakeRotation(M_PI);
+    } completion:^(BOOL finished) {
+        if (_animating) {
+            // if flag still set, keep spinning with constant speed
+            [self animateImageView];
+        }
+    }];
+}
+
+- (void) startSpin {
+    if (!_animating) {
+        _animating = YES;
+        [self animateImageView];
+    }
+}
+
+- (void) stopSpin {
+    // set the flag to stop spinning after one last 90 degree increment
+    _animating = NO;
+}
 
 #pragma mark - uicontrol callbacks
 
@@ -714,7 +753,10 @@
 
 -(void) syncReadingStatusDataAndShowErrorMessage {
 
-    [self syncReadingStatusDataAndShowErrorMessage:YES completion:nil ];
+    [self startSpin];
+    [self syncReadingStatusDataAndShowErrorMessage:YES completion:nil];
+    [self stopSpin];
+
 }
 
 -(void) syncReadingStatusDataAndShowErrorMessage:(BOOL)showErrorMessage completion:(void (^)(BOOL finished))completion {
