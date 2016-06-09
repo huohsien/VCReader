@@ -79,6 +79,7 @@
         UIStoryboard*  storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         VCPageViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"VCPageViewController"];
         vc.book = _bootTobeRead;
+        _bootTobeRead = nil;
         [self.navigationController pushViewController:vc animated:NO];
         return;
     }
