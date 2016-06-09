@@ -478,6 +478,10 @@
 
 -(void)swipeUp:(id)sender {
     
+    // hide nav bar when moving pages
+    [self hideNavigationBar];
+    
+    // handle the case of the last page of the book
     if (_chapterNumber == _book.totalNumberOfChapters - 1 && _pageNumber == _currentChapter.pageArray.count - 1) {
         
         VCLOG(@"hit the last page of the book");
@@ -489,8 +493,10 @@
         } completion:nil];
         return;
     }
+    
     _pageNumber++;
     
+    // store reading status locally
     if (_pageNumber <= _currentChapter.pageArray.count - 1) {
         [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
     }
@@ -500,7 +506,8 @@
         [self showThePageAt:_pageNumber];
         
     } completion:^(BOOL finished) {
-        
+    
+        // prefetch the pages of the new chapter. set up new page and chapter number
         if (_pageNumber > _currentChapter.pageArray.count - 1) {
             
             [self nextChapter];
@@ -515,6 +522,10 @@
 
 -(void)swipeDown:(id)sender {
     
+    // hide nav bar when moving pages
+    [self hideNavigationBar];
+    
+    // handle the case of the first page of the book
     if (_chapterNumber == 0 && _pageNumber == 0) {
      
         [UIView animateWithDuration:0.15 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
@@ -526,6 +537,7 @@
     }
     _pageNumber--;
 
+    // store reading status locally
     if (_pageNumber >= 0) {
         [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:_chapterNumber wordNumber:[self getWordNumberFromPageNumber:_pageNumber]];
     }
@@ -538,6 +550,7 @@
         
         if (_pageNumber < 0){
             
+            // prefetch the pages of the new chapter. set up new page and chapter number
             [self previousChapter];
         }
         
@@ -1184,6 +1197,25 @@
     
 }
 
+-(void) hideNavigationBar {
+    
+    CGRect frame = self.navigationController.navigationBar.bounds;
+    
+    if (self.navigationController.navigationBar.hidden == NO) {
+        
+        [self.navigationController.navigationBar setFrame:CGRectMake(0, 20, frame.size.width, frame.size.height)];
+        
+        [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            [self showStatusBar:NO];
+            [self.navigationController.navigationBar setFrame:CGRectMake(0,  -frame.size.height - 20, frame.size.width, frame.size.height)];
+        } completion:^(BOOL finished) {
+            self.navigationController.navigationBar.hidden = YES;
+            
+        }];
+    }
+    
+    
+}
 -(void) updateProgessInfo {
 
     NSString *numberOfWordsString = [VCTool getDatafromBook:_book.bookName withField:@"numberOfWords"];
