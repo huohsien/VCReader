@@ -285,7 +285,8 @@
     self.navigationController.navigationBar.barTintColor = navigationBarColor;
     self.navigationController.navigationBar.tintColor = textColorInNavigationBar;
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
-    
+    [self.navigationController.navigationBar setTranslucent:YES];
+
     UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chapter_list_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showChapters:)];
     UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sync_progress_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(syncReadingStatusDataAndShowErrorMessage)];
     

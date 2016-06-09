@@ -25,9 +25,8 @@
     _documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
     // setup navigation bar
-    if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
-        [self.navigationController.navigationBar setTranslucent:NO];
-    }
+    [self.navigationController.navigationBar setTranslucent:NO];
+    
     //show tab bar
     self.tabBarController.tabBar.hidden = NO;
     

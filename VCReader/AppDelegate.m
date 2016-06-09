@@ -37,9 +37,7 @@
     [[UINavigationBar appearance] setBarTintColor:[UIColor redColor]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
-        [[UINavigationBar appearance] setTranslucent:NO];
-    }
+
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:21.0], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil]];
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:18.0], NSFontAttributeName, nil] forState:UIControlStateNormal];
     
