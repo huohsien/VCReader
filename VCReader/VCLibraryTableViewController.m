@@ -22,7 +22,7 @@
 }
 @synthesize jsonResponse = _jsonResponse;
 @synthesize bookArray = _bookArray;
-@synthesize bootTobeRead = _bootTobeRead;
+@synthesize bootTobeRead = _bookToBeRead;
 
 - (void)viewDidLoad {
     
@@ -66,7 +66,7 @@
 
     
     _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
-    
+    VCLOG(@"book array = %@", _bookArray);
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -74,12 +74,12 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.topItem.title = @"书架";
     
-    if (_bootTobeRead) {
+    if (_bookToBeRead) {
         
         UIStoryboard*  storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         VCPageViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"VCPageViewController"];
-        vc.book = _bootTobeRead;
-        _bootTobeRead = nil;
+        vc.book = _bookToBeRead;
+        _bookToBeRead = nil;
         [self.navigationController pushViewController:vc animated:NO];
         return;
     }
@@ -87,6 +87,43 @@
     [self updateAllBooksOfCurrentUserAndShowErrorMessage:NO];
     
 }
+
+
+-(void)downloadReadingStatusToLocalStorage {
+    
+    for (VCBookMO *book in _bookArray) {
+        
+        VCLOG(@"callAPI");
+        [[VCReaderAPIClient sharedClient] callAPI:@"user_status_get" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : book.name} showErrorMessage:NO success:^(NSURLSessionDataTask *task, id responseObject) {
+            
+            NSDictionary *dict = responseObject;
+            
+            if (dict[@"token"]) {
+                
+                NSTimeInterval timestampFromServer = [dict[@"timestamp"] doubleValue];
+                VCReadingStatusMO *readingStatus = [[VCCoreDataCenter sharedInstance] getReadingStatusForBook:book.name];
+                
+                if (!readingStatus) {
+                    
+                    VCLOG(@"no core data record but got data in the server. first init a core data record");
+                    
+                    [[VCCoreDataCenter sharedInstance] initReadingStatusForBook:dict[@"book_name"] isDummy:YES];
+                    [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:dict[@"book_name"] chapterNumber:[dict[@"chapter"] intValue] wordNumber:[dict[@"word"] intValue] timestampFromServer:timestampFromServer];
+                    
+                    VCLOG(@"finish syncing core data with data in server. ready for users to read");
+                    
+                    
+                }
+            }
+            
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+            VCLOG(@"Failure: %@\n response =%@", error.debugDescription, errResponse);
+            
+        } completion:nil];
+    }
+    [self.tableView reloadData]
+    ;}
 
 -(void)updateAllBooksOfCurrentUser {
     [self updateAllBooksOfCurrentUserAndShowErrorMessage:YES];
@@ -102,7 +139,7 @@
     
     NSString *token = [VCTool getObjectWithKey:@"token"];
     
-    VCLOG(@"callAPI");
+    VCLOG();
     [[VCReaderAPIClient sharedClient] callAPI:@"book_get_list" params:@{@"token" : token} showErrorMessage:showErrorMessage success:^(NSURLSessionDataTask *task, id responseObject) {
         
         self.jsonResponse = responseObject;
@@ -138,6 +175,9 @@
         [self.tableView reloadData];
         
         _isUpdatingBook = NO;
+        
+        VCLOG(@"call downloadReadingStatusToLocalStorage");
+        [self downloadReadingStatusToLocalStorage];
 
     }];
     
@@ -173,17 +213,17 @@
     if ([segue.identifier isEqualToString:@"showBookContent"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         
-        if (!_bootTobeRead) {
+        if (!_bookToBeRead) {
             
             [VCTool showActivityView];
-            _bootTobeRead = [[VCBook alloc] initWithBookName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name contentFilename:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).contentFilePath];
+            _bookToBeRead = [[VCBook alloc] initWithBookName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name contentFilename:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).contentFilePath];
             [VCTool hideActivityView];
         }
 
         
         VCPageViewController *viewController = segue.destinationViewController;
-        viewController.book = _bootTobeRead;
-        _bootTobeRead = nil;
+        viewController.book = _bookToBeRead;
+        _bookToBeRead = nil;
     }
 }
 
@@ -328,7 +368,7 @@
 
         [self.tableView reloadData];
         
-        VCLOG(@"callAPI");
+        VCLOG();
         [[VCReaderAPIClient sharedClient] callAPI:@"user_remove_book" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : bookName} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
             VCLOG(@"success in removing a book for the current user in the cloud db");
         } failure:^(NSURLSessionDataTask *task, NSError *error) {

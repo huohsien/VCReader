@@ -201,6 +201,7 @@
     _horizontalMargin = 10;
     _textLineSpacing = 15;
     _charactersSpacing = 4.0;
+    
     _rectOfScreen = [[UIScreen mainScreen] bounds];
     
     _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:214 / 255.0 green:202 / 255.0 blue:130.0 / 181 alpha:1.0] withRect:_rectOfScreen];
@@ -218,7 +219,6 @@
     // setup UIs
     //
     
-    //    self.title = _book.bookName;
     self.title = @"";
     
     CGSize sizeOfScreen = _rectOfScreen.size;
@@ -238,7 +238,7 @@
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:self.backgroundImage]];
     [_contentView setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:_contentView];
-//    [self.view sendSubviewToBack:_contentView];
+
     [self.view bringSubviewToFront:self.topStatusBarView];
     [self.view bringSubviewToFront:self.bottomStatusBarView];
     
@@ -1163,6 +1163,7 @@
         [self toggleNavigationBar];
     }
 }
+#pragma mark - navigation bar
 
 -(void) toggleNavigationBar {
     
@@ -1216,6 +1217,9 @@
     
     
 }
+
+#pragma mark -  UI of reading status
+
 -(void) updateProgessInfo {
 
     NSString *numberOfWordsString = [VCTool getDatafromBook:_book.bookName withField:@"numberOfWords"];

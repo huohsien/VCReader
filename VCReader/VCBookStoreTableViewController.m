@@ -243,6 +243,7 @@
         
         if ([dict[@"error"][@"code"] isEqualToString:@"113"]) {
             [VCTool showAlertViewWithMessage:@"所选书籍已在您的书架收藏中"];
+            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
             return;
         }
         

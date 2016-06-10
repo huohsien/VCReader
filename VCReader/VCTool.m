@@ -239,6 +239,7 @@ static UIView *_activityView;
     
     @autoreleasepool {
         
+        VCLOG();
         AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
         UIWindow *window = delegate.window;
         
@@ -266,6 +267,7 @@ static UIView *_activityView;
 
 +(void)hideActivityView {
     
+    VCLOG();
     [[[_activityView subviews] objectAtIndex:0] stopAnimating];
     [_activityView removeFromSuperview];
 

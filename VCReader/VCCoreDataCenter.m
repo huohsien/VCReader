@@ -180,13 +180,13 @@
     VCReadingStatusMO *readingStatus = nil;
     
     for (VCReadingStatusMO *rs in _user.readingStatus) {
-        VCLOG(@"loop through books for user with token= %@ and book name = %@", _user.token, rs.bookName);
+//        VCLOG(@"loop through books for user with token= %@ and book name = %@", _user.token, rs.bookName);
         if ([rs.bookName isEqualToString:bookName])
             readingStatus = rs;
     }
 
     if (readingStatus == nil) {
-        VCLOG(@"can not find user's reading status of the given book");
+        VCLOG(@"can not find user's reading status of the given book. This might happen when the app is launched first time and the data are not synced with those on the server yet");
     }
     return readingStatus;
 }
@@ -217,24 +217,26 @@
 #pragma mark - book
 
 -(void) addForCurrentUserBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp {
- 
+    
+    VCLOG(@"add book:%@", bookName);
+    
     if (!_user) [self hookupCurrentUserWithToken];
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", bookName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(name == %@)", bookName];
     [fetchRequest setPredicate:predicate];
     NSError *error = nil;
-    NSArray *userArray = [_context executeFetchRequest:fetchRequest error:&error];
+    NSArray *bookArray = [_context executeFetchRequest:fetchRequest error:&error];
     
     if (error) VCLOG(@"Unresolved error %@, %@",error,[error userInfo]);
     
     VCBookMO *book = nil;
-    if (userArray.count == 0) {
+    if (bookArray.count == 0) {
         
-        VCLOG(@"No book in core data. This should not happen.");
+        VCLOG(@"No book in core data. First time launch the app");
         book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:_context];
     } else {
-        book = [userArray firstObject];
+        book = [bookArray firstObject];
     }
     book.name = bookName;
     book.contentFilePath = contentFilePath;
@@ -252,7 +254,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", bookName];
     [fetchRequest setPredicate:predicate];
     NSError *error = nil;
-    NSArray *userArray = [_context executeFetchRequest:fetchRequest error:&error];
+    NSArray *bookArray = [_context executeFetchRequest:fetchRequest error:&error];
     
     if (error) {
         
@@ -261,12 +263,12 @@
     }
     
     VCBookMO *book = nil;
-    if (userArray.count == 0) {
+    if (bookArray.count == 0) {
         
         VCLOG(@"No book in core data. This should not happen.");
         return;
     } else {
-        book = [userArray firstObject];
+        book = [bookArray firstObject];
     }
 
     [_user removeBooksObject:book];

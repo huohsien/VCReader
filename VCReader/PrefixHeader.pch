@@ -9,14 +9,21 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 
+
 #ifdef NDEBUG
 
-// do nothing
-#define VCLOG(...)
+    #define VCLOG(...)
 
 #else
 
-#define VCLOG(fmt, ...) DDLogVerbose((@"%s [Line %d] --- " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+    #define VCLOG(fmt, ...) \
+    {NSString *tmp = @""fmt; \
+    if ([tmp length] == 0) { \
+        DDLogVerbose((@"%s [Line %d]"), __PRETTY_FUNCTION__, __LINE__); \
+    } else { \
+        DDLogVerbose((@"%s [Line %d] --- " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__); \
+    }}
+
 
 #endif
 
