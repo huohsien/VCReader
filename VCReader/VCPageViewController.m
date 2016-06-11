@@ -161,7 +161,7 @@
     int _chapterNumber;
     int _pageNumber;
     BOOL _isSyncing;
-    BOOL _animating;
+    int _animatingCount;
     UIImageView *_imageView;
     CGFloat _currentRotationalPosition;
 
@@ -215,6 +215,7 @@
     [_textRenderAttributionDict setObject:_textColor forKey:@"text color"];
     
     _isSyncing = NO;
+    
     
     // setup UIs
     //
@@ -274,7 +275,7 @@
     //
     
     _isEditingTextView = NO;
-    _animating = NO;
+    _animatingCount = 0;
     
     // setup UIs
     //
@@ -435,13 +436,15 @@
 
 - (void) animateImageView {
     
-    [UIView animateWithDuration:0.35 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-        _imageView.transform = CGAffineTransformMakeRotation( _currentRotationalPosition + M_PI);
+    CGFloat rotationRate = M_PI / 0.4;
+    CGFloat rotationUnitTime = 0.1;
+    [UIView animateWithDuration:rotationUnitTime delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        _imageView.transform = CGAffineTransformMakeRotation( _currentRotationalPosition + rotationUnitTime * rotationRate);
     } completion:^(BOOL finished) {
         
-        _currentRotationalPosition += M_PI;
+        _currentRotationalPosition += rotationUnitTime * rotationRate;
         
-        if (_animating) {
+        if (_animatingCount > 0) {
             // if flag still set, keep spinning with constant speed
             [self animateImageView];
         }
@@ -449,17 +452,18 @@
 }
 
 - (void) startSpin {
-    if (!_animating) {
-        _animating = YES;
-        VCLOG(@"animating");
+    
+    _animatingCount++;
+    if (_animatingCount > 0) {
+        VCLOG(@"animating count increases by 1. current count = %d",_animatingCount);
         [self animateImageView];
     }
 }
 
 - (void) stopSpin {
     // set the flag to stop spinning after one last 90 degree increment
-    VCLOG(@"stop animating");
-    _animating = NO;
+    _animatingCount--;
+    VCLOG(@"animating count decreases by 1. current count = %d",_animatingCount);
 }
 
 #pragma mark - uicontrol callbacks
@@ -776,9 +780,7 @@
 
 -(void) syncReadingStatusDataAndShowErrorMessage {
 
-    [self startSpin];
     [self syncReadingStatusDataAndShowErrorMessage:YES completion:nil];
-    [self stopSpin];
 
 }
 
@@ -791,8 +793,10 @@
     _isSyncing = YES;
     
     VCLOG();
+
     if (!_book) return;
     
+    [self startSpin];
     VCLOG(@"callAPI");
     [[VCReaderAPIClient sharedClient] callAPI:@"user_status_get" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName} showErrorMessage:showErrorMessage success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -814,6 +818,7 @@
                     NSString *word = [NSString stringWithFormat:@"%d", readingStatus.wordNumber];
                     NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)readingStatus.timestamp];
                     
+                    [self startSpin];
                     VCLOG(@"callAPI");
                     [[VCReaderAPIClient sharedClient] callAPI:@"user_status_add" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName, @"current_reading_chapter" : chapter, @"current_reading_word" : word, @"timestamp" : timestamp} showErrorMessage:YES  success:^(NSURLSessionDataTask *task, id responseObject) {
                         
@@ -830,7 +835,9 @@
                         [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
                         _isSyncing = NO;
 
-                    } completion:nil];
+                    } completion:^(BOOL finished) {
+                        [self stopSpin];
+                    }];
                     
                 } else {
                     
@@ -868,6 +875,7 @@
                     NSString *word = [NSString stringWithFormat:@"%d", readingStatus.wordNumber];
                     NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)readingStatus.timestamp];
                     
+                    [self startSpin];
                     VCLOG(@"callAPI");
                     [[VCReaderAPIClient sharedClient] callAPI:@"user_status_add" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : _book.bookName, @"current_reading_chapter" : chapter, @"current_reading_word" : word, @"timestamp" : timestamp} showErrorMessage:YES success:^(NSURLSessionDataTask *task, id responseObject) {
                         
@@ -887,7 +895,9 @@
                         [VCTool showAlertViewWithTitle:@"web error" andMessage:error.debugDescription];
                         _isSyncing = NO;
                         
-                    } completion:nil];
+                    } completion:^(BOOL finished) {
+                        [self stopSpin];
+                    }];
                     
                 } else {
                     
@@ -921,7 +931,10 @@
         VCLOG(@"Failure: %@\n response =%@", error.debugDescription, errResponse);
         _isSyncing = NO;
 
-    } completion:completion];
+    } completion:^(BOOL finished) {
+        if (completion) completion(finished);
+        [self stopSpin];
+    }];
 
 }
 
