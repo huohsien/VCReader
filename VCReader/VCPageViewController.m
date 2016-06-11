@@ -1246,7 +1246,7 @@
     
     [self.totalBookReadProgressLabel setText:[NSString stringWithFormat:@"%3.1f%%", progress]];
     
-    self.pageLabel.text = [NSString stringWithFormat:@"%d/%d", _pageNumber + 1, (int)_currentChapter.pageArray.count];
+    self.pageLabel.text = [NSString stringWithFormat:@"%d页/%d页", _pageNumber + 1, (int)_currentChapter.pageArray.count];
     
     if (_pageNumber != 0) {
         self.chapterTitleLabel.text = [_book getChapterTitleStringFromChapterNumber:_chapterNumber];
