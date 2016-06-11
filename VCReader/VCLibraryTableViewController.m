@@ -50,6 +50,18 @@
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self action:@selector(updateAllBooksOfCurrentUser) forControlEvents:UIControlEventValueChanged];
     
+
+
+    
+    _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
+    VCLOG(@"book array = %@", _bookArray);
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.topItem.title = @"书架";
+    
     NSString *nameOfLastReadBook = [VCTool getObjectWithKey:@"nameOfTheLastReadBook"];
     
     if (nameOfLastReadBook) {
@@ -63,16 +75,6 @@
         }
         return;
     }
-
-    
-    _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
-    VCLOG(@"book array = %@", _bookArray);
-}
-
--(void) viewWillAppear:(BOOL)animated {
-    
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.topItem.title = @"书架";
     
     if (_bookToBeRead) {
         
