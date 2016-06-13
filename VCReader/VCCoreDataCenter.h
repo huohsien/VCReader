@@ -39,7 +39,7 @@
 //-(void) setAttributesForBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath;
 
 -(void) addBookNamed:(NSString *)bookName contentFilePath:(NSString *)contentFilePath coverImageFilePath:(NSString *)coverImageFilePath timestamp:(NSString *)timestamp;
-//-(void) clearAllBooks;
+-(void) clearAllBooks;
 -(NSArray *)getAllBooks;
 
 

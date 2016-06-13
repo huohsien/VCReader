@@ -34,7 +34,7 @@
     
     // setup navigation bar
     self.navigationController.navigationBar.topItem.title = @"书架";
-    [self.navigationController.navigationBar setTranslucent:NO];
+//    [self.navigationController.navigationBar setTranslucent:NO];
     
     //show tab bar
     self.tabBarController.tabBar.hidden = NO;
@@ -49,9 +49,6 @@
     self.refreshControl.backgroundColor = [UIColor redColor];
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self action:@selector(updateAllBooksOfCurrentUser) forControlEvents:UIControlEventValueChanged];
-    
-
-
     
     _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
     VCLOG(@"book array = %@", _bookArray);
@@ -89,43 +86,6 @@
     [self updateAllBooksOfCurrentUserAndShowErrorMessage:NO];
     
 }
-
-
--(void)downloadReadingStatusToLocalStorage {
-    
-    for (VCBookMO *book in _bookArray) {
-        
-        VCLOG(@"callAPI");
-        [[VCReaderAPIClient sharedClient] callAPI:@"user_status_get" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : book.name} showErrorMessage:NO success:^(NSURLSessionDataTask *task, id responseObject) {
-            
-            NSDictionary *dict = responseObject;
-            
-            if (dict[@"token"]) {
-                
-                NSTimeInterval timestampFromServer = [dict[@"timestamp"] doubleValue];
-                VCReadingStatusMO *readingStatus = [[VCCoreDataCenter sharedInstance] getReadingStatusForBook:book.name];
-                
-                if (!readingStatus) {
-                    
-                    VCLOG(@"no core data record but got data in the server. first init a core data record");
-                    
-                    [[VCCoreDataCenter sharedInstance] initReadingStatusForBook:dict[@"book_name"] isDummy:YES];
-                    [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:dict[@"book_name"] chapterNumber:[dict[@"chapter"] intValue] wordNumber:[dict[@"word"] intValue] timestampFromServer:timestampFromServer];
-                    
-                    VCLOG(@"finish syncing core data with data in server. ready for users to read");
-                    
-                    
-                }
-            }
-            
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
-            VCLOG(@"Failure: %@\n response =%@", error.debugDescription, errResponse);
-            
-        } completion:nil];
-    }
-    [self.tableView reloadData]
-    ;}
 
 -(void)updateAllBooksOfCurrentUser {
     [self updateAllBooksOfCurrentUserAndShowErrorMessage:YES];
@@ -183,6 +143,42 @@
 
     }];
     
+}
+
+-(void)downloadReadingStatusToLocalStorage {
+    
+    for (VCBookMO *book in _bookArray) {
+        
+        VCLOG(@"callAPI");
+        [[VCReaderAPIClient sharedClient] callAPI:@"user_status_get" params:@{@"token" : [VCTool getObjectWithKey:@"token"], @"book_name" : book.name} showErrorMessage:NO success:^(NSURLSessionDataTask *task, id responseObject) {
+            
+            NSDictionary *dict = responseObject;
+            
+            if (dict[@"token"]) {
+                
+                NSTimeInterval timestampFromServer = [dict[@"timestamp"] doubleValue];
+                VCReadingStatusMO *readingStatus = [[VCCoreDataCenter sharedInstance] getReadingStatusForBook:book.name];
+                
+                if (!readingStatus) {
+                    
+                    VCLOG(@"no core data record but got data in the server. first init a core data record");
+                    
+                    [[VCCoreDataCenter sharedInstance] initReadingStatusForBook:dict[@"book_name"] isDummy:YES];
+                    [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:dict[@"book_name"] chapterNumber:[dict[@"chapter"] intValue] wordNumber:[dict[@"word"] intValue] timestampFromServer:timestampFromServer];
+                    
+                    VCLOG(@"finish syncing core data with data in server. ready for users to read");
+                    
+                    
+                }
+            }
+            
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+            VCLOG(@"Failure: %@\n response =%@", error.debugDescription, errResponse);
+            
+        } completion:nil];
+    }
+    [self.tableView reloadData];
 }
 
 -(void) showActivityView {

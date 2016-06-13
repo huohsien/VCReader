@@ -358,7 +358,7 @@
     }
 }
 
-/*
+
 -(void)clearAllBooks {
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Book"];
@@ -368,7 +368,7 @@
     [[[VCTool appDelegate] persistentStoreCoordinator] executeRequest:delete withContext:_context error:&deleteError];
     
 }
-*/
+
 -(NSArray *)getAllBooks {
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];

@@ -25,6 +25,7 @@
     _documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
     // setup navigation bar
+    self.navigationController.navigationBar.topItem.title = @"书库";
     [self.navigationController.navigationBar setTranslucent:NO];
     
     //show tab bar
@@ -69,7 +70,7 @@
         
         self.jsonResponse = responseObject;
         
-//        [[VCCoreDataCenter sharedInstance] clearAllBooks];
+        [[VCCoreDataCenter sharedInstance] clearAllBooks];
         
         for (NSDictionary *dict in _jsonResponse) {
             
@@ -84,9 +85,6 @@
         
     } completion:^(BOOL finished) {
         
-        _bookArray = [[VCCoreDataCenter sharedInstance] getAllBooks];
-        [self.tableView reloadData];
-        
         // End the refreshing
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -98,6 +96,10 @@
         self.refreshControl.attributedTitle = attributedTitle;
         
         [self.refreshControl endRefreshing];
+        
+        _bookArray = [[VCCoreDataCenter sharedInstance] getAllBooks];
+        [self.tableView reloadData];
+        
         _isUpdatingBook = NO;
 
     }];
