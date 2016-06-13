@@ -70,6 +70,7 @@ NSString * const kTencentOAuthAppID = @"1105244329";
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
     
     [self.loginButton setHidden:YES];
+    [self.rapidLoginView setHidden:YES];
     
 }
 
@@ -203,6 +204,7 @@ return NO;\
         [firstResponder resignFirstResponder];
         [self checkFormValidity];
         [self.loginButton setHidden:NO];
+        [self.rapidLoginView setHidden:NO];
     }
     
 }

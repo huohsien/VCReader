@@ -18,4 +18,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *qqLoginButton;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIView *rapidLoginView;
 @end
