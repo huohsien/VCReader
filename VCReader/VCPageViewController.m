@@ -148,21 +148,33 @@
 {
 
     NSArray *_titleOfChaptersArray;
+    
     CGRect _rectOfTextView;
     CGRect _rectOfScreen;
+    
     CGFloat _previousOffset;
     CGFloat _deltaOffset;
+    
     BOOL _statusBarHidden;
+    
     BOOL _isEditingTextView;
+    
     NSMutableArray *_pageArray;
     VCChapter *_previousChapter;
     VCChapter *_currentChapter;
     VCChapter *_nextChapter;
+   
     int _chapterNumber;
     int _pageNumber;
+    
     BOOL _isSyncing;
     int _animatingCount;
+    
     UIImageView *_imageView;
+    UIView *_toolBarView;
+    UIColor *_barColor;
+    UIColor *_textColorInBar;
+    
     CGFloat _currentRotationalPosition;
 
     
@@ -187,8 +199,7 @@
 @synthesize contentView =_contentView;
 @synthesize textRenderAttributionDict = _textRenderAttributionDict;
 @synthesize backgroundImage = _backgroundImage;
-//@synthesize chapterNumber = _chapterNumber;
-//@synthesize pageNumber = _pageNumber;
+
 
 @synthesize dict;
 
@@ -284,12 +295,12 @@
     
     [self showStatusBar:NO];
     
-    UIColor *textColorInNavigationBar = [VCTool adjustUIColor:_textColor brightenFactor:2];
-    UIColor *navigationBarColor = [VCTool adjustUIColor:[_backgroundImage averageColor] brightenFactor:1.06];
+    _textColorInBar = [VCTool adjustUIColor:_textColor brightenFactor:2];
+    _barColor = [VCTool adjustUIColor:[_backgroundImage averageColor] brightenFactor:1.06];
     
     self.navigationController.navigationBar.hidden = YES;
-    self.navigationController.navigationBar.barTintColor = navigationBarColor;
-    self.navigationController.navigationBar.tintColor = textColorInNavigationBar;
+    self.navigationController.navigationBar.barTintColor = _barColor;
+    self.navigationController.navigationBar.tintColor = _textColorInBar;
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     [self.navigationController.navigationBar setTranslucent:YES];
 
@@ -318,6 +329,9 @@
     self.navigationItem.leftBarButtonItem = newBackButton;
     
     self.tabBarController.tabBar.hidden = YES;
+    
+    [self newToolBar];
+
     
     // turn off gesture for navigation
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
@@ -1192,7 +1206,8 @@
             
             [self showStatusBar:YES];
             [self.navigationController.navigationBar setFrame:CGRectMake(0, 20, frame.size.width, frame.size.height)];
-
+            [_toolBarView setFrame:CGRectMake(0, _rectOfScreen.size.height - _toolBarView.frame.size.height, _toolBarView.frame.size.width, _toolBarView.frame.size.height)];
+            
         } completion:nil];
         
     } else {
@@ -1200,8 +1215,11 @@
         [self.navigationController.navigationBar setFrame:CGRectMake(0, 20, frame.size.width, frame.size.height)];
         
         [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            
             [self showStatusBar:NO];
             [self.navigationController.navigationBar setFrame:CGRectMake(0,  -frame.size.height - 20, frame.size.width, frame.size.height)];
+            [_toolBarView setFrame:CGRectMake(0, _rectOfScreen.size.height + _toolBarView.frame.size.height, _toolBarView.frame.size.width, _toolBarView.frame.size.height)];
+            
         } completion:^(BOOL finished) {
             self.navigationController.navigationBar.hidden = YES;
 
@@ -1229,6 +1247,32 @@
     }
     
     
+}
+#pragma mark - tool bar
+
+-(void) newToolBar {
+    
+    if (_toolBarView) return;
+    
+    CGFloat width = _rectOfScreen.size.width;
+    CGFloat padding = 4.0;
+    CGFloat margin = 16.0;
+    UIButton *fontButton = [[UIButton alloc] initWithFrame:CGRectMake(margin, margin, (width - 2 * margin - (1 - 1) * padding) / 1, 21.0f + margin * 2)];
+    
+    [fontButton setTitle:@"内文字体大小" forState:UIControlStateNormal];
+    [fontButton setTitleColor:_textColorInBar forState:UIControlStateNormal];
+    fontButton.layer.cornerRadius = 8;
+    fontButton.layer.borderWidth = 1;
+    fontButton.layer.borderColor = _textColorInBar.CGColor;
+    
+    CGFloat height = 2 * margin + fontButton.frame.size.height;
+    _toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, _rectOfScreen.size.height + height, width, height)];
+    [_toolBarView setBackgroundColor:_barColor];
+    
+    [_toolBarView addSubview:fontButton];
+    [self.view addSubview:_toolBarView];
+    [self.view bringSubviewToFront:_toolBarView];
+    VCLOG(@"add new tool bar");
 }
 
 #pragma mark -  UI of reading status

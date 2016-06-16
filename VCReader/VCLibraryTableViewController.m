@@ -51,7 +51,6 @@
     [self.refreshControl addTarget:self action:@selector(updateAllBooksOfCurrentUser) forControlEvents:UIControlEventValueChanged];
     
     _bookArray = [[VCCoreDataCenter sharedInstance] getForCurrentUserAllBooks];
-    VCLOG(@"book array = %@", _bookArray);
 }
 
 -(void) viewWillAppear:(BOOL)animated {

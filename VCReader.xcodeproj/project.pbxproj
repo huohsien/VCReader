@@ -31,7 +31,6 @@
 		662225D81CCCAF6A001BE988 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225D71CCCAF6A001BE988 /* libstdc++.6.0.9.dylib */; };
 		662225DA1CCCAF7C001BE988 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225D91CCCAF7C001BE988 /* CoreTelephony.framework */; };
 		662225E01CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 662225DF1CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle */; };
-		663113221D0AB2E700B3AEAC /* VCFontAndLineSpacingSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 663113211D0AB2E700B3AEAC /* VCFontAndLineSpacingSettingViewController.m */; };
 		6643419D1C7A868A00580AEF /* VCChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419C1C7A868A00580AEF /* VCChapter.m */; };
 		664341A01C7BFA7C00580AEF /* VCPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419F1C7BFA7C00580AEF /* VCPage.m */; };
 		665B535D1D02C5F80030F635 /* VCCommentComposerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B535B1D02C5F80030F635 /* VCCommentComposerViewController.m */; };
@@ -40,8 +39,6 @@
 		665B53631D043A020030F635 /* VCPlaintextResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B53621D043A020030F635 /* VCPlaintextResponseSerializer.m */; };
 		665B53671D0533B10030F635 /* VCBookStoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B53661D0533B10030F635 /* VCBookStoreTableViewController.m */; };
 		665B536A1D0585EF0030F635 /* VCBookStoreTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B53691D0585EF0030F635 /* VCBookStoreTableViewCell.m */; };
-		665B536E1D06A2F70030F635 /* VCFontSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B536C1D06A2F70030F635 /* VCFontSettingViewController.m */; };
-		665B536F1D06A2F70030F635 /* VCFontSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 665B536D1D06A2F70030F635 /* VCFontSettingViewController.xib */; };
 		666266E41C8596DB004F133F /* VCLibraryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */; };
 		6668596C1C9683110046C8E8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6668596E1C9683110046C8E8 /* Localizable.strings */; };
 		666EECB81C81BEC600DF5621 /* VCLibraryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 666EECB71C81BEC600DF5621 /* VCLibraryTableViewController.m */; };
@@ -102,8 +99,6 @@
 		662225D71CCCAF6A001BE988 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "../../../../../usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<group>"; };
 		662225D91CCCAF7C001BE988 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		662225DF1CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
-		663113201D0AB2E700B3AEAC /* VCFontAndLineSpacingSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCFontAndLineSpacingSettingViewController.h; sourceTree = "<group>"; };
-		663113211D0AB2E700B3AEAC /* VCFontAndLineSpacingSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCFontAndLineSpacingSettingViewController.m; sourceTree = "<group>"; };
 		6643419B1C7A868A00580AEF /* VCChapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCChapter.h; sourceTree = "<group>"; };
 		6643419C1C7A868A00580AEF /* VCChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCChapter.m; sourceTree = "<group>"; };
 		6643419E1C7BFA7C00580AEF /* VCPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCPage.h; sourceTree = "<group>"; };
@@ -119,9 +114,6 @@
 		665B53661D0533B10030F635 /* VCBookStoreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBookStoreTableViewController.m; sourceTree = "<group>"; };
 		665B53681D0585EF0030F635 /* VCBookStoreTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBookStoreTableViewCell.h; sourceTree = "<group>"; };
 		665B53691D0585EF0030F635 /* VCBookStoreTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBookStoreTableViewCell.m; sourceTree = "<group>"; };
-		665B536B1D06A2F70030F635 /* VCFontSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCFontSettingViewController.h; sourceTree = "<group>"; };
-		665B536C1D06A2F70030F635 /* VCFontSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCFontSettingViewController.m; sourceTree = "<group>"; };
-		665B536D1D06A2F70030F635 /* VCFontSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VCFontSettingViewController.xib; sourceTree = "<group>"; };
 		666266E21C8596DB004F133F /* VCLibraryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCLibraryTableViewCell.h; sourceTree = "<group>"; };
 		666266E31C8596DB004F133F /* VCLibraryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCLibraryTableViewCell.m; sourceTree = "<group>"; };
 		6668596D1C9683110046C8E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -319,11 +311,6 @@
 				665B535A1D02C5F80030F635 /* VCCommentComposerViewController.h */,
 				665B535B1D02C5F80030F635 /* VCCommentComposerViewController.m */,
 				665B535C1D02C5F80030F635 /* VCCommentComposerViewController.xib */,
-				665B536B1D06A2F70030F635 /* VCFontSettingViewController.h */,
-				665B536C1D06A2F70030F635 /* VCFontSettingViewController.m */,
-				665B536D1D06A2F70030F635 /* VCFontSettingViewController.xib */,
-				663113201D0AB2E700B3AEAC /* VCFontAndLineSpacingSettingViewController.h */,
-				663113211D0AB2E700B3AEAC /* VCFontAndLineSpacingSettingViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -457,7 +444,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				662225E01CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
-				665B536F1D06A2F70030F635 /* VCFontSettingViewController.xib in Resources */,
 				6668596C1C9683110046C8E8 /* Localizable.strings in Resources */,
 				665B535E1D02C5F80030F635 /* VCCommentComposerViewController.xib in Resources */,
 				667AACDF1C545D9400CD40E1 /* Assets.xcassets in Resources */,
@@ -548,7 +534,6 @@
 				669227C61CCDE6730045291E /* VCSignUpViewController.m in Sources */,
 				664341A01C7BFA7C00580AEF /* VCPage.m in Sources */,
 				662225AA1CC3989E001BE988 /* VCChapterMO+CoreDataProperties.m in Sources */,
-				663113221D0AB2E700B3AEAC /* VCFontAndLineSpacingSettingViewController.m in Sources */,
 				665B535D1D02C5F80030F635 /* VCCommentComposerViewController.m in Sources */,
 				662225A91CC3989E001BE988 /* VCBookMO.m in Sources */,
 				661A47FD1CE103E40032B152 /* VCEmailVerificationViewController.m in Sources */,
@@ -558,7 +543,6 @@
 				665B53631D043A020030F635 /* VCPlaintextResponseSerializer.m in Sources */,
 				667AACD11C545D9400CD40E1 /* main.m in Sources */,
 				662225AB1CC3989E001BE988 /* VCChapterMO.m in Sources */,
-				665B536E1D06A2F70030F635 /* VCFontSettingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
