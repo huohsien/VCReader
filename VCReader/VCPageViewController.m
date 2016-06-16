@@ -304,7 +304,8 @@
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     [self.navigationController.navigationBar setTranslucent:YES];
 
-    _imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sync_progress_icon"]];
+    UIImage *image = [VCTool maskedImage:[UIImage imageNamed:@"sync_progress_icon"] color:_textColorInBar];
+    _imageView = [[UIImageView alloc] initWithImage:image];
     _imageView.autoresizingMask = UIViewAutoresizingNone;
     _imageView.contentMode = UIViewContentModeCenter;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
