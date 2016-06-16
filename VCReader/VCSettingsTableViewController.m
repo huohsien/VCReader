@@ -100,7 +100,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.section == 2 && indexPath.row == 0) {
+    NSString *title = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+    VCLOG(@"selected cell title name:%@", title);
+    if ([title isEqualToString:@"反馈吐槽"]) {
         
 //        [self composeEmailWithDebugAttachment];
         
