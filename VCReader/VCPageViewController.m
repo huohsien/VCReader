@@ -498,7 +498,7 @@
 -(void)swipeUp:(id)sender {
     
     // hide nav bar when moving pages
-    [self hideNavigationBar];
+    [self hideBars];
     
     // handle the case of the last page of the book
     if (_chapterNumber == _book.totalNumberOfChapters - 1 && _pageNumber == _currentChapter.pageArray.count - 1) {
@@ -542,7 +542,7 @@
 -(void)swipeDown:(id)sender {
     
     // hide nav bar when moving pages
-    [self hideNavigationBar];
+    [self hideBars];
     
     // handle the case of the first page of the book
     if (_chapterNumber == 0 && _pageNumber == 0) {
@@ -1139,7 +1139,7 @@
 //        _isEditingTextView = YES;
 //        
 //        if (self.navigationController.navigationBar.hidden == NO) {
-//            [self toggleNavigationBar];
+//            [self toggleBars];
 //        }
 //        
 //        [self startEditingInTheTextView];
@@ -1188,12 +1188,12 @@
     }
 
     if (yDisplacement < 10 && yDisplacement > -10 && _elapsedTime < 1.5 && _isEditingTextView == NO && xDisplacement < 300) {
-        [self toggleNavigationBar];
+        [self toggleBars];
     }
 }
 #pragma mark - navigation bar
 
--(void) toggleNavigationBar {
+-(void) toggleBars {
     
     CGRect frame = self.navigationController.navigationBar.bounds;
     
@@ -1230,7 +1230,7 @@
     
 }
 
--(void) hideNavigationBar {
+-(void) hideBars {
     
     CGRect frame = self.navigationController.navigationBar.bounds;
     
@@ -1241,6 +1241,8 @@
         [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
             [self showStatusBar:NO];
             [self.navigationController.navigationBar setFrame:CGRectMake(0,  -frame.size.height - 20, frame.size.width, frame.size.height)];
+            [_toolBarView setFrame:CGRectMake(0, _rectOfScreen.size.height + _toolBarView.frame.size.height, _toolBarView.frame.size.width, _toolBarView.frame.size.height)];
+
         } completion:^(BOOL finished) {
             self.navigationController.navigationBar.hidden = YES;
             
