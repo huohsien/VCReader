@@ -174,7 +174,7 @@ static UIView *_activityView;
     return result;
 }
 
-+(void) saveImage:(UIImage *)image withName:(NSString *)name {
++(void) saveImage:(UIImage *)image asPNGFileWithName:(NSString *)name {
     
     if (image) {
         

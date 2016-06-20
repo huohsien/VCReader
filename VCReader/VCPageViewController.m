@@ -304,6 +304,8 @@
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     [self.navigationController.navigationBar setTranslucent:YES];
 
+    [_toolBarView setHidden:YES];
+    
     UIImage *image = [VCTool maskedImage:[UIImage imageNamed:@"sync_progress_icon"] color:_textColorInBar];
     _imageView = [[UIImageView alloc] initWithImage:image];
     _imageView.autoresizingMask = UIViewAutoresizingNone;
@@ -1198,11 +1200,15 @@
     CGRect frame = self.navigationController.navigationBar.bounds;
     
     if (self.navigationController.navigationBar.hidden == YES) {
+        // show bars
         
         self.navigationController.navigationBar.hidden = NO;
-        
+        [_toolBarView setHidden:NO];
+
+        // prepare the animation for both the navi and the tool bars appearing from outside visible screen
         [self.navigationController.navigationBar setFrame:CGRectMake(0, -20 - frame.size.height, frame.size.width, frame.size.height)];
-        
+        [_toolBarView setFrame:CGRectMake(0, _rectOfScreen.size.height, _toolBarView.frame.size.width, _toolBarView.frame.size.height)];
+
         [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
             
             [self showStatusBar:YES];
@@ -1212,17 +1218,21 @@
         } completion:nil];
         
     } else {
+        //hide bars
 
+        // prepare the animation for both the navi and the tool bars disappearing from the visible screen
         [self.navigationController.navigationBar setFrame:CGRectMake(0, 20, frame.size.width, frame.size.height)];
-        
+        [_toolBarView setFrame:CGRectMake(0, _rectOfScreen.size.height - _toolBarView.frame.size.height, _toolBarView.frame.size.width, _toolBarView.frame.size.height)];
+
         [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
             
             [self showStatusBar:NO];
             [self.navigationController.navigationBar setFrame:CGRectMake(0,  -frame.size.height - 20, frame.size.width, frame.size.height)];
-            [_toolBarView setFrame:CGRectMake(0, _rectOfScreen.size.height + _toolBarView.frame.size.height, _toolBarView.frame.size.width, _toolBarView.frame.size.height)];
+            [_toolBarView setFrame:CGRectMake(0, _rectOfScreen.size.height, _toolBarView.frame.size.width, _toolBarView.frame.size.height)];
             
         } completion:^(BOOL finished) {
             self.navigationController.navigationBar.hidden = YES;
+            [_toolBarView setHidden:YES];
 
         }];
     }
@@ -1241,10 +1251,11 @@
         [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
             [self showStatusBar:NO];
             [self.navigationController.navigationBar setFrame:CGRectMake(0,  -frame.size.height - 20, frame.size.width, frame.size.height)];
-            [_toolBarView setFrame:CGRectMake(0, _rectOfScreen.size.height + _toolBarView.frame.size.height, _toolBarView.frame.size.width, _toolBarView.frame.size.height)];
+            [_toolBarView setFrame:CGRectMake(0, _rectOfScreen.size.height, _toolBarView.frame.size.width, _toolBarView.frame.size.height)];
 
         } completion:^(BOOL finished) {
             self.navigationController.navigationBar.hidden = YES;
+            [_toolBarView setHidden:YES];
             
         }];
     }

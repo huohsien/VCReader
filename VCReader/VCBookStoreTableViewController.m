@@ -171,7 +171,7 @@
         [manager GET:encodedPath parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
             
             UIImage *image = responseObject;
-            [VCTool saveImage:image withName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name];
+            [VCTool saveImage:image asPNGFileWithName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name];
             
             [cell.bookCoverImage setImage:image];
             [cell.imageDownloadProgressIndicator stopAnimating];

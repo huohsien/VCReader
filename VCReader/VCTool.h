@@ -35,7 +35,7 @@
 +(id) getObjectWithKey:(NSString *)key;
 
 +(UIImage *) getImageFromURL:(NSString *)fileURL;
-+(void) saveImage:(UIImage *)image withName:(NSString *)name;
++(void) saveImage:(UIImage *)image asPNGFileWithName:(NSString *)name;
 
 +(NSString *) saveData:(NSData *)data toFileNamed:(NSString *)filename;
 +(void) deleteFilename:(NSString *)filename;

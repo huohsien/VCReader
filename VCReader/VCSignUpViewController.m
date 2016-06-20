@@ -276,7 +276,7 @@ return NO;\
         
         VCLOG(@"qq login response = %@", response.jsonResponse);
         
-        [VCTool saveImage:[VCTool getImageFromURL:response.jsonResponse[@"figureurl_qq_2"]] withName:@"headshot"];
+        [VCTool saveImage:[VCTool getImageFromURL:response.jsonResponse[@"figureurl_qq_2"]] asPNGFileWithName:@"headshot"];
         
         NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)([[NSDate new] timeIntervalSince1970]  * 1000.0)];
         
