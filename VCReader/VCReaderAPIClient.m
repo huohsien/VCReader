@@ -8,8 +8,8 @@
 
 #import "VCReaderAPIClient.h"
 
-//NSString * const kVCReaderBaseURLString = @"http://vhhc.homedns.org";
-NSString * const kVCReaderBaseURLString = @"http://api.vhhc.dyndns.org";
+NSString * const kVCReaderBaseURLString = @"http://vhhc.homedns.org";
+//NSString * const kVCReaderBaseURLString = @"http://api.vhhc.dyndns.org";
 
 @implementation VCReaderAPIClient
 

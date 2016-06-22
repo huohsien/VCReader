@@ -185,7 +185,7 @@
         NSRange range = [match rangeAtIndex:0];
         NSString *title = [_contentString substringWithRange:range];
         
-        VCLOG(@"%@",title);
+//        VCLOG(@"%@",title);
         
         unichar charaterBeforeTitle;
 
@@ -194,7 +194,8 @@
             charaterBeforeTitle = [_contentString characterAtIndex:(range.location - 1)];
             if (charaterBeforeTitle != '\r' && charaterBeforeTitle != '\n' && charaterBeforeTitle != ' ') {
                 if ([_chapterTitleStringArray count] > 0) {
-                    VCLOG(@"might have a problem splitting chapters.\n problematic chapter title = %@ previous title = %@", title, [_chapterTitleStringArray objectAtIndex:(count-1)]);
+                    
+//                    VCLOG(@"might have a problem splitting chapters.\n problematic chapter title = %@ previous title = %@", title, [_chapterTitleStringArray objectAtIndex:(count-1)]);
                 }
                 return ;
             }
@@ -216,7 +217,7 @@
                 previousChapterString = title;
                 previousTitleRange = range;
 
-                VCLOG(@"might have a problem splitting cuz the length of the chapter is less than 100.\n Chapter =%@, count = %d", title, count);
+//                VCLOG(@"might have a problem splitting cuz the length of the chapter is less than 100.\n Chapter =%@, count = %d", title, count);
 
             }
 
@@ -229,11 +230,11 @@
         [_chapterContentRangeStringArray addObject:str];
         [_wordCountOfTheBookForTheFirstWordInChapters addObject:@(wordCount).stringValue];
         wordCount += contentRange.length;
-        VCLOG(@"word count = %ld", wordCount);
+//        VCLOG(@"word count = %ld", wordCount);
         
         count++;
 
-        VCLOG(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
+//        VCLOG(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
 
         previousChapterString = title;
         previousTitleRange = range;
