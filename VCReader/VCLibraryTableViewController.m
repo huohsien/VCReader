@@ -272,7 +272,9 @@
 
     VCReadingStatusMO *status = [[VCCoreDataCenter sharedInstance] getReadingStatusForBook:bookNameString];
     int chapterNumber = status.chapterNumber;
-    NSString *wordCountOfTheBookForTheFirstWordInTheChapter = [[VCTool getDatafromBook:bookNameString withField:@"wordCountOfTheBookForTheFirstWordInChapters"] objectAtIndex:chapterNumber];
+    
+    NSArray *wordCountOfTheBookForTheFirstWordInChapterArray = [VCTool getDatafromBook:bookNameString withField:@"wordCountOfTheBookForTheFirstWordInChapters"];
+    NSString *wordCountOfTheBookForTheFirstWordInTheChapter = [wordCountOfTheBookForTheFirstWordInChapterArray objectAtIndex:chapterNumber];
     long currentReadWordPosition = [wordCountOfTheBookForTheFirstWordInTheChapter intValue] + status.wordNumber;
     
     if (numberOfWords > 0 && currentReadWordPosition > 0) {

@@ -215,8 +215,10 @@
     
     _rectOfScreen = [[UIScreen mainScreen] bounds];
     
-    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:214 / 255.0 green:202 / 255.0 blue:130.0 / 181 alpha:1.0] withRect:_rectOfScreen];
-    _textColor = [UIColor colorWithRed: 70 / 255.0 green: 65 / 255.0 blue: 56 / 255.0 alpha: 1.0];
+//    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:214 / 255.0 green:202 / 255.0 blue:130.0 / 255.0 alpha:1.0] withRect:_rectOfScreen];
+    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:33 / 255.0 green:33 / 255.0 blue:33 / 255.0 alpha:1.0] withRect:_rectOfScreen];
+//    _textColor = [UIColor colorWithRed: 70 / 255.0 green: 65 / 255.0 blue: 56 / 255.0 alpha: 1.0];
+    _textColor = [UIColor colorWithRed:102 / 255.0 green:102 / 255.0 blue:102 / 255.0 alpha: 1.0];
     
     // init objects and vars
     //
@@ -1296,8 +1298,8 @@
     NSString *numberOfWordsString = [VCTool getDatafromBook:_book.bookName withField:@"numberOfWords"];
     long numberOfWords = [numberOfWordsString intValue];
     
-
-    NSString *wordCountOfTheBookForTheFirstWordInTheChapter = [[VCTool getDatafromBook:_book.bookName withField:@"wordCountOfTheBookForTheFirstWordInChapters"] objectAtIndex:_chapterNumber];
+    NSArray *wordCountOfTheBookForTheFirstWordInChapterArray = [VCTool getDatafromBook:_book.bookName withField:@"wordCountOfTheBookForTheFirstWordInChapters"];
+    NSString *wordCountOfTheBookForTheFirstWordInTheChapter = [wordCountOfTheBookForTheFirstWordInChapterArray objectAtIndex:_chapterNumber];
     long currentReadWordPosition = [wordCountOfTheBookForTheFirstWordInTheChapter intValue] + [self getWordNumberFromPageNumber:_pageNumber];
     
     float progress = (float)currentReadWordPosition / (float)numberOfWords * 100.0f;

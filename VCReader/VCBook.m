@@ -229,8 +229,9 @@
         NSString *str = NSStringFromRange(contentRange);
         [_chapterContentRangeStringArray addObject:str];
         [_wordCountOfTheBookForTheFirstWordInChapters addObject:@(wordCount).stringValue];
-        wordCount += contentRange.length;
 //        VCLOG(@"word count = %ld", wordCount);
+
+        wordCount += contentRange.length;
         
         count++;
 
@@ -247,9 +248,11 @@
     NSRange contentRange = NSMakeRange(NSMaxRange(previousTitleRange), [_contentString length] - NSMaxRange(previousTitleRange));
     NSString *string = NSStringFromRange(contentRange);
     [_chapterContentRangeStringArray addObject:string];
+    [_wordCountOfTheBookForTheFirstWordInChapters addObject:@(wordCount).stringValue];
+//    VCLOG(@"word count = %ld", wordCount);
     count++;
 
-    VCLOG(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
+//    VCLOG(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
     
     _totalNumberOfChapters = count;
     
