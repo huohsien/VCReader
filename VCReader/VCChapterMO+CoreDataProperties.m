@@ -2,7 +2,7 @@
 //  VCChapterMO+CoreDataProperties.m
 //  VCReader
 //
-//  Created by victor on 6/2/16.
+//  Created by victor on 7/6/16.
 //  Copyright © 2016 VHHC. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -13,7 +13,8 @@
 
 @implementation VCChapterMO (CoreDataProperties)
 
-@dynamic content;
+@dynamic contentText;
+@dynamic firstWordLocation;
 @dynamic title;
 @dynamic book;
 

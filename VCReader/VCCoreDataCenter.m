@@ -344,6 +344,7 @@
         book.timestamp = [timestamp doubleValue];
         [self saveContext];
     } else if (bookArray.count == 1) {
+        
         VCBookMO *book = (VCBookMO *)[bookArray firstObject];
         if (book.timestamp < [timestamp doubleValue]) {
             VCLOG(@"add a book with the same name as one's in Book Entity if the try-to-be-added book record is more updated than the one in the local storage");

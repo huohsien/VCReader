@@ -2,7 +2,7 @@
 //  VCReadingStatusMO+CoreDataProperties.h
 //  VCReader
 //
-//  Created by victor on 6/2/16.
+//  Created by victor on 7/6/16.
 //  Copyright © 2016 VHHC. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -10,9 +10,10 @@
 //
 
 #import "VCReadingStatusMO.h"
-@class VCUserMO;
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class VCUserMO;
 
 @interface VCReadingStatusMO (CoreDataProperties)
 
