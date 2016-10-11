@@ -11,6 +11,7 @@
 #import "VCTextView.h"
 #import "AppDelegate.h"
 #import "VCReadingStatusMO+CoreDataProperties.h"
+#import "VCColorPicker.h"
 
 #define NUMBER_OF_PREFETCH_PAGES 1
 
@@ -174,6 +175,7 @@
     UIView *_toolBarView;
     UIColor *_barColor;
     UIColor *_textColorInBar;
+    VCColorPicker *_colorPicker;
     
     CGFloat _currentRotationalPosition;
 
@@ -335,7 +337,8 @@
     
     self.tabBarController.tabBar.hidden = YES;
     
-    [self newToolBar];
+    [self addColorToolBar];
+    [self addColorPicker];
 
     
     // turn off gesture for navigation
@@ -1261,34 +1264,121 @@
             
         }];
     }
+
+}
+
+#pragma mark - color picker show and hide or toggle
+
+-(void) toggleColorPicker {
+    
+    CGRect frame = _colorPicker.frame;
+    
+    if (frame.origin.y <= _rectOfScreen.size.height) {
+        // show bars
+        
+        [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            
+            [_colorPicker setFrame:CGRectMake(0, _rectOfScreen.size.height - _colorPicker.frame.size.height, _colorPicker.frame.size.width, _colorPicker.frame.size.height)];
+            
+        } completion:nil];
+        
+    } else {
+        //hide bars
+
+        [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            
+            [_colorPicker setFrame:CGRectMake(0, _rectOfScreen.size.height, _toolBarView.frame.size.width, _toolBarView.frame.size.height)];
+            
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
     
     
 }
+
+-(void) hideColorPicker {
+    
+    CGRect frame = _colorPicker.frame;
+    
+    if (frame.origin.y == _rectOfScreen.size.height - _colorPicker.frame.size.height) {
+        
+        
+        [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            
+            [_colorPicker setFrame:CGRectMake(0, _rectOfScreen.size.height, _toolBarView.frame.size.width, _toolBarView.frame.size.height)];
+
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
+}
+
 #pragma mark - tool bar
 
--(void) newToolBar {
+-(void) addColorToolBar {
     
     if (_toolBarView) return;
     
     CGFloat width = _rectOfScreen.size.width;
     CGFloat padding = 4.0;
     CGFloat margin = 16.0;
-    UIButton *fontButton = [[UIButton alloc] initWithFrame:CGRectMake(margin, margin, (width - 2 * margin - (1 - 1) * padding) / 1, 21.0f + margin * 2)];
+    UIButton *fontColorButton = [[UIButton alloc] initWithFrame:CGRectMake(margin, margin, (width - 2 * margin - (2 - 1) * padding) / 2, 21.0f + margin * 2)];
+    [fontColorButton setTitle:@"字体颜色" forState:UIControlStateNormal];
+    [fontColorButton setTitleColor:_textColorInBar forState:UIControlStateNormal];
+    fontColorButton.layer.cornerRadius = 8;
+    fontColorButton.layer.borderWidth = 1;
+    fontColorButton.layer.borderColor = _textColorInBar.CGColor;
+    [fontColorButton addTarget:self action:@selector(showColorPickerForFont:) forControlEvents:UIControlEventTouchDown];
+
+    UIButton *backgroundColorButton = [[UIButton alloc] initWithFrame:CGRectMake(margin + fontColorButton.bounds.size.width + padding, margin, (width - 2 * margin - (2 - 1) * padding) / 2, 21.0f + margin * 2)];
+    [backgroundColorButton setTitle:@"背景颜色" forState:UIControlStateNormal];
+    [backgroundColorButton setTitleColor:_textColorInBar forState:UIControlStateNormal];
+    backgroundColorButton.layer.cornerRadius = 8;
+    backgroundColorButton.layer.borderWidth = 1;
+    backgroundColorButton.layer.borderColor = _textColorInBar.CGColor;
     
-    [fontButton setTitle:@"内文字体大小" forState:UIControlStateNormal];
-    [fontButton setTitleColor:_textColorInBar forState:UIControlStateNormal];
-    fontButton.layer.cornerRadius = 8;
-    fontButton.layer.borderWidth = 1;
-    fontButton.layer.borderColor = _textColorInBar.CGColor;
-    
-    CGFloat height = 2 * margin + fontButton.frame.size.height;
+    CGFloat height = 2 * margin + fontColorButton.frame.size.height;
     _toolBarView = [[UIView alloc] initWithFrame:CGRectMake(0, _rectOfScreen.size.height + height, width, height)];
     [_toolBarView setBackgroundColor:_barColor];
     
-    [_toolBarView addSubview:fontButton];
+    [_toolBarView addSubview:fontColorButton];
+    [_toolBarView addSubview:backgroundColorButton];
     [self.view addSubview:_toolBarView];
     [self.view bringSubviewToFront:_toolBarView];
     VCLOG(@"add new tool bar");
+}
+
+- (void)showColorPickerForFont:(UIButton *)button {
+    [self showColorPicker];
+}
+
+- (void)showColorPicker {
+    
+    [self toggleColorPicker];
+    [self toggleBars];
+}
+
+#pragma mark - color picker wheel control
+
+- (void) addColorPicker {
+    
+    CGFloat width = _rectOfScreen.size.width;
+    CGFloat height = _rectOfScreen.size.height * 0.5;
+
+    _colorPicker = [[VCColorPicker alloc] initWithFrame:CGRectMake(0, _rectOfScreen.size.height, width, height)];
+    _colorPicker.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:_colorPicker];
+    [self.view bringSubviewToFront:_colorPicker];
+
+    [_colorPicker addTarget:self
+                     action:@selector(colorPickerValueChanged:)
+           forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)colorPickerValueChanged:(id)control {
+    
+//    self.textview.textColor = _colorPicker.color;
 }
 
 #pragma mark -  UI of reading status

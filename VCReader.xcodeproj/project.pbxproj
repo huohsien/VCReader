@@ -31,6 +31,10 @@
 		662225D81CCCAF6A001BE988 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225D71CCCAF6A001BE988 /* libstdc++.6.0.9.dylib */; };
 		662225DA1CCCAF7C001BE988 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225D91CCCAF7C001BE988 /* CoreTelephony.framework */; };
 		662225E01CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 662225DF1CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle */; };
+		6625577F1DACC08700CC5AF1 /* VCColorTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 6625577E1DACC08700CC5AF1 /* VCColorTool.m */; };
+		662557861DACC0B100CC5AF1 /* VCColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 662557811DACC0B100CC5AF1 /* VCColorPicker.m */; };
+		662557871DACC0B100CC5AF1 /* VCColorPickerWheelLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 662557831DACC0B100CC5AF1 /* VCColorPickerWheelLayer.m */; };
+		662557881DACC0B100CC5AF1 /* VCPickerCrosshairLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 662557851DACC0B100CC5AF1 /* VCPickerCrosshairLayer.m */; };
 		6643419D1C7A868A00580AEF /* VCChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419C1C7A868A00580AEF /* VCChapter.m */; };
 		664341A01C7BFA7C00580AEF /* VCPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643419F1C7BFA7C00580AEF /* VCPage.m */; };
 		665B535D1D02C5F80030F635 /* VCCommentComposerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 665B535B1D02C5F80030F635 /* VCCommentComposerViewController.m */; };
@@ -99,6 +103,14 @@
 		662225D71CCCAF6A001BE988 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "../../../../../usr/lib/libstdc++.6.0.9.dylib"; sourceTree = "<group>"; };
 		662225D91CCCAF7C001BE988 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		662225DF1CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		6625577D1DACC08700CC5AF1 /* VCColorTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCColorTool.h; path = ../../ColorPicker/ColorPicker/VCColorTool.h; sourceTree = "<group>"; };
+		6625577E1DACC08700CC5AF1 /* VCColorTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCColorTool.m; path = ../../ColorPicker/ColorPicker/VCColorTool.m; sourceTree = "<group>"; };
+		662557801DACC0B100CC5AF1 /* VCColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCColorPicker.h; path = ../../ColorPicker/ColorPicker/VCColorPicker.h; sourceTree = "<group>"; };
+		662557811DACC0B100CC5AF1 /* VCColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCColorPicker.m; path = ../../ColorPicker/ColorPicker/VCColorPicker.m; sourceTree = "<group>"; };
+		662557821DACC0B100CC5AF1 /* VCColorPickerWheelLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCColorPickerWheelLayer.h; path = ../../ColorPicker/ColorPicker/VCColorPickerWheelLayer.h; sourceTree = "<group>"; };
+		662557831DACC0B100CC5AF1 /* VCColorPickerWheelLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCColorPickerWheelLayer.m; path = ../../ColorPicker/ColorPicker/VCColorPickerWheelLayer.m; sourceTree = "<group>"; };
+		662557841DACC0B100CC5AF1 /* VCPickerCrosshairLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCPickerCrosshairLayer.h; path = ../../ColorPicker/ColorPicker/VCPickerCrosshairLayer.h; sourceTree = "<group>"; };
+		662557851DACC0B100CC5AF1 /* VCPickerCrosshairLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCPickerCrosshairLayer.m; path = ../../ColorPicker/ColorPicker/VCPickerCrosshairLayer.m; sourceTree = "<group>"; };
 		6643419B1C7A868A00580AEF /* VCChapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCChapter.h; sourceTree = "<group>"; };
 		6643419C1C7A868A00580AEF /* VCChapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCChapter.m; sourceTree = "<group>"; };
 		6643419E1C7BFA7C00580AEF /* VCPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCPage.h; sourceTree = "<group>"; };
@@ -229,6 +241,26 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		662557891DACC0BA00CC5AF1 /* layers */ = {
+			isa = PBXGroup;
+			children = (
+				662557821DACC0B100CC5AF1 /* VCColorPickerWheelLayer.h */,
+				662557831DACC0B100CC5AF1 /* VCColorPickerWheelLayer.m */,
+				662557841DACC0B100CC5AF1 /* VCPickerCrosshairLayer.h */,
+				662557851DACC0B100CC5AF1 /* VCPickerCrosshairLayer.m */,
+			);
+			name = layers;
+			sourceTree = "<group>";
+		};
+		6625578A1DACC0C700CC5AF1 /* controls */ = {
+			isa = PBXGroup;
+			children = (
+				662557801DACC0B100CC5AF1 /* VCColorPicker.h */,
+				662557811DACC0B100CC5AF1 /* VCColorPicker.m */,
+			);
+			name = controls;
+			sourceTree = "<group>";
+		};
 		666266E11C859503004F133F /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,13 +293,15 @@
 		667AACCE1C545D9400CD40E1 /* VCReader */ = {
 			isa = PBXGroup;
 			children = (
+				667AACD81C545D9400CD40E1 /* Main.storyboard */,
+				662557891DACC0BA00CC5AF1 /* layers */,
+				6625578A1DACC0C700CC5AF1 /* controls */,
 				660C15571CD8BD4E00C25553 /* Views */,
 				6622255B1CBF968C001BE988 /* Core Data */,
 				662225491CBD395E001BE988 /* APIClients */,
 				669CD8D71C913E5500CC99D3 /* VCModels */,
 				669CD8D61C913E1400CC99D3 /* Tools */,
 				666266E11C859503004F133F /* TableViewCells */,
-				667AACD81C545D9400CD40E1 /* Main.storyboard */,
 				667AACEC1C545E9400CD40E1 /* ViewControllers */,
 				667AACF41C584F1900CD40E1 /* Resources */,
 				667AACCF1C545D9400CD40E1 /* Supporting Files */,
@@ -328,6 +362,8 @@
 		669CD8D61C913E1400CC99D3 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				6625577D1DACC08700CC5AF1 /* VCColorTool.h */,
+				6625577E1DACC08700CC5AF1 /* VCColorTool.m */,
 				668AB1B91C5BDD1C00395099 /* VCTool.h */,
 				668AB1BA1C5BDD1C00395099 /* VCTool.m */,
 				662225AE1CC616DB001BE988 /* VCSyncEngine.h */,
@@ -510,6 +546,8 @@
 				666EECBB1C83C3E700DF5621 /* VCChapterTableViewController.m in Sources */,
 				669227D81CD09F820045291E /* VCCoreDataCenter.m in Sources */,
 				6643419D1C7A868A00580AEF /* VCChapter.m in Sources */,
+				662557881DACC0B100CC5AF1 /* VCPickerCrosshairLayer.m in Sources */,
+				6625577F1DACC08700CC5AF1 /* VCColorTool.m in Sources */,
 				660C15601CD9F51500C25553 /* VCSetEmailViewController.m in Sources */,
 				66F8C3761C5D078100DF7611 /* VCTextView.m in Sources */,
 				662225A81CC3989E001BE988 /* VCBookMO+CoreDataProperties.m in Sources */,
@@ -517,6 +555,7 @@
 				662225B01CC616DB001BE988 /* VCSyncEngine.m in Sources */,
 				66F8C3791C5D0AF300DF7611 /* VCView.m in Sources */,
 				669227D51CD09E0A0045291E /* VCUserMO.m in Sources */,
+				662557871DACC0B100CC5AF1 /* VCColorPickerWheelLayer.m in Sources */,
 				6622254C1CBD39DA001BE988 /* VCReaderAPIClient.m in Sources */,
 				662225AC1CC3989E001BE988 /* VCReadingStatusMO+CoreDataProperties.m in Sources */,
 				66CA98001CB62E5400B52B5E /* VCSettingsTableViewController.m in Sources */,
@@ -532,6 +571,7 @@
 				669227D41CD09E0A0045291E /* VCUserMO+CoreDataProperties.m in Sources */,
 				662225AD1CC3989E001BE988 /* VCReadingStatusMO.m in Sources */,
 				669227C61CCDE6730045291E /* VCSignUpViewController.m in Sources */,
+				662557861DACC0B100CC5AF1 /* VCColorPicker.m in Sources */,
 				664341A01C7BFA7C00580AEF /* VCPage.m in Sources */,
 				662225AA1CC3989E001BE988 /* VCChapterMO+CoreDataProperties.m in Sources */,
 				665B535D1D02C5F80030F635 /* VCCommentComposerViewController.m in Sources */,
