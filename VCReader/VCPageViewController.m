@@ -1195,7 +1195,13 @@
     }
 
     if (yDisplacement < 10 && yDisplacement > -10 && _elapsedTime < 1.5 && _isEditingTextView == NO && xDisplacement < 300) {
-        [self toggleBars];
+        
+        CGRect frame = _colorPicker.frame;
+        if (frame.origin.y < _rectOfScreen.size.height) {
+            [self hideColorPicker];
+        } else {
+            [self toggleBars];
+        }
     }
 }
 #pragma mark - navigation bar
@@ -1276,7 +1282,7 @@
     if (frame.origin.y <= _rectOfScreen.size.height) {
         // show bars
         
-        [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
             
             [_colorPicker setFrame:CGRectMake(0, _rectOfScreen.size.height - _colorPicker.frame.size.height, _colorPicker.frame.size.width, _colorPicker.frame.size.height)];
             
@@ -1285,9 +1291,9 @@
     } else {
         //hide bars
 
-        [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
             
-            [_colorPicker setFrame:CGRectMake(0, _rectOfScreen.size.height, _toolBarView.frame.size.width, _toolBarView.frame.size.height)];
+            [_colorPicker setFrame:CGRectMake(0, _rectOfScreen.size.height, _colorPicker.frame.size.width, _colorPicker.frame.size.height)];
             
         } completion:^(BOOL finished) {
             
@@ -1304,9 +1310,9 @@
     if (frame.origin.y == _rectOfScreen.size.height - _colorPicker.frame.size.height) {
         
         
-        [UIView animateWithDuration:0.4 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
             
-            [_colorPicker setFrame:CGRectMake(0, _rectOfScreen.size.height, _toolBarView.frame.size.width, _toolBarView.frame.size.height)];
+            [_colorPicker setFrame:CGRectMake(0, _rectOfScreen.size.height, _colorPicker.frame.size.width, _colorPicker.frame.size.height)];
 
         } completion:^(BOOL finished) {
             
