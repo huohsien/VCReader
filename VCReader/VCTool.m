@@ -240,7 +240,7 @@ static UIView *_activityView;
     @autoreleasepool {
         
         VCLOG();
-        AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         UIWindow *window = delegate.window;
         
         if (_activityView == nil) {
