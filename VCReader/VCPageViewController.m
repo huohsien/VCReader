@@ -286,7 +286,6 @@
     } else {
         _textColor = [VCTool getObjectWithKey:@"font color"];
     }
-    
     // init objects and vars
     //
     
