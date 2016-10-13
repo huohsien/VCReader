@@ -262,11 +262,11 @@
 			isa = PBXGroup;
 			children = (
 				662557801DACC0B100CC5AF1 /* VCColorPicker.h */,
+				662557811DACC0B100CC5AF1 /* VCColorPicker.m */,
 				660F19731DAF15E500315979 /* VCColorPickerBrightnessSlider.h */,
 				660F19741DAF15E500315979 /* VCColorPickerBrightnessSlider.m */,
 				660F19751DAF15E500315979 /* VCUnitSlider.h */,
 				660F19761DAF15E500315979 /* VCUnitSlider.m */,
-				662557811DACC0B100CC5AF1 /* VCColorPicker.m */,
 			);
 			name = controls;
 			sourceTree = "<group>";
