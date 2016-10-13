@@ -206,6 +206,56 @@
 
 @synthesize dict;
 
+- (void)updateColorScheme {
+    
+    // resize bg image
+    _backgroundImage = [_backgroundImage imageByScalingProportionallyToSize:_rectOfScreen.size];
+    // set page status bars' color
+    [self.topStatusBarView setBackgroundColor:[UIColor colorWithPatternImage:_backgroundImage]];
+
+    // crop background image to match the bottom part
+    CGRect cropRect = CGRectMake(0, _backgroundImage.size.height - _bottomStatusBarView.bounds.size.height, _backgroundImage.size.width, _backgroundImage.size.height);
+    [self.bottomStatusBarView setBackgroundColor:[UIColor colorWithPatternImage:[_backgroundImage crop:cropRect]]];
+    
+    // set color of the text in the status bars
+    UIColor *statusBarTextColor = [VCTool changeUIColor:_textColor alphaValueTo:0.7];
+    [self.chapterTitleLabel setTextColor:statusBarTextColor];
+    [self.pageLabel setTextColor:statusBarTextColor];
+    [self.batteryLabel setTextColor:statusBarTextColor];
+    [self.currentTimeLabel setTextColor:statusBarTextColor];
+    [self.totalBookReadProgressLabel setTextColor:statusBarTextColor];
+    
+    _textColorInBar = [VCTool adjustUIColor:_textColor brightenFactor:2];
+    _barColor = [VCTool adjustUIColor:[_backgroundImage averageColor] brightenFactor:1.06];
+    self.navigationController.navigationBar.barTintColor = _barColor;
+    self.navigationController.navigationBar.tintColor = _textColorInBar;
+    
+
+    UIImage *image = [VCTool maskedImage:[UIImage imageNamed:@"sync_progress_icon"] color:_textColorInBar];
+    _imageView = [[UIImageView alloc] initWithImage:image];
+    _imageView.autoresizingMask = UIViewAutoresizingNone;
+    _imageView.contentMode = UIViewContentModeCenter;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, 0, 40, 40);
+    [button addSubview:_imageView];
+    [button addTarget:self action:@selector(syncReadingStatusDataAndShowErrorMessage) forControlEvents:UIControlEventTouchUpInside];
+    _imageView.center = button.center;
+    
+    button.imageView.clipsToBounds = NO;
+    button.imageView.contentMode = UIViewContentModeCenter;
+    _currentRotationalPosition = 0;
+    
+    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"chapter_list_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showChapters:)];
+    UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithCustomView:button];
+    NSArray *actionButtonItems = @[item1,item2];
+    self.navigationItem.rightBarButtonItems = actionButtonItems;
+    
+    [self updateBatteryIcon];
+    
+    [_toolBarView removeFromSuperview];
+    _toolBarView = nil;
+    [self addColorToolBar];
+}
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -218,9 +268,11 @@
     
     _rectOfScreen = [[UIScreen mainScreen] bounds];
     
-    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:33 / 255.0 green:33 / 255.0 blue:33 / 255.0 alpha:1.0] withRect:_rectOfScreen];
-
-    _textColor = [UIColor colorWithRed:102 / 255.0 green:102 / 255.0 blue:102 / 255.0 alpha: 1.0];
+//    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:33 / 255.0 green:33 / 255.0 blue:33 / 255.0 alpha:1.0] withRect:_rectOfScreen];
+//    _textColor = [UIColor colorWithRed:102 / 255.0 green:102 / 255.0 blue:102 / 255.0 alpha: 1.0];
+   
+    _backgroundImage = [UIImage imageFromColor:[UIColor blackColor] withRect:_rectOfScreen];
+    _textColor = [UIColor greenColor];
     
     // init objects and vars
     //
@@ -1367,7 +1419,6 @@
     [_toolBarView addSubview:backgroundColorButton];
     [self.view addSubview:_toolBarView];
     [self.view bringSubviewToFront:_toolBarView];
-    VCLOG(@"add new tool bar");
 }
 
 - (void)showColorPickerForFont:(UIButton *)button {
@@ -1425,6 +1476,8 @@
     _textColor = _colorPickerForFont.color;
     [_textRenderAttributionDict setObject:_textColor forKey:@"text color"];
     [self initPages];
+    
+    [self updateColorScheme];
 }
 
 - (void)colorPickerForFontColorConfirmed:(VCColorPicker *)picker {
@@ -1439,6 +1492,8 @@
     
     _backgroundImage = [UIImage imageFromColor:_colorPickerForBackground.color withRect:_rectOfScreen];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:self.backgroundImage]];
+    
+    [self updateColorScheme];
 }
 
 - (void)colorPickerForBackgroundColorConfirmed:(VCColorPicker *)picker {
