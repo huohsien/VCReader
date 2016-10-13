@@ -17,7 +17,7 @@ static UIView *_activityView;
 +(void) storeIntoBook:(NSString *)bookName withField:(NSString *)field andData:(id)data {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *dict = [NSDictionary dictionaryWithObject:data forKey:field];
-    [defaults setObject:dict forKey:[NSString stringWithFormat:@"%@_%@", bookName, field]];
+    [defaults setValue:dict forKey:[NSString stringWithFormat:@"%@_%@", bookName, field]];
     [defaults synchronize];
 }
 
@@ -156,14 +156,32 @@ static UIView *_activityView;
 
 +(void) storeObject:(id)object withKey:(NSString *)key {
 
-    [[NSUserDefaults standardUserDefaults] setObject:object forKey:key];
+    if ([object isKindOfClass:[UIColor class]]) {
+
+        UIColor *color = (UIColor *)object;
+        NSString *colorString = [[CIColor colorWithCGColor:[color CGColor]] stringRepresentation];
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"YES", @"isUIColor", colorString, @"colorString", nil];
+        object = dict;
+    }
+    [[NSUserDefaults standardUserDefaults] setValue:object forKey:key];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
 }
 
 +(id) getObjectWithKey:(NSString *)key {
     
-    return [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    id object = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    if ([object isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *dict = (NSDictionary *)object;
+        NSString *isColorString = [dict valueForKey:@"isUIColor"];
+        if ([isColorString isEqualToString:@"YES"]) {
+            NSString *colorString = [dict valueForKey:@"colorString"];
+            CIColor *coreColor = [CIColor colorWithString:colorString];
+            object = [UIColor colorWithRed:coreColor.red green:coreColor.green blue:coreColor.blue alpha:coreColor.alpha];
+        }
+    }
+    
+    return object;
 }
 
 +(UIImage *) getImageFromURL:(NSString *)fileURL {

@@ -268,11 +268,24 @@
     
     _rectOfScreen = [[UIScreen mainScreen] bounds];
     
-//    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:33 / 255.0 green:33 / 255.0 blue:33 / 255.0 alpha:1.0] withRect:_rectOfScreen];
-//    _textColor = [UIColor colorWithRed:102 / 255.0 green:102 / 255.0 blue:102 / 255.0 alpha: 1.0];
-   
-    _backgroundImage = [UIImage imageFromColor:[UIColor blackColor] withRect:_rectOfScreen];
-    _textColor = [UIColor greenColor];
+    UIColor *backgroundColor = [VCTool getObjectWithKey:@"background color"];
+    UIColor *fontColor = [VCTool getObjectWithKey:@"font color"];
+    if (backgroundColor == nil) {
+        
+        _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:33 / 255.0 green:33 / 255.0 blue:33 / 255.0 alpha:1.0] withRect:_rectOfScreen];
+        [VCTool storeObject:[_backgroundImage averageColor] withKey:@"background color"];
+        
+    } else {
+        _backgroundImage = [UIImage imageFromColor:[VCTool getObjectWithKey:@"background color"] withRect:_rectOfScreen];
+    }
+    if (fontColor == nil) {
+        
+        _textColor = [UIColor colorWithRed:102 / 255.0 green:102 / 255.0 blue:102 / 255.0 alpha: 1.0];
+        [VCTool storeObject:_textColor withKey:@"font color"];
+        
+    } else {
+        _textColor = [VCTool getObjectWithKey:@"font color"];
+    }
     
     // init objects and vars
     //
@@ -1478,6 +1491,8 @@
     [self initPages];
     
     [self updateColorScheme];
+    
+    [VCTool storeObject:_textColor withKey:@"font color"];
 }
 
 - (void)colorPickerForFontColorConfirmed:(VCColorPicker *)picker {
@@ -1494,6 +1509,8 @@
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:self.backgroundImage]];
     
     [self updateColorScheme];
+    
+    [VCTool storeObject:[_backgroundImage averageColor] withKey:@"background color"];
 }
 
 - (void)colorPickerForBackgroundColorConfirmed:(VCColorPicker *)picker {
