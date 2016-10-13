@@ -218,16 +218,14 @@
     
     _rectOfScreen = [[UIScreen mainScreen] bounds];
     
-//    _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:214 / 255.0 green:202 / 255.0 blue:130.0 / 255.0 alpha:1.0] withRect:_rectOfScreen];
     _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:33 / 255.0 green:33 / 255.0 blue:33 / 255.0 alpha:1.0] withRect:_rectOfScreen];
-//    _textColor = [UIColor colorWithRed: 70 / 255.0 green: 65 / 255.0 blue: 56 / 255.0 alpha: 1.0];
+
     _textColor = [UIColor colorWithRed:102 / 255.0 green:102 / 255.0 blue:102 / 255.0 alpha: 1.0];
     
     // init objects and vars
     //
     
     _textRenderAttributionDict = [NSMutableDictionary new];
-    [_textRenderAttributionDict setObject:[UIColor colorWithPatternImage:_backgroundImage] forKey:@"background color"];
     [_textRenderAttributionDict setObject:_textColor forKey:@"text color"];
     
     _isSyncing = NO;
@@ -1399,11 +1397,12 @@
     [self.view bringSubviewToFront:_colorPickerForFont];
 
     [_colorPickerForFont addTarget:self
-                     action:@selector(colorPickerValueChanged:)
+                     action:@selector(colorPickerForFontValueChanged:)
            forControlEvents:UIControlEventValueChanged];
     [_colorPickerForFont addTarget:self
-                     action:@selector(colorPickerColorConfirmed:)
+                     action:@selector(colorPickerForFontColorConfirmed:)
            forControlEvents:VCColorPickerControlEventButtonClicked];
+    [_colorPickerForFont setColor:_textColor];
     
     _colorPickerForBackground = [[VCColorPicker alloc] initWithFrame:CGRectMake(0, _rectOfScreen.size.height, width, height)];
     _colorPickerForBackground.backgroundColor = [UIColor blackColor];
@@ -1411,21 +1410,40 @@
     [self.view bringSubviewToFront:_colorPickerForBackground];
     
     [_colorPickerForBackground addTarget:self
-                     action:@selector(colorPickerValueChanged:)
+                     action:@selector(colorPickerForBackgroundValueChanged:)
            forControlEvents:UIControlEventValueChanged];
     [_colorPickerForBackground addTarget:self
-                     action:@selector(colorPickerColorConfirmed:)
+                     action:@selector(colorPickerForBackgroundColorConfirmed:)
            forControlEvents:VCColorPickerControlEventButtonClicked];
+    [_colorPickerForBackground setColor:[_backgroundImage averageColor]];
+
 }
 
-- (void)colorPickerValueChanged:(VCColorPicker *)picker {
+- (void)colorPickerForFontValueChanged:(VCColorPicker *)picker {
     
-    VCLOG(@"color picker value changed");
+//    VCLOG(@"color picker value changed");
+    _textColor = _colorPickerForFont.color;
+    [_textRenderAttributionDict setObject:_textColor forKey:@"text color"];
+    [self initPages];
 }
 
-- (void)colorPickerColorConfirmed:(VCColorPicker *)picker {
+- (void)colorPickerForFontColorConfirmed:(VCColorPicker *)picker {
 
-    VCLOG(@"color picker button clicked");
+//    VCLOG(@"color picker button clicked");
+    [self hideColorPickers];
+}
+
+- (void)colorPickerForBackgroundValueChanged:(VCColorPicker *)picker {
+    
+    //    VCLOG(@"color picker value changed");
+    
+    _backgroundImage = [UIImage imageFromColor:_colorPickerForBackground.color withRect:_rectOfScreen];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:self.backgroundImage]];
+}
+
+- (void)colorPickerForBackgroundColorConfirmed:(VCColorPicker *)picker {
+    
+    //    VCLOG(@"color picker button clicked");
     [self hideColorPickers];
 }
 #pragma mark -  UI of reading status

@@ -28,7 +28,6 @@
     CGFloat _charactersSpacing;
     CGFloat _chapterTitleFontSize;
     CGFloat _chapterContentFontSize;
-    UIColor *_backgroundColor;
     UIColor *_textColor;
     
 
@@ -59,7 +58,6 @@
         _chapterTitleFontSize = 34.0;
         _chapterContentFontSize = 26.0;
         
-        _backgroundColor = (UIColor *)[viewController.textRenderAttributionDict objectForKey:@"background color"];
         _textColor = (UIColor *)[viewController.textRenderAttributionDict objectForKey:@"text color"];
         
         _rectOfTextView = rect;
