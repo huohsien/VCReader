@@ -671,6 +671,13 @@
     return [[_currentChapter.firstWordCountOfEachPage objectAtIndex:pageNumber] intValue];
 }
 
+- (void)updateFontColorForCurrentPage {
+
+    NSUInteger index = NUMBER_OF_PREFETCH_PAGES + _pageNumber;
+    VCPage *page = [_pageArray objectAtIndex:index];
+    [page.textView setTextColor:_textColor];
+}
+
 -(void) initPages {
     
     _currentChapter = [[VCChapter alloc] initForVCBook:_book OfChapterNumber:_chapterNumber inViewController:self inViewingRect:_rectOfTextView];
@@ -1261,6 +1268,20 @@
         
         if (_colorPickerForFont.frame.origin.y < _rectOfScreen.size.height || _colorPickerForBackground.frame.origin.y < _rectOfScreen.size.height) {
 
+            VCLOG(@"restore color from the persistent storage");
+            //restore bg color
+            
+            UIColor *backgroundColor = [VCTool getObjectWithKey:@"background color"];
+            _backgroundImage = [UIImage imageFromColor:backgroundColor withRect:_rectOfScreen];
+            [self.view setBackgroundColor:[UIColor colorWithPatternImage:self.backgroundImage]];
+            [self updateColorScheme];
+            [_colorPickerForBackground setColor:backgroundColor];
+            [_colorPickerForBackground updateUIAccordingToColor];
+            
+            //restore font color
+            
+            
+            
             [self hideColorPickers];
 
         } else {
@@ -1484,37 +1505,39 @@
 
 - (void)colorPickerForFontValueChanged:(VCColorPicker *)picker {
     
-//    VCLOG(@"color picker value changed");
     _textColor = _colorPickerForFont.color;
-    [_textRenderAttributionDict setObject:_textColor forKey:@"text color"];
-    [self initPages];
-    
+
+    [self updateFontColorForCurrentPage];
     [self updateColorScheme];
-    
-    [VCTool storeObject:_textColor withKey:@"font color"];
 }
 
 - (void)colorPickerForFontColorConfirmed:(VCColorPicker *)picker {
 
-//    VCLOG(@"color picker button clicked");
+    VCLOG(@"color picker button clicked");
+    _textColor = _colorPickerForFont.color;
+    [_textRenderAttributionDict setObject:_textColor forKey:@"text color"];
+    [self initPages];
+    [self updateColorScheme];
+    [VCTool storeObject:_textColor withKey:@"font color"];
     [self hideColorPickers];
 }
 
 - (void)colorPickerForBackgroundValueChanged:(VCColorPicker *)picker {
     
-    //    VCLOG(@"color picker value changed");
-    
     _backgroundImage = [UIImage imageFromColor:_colorPickerForBackground.color withRect:_rectOfScreen];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:self.backgroundImage]];
-    
     [self updateColorScheme];
-    
-    [VCTool storeObject:[_backgroundImage averageColor] withKey:@"background color"];
+
 }
 
 - (void)colorPickerForBackgroundColorConfirmed:(VCColorPicker *)picker {
     
-    //    VCLOG(@"color picker button clicked");
+    VCLOG(@"color picker button clicked");
+    
+    _backgroundImage = [UIImage imageFromColor:_colorPickerForBackground.color withRect:_rectOfScreen];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:self.backgroundImage]];
+    [self updateColorScheme];
+    [VCTool storeObject:[_backgroundImage averageColor] withKey:@"background color"];
     [self hideColorPickers];
 }
 #pragma mark -  UI of reading status
