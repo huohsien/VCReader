@@ -11,6 +11,8 @@
 		660C155C1CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C15591CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m */; };
 		660C155D1CD8EF0200C25553 /* VCBatteryMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C155B1CD8EF0200C25553 /* VCBatteryMO.m */; };
 		660C15601CD9F51500C25553 /* VCSetEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C155F1CD9F51500C25553 /* VCSetEmailViewController.m */; };
+		660F19771DAF15E500315979 /* VCColorPickerBrightnessSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 660F19741DAF15E500315979 /* VCColorPickerBrightnessSlider.m */; };
+		660F19781DAF15E500315979 /* VCUnitSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 660F19761DAF15E500315979 /* VCUnitSlider.m */; };
 		661A47FD1CE103E40032B152 /* VCEmailVerificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 661A47FC1CE103E40032B152 /* VCEmailVerificationViewController.m */; };
 		6622254C1CBD39DA001BE988 /* VCReaderAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622254B1CBD39DA001BE988 /* VCReaderAPIClient.m */; };
 		662225A81CC3989E001BE988 /* VCBookMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 6622259D1CC3989E001BE988 /* VCBookMO+CoreDataProperties.m */; };
@@ -72,6 +74,10 @@
 		660C155B1CD8EF0200C25553 /* VCBatteryMO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCBatteryMO.m; path = VCReader/VCBatteryMO.m; sourceTree = "<group>"; };
 		660C155E1CD9F51500C25553 /* VCSetEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCSetEmailViewController.h; sourceTree = "<group>"; };
 		660C155F1CD9F51500C25553 /* VCSetEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCSetEmailViewController.m; sourceTree = "<group>"; };
+		660F19731DAF15E500315979 /* VCColorPickerBrightnessSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCColorPickerBrightnessSlider.h; path = ../../ColorPicker/ColorPicker/VCColorPickerBrightnessSlider.h; sourceTree = "<group>"; };
+		660F19741DAF15E500315979 /* VCColorPickerBrightnessSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCColorPickerBrightnessSlider.m; path = ../../ColorPicker/ColorPicker/VCColorPickerBrightnessSlider.m; sourceTree = "<group>"; };
+		660F19751DAF15E500315979 /* VCUnitSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCUnitSlider.h; path = ../../ColorPicker/ColorPicker/VCUnitSlider.h; sourceTree = "<group>"; };
+		660F19761DAF15E500315979 /* VCUnitSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VCUnitSlider.m; path = ../../ColorPicker/ColorPicker/VCUnitSlider.m; sourceTree = "<group>"; };
 		661A47FB1CE103E40032B152 /* VCEmailVerificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCEmailVerificationViewController.h; sourceTree = "<group>"; };
 		661A47FC1CE103E40032B152 /* VCEmailVerificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCEmailVerificationViewController.m; sourceTree = "<group>"; };
 		6622254A1CBD39DA001BE988 /* VCReaderAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCReaderAPIClient.h; sourceTree = "<group>"; };
@@ -256,6 +262,10 @@
 			isa = PBXGroup;
 			children = (
 				662557801DACC0B100CC5AF1 /* VCColorPicker.h */,
+				660F19731DAF15E500315979 /* VCColorPickerBrightnessSlider.h */,
+				660F19741DAF15E500315979 /* VCColorPickerBrightnessSlider.m */,
+				660F19751DAF15E500315979 /* VCUnitSlider.h */,
+				660F19761DAF15E500315979 /* VCUnitSlider.m */,
 				662557811DACC0B100CC5AF1 /* VCColorPicker.m */,
 			);
 			name = controls;
@@ -548,6 +558,7 @@
 				6643419D1C7A868A00580AEF /* VCChapter.m in Sources */,
 				662557881DACC0B100CC5AF1 /* VCPickerCrosshairLayer.m in Sources */,
 				6625577F1DACC08700CC5AF1 /* VCColorTool.m in Sources */,
+				660F19771DAF15E500315979 /* VCColorPickerBrightnessSlider.m in Sources */,
 				660C15601CD9F51500C25553 /* VCSetEmailViewController.m in Sources */,
 				66F8C3761C5D078100DF7611 /* VCTextView.m in Sources */,
 				662225A81CC3989E001BE988 /* VCBookMO+CoreDataProperties.m in Sources */,
@@ -581,6 +592,7 @@
 				662225BB1CC9F973001BE988 /* VCLoginViewController.m in Sources */,
 				665B536A1D0585EF0030F635 /* VCBookStoreTableViewCell.m in Sources */,
 				665B53631D043A020030F635 /* VCPlaintextResponseSerializer.m in Sources */,
+				660F19781DAF15E500315979 /* VCUnitSlider.m in Sources */,
 				667AACD11C545D9400CD40E1 /* main.m in Sources */,
 				662225AB1CC3989E001BE988 /* VCChapterMO.m in Sources */,
 			);
