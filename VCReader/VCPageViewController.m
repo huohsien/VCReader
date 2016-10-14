@@ -1268,27 +1268,33 @@
         
         if (_colorPickerForFont.frame.origin.y < _rectOfScreen.size.height || _colorPickerForBackground.frame.origin.y < _rectOfScreen.size.height) {
 
-            VCLOG(@"restore color from the persistent storage");
-            //restore bg color
-            
-            UIColor *backgroundColor = [VCTool getObjectWithKey:@"background color"];
-            _backgroundImage = [UIImage imageFromColor:backgroundColor withRect:_rectOfScreen];
-            [self.view setBackgroundColor:[UIColor colorWithPatternImage:self.backgroundImage]];
-            [self updateColorScheme];
-            [_colorPickerForBackground setColor:backgroundColor];
-            [_colorPickerForBackground updateUIAccordingToColor];
-            
-            //restore font color
-            
-            
-            
-            [self hideColorPickers];
+            [self colorPickerCancelled];
 
         } else {
             
             [self toggleBars];
         }
     }
+}
+- (void)colorPickerCancelled {
+    
+    VCLOG(@"restore color from the persistent storage");
+    
+    //restore bg color
+    UIColor *backgroundColor = [VCTool getObjectWithKey:@"background color"];
+    _backgroundImage = [UIImage imageFromColor:backgroundColor withRect:_rectOfScreen];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:self.backgroundImage]];
+    [_colorPickerForBackground setColor:backgroundColor];
+    [_colorPickerForBackground updateUIAccordingToColor];
+    
+    //restore font color
+    _textColor = [VCTool getObjectWithKey:@"font color"];
+    [self updateFontColorForCurrentPage];
+    [_colorPickerForFont setColor:_textColor];
+    [_colorPickerForFont updateUIAccordingToColor];
+    
+    [self updateColorScheme];
+    [self hideColorPickers];
 }
 
 - (void)hideColorPickers {
