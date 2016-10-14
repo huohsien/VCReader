@@ -308,6 +308,7 @@ return NO;\
                 UINavigationController *nc = [storyboard instantiateViewControllerWithIdentifier:@"EmailVerificationNavigationController"];
                 VCSetEmailViewController *vc = [nc.viewControllers firstObject];
                 vc.token = dict[@"token"];
+                vc.type = @"邮箱认证";
                 [VCTool appDelegate].window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
                 [VCTool appDelegate].window.rootViewController = nc;
                 [[VCTool appDelegate].window makeKeyAndVisible];
