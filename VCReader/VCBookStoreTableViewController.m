@@ -70,7 +70,7 @@
         
         self.jsonResponse = responseObject;
         
-//        [[VCCoreDataCenter sharedInstance] clearAllBooks];
+        [[VCCoreDataCenter sharedInstance] clearAllBooks];
         
         for (NSDictionary *dict in _jsonResponse) {
             
