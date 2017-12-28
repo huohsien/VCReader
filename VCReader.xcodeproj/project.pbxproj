@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		41A2B5B578457A4DCECFA95E /* libPods-VCReader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4B45A4D17CD603364319333 /* libPods-VCReader.a */; };
 		660C155C1CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C15591CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m */; };
 		660C155D1CD8EF0200C25553 /* VCBatteryMO.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C155B1CD8EF0200C25553 /* VCBatteryMO.m */; };
 		660C15601CD9F51500C25553 /* VCSetEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 660C155F1CD9F51500C25553 /* VCSetEmailViewController.m */; };
@@ -64,10 +63,10 @@
 		66CA98001CB62E5400B52B5E /* VCSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66CA97FF1CB62E5400B52B5E /* VCSettingsTableViewController.m */; };
 		66F8C3761C5D078100DF7611 /* VCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C3751C5D078100DF7611 /* VCTextView.m */; };
 		66F8C3791C5D0AF300DF7611 /* VCView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F8C3781C5D0AF300DF7611 /* VCView.m */; };
+		CF9ADC36E9258C202FE67EFC /* libPods-VCReader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FB110BB05C5B41C73D2AD7A1 /* libPods-VCReader.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0B4A3336345389BA90085697 /* Pods-VCReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VCReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VCReader/Pods-VCReader.debug.xcconfig"; sourceTree = "<group>"; };
 		660C15581CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VCBatteryMO+CoreDataProperties.h"; path = "VCReader/VCBatteryMO+CoreDataProperties.h"; sourceTree = "<group>"; };
 		660C15591CD8EF0200C25553 /* VCBatteryMO+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "VCBatteryMO+CoreDataProperties.m"; path = "VCReader/VCBatteryMO+CoreDataProperties.m"; sourceTree = "<group>"; };
 		660C155A1CD8EF0200C25553 /* VCBatteryMO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VCBatteryMO.h; path = VCReader/VCBatteryMO.h; sourceTree = "<group>"; };
@@ -168,8 +167,9 @@
 		66F8C3751C5D078100DF7611 /* VCTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCTextView.m; sourceTree = "<group>"; };
 		66F8C3771C5D0AF300DF7611 /* VCView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCView.h; sourceTree = "<group>"; };
 		66F8C3781C5D0AF300DF7611 /* VCView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCView.m; sourceTree = "<group>"; };
-		7448617C5C4D6839113C0905 /* Pods-VCReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VCReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-VCReader/Pods-VCReader.release.xcconfig"; sourceTree = "<group>"; };
-		F4B45A4D17CD603364319333 /* libPods-VCReader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VCReader.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6FC6D075E3CC289C56A187F /* Pods-VCReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VCReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-VCReader/Pods-VCReader.release.xcconfig"; sourceTree = "<group>"; };
+		DB9CD738332BF902C7AD1203 /* Pods-VCReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VCReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VCReader/Pods-VCReader.debug.xcconfig"; sourceTree = "<group>"; };
+		FB110BB05C5B41C73D2AD7A1 /* libPods-VCReader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VCReader.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,8 +184,8 @@
 				662225D21CCCA91B001BE988 /* CoreGraphics.framework in Frameworks */,
 				662225D01CCCA8EE001BE988 /* SystemConfiguration.framework in Frameworks */,
 				662225CE1CCCA7AC001BE988 /* Security.framework in Frameworks */,
-				41A2B5B578457A4DCECFA95E /* libPods-VCReader.a in Frameworks */,
 				662225CC1CCCA781001BE988 /* TencentOpenAPI.framework in Frameworks */,
+				CF9ADC36E9258C202FE67EFC /* libPods-VCReader.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,7 +288,7 @@
 				667AACCE1C545D9400CD40E1 /* VCReader */,
 				66A313E31CB7C5CE00A43B7A /* Frameworks */,
 				667AACCD1C545D9400CD40E1 /* Products */,
-				C7054E4DDEEF3B154287D12B /* Pods */,
+				BFD99ADB4F7CC434D8ED0F84 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -408,17 +408,17 @@
 				662225CF1CCCA8EE001BE988 /* SystemConfiguration.framework */,
 				662225CD1CCCA7AC001BE988 /* Security.framework */,
 				662225CB1CCCA781001BE988 /* TencentOpenAPI.framework */,
-				F4B45A4D17CD603364319333 /* libPods-VCReader.a */,
+				FB110BB05C5B41C73D2AD7A1 /* libPods-VCReader.a */,
 			);
 			name = Frameworks;
 			path = VCReader;
 			sourceTree = "<group>";
 		};
-		C7054E4DDEEF3B154287D12B /* Pods */ = {
+		BFD99ADB4F7CC434D8ED0F84 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0B4A3336345389BA90085697 /* Pods-VCReader.debug.xcconfig */,
-				7448617C5C4D6839113C0905 /* Pods-VCReader.release.xcconfig */,
+				DB9CD738332BF902C7AD1203 /* Pods-VCReader.debug.xcconfig */,
+				C6FC6D075E3CC289C56A187F /* Pods-VCReader.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -430,12 +430,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 667AACE61C545D9400CD40E1 /* Build configuration list for PBXNativeTarget "VCReader" */;
 			buildPhases = (
-				12C31A7C016F210BA3584008 /* Check Pods Manifest.lock */,
+				316F439C411564769ED0B898 /* [CP] Check Pods Manifest.lock */,
 				667AACC81C545D9400CD40E1 /* Sources */,
 				667AACC91C545D9400CD40E1 /* Frameworks */,
 				667AACCA1C545D9400CD40E1 /* Resources */,
-				44F762215D8B6FE26AF1C33C /* Embed Pods Frameworks */,
-				AD1C2B06419F9DAF0916C951 /* Copy Pods Resources */,
+				994D19D3F96119D137716E45 /* [CP] Embed Pods Frameworks */,
+				E954359F9B2B058DC9883D3C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -500,29 +500,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		12C31A7C016F210BA3584008 /* Check Pods Manifest.lock */ = {
+		316F439C411564769ED0B898 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		44F762215D8B6FE26AF1C33C /* Embed Pods Frameworks */ = {
+		994D19D3F96119D137716E45 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -530,14 +530,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VCReader/Pods-VCReader-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AD1C2B06419F9DAF0916C951 /* Copy Pods Resources */ = {
+		E954359F9B2B058DC9883D3C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -706,7 +706,7 @@
 		};
 		667AACE71C545D9400CD40E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0B4A3336345389BA90085697 /* Pods-VCReader.debug.xcconfig */;
+			baseConfigurationReference = DB9CD738332BF902C7AD1203 /* Pods-VCReader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -756,7 +756,7 @@
 		};
 		667AACE81C545D9400CD40E1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7448617C5C4D6839113C0905 /* Pods-VCReader.release.xcconfig */;
+			baseConfigurationReference = C6FC6D075E3CC289C56A187F /* Pods-VCReader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
