@@ -176,7 +176,7 @@
     previousTitleRange = NSMakeRange(0, 0);
     
     NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:@"(第(一|两|二|三|四|五|六|七|八|九|十|零|百|千|〇|[0-9])+章|序章|楔子|引子|后记).*[\\n\\r\\s]*"
+                                  regularExpressionWithPattern:@"((第)*(一|两|二|三|四|五|六|七|八|九|十|零|百|千|〇|[0-9])+章|序章|楔子|引子|后记).*[\\n\\r\\s]*"
                                   options:NSRegularExpressionCaseInsensitive
                                   error:&error];
     
@@ -185,7 +185,7 @@
         NSRange range = [match rangeAtIndex:0];
         NSString *title = [_contentString substringWithRange:range];
         
-//        VCLOG(@"%@",title);
+        VCLOG(@"%@",title);
         
         unichar charaterBeforeTitle;
 
@@ -195,7 +195,7 @@
             if (charaterBeforeTitle != '\r' && charaterBeforeTitle != '\n' && charaterBeforeTitle != ' ') {
                 if ([_chapterTitleStringArray count] > 0) {
                     
-//                    VCLOG(@"might have a problem splitting chapters.\n problematic chapter title = %@ previous title = %@", title, [_chapterTitleStringArray objectAtIndex:(count-1)]);
+                    VCLOG(@"might have a problem splitting chapters.\n problematic chapter title = %@ previous title = %@", title, [_chapterTitleStringArray objectAtIndex:(count-1)]);
                 }
                 return ;
             }
@@ -217,7 +217,7 @@
                 previousChapterString = title;
                 previousTitleRange = range;
 
-//                VCLOG(@"might have a problem splitting cuz the length of the chapter is less than 100.\n Chapter =%@, count = %d", title, count);
+                VCLOG(@"might have a problem splitting cuz the length of the chapter is less than 100.\n Chapter =%@, count = %d", title, count);
 
             }
 
@@ -229,13 +229,13 @@
         NSString *str = NSStringFromRange(contentRange);
         [_chapterContentRangeStringArray addObject:str];
         [_wordCountOfTheBookForTheFirstWordInChapters addObject:@(wordCount).stringValue];
-//        VCLOG(@"word count = %ld", wordCount);
+        VCLOG(@"word count = %ld", wordCount);
 
         wordCount += contentRange.length;
         
         count++;
 
-//        VCLOG(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
+        VCLOG(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
 
         previousChapterString = title;
         previousTitleRange = range;
@@ -249,10 +249,10 @@
     NSString *string = NSStringFromRange(contentRange);
     [_chapterContentRangeStringArray addObject:string];
     [_wordCountOfTheBookForTheFirstWordInChapters addObject:@(wordCount).stringValue];
-//    VCLOG(@"word count = %ld", wordCount);
+    VCLOG(@"word count = %ld", wordCount);
     count++;
 
-//    VCLOG(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
+    VCLOG(@"title:%@ word count:%lu match number:%d",[_chapterTitleStringArray objectAtIndex:count-1], (unsigned long)(NSRangeFromString([_chapterContentRangeStringArray objectAtIndex:count-1]).length), count);
     
     _totalNumberOfChapters = count;
     
@@ -302,7 +302,7 @@
     NSError *error = NULL;
 
     NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:@"第(一|两|二|三|四|五|六|七|八|九|十|零|百|〇|[0-9])+章"
+                                  regularExpressionWithPattern:@"(一|两|二|三|四|五|六|七|八|九|十|零|百|〇|[0-9])+章"
                                   options:NSRegularExpressionCaseInsensitive
                                   error:&error];
     NSRange stringRange = NSMakeRange(0, string.length);
@@ -317,7 +317,7 @@
     NSError *error = NULL;
     
     NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:@"第(一|两|二|三|四|五|六|七|八|九|十|零|百|〇|[0-9])+章.*$"
+                                  regularExpressionWithPattern:@"(一|两|二|三|四|五|六|七|八|九|十|零|百|〇|[0-9])+章.*$"
                                   options:NSRegularExpressionCaseInsensitive
                                   error:&error];
     NSRange stringRange = NSMakeRange(0, string.length);
@@ -332,7 +332,7 @@
     NSError *error = NULL;
     
     NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern:@"第([0-9])+章"
+                                  regularExpressionWithPattern:@"([0-9])+章"
                                   options:NSRegularExpressionCaseInsensitive
                                   error:&error];
     NSRange stringRange = NSMakeRange(0, string.length);
