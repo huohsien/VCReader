@@ -60,6 +60,7 @@
         
         [errorLogData appendData:errorLogFileData];
     }
+    VCLOG("call showActivityView");
     [VCTool showActivityView];
 
     NSString *fullPath = [VCTool saveData:errorLogData toFileNamed:@"log.txt"];
@@ -96,7 +97,7 @@
         
     }];
     
-    
+    VCLOG("call showActivityView");
     [VCTool showActivityView];
 
     NSString *timestamp = [NSString stringWithFormat:@"%ld", (long) ([[NSDate new] timeIntervalSince1970] * 1000.0f)];

@@ -54,6 +54,7 @@
         return;
     }
 
+    VCLOG("call showActivityView");
     [VCTool showActivityView];
    
     if ([_type isEqualToString:@"邮箱认证"]) {

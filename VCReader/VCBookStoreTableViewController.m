@@ -106,16 +106,6 @@
     
 }
 
-
-
-
--(void)showActivityView {
-    
-    [VCTool showActivityView];
-    
-}
-
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -255,9 +245,11 @@
         for (UIViewController *vc in [self.tabBarController viewControllers]) {
             VCLOG(@"loop through tab view controller:%@", vc.title);
             if ([vc.title isEqualToString:@"书架"]) {
-                [VCTool showActivityView];
+                
+//                VCLOG("call showActivityView");
+//                [VCTool showActivityView];
                 VCBook *book = [[VCBook alloc] initWithBookName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name contentFilename:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).contentFilePath];
-                [VCTool hideActivityView];
+//                [VCTool hideActivityView];
                 VCLibraryTableViewController *libraryTableViewController = (VCLibraryTableViewController *)vc;
                 libraryTableViewController.bootTobeRead = book;
                 [self.tabBarController setSelectedViewController:libraryTableViewController];

@@ -87,6 +87,7 @@
 
     VCLOG();
 
+    VCLOG("call showActivityView");
     [VCTool showActivityView];
     
     VCReadingStatusMO *readingStatus = [[VCCoreDataCenter sharedInstance] updateReadingStatusForBook:_book.bookName chapterNumber:(int)indexPath.row wordNumber:0];

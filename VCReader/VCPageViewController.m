@@ -414,6 +414,7 @@
         if (finished) [self loadContent];
     }];
     
+    VCLOG("call showActivityView");
     [VCTool showActivityView];
     
     [self startMonitoringBattery];

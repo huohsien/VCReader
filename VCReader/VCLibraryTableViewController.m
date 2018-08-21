@@ -180,18 +180,13 @@
     [self.tableView reloadData];
 }
 
--(void) showActivityView {
-
-    [VCTool showActivityView];
-
-}
-
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     
     if ([identifier isEqualToString:@"showBookContent"]) {
         
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         
+        VCLOG("call showActivityView");
         [VCTool showActivityView];
         VCBook *book = [[VCBook alloc] initWithBookName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name contentFilename:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).contentFilePath];
         [VCTool hideActivityView];
@@ -212,7 +207,9 @@
         
         if (!_bookToBeRead) {
             
+            VCLOG("call showActivityView");
             [VCTool showActivityView];
+            
             _bookToBeRead = [[VCBook alloc] initWithBookName:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).name contentFilename:((VCBookMO *)[_bookArray objectAtIndex:indexPath.row]).contentFilePath];
             [VCTool hideActivityView];
         }

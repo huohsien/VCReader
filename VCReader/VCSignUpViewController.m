@@ -214,6 +214,7 @@ return NO;\
 
 - (IBAction)qqButtonPressed:(id)sender {
     
+    VCLOG("call showActivityView");
     [VCTool showActivityView];
     
     self.tencentOAuth = [[TencentOAuth alloc] initWithAppId:kTencentOAuthAppID andDelegate:self];

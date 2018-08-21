@@ -28,6 +28,7 @@
 
 - (IBAction)loginButtonPressed:(id)sender {
     
+    VCLOG("call showActivityView");
     [VCTool showActivityView];
     
     [[VCReaderAPIClient sharedClient] userLoginWithAccountName:self.accountNameTextView.text password:self.passwordTextView.text success:^(NSURLSessionDataTask *task, id responseObject) {

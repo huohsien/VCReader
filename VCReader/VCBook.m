@@ -55,6 +55,7 @@
     
     if (!isBookLoaded) {
         
+        VCLOG("call showActivityView");
         [VCTool showActivityView];
         if (![self loadContent])
             return NO;
@@ -108,7 +109,9 @@
     } else {
         
         if ([directoryContent count] == 0) {
-
+            
+            [VCTool toastMessage:@"伺服器上书籍资料有误，请回报错误"];
+            return false;
         }
         NSString *path = [NSString stringWithFormat:@"%@/%@", unzipFilePath, [directoryContent lastObject]];
         VCLOG(@"path = %@", path);

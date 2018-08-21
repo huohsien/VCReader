@@ -39,6 +39,7 @@
         return;
     }
     
+    VCLOG("call showActivityView");
     [VCTool showActivityView];
     
     NSString *timestamp = [NSString stringWithFormat:@"%ld", (long)([[NSDate new] timeIntervalSince1970] * 1000.0)];
