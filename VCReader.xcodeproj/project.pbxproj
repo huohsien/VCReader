@@ -29,7 +29,6 @@
 		662225D21CCCA91B001BE988 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225D11CCCA91B001BE988 /* CoreGraphics.framework */; };
 		662225D41CCCAED1001BE988 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225D31CCCAED1001BE988 /* libsqlite3.dylib */; };
 		662225D61CCCAF39001BE988 /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225D51CCCAF39001BE988 /* libz.1.dylib */; };
-		662225D81CCCAF6A001BE988 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225D71CCCAF6A001BE988 /* libstdc++.6.0.9.dylib */; };
 		662225DA1CCCAF7C001BE988 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 662225D91CCCAF7C001BE988 /* CoreTelephony.framework */; };
 		662225E01CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 662225DF1CCCB0ED001BE988 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		6625577F1DACC08700CC5AF1 /* VCColorTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 6625577E1DACC08700CC5AF1 /* VCColorTool.m */; };
@@ -55,6 +54,7 @@
 		667AACDF1C545D9400CD40E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 667AACDE1C545D9400CD40E1 /* Assets.xcassets */; };
 		667AACEB1C545E3E00CD40E1 /* VCPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */; };
 		667AACFA1C58B05C00CD40E1 /* VCBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 667AACF91C58B05C00CD40E1 /* VCBook.m */; };
+		667DC536231A75F7009DDB6C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 667DC535231A75F7009DDB6C /* libc++.tbd */; };
 		668AB1BB1C5BDD1C00395099 /* VCTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 668AB1BA1C5BDD1C00395099 /* VCTool.m */; };
 		669227C61CCDE6730045291E /* VCSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227C51CCDE6730045291E /* VCSignUpViewController.m */; };
 		669227D41CD09E0A0045291E /* VCUserMO+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 669227D11CD09E0A0045291E /* VCUserMO+CoreDataProperties.m */; };
@@ -150,6 +150,7 @@
 		667AACEA1C545E3E00CD40E1 /* VCPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCPageViewController.m; sourceTree = "<group>"; };
 		667AACF81C58B05C00CD40E1 /* VCBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCBook.h; sourceTree = "<group>"; };
 		667AACF91C58B05C00CD40E1 /* VCBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCBook.m; sourceTree = "<group>"; };
+		667DC535231A75F7009DDB6C /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		668AB1B91C5BDD1C00395099 /* VCTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCTool.h; sourceTree = "<group>"; };
 		668AB1BA1C5BDD1C00395099 /* VCTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCTool.m; sourceTree = "<group>"; };
 		668AB1BD1C5BDF8900395099 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -177,8 +178,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				667DC536231A75F7009DDB6C /* libc++.tbd in Frameworks */,
 				662225DA1CCCAF7C001BE988 /* CoreTelephony.framework in Frameworks */,
-				662225D81CCCAF6A001BE988 /* libstdc++.6.0.9.dylib in Frameworks */,
 				662225D61CCCAF39001BE988 /* libz.1.dylib in Frameworks */,
 				662225D41CCCAED1001BE988 /* libsqlite3.dylib in Frameworks */,
 				662225D21CCCA91B001BE988 /* CoreGraphics.framework in Frameworks */,
@@ -400,6 +401,7 @@
 		66A313E31CB7C5CE00A43B7A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				667DC535231A75F7009DDB6C /* libc++.tbd */,
 				662225D91CCCAF7C001BE988 /* CoreTelephony.framework */,
 				662225D71CCCAF6A001BE988 /* libstdc++.6.0.9.dylib */,
 				662225D51CCCAF39001BE988 /* libz.1.dylib */,
@@ -434,8 +436,6 @@
 				667AACC81C545D9400CD40E1 /* Sources */,
 				667AACC91C545D9400CD40E1 /* Frameworks */,
 				667AACCA1C545D9400CD40E1 /* Resources */,
-				994D19D3F96119D137716E45 /* [CP] Embed Pods Frameworks */,
-				E954359F9B2B058DC9883D3C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -471,6 +471,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -506,43 +507,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VCReader-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		994D19D3F96119D137716E45 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VCReader/Pods-VCReader-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E954359F9B2B058DC9883D3C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VCReader/Pods-VCReader-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

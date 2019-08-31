@@ -96,6 +96,7 @@
     if (![SSZipArchive unzipFileAtPath:zipFilePath toDestination:unzipFilePath]) {
         VCLOG(@"unzip fail");
         [VCTool toastMessage:@"无法下载书籍"];
+        [VCTool hideActivityView];
         return NO;
     };
     NSError *error = nil;
