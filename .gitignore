@@ -23,3 +23,5 @@ build/
 *~.nib
 \#*#
 .#*
+# my files and folders
+temp/
