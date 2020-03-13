@@ -272,7 +272,7 @@
     UIColor *fontColor = [VCTool getObjectWithKey:@"font color"];
     if (backgroundColor == nil) {
         
-        _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:33 / 255.0 green:33 / 255.0 blue:33 / 255.0 alpha:1.0] withRect:_rectOfScreen];
+        _backgroundImage = [UIImage imageFromColor:[UIColor colorWithRed:13 / 255.0 green:13 / 255.0 blue:13 / 255.0 alpha:1.0] withRect:_rectOfScreen];
         [VCTool storeObject:[_backgroundImage averageColor] withKey:@"background color"];
         
     } else {
