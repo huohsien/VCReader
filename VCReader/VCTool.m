@@ -275,7 +275,11 @@ static UIView *_activityView;
                                               UIViewAutoresizingFlexibleBottomMargin);
             [_activityView addSubview:activityWheel];
         }
-        [window addSubview: _activityView];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [window addSubview: _activityView];
+        });
+        
 
         [[[_activityView subviews] objectAtIndex:0] startAnimating];
     }
