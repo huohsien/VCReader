@@ -10,7 +10,7 @@
 
 //NSString * const kVCReaderBaseURLString = @"http://vhhc.homedns.org";
 //NSString * const kVCReaderBaseURLString = @"http://api.vhhc.dyndns.org";
-NSString * const kVCReaderBaseURLString = @"http://vhhcstudio.com/VCReader_server";
+NSString * const kVCReaderBaseURLString = @"http://api.vhhcstudio.com";
 
 
 @implementation VCReaderAPIClient
