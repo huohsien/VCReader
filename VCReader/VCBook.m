@@ -114,7 +114,20 @@
             [VCTool toastMessage:@"伺服器上书籍资料有误，请回报错误"];
             return false;
         }
-        NSString *path = [NSString stringWithFormat:@"%@/%@", unzipFilePath, [directoryContent lastObject]];
+        NSString *fileName;
+        if ([directoryContent count] > 1) {
+            for (int i = 0; i<[directoryContent count]; i++) {
+                fileName = [NSString stringWithFormat:@"%@", directoryContent[i]];
+                NSLog(@"%@",fileName);
+                if ([fileName containsString:@"txt"]) {
+                    break;
+                }
+                VCLOG(@"zip file has no proper text file");
+                exit(1);
+            }
+            
+        }
+        NSString *path = [NSString stringWithFormat:@"%@/%@", unzipFilePath, fileName];
         VCLOG(@"path = %@", path);
         _contentString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
         VCLOG(@"number of words:%lu", (unsigned long)_contentString.length);
