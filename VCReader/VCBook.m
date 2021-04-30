@@ -126,6 +126,8 @@
                 exit(1);
             }
             
+        } else {
+            fileName = [directoryContent lastObject];
         }
         NSString *path = [NSString stringWithFormat:@"%@/%@", unzipFilePath, fileName];
         VCLOG(@"path = %@", path);
